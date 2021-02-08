@@ -1,5 +1,6 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include "Animation.h"
 
 using namespace sf;
 //using sf::Event;
@@ -14,12 +15,13 @@ int main() {
     float windowWidth = 512;
     float windowHeight = 512;
     RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
-    
+    int frameRateLimit = 60;
+    window.setFramerateLimit(60);
 
     float playerSpeed = 0.1f;
     float playerWidth = 100;
     float playerHeight = 100;
-
+    
     RectangleShape player(Vector2f(playerWidth, playerHeight));
     
     player.setOrigin(playerWidth / 2, playerHeight / 2);
@@ -30,21 +32,24 @@ int main() {
     playerTexture.loadFromFile("testTextureLarge.png");
     player.setTexture(&playerTexture);
 
+    Animation animation(&playerTexture, Vector2u(16, 11), 0.3f); 
+
+    float deltaTime = 0.0f;
+    Clock clock;
+
     Vector2u textureSize = playerTexture.getSize();
     textureSize.x /= 16;
     textureSize.y /= 11;
 
-    player.setTextureRect(IntRect(textureSize.x * 13, textureSize.y * 10, textureSize.x, textureSize.y));
+    //player.setTextureRect(IntRect(textureSize.x * 13, textureSize.y * 10, textureSize.x, textureSize.y));
 
 
-    Clock deltaClock;
 
     while (window.isOpen()) {
 
+        deltaTime = clock.restart().asSeconds();
         Event evnt;
         while (window.pollEvent(evnt)) {
-
-            float deltaTime = deltaClock.restart().asSeconds();
 
             switch (evnt.type) {
             case Event::Closed:
@@ -61,7 +66,6 @@ int main() {
 
         }
 
-
         if(Keyboard::isKeyPressed(Keyboard::W)) {
             player.move(0, -playerSpeed);
         }
@@ -76,16 +80,18 @@ int main() {
         }
 
         if (Mouse::isButtonPressed(Mouse::Left)) {
-            
             Vector2i mousePos = Mouse::getPosition(window);
             player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
-
-
         }
 
-        window.clear(Color::Black);
+
+        animation.Update(9, deltaTime, false);
+        player.setTextureRect(animation.uvRect);
+
+        window.clear(Color::White);
         window.draw(player);
         window.display();
+        //cout << deltaTime << " " << animation.switchTime << endl;
 
     }
 
