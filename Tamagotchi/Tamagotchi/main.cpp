@@ -12,8 +12,8 @@ using std::endl;
 
 int main() {
 
-    float windowWidth = 512;
-    float windowHeight = 512;
+    int windowWidth = 512;
+    int windowHeight = 512;
     RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
     int frameRateLimit = 60;
     window.setFramerateLimit(60);
@@ -97,4 +97,3 @@ int main() {
 
     return 0;
 }
-
