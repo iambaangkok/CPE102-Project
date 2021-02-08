@@ -6,21 +6,18 @@ using namespace sf;
 class Animation
 {
 public:
-	Animation(Texture* texture, Vector2u imageCount, float switchTime);
-	~Animation();
+    Animation(Texture* texture, Vector2u imageCount, float switchTime);
+    ~Animation();
 
-	void Update(int row, float deltaTime, bool faceRight);
+    void Update(int row, float deltaTime, bool faceRight);
 
 public:
-	IntRect uvRect;
-	float switchTime;
+    IntRect uvRect;
+    float switchTime;
 
 private:
-	Vector2u imageCount;
-	Vector2u currentImage;
+    Vector2u imageCount;
+    Vector2u currentImage;
 
-	float totalTime;
-	
-
-
+    float totalTime;
 };
