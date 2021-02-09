@@ -3,7 +3,6 @@
 #include <iostream>
 #include "Animation.h"
 #include "GameObject.h"
-#include "Guy.h"
 
 using namespace sf;
 
