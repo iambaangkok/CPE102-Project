@@ -1,5 +1,17 @@
-﻿  main.cpp
-D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(16,48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(16,35): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(57,45): warning C4390: ';': empty controlled statement found; is this the intent?
+﻿  Animation.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Animation.cpp(17,41): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Animation.cpp(18,42): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  GameObject.cpp
+  main.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(62,45): warning C4390: ';': empty controlled statement found; is this the intent?
+  Generating Code...
+  LINK : D:\GitHub\CPE102-Project\Tamagotchi\Debug\Tamagotchi.exe not found or not built by the last incremental link; performing full link
   Tamagotchi.vcxproj -> D:\GitHub\CPE102-Project\Tamagotchi\Debug\Tamagotchi.exe

@@ -1,1 +1,11 @@
+<<<<<<< Updated upstream
 SFML-2.5.1/
+=======
+SFML-2.5.1/
+Tamagotchi/Tamagotchi/.gitignore
+.vs/
+Tamagotchi/.vs/
+Tamagotchi/Tamagotchi/Debug/
+Tamagotchi/Tamagotchi/Debug/Tamagotchi.tlog/
+Tamagotchi/.vs/Tamagotchi/v16/.suo
+>>>>>>> Stashed changes
