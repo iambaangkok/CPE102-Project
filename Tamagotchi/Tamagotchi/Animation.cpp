@@ -3,6 +3,7 @@
 
 using namespace sf;
 
+
 Animation::Animation() {
     frameTime = 0.0f;
     totalTime = 0.0f;
@@ -26,15 +27,18 @@ void Animation::Update(int row, float deltaTime, bool faceRight) {
     if (!enabled) {
         return;
     }
+
     currentImage.y = row;
-    totalTime += deltaTime;
 
-    if (totalTime >= frameTime) {
-        totalTime -= frameTime;
-        currentImage.x++;
+    if (!freezeFrame) {
+        totalTime += deltaTime;
 
-        if (currentImage.x >= imageCount.x) {
-            currentImage.x = 0;
+        if (totalTime >= frameTime) {
+            totalTime -= frameTime;
+            currentImage.x++;
+            if (currentImage.x >= imageCount.x) {
+                currentImage.x = 0;
+            }
         }
     }
 
@@ -57,15 +61,7 @@ void Animation::SetTexture(Texture* texture) {
     
 }
 
-void Animation::SetFrame(int row, int column, bool faceRight) {
-    currentImage.y = row;
-    currentImage.x = column;
-    if (faceRight) {
-        uvRect.left = currentImage.x * uvRect.width;
-        uvRect.width = abs(uvRect.width);
-    }
-    else {
-        uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
-        uvRect.width = -abs(uvRect.width);
-    }
+void Animation::SetFrame(Vector2u rowColumn) {
+    currentImage.y = rowColumn.x;
+    currentImage.x = rowColumn.y;
 }

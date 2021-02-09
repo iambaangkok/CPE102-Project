@@ -1,7 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
 using namespace sf;
+using std::cout;
+using std::endl;
 
 class Animation
 {
@@ -13,9 +15,10 @@ public:
     void Update(int row, float deltaTime, bool faceRight);
     void SetFrameTime(float frameTime);
     void SetTexture(Texture* texture);
-    void SetFrame(int row, int column, bool faceRight);
+    void SetFrame(Vector2u rowColumn);
     
     bool enabled = true;
+    bool freezeFrame = false;
 
     IntRect uvRect;
     float frameTime;
