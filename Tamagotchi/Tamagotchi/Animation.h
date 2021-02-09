@@ -6,14 +6,20 @@ using namespace sf;
 class Animation
 {
 public:
-    Animation(Texture* texture, Vector2u imageCount, float switchTime);
+    Animation();
+    Animation(Texture* texture, Vector2u imageCount, float frameTime);
     ~Animation();
 
     void Update(int row, float deltaTime, bool faceRight);
+    void SetFrameTime(float frameTime);
+    void SetTexture(Texture* texture);
+    void SetFrame(int row, int column, bool faceRight);
+    
+    bool enabled = true;
 
-public:
     IntRect uvRect;
-    float switchTime;
+    float frameTime;
+    
 
 private:
     Vector2u imageCount;

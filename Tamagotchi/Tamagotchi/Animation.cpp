@@ -3,10 +3,14 @@
 
 using namespace sf;
 
+Animation::Animation() {
+    frameTime = 0.0f;
+    totalTime = 0.0f;
+}
 
-Animation::Animation(Texture* texture, Vector2u imageCount, float switchTime) {
+Animation::Animation(Texture* texture, Vector2u imageCount, float frameTime) {
     this->imageCount = imageCount;
-    this->switchTime = switchTime;
+    this->frameTime = frameTime;
     totalTime = 0.0f;
     currentImage.x = 0;
 
@@ -19,11 +23,14 @@ Animation::~Animation() {
 }
 
 void Animation::Update(int row, float deltaTime, bool faceRight) {
+    if (!enabled) {
+        return;
+    }
     currentImage.y = row;
     totalTime += deltaTime;
 
-    if (totalTime >= switchTime) {
-        totalTime -= switchTime;
+    if (totalTime >= frameTime) {
+        totalTime -= frameTime;
         currentImage.x++;
 
         if (currentImage.x >= imageCount.x) {
@@ -32,6 +39,27 @@ void Animation::Update(int row, float deltaTime, bool faceRight) {
     }
 
     uvRect.top = currentImage.y * uvRect.height;
+    if (faceRight) {
+        uvRect.left = currentImage.x * uvRect.width;
+        uvRect.width = abs(uvRect.width);
+    }
+    else {
+        uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
+        uvRect.width = -abs(uvRect.width);
+    }
+}
+
+void Animation::SetFrameTime(float frameTime) {
+    this->frameTime = frameTime;
+}
+
+void Animation::SetTexture(Texture* texture) {
+    
+}
+
+void Animation::SetFrame(int row, int column, bool faceRight) {
+    currentImage.y = row;
+    currentImage.x = column;
     if (faceRight) {
         uvRect.left = currentImage.x * uvRect.width;
         uvRect.width = abs(uvRect.width);
