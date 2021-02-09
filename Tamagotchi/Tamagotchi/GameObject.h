@@ -12,6 +12,7 @@ using std::string;
 class GameObject
 {
 public:
+	GameObject();
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
 		string texturePath); //Single Texture
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
@@ -31,7 +32,6 @@ public:
 	bool enabled = true;
 
 	Vector2f dimensions;
-
 
 	Texture texture;
 	RectangleShape rectangleShape;

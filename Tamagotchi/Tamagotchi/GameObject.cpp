@@ -1,6 +1,8 @@
 #include "GameObject.h"
 
+GameObject::GameObject() {
 
+}
 
 GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath) {
 
