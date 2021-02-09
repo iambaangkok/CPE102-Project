@@ -4,6 +4,7 @@
 using namespace sf;
 
 
+
 Animation::Animation() {
     frameTime = 0.0f;
     totalTime = 0.0f;
