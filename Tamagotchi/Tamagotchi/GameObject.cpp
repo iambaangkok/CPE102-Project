@@ -4,7 +4,9 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 	rectangleShape.setPosition(position);
 	rectangleShape.setSize(dimensions);
-	rectangleShape.setOrigin(Vector2f(dimensions.x/2,dimensions.y/2));
+	if (originIsCenter) {
+		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	}
 
 	texture.loadFromFile(texturePath);
 	
@@ -16,7 +18,9 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 	rectangleShape.setPosition(position);
 	rectangleShape.setSize(dimensions);
-	rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	if (originIsCenter) {
+		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	}
 
 	texture.loadFromFile(texturePath);
 
@@ -30,7 +34,9 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 	rectangleShape.setPosition(position);
 	rectangleShape.setSize(dimensions);
-	rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	if (originIsCenter) {
+		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	}
 
 	texture.loadFromFile(texturePath);
 

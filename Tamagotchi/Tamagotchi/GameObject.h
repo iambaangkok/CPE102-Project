@@ -23,7 +23,6 @@ public:
 
 	Vector2f dimensions;
 
-	bool originIsCenter;
 
 	Texture texture;
 	RectangleShape rectangleShape;
