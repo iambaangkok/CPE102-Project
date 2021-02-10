@@ -27,7 +27,16 @@ int main() {
     GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12,10), Vector2i(14,10), 0.3f);
     float deltaTime = 0.0f;
     Clock clock;
-
+    Font font;
+    if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// æ“ ¢Õßfont
+        throw(" CLOUD NOT LOAD FONT! ");
+    Text text;
+    text.setFont(font);
+    text.setFillColor(Color::Black);
+    text.setCharacterSize(25);
+    text.setString("BoBo is the best of game year."); // ¢ÈÕ§«“¡
+    text.setPosition(10.f, windowHeight/ 2);
+    text.move(0.1f, 0.f);
     while (window.isOpen()) {
 
         playerSpeed = Vector2f(0, 0);
@@ -51,7 +60,7 @@ int main() {
             }
 
         }
-
+        
         if (Keyboard::isKeyPressed(Keyboard::W)) {
             playerSpeed.y = -maxPlayerSpeed.y;
         }
@@ -80,6 +89,7 @@ int main() {
 
         window.clear(Color::White);
         player.Draw(window);
+        window.draw(text);
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;
 
