@@ -38,7 +38,16 @@ int main() {
     
     float deltaTime = 0.0f;
     Clock clock;
-
+    Font font;
+    if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
+        throw(" CLOUD NOT LOAD FONT! ");
+    Text text;
+    text.setFont(font);
+    text.setFillColor(Color::Black);
+    text.setCharacterSize(25);
+    text.setString("BoBo is the best of game year."); // ��ͤ���
+    text.setPosition(10.f, windowHeight/ 2);
+    text.move(0.1f, 0.f);
     while (window.isOpen()) {
 
         playerSpeed = Vector2f(0, 0);
@@ -62,7 +71,7 @@ int main() {
             }
 
         }
-
+        
         if (Keyboard::isKeyPressed(Keyboard::W)) {
             playerSpeed.y = -maxPlayerSpeed.y;
         }
@@ -93,7 +102,11 @@ int main() {
 
         window.clear(Color::Black);
         player.Draw(window);
+
         platform1.Draw(window);
+
+        window.draw(text);
+
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;
 
