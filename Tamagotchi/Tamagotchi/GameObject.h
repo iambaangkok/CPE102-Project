@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include "Collider.h"
 
 using namespace sf;
 
@@ -14,7 +15,7 @@ class GameObject
 public:
 	GameObject();
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
-		string texturePath); //Single Texture
+		string texturePath = "Assets/Textures/testTextureLARGE.png"); //Single Texture
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
 		string texturePath, Vector2u imageCount, float frameTime); //1Row Animation from Texture Sheet
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
@@ -31,10 +32,11 @@ public:
 	void Move(float speedX, float speedY);//Simple Move
 
 	Vector2f GetPosition(); //Returns Origin position
+	Vector2f GetSize();
+
+	void checkCollision(GameObject& other , float push);
 
 	bool enabled = true;
-
-	Vector2f dimensions;
 
 	Texture texture;
 	RectangleShape rectangleShape;
@@ -42,7 +44,6 @@ public:
 	Animation animation;
 
 	bool faceRight = true; //Set whether to Face Right
-
 
 private:
 
