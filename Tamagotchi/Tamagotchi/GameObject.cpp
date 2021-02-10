@@ -132,24 +132,23 @@ Vector2f GameObject::GetSize()
 	return rectangleShape.getSize();
 }
 
-void GameObject::checkCollision(GameObject& other , float push)
+void GameObject::checkCollision(GameObject &other , float push)
 {
 	Vector2f otherPosition = other.GetPosition();
-	Vector2f otherHalfSize = other.GetSize();
+	Vector2f otherHalfSize = other.GetSize() / 2.0f;
 	Vector2f thisPosition = GetPosition();
-	Vector2f thisHalfSize = GetSize();
+	Vector2f thisHalfSize = GetSize() / 2.0f;
 
 	float deltaX = otherPosition.x - thisPosition.x;
 	float deltaY = otherPosition.y - thisPosition.y;
 
 	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
 	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
-	/*cout << deltaX << " " << deltaY << endl;
-	cout << intersectX << " " << intersectY << endl;*/
+	/*cout << deltaX << " " << deltaY << endl;*/
+	cout << intersectX << " " << intersectY << endl;
 
-	if (intersectX < 0 and intersectY < 0) {
+	if (intersectX < 0.0f && intersectY < 0.0f) {
 		push = std::min(std::max(push, 0.0f), 1.0f);
-
 		if (intersectX > intersectY) {
 			if (deltaX > 0) {
 				Move(intersectX * (1.0f - push), 0.0f);
@@ -166,7 +165,7 @@ void GameObject::checkCollision(GameObject& other , float push)
 				other.Move(0.0f, -intersectY * push);
 			}
 			else {
-				Move(0.0f, -intersectX * (1.0f - push));
+				Move(0.0f, -intersectY * (1.0f - push));
 				other.Move(0.0f, intersectY * push);
 			}
 		}

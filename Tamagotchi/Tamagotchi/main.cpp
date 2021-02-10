@@ -3,7 +3,6 @@
 #include <iostream>
 #include "Animation.h"
 #include "GameObject.h"
-#include "Collider.h"
 
 using namespace sf;
 
@@ -27,18 +26,12 @@ int main() {
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12,10), Vector2i(14,10), 0.3f);
     
-    GameObject platform1(Vector2f(200.0f, 200.0f), Vector2f(100.0f, 100.0f), true);
-    
-    
-    
-    
-    
-    
-    
+    GameObject platform1(Vector2f(400.0f, 400.0f), Vector2f(100.0f, 100.0f), true);
+    GameObject platform2(Vector2f(600.0f, 400.0f), Vector2f(100.0f, 100.0f), true);
     
     float deltaTime = 0.0f;
     Clock clock;
-    Font font;
+    /*Font font;
     if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
         throw(" CLOUD NOT LOAD FONT! ");
     Text text;
@@ -47,7 +40,7 @@ int main() {
     text.setCharacterSize(25);
     text.setString("BoBo is the best of game year."); // ��ͤ���
     text.setPosition(10.f, windowHeight/ 2);
-    text.move(0.1f, 0.f);
+    text.move(0.1f, 0.f);*/
     while (window.isOpen()) {
 
         playerSpeed = Vector2f(0, 0);
@@ -97,15 +90,18 @@ int main() {
         //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
 
-        platform1.checkCollision(player, 1.0f);
+        platform1.checkCollision(player, 0.2f);
+        platform2.checkCollision(player, 0.2f);
+        platform1.checkCollision(platform2, 0.2f);
 
 
         window.clear(Color::Black);
         player.Draw(window);
 
         platform1.Draw(window);
+        platform2.Draw(window);
 
-        window.draw(text);
+        //window.draw(text);
 
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;

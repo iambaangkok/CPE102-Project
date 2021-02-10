@@ -2,7 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
-#include "Collider.h"
 
 using namespace sf;
 
@@ -34,7 +33,7 @@ public:
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize();
 
-	void checkCollision(GameObject& other , float push);
+	void checkCollision(GameObject &other , float push);
 
 	bool enabled = true;
 
