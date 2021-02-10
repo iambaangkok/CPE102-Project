@@ -16,18 +16,21 @@ public:
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
 		string texturePath); //Single Texture
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
-		string texturePath, Vector2u imageCount, float frameTime); //Animation from Texture Sheet
-	//GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
-		//string texturePath, Vector2u imageCount,float frameTime, Vector2u uv); //Single Texture from Texture Sheet
+		string texturePath, Vector2u imageCount, float frameTime); //1Row Animation from Texture Sheet
+	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
+		string texturePath, Vector2u imageCount, Vector2i imageCoordinate); //Single Texture from Texture Sheet
+	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter,
+		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime); //Proper Animation
 	~GameObject();
 
-	void Update(float deltaTime);
-	void Update(int row, float deltaTime, bool faceRight);
+	void Update(float deltaTime); //Single Texture
+	void Update(int row, float deltaTime, bool faceRight); //1Row Animation, Single Texture from Texture Sheet
+	void Update(Vector2i start, Vector2i finish, float deltaTime);//Proper Animation
 
 	void Draw(RenderWindow& window);
-	void Move(float speedX, float speedY);
+	void Move(float speedX, float speedY);//Simple Move
 
-	Vector2f GetPosition();
+	Vector2f GetPosition(); //Returns Origin position
 
 	bool enabled = true;
 
@@ -37,6 +40,8 @@ public:
 	RectangleShape rectangleShape;
 
 	Animation animation;
+
+	bool faceRight = true; //Set whether to Face Right
 
 
 private:

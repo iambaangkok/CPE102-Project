@@ -4,6 +4,7 @@ GameObject::GameObject() {
 
 }
 
+//Single Texture
 GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath) {
 
 	rectangleShape = RectangleShape(dimensions);
@@ -20,7 +21,8 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	rectangleShape.setTexture(&texture);
 }
 
-GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, float frameTime){ //Animation from Texture Sheet
+//1Row Animation from Texture Sheet
+GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, float frameTime){ 
 
 	rectangleShape = RectangleShape(dimensions);
 	rectangleShape.setPosition(position);
@@ -36,24 +38,48 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	animation = Animation(&texture, imageCount, frameTime);
 }
 
-//GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, float frameTime, Vector2u uv){ //Single Texture from Texture Sheet
-//	cout << "Con3 ";
-//	rectangleShape = RectangleShape(dimensions);
-//	rectangleShape.setPosition(position);
-//	rectangleShape.setSize(dimensions);
-//	if (originIsCenter) {
-//		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
-//	}
-//
-//	if (texture.loadFromFile(texturePath)) {
-//		cout << "Loaded " + texturePath << endl;
-//	}
-//	rectangleShape.setTexture(&texture);
-//
-//	animation = Animation(&texture, imageCount, frameTime);
-//	animation.freezeFrame = true;
-//	animation.SetFrame(uv);
-//}
+//Single Texture from Texture Sheet
+GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i imageCoordinate){ 
+	cout << "Con3" << endl;
+	rectangleShape = RectangleShape(dimensions);
+	rectangleShape.setPosition(position);
+	rectangleShape.setSize(dimensions);
+	if (originIsCenter) {
+		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	}
+
+	
+	if (texture.loadFromFile(texturePath)) {
+		cout << "Loaded " + texturePath << endl;
+	}
+
+	rectangleShape.setTexture(&texture);
+
+	animation = Animation(&texture, imageCount);
+	animation.freezeFrame = true;
+	animation.SetFrame(imageCoordinate);
+}
+
+//Proper Animation
+GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish,float frameTime) { 
+	cout << "Con4" << endl;
+	rectangleShape = RectangleShape(dimensions);
+	rectangleShape.setPosition(position);
+	rectangleShape.setSize(dimensions);
+	if (originIsCenter) {
+		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	}
+
+
+	if (texture.loadFromFile(texturePath)) {
+		cout << "Loaded " + texturePath << endl;
+	}
+	rectangleShape.setTexture(&texture);
+	animation = Animation(&texture, imageCount, frameTime);
+	animation.SetStartFrame(start);
+	animation.SetFinishFrame(finish);
+	animation.SetFrame(start);
+}
 
 GameObject::~GameObject() {
 
@@ -66,11 +92,26 @@ void GameObject::Update(float deltaTime) {
 	rectangleShape.setTexture(&texture);
 }
 
-void GameObject::Update(int row, float deltaTime, bool faceRight) {
+void GameObject::Update(int row, float deltaTime,bool faceRight) {
 	if (!enabled) {
 		return;
 	}
 	animation.Update(row, deltaTime, faceRight);
+	rectangleShape.setTextureRect(animation.uvRect);
+}
+
+void GameObject::Update(Vector2i start, Vector2i finish, float deltaTime) {
+	if (!enabled) {
+		return;
+	}
+	animation.Update(start, finish, deltaTime);
+
+	if (faceRight) {
+		rectangleShape.setScale(Vector2f(1, 1));
+	}
+	else {
+		rectangleShape.setScale(Vector2f(-1, 1));
+	}
 	rectangleShape.setTextureRect(animation.uvRect);
 }
 
