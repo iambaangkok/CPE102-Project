@@ -11,22 +11,26 @@ using std::endl;
 
 int main() {
 
-    int windowWidth = 512;
-    int windowHeight = 512;
+    int windowWidth = 720;
+    int windowHeight = 1040;
     RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
     int frameRateLimit = 60;
     window.setFramerateLimit(60);
 
-    float playerSpeed = 5.0f;
+    Vector2f maxPlayerSpeed = Vector2f(5, 5);
+    Vector2f playerSpeed = Vector2f(0, 0);
+    //float playerSpeed = 5.0f;
     float playerWidth = 100;
     float playerHeight = 100;
-
-    GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "testTextureLARGE.png", Vector2u(16,11), 0.3f);
-
+    
+    //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
+    GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12,10), Vector2i(14,10), 0.3f);
     float deltaTime = 0.0f;
     Clock clock;
 
     while (window.isOpen()) {
+
+        playerSpeed = Vector2f(0, 0);
 
         deltaTime = clock.restart().asSeconds();
         Event evnt;
@@ -49,16 +53,18 @@ int main() {
         }
 
         if (Keyboard::isKeyPressed(Keyboard::W)) {
-            player.Move(0, -playerSpeed);
+            playerSpeed.y = -maxPlayerSpeed.y;
         }
         if (Keyboard::isKeyPressed(Keyboard::A)) {
-            player.Move(-playerSpeed, 0);
+            playerSpeed.x = -maxPlayerSpeed.x;
+            player.faceRight = false;
         }
         if (Keyboard::isKeyPressed(Keyboard::S)) {
-            player.Move(0, playerSpeed);
+            playerSpeed.y = +maxPlayerSpeed.y;
         }
         if (Keyboard::isKeyPressed(Keyboard::D)) {
-            player.Move(playerSpeed, 0);
+            playerSpeed.x = +maxPlayerSpeed.x;
+            player.faceRight = true;
         }
 
         if (Mouse::isButtonPressed(Mouse::Left)) {
@@ -66,8 +72,9 @@ int main() {
             player.rectangleShape.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
         }
 
-
-        player.Update(10,deltaTime,true);
+        player.Update(player.animation.startFrame, player.animation.finishFrame, deltaTime);
+        player.Move(playerSpeed.x, playerSpeed.y);
+        //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
 
 
