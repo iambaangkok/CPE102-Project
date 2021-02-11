@@ -17,6 +17,7 @@ public:
 		string name, string description, int hpChange, bool evoStone,
 		int foodChange, int happinessChange, bool minigameLife, float xpCoupon);//Item in shop.
 	~Item();
+
 	string name;
 	string description;
 	int hpChange;
