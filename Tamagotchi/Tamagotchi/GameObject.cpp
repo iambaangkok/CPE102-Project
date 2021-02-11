@@ -164,7 +164,7 @@ void GameObject::SetTexture(string texturePath) // Set texture
 }
 void GameObject::SetImageCount(Vector2u imageCount) // Set image count
 {
-	//animation.imageCount(imageCount); 
+	//animation.imageCount(imageCount);  
 }
 void GameObject::SetStartFrame(Vector2i start) // Set 1st Frame
 {

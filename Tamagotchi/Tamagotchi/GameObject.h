@@ -44,7 +44,7 @@ public:
 
 	void CheckCollision(GameObject &other , float push); //Check if 2 objects collide each other
 
-	bool enabled = true;
+	bool enabled = true; 
 
 	Texture texture;
 	RectangleShape rectangleShape;
