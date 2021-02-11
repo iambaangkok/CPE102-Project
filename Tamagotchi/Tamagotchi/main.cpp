@@ -90,9 +90,9 @@ int main() {
         //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
 
-        platform1.checkCollision(player, 0.2f);
-        platform2.checkCollision(player, 0.2f);
-        platform1.checkCollision(platform2, 0.2f);
+        platform1.CheckCollision(player, 0.2f);
+        platform2.CheckCollision(player, 0.2f);
+        platform1.CheckCollision(platform2, 0.2f);
 
 
         window.clear(Color::Black);

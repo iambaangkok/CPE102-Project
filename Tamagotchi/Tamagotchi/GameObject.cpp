@@ -132,8 +132,9 @@ Vector2f GameObject::GetSize()
 	return rectangleShape.getSize();
 }
 
-void GameObject::checkCollision(GameObject &other , float push)
+void GameObject::CheckCollision(GameObject& other, float push)
 {
+
 	Vector2f otherPosition = other.GetPosition();
 	Vector2f otherHalfSize = other.GetSize() / 2.0f;
 	Vector2f thisPosition = GetPosition();

@@ -33,7 +33,7 @@ public:
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize();
 
-	void checkCollision(GameObject &other , float push);
+	void CheckCollision(GameObject &other , float push); //Check if 2 objects collide each other
 
 	bool enabled = true;
 
