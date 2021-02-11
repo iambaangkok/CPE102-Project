@@ -24,6 +24,7 @@ int main() {
     float playerHeight = 100;
     
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
+    GameObject defaultGameObject;
     GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12,10), Vector2i(14,10), 0.3f);
     
     GameObject platform1(Vector2f(400.0f, 400.0f), Vector2f(100.0f, 100.0f), true);
@@ -96,6 +97,9 @@ int main() {
 
 
         window.clear(Color::Black);
+
+        defaultGameObject.Draw(window);
+
         player.Draw(window);
 
         platform1.Draw(window);

@@ -1,7 +1,20 @@
 #include "GameObject.h"
 
 GameObject::GameObject() {
+	Vector2f dimensions = Vector2f(100, 100);
+	Vector2f position = Vector2f(200, 200);
+	string texturePath = "Assets/Textures/DefaultTexture.png";
 
+	rectangleShape = RectangleShape(dimensions);
+	rectangleShape.setPosition(position);
+	rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+
+	if (texture.loadFromFile(texturePath)) {
+		cout << "Loaded Default Texture" << endl;
+	}
+
+	Vector2u textureSize = texture.getSize();
+	rectangleShape.setTexture(&texture);
 }
 
 //Single Texture
