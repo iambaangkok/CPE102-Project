@@ -145,6 +145,44 @@ Vector2f GameObject::GetSize()
 	return rectangleShape.getSize();
 }
 
+void GameObject::SetPosition(Vector2f position) // Set Position
+{
+	rectangleShape.setPosition(position);
+}
+void GameObject::SetDimensions(Vector2f dimensions) // Set dimension
+{
+	rectangleShape.setSize(dimensions);
+
+}
+void GameObject::SetOrigin(Vector2f origin) // Set origin
+{
+	rectangleShape.setOrigin(origin);
+}
+void GameObject::SetTexture(string texturePath) // Set texture
+{
+	rectangleShape.setTexture(&texture);
+}
+void GameObject::SetImageCount(Vector2u imageCount) // Set image count
+{
+	//animation.imageCount(imageCount); 
+}
+void GameObject::SetStartFrame(Vector2i start) // Set 1st Frame
+{
+	animation.SetStartFrame(start);
+}
+void GameObject::SetFinishFrame(Vector2i finish) // Set last frame
+{
+	animation.SetFinishFrame(finish);
+}
+void GameObject::SetFrameTime(float frameTime) // Set frametime
+{
+	animation.SetFrameTime(frameTime);
+}
+
+void GameObject::SetPosition(Vector2f position) {
+	rectangleShape.setPosition(position);
+}
+
 void GameObject::CheckCollision(GameObject& other, float push)
 {
 

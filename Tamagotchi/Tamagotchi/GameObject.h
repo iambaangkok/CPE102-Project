@@ -33,6 +33,15 @@ public:
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize();
 
+	void SetPosition(Vector2f position); // Set Position
+	void SetDimensions(Vector2f dimensions); // Set dimension
+	void SetOrigin(Vector2f origin); // Set origin
+	void SetTexture(string texturePath); // Set texture
+	void SetImageCount(Vector2u imageCount); // Set image count
+	void SetStartFrame(Vector2i start); // Set 1st Frame
+	void SetFinishFrame(Vector2i finish); // Set last frame
+	void SetFrameTime(float frameTime); // Set frametime
+
 	void CheckCollision(GameObject &other , float push); //Check if 2 objects collide each other
 
 	bool enabled = true;
