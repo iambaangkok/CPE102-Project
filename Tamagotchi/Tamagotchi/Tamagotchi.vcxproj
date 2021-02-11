@@ -157,12 +157,14 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="mainOld.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Guy.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Pet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
