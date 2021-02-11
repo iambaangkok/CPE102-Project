@@ -42,7 +42,7 @@ public:
 	void SetFinishFrame(Vector2i finish); // Set last frame
 	void SetFrameTime(float frameTime); // Set frametime
 
-	void CheckCollision(GameObject &other , float push); //Check if 2 objects collide each other
+	bool CheckCollision(GameObject &other ,Vector2f & direction, float push); //Check if 2 objects collide each other
 
 	bool enabled = true; 
 
@@ -52,6 +52,8 @@ public:
 	Animation animation;
 
 	bool faceRight = true; //Set whether to Face Right
+
+	Vector2f direction; // Show what side of object that collide (Left , Right , Up , Down);
 
 private:
 

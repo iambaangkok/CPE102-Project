@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Animation.h"
 #include "GameObject.h"
+#include "GravityObject.h"
 
 using namespace sf;
 
@@ -24,11 +25,10 @@ int main() {
     float playerHeight = 100;
     
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
-    GameObject defaultGameObject;
-    GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12,10), Vector2i(14,10), 0.3f);
-    
-    GameObject platform1(Vector2f(400.0f, 400.0f), Vector2f(100.0f, 100.0f), true);
-    GameObject platform2(Vector2f(600.0f, 400.0f), Vector2f(100.0f, 100.0f), true);
+    //GameObject defaultGameObject;
+    //GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
+    GravityObject Alpha(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, 500.0f, 200.0f);
+    GameObject platform1(Vector2f(400.0f, 800.0f), Vector2f(1000.0f, 100.0f), true);
     
     float deltaTime = 0.0f;
     Clock clock;
@@ -65,7 +65,7 @@ int main() {
             }
 
         }
-        
+        /*
         if (Keyboard::isKeyPressed(Keyboard::W)) {
             playerSpeed.y = -maxPlayerSpeed.y;
         }
@@ -90,20 +90,25 @@ int main() {
         player.Move(playerSpeed.x, playerSpeed.y);
         //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
-
-        platform1.CheckCollision(player, 0.2f);
-        platform2.CheckCollision(player, 0.2f);
-        platform1.CheckCollision(platform2, 0.2f);
-
-
+        
+        platform1.CheckCollision(player, 1.0f);
+        */
         window.clear(Color::Black);
 
-        defaultGameObject.Draw(window);
-
+        //defaultGameObject.Draw(window);
+        /*
         player.Draw(window);
+        */
 
+        Vector2f direction;
+
+        if(platform1.CheckCollision(Alpha, direction, 1.0f))
+            Alpha.OnCollision(direction);
+        
+        
+        Alpha.Update(deltaTime);
+        Alpha.Draw(window);
         platform1.Draw(window);
-        platform2.Draw(window);
 
         //window.draw(text);
 
