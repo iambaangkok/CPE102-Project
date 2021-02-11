@@ -20,7 +20,7 @@ public:
     void SetFrame(Vector2i imageCoordinate);
     void SetStartFrame(Vector2i start);
     void SetFinishFrame(Vector2i finish);
-
+    void SetImageCount(Texture& texture,Vector2u imageCount);
     bool enabled = true;
     bool freezeFrame = false;
 

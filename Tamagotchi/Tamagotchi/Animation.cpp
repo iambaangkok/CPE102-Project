@@ -147,3 +147,10 @@ void Animation::SetFinishFrame(Vector2i finish) {
 
     finishFrame = finish;
 }
+
+void Animation::SetImageCount(Texture& texture,Vector2u imageCount) {
+    this->imageCount = imageCount;
+
+    uvRect.width = texture.getSize().x / float(imageCount.x);
+    uvRect.height = texture.getSize().y / float(imageCount.y);
+}
