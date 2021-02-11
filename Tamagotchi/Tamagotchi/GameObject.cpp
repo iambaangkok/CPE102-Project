@@ -162,9 +162,9 @@ void GameObject::SetTexture(string texturePath) // Set texture
 {
 	rectangleShape.setTexture(&texture);
 }
-void GameObject::SetImageCount(Vector2u imageCount) // Set image count
+void GameObject::SetImageCount(Texture& texture,Vector2u imageCount) // Set image count
 {
-	//animation.imageCount(imageCount);  
+	animation.SetImageCount(texture,imageCount);  
 }
 void GameObject::SetStartFrame(Vector2i start) // Set 1st Frame
 {

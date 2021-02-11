@@ -23,6 +23,17 @@ public:
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime); //Proper Animation
 	~GameObject();
 
+
+	bool enabled = true; 
+
+	Texture texture;
+	RectangleShape rectangleShape;
+
+	Animation animation;
+
+	bool faceRight = true; //Set whether to Face Right
+
+
 	void Update(float deltaTime); //Single Texture
 	void Update(int row, float deltaTime, bool faceRight); //1Row Animation, Single Texture from Texture Sheet
 	void Update(Vector2i start, Vector2i finish, float deltaTime);//Proper Animation
@@ -37,21 +48,12 @@ public:
 	void SetDimensions(Vector2f dimensions); // Set dimension
 	void SetOrigin(Vector2f origin); // Set origin
 	void SetTexture(string texturePath); // Set texture
-	void SetImageCount(Vector2u imageCount); // Set image count
+	void SetImageCount(Texture& texture, Vector2u imageCount); // Set image count
 	void SetStartFrame(Vector2i start); // Set 1st Frame
 	void SetFinishFrame(Vector2i finish); // Set last frame
 	void SetFrameTime(float frameTime); // Set frametime
 
-	void CheckCollision(GameObject &other , float push); //Check if 2 objects collide each other
-
-	bool enabled = true; 
-
-	Texture texture;
-	RectangleShape rectangleShape;
-
-	Animation animation;
-
-	bool faceRight = true; //Set whether to Face Right
+	void CheckCollision(GameObject& other, float push); //Check if 2 objects collide each other
 
 private:
 
