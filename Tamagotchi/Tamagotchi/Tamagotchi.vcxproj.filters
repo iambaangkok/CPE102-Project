@@ -33,7 +33,11 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Pet.cpp">
+=======
+    <ClCompile Include="GravityObject.cpp">
+>>>>>>> c5e08c6f9cb015b4f308a0fdff5b033ab89866c6
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,7 +54,11 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Pet.h">
+=======
+    <ClInclude Include="GravityObject.h">
+>>>>>>> c5e08c6f9cb015b4f308a0fdff5b033ab89866c6
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
