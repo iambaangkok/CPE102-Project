@@ -179,11 +179,7 @@ void GameObject::SetFrameTime(float frameTime) // Set frametime
 	animation.SetFrameTime(frameTime);
 }
 
-void GameObject::SetPosition(Vector2f position) {
-	rectangleShape.setPosition(position);
-}
-
-void GameObject::CheckCollision(GameObject& other, float push)
+bool GameObject::CheckCollision(GameObject& other, Vector2f& direction , float push)
 {
 
 	Vector2f otherPosition = other.GetPosition();
@@ -205,21 +201,31 @@ void GameObject::CheckCollision(GameObject& other, float push)
 			if (deltaX > 0) {
 				Move(intersectX * (1.0f - push), 0.0f);
 				other.Move(-intersectX * push, 0.0f);
+				direction.x = 1.0f;
+				direction.y = 0.0f;
 			}
 			else {
 				Move(-intersectX * (1.0f - push), 0.0f);
 				other.Move(intersectX * push, 0.0f);
+				direction.x = -1.0f;
+				direction.y = 0.0f;
 			}
 		}
 		else {
 			if (deltaY > 0) {
 				Move(0.0f, intersectY * (1.0f - push));
 				other.Move(0.0f, -intersectY * push);
+				direction.x = 0.0f;
+				direction.y = 1.0f;
 			}
 			else {
 				Move(0.0f, -intersectY * (1.0f - push));
 				other.Move(0.0f, intersectY * push);
+				direction.x = 0.0f;
+				direction.y = -1.0f;
 			}
 		}
+		return true;
 	}
+	return false;
 }
