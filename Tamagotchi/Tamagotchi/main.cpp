@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
-
+#include "Pet.h"
 using namespace sf;
 
 using std::cout;
@@ -27,9 +27,11 @@ int main() {
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     //GameObject defaultGameObject;
     //GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    GravityObject Alpha(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, 500.0f, 200.0f);
-    GameObject platform1(Vector2f(400.0f, 800.0f), Vector2f(1000.0f, 100.0f), true);
-    
+    //GravityObject Alpha(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, 500.0f, 200.0f);
+    //GameObject platform1(Vector2f(400.0f, 800.0f), Vector2f(1000.0f, 100.0f), true);
+    Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
+        "Fluffball", "Dragon", 3, vector<int>{20,30,40}, vector<int>{ 100,200,300 }, vector<int>{ 30,30,30 }, vector<int>{ 20,25,30 }, vector<int>{ 10,10,10 });
+
     float deltaTime = 0.0f;
     Clock clock;
     /*Font font;
@@ -43,11 +45,13 @@ int main() {
     text.setPosition(10.f, windowHeight/ 2);
     text.move(0.1f, 0.f);*/
     while (window.isOpen()) {
-
-        playerSpeed = Vector2f(0, 0);
-
+        ///INITIALIZE
         deltaTime = clock.restart().asSeconds();
         Event evnt;
+        
+        player.Initialize();
+
+        ///  GET INPUT
         while (window.pollEvent(evnt)) {
 
             switch (evnt.type) {
@@ -65,19 +69,23 @@ int main() {
             }
 
         }
-        /*
+        
         if (Keyboard::isKeyPressed(Keyboard::W)) {
-            playerSpeed.y = -maxPlayerSpeed.y;
+            //playerSpeed.y = -maxPlayerSpeed.y;
+            player.speed.y = -player.maxSpeed.y;
         }
         if (Keyboard::isKeyPressed(Keyboard::A)) {
-            playerSpeed.x = -maxPlayerSpeed.x;
+            //playerSpeed.x = -maxPlayerSpeed.x;
+            player.speed.x = -player.maxSpeed.x;
             player.faceRight = false;
         }
         if (Keyboard::isKeyPressed(Keyboard::S)) {
-            playerSpeed.y = +maxPlayerSpeed.y;
+            //playerSpeed.y = +maxPlayerSpeed.y;
+            player.speed.y = +player.maxSpeed.y;
         }
         if (Keyboard::isKeyPressed(Keyboard::D)) {
-            playerSpeed.x = +maxPlayerSpeed.x;
+            //playerSpeed.x = +maxPlayerSpeed.x;
+            player.speed.x = +player.maxSpeed.x;
             player.faceRight = true;
         }
 
@@ -86,29 +94,34 @@ int main() {
             player.rectangleShape.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
         }
 
-        player.Update(player.animation.startFrame, player.animation.finishFrame, deltaTime);
-        player.Move(playerSpeed.x, playerSpeed.y);
+        /// UPDATE
+        player.Update(deltaTime);
+        //player.Update(player.animation.startFrame, player.animation.finishFrame, deltaTime);
+        //player.Move(playerSpeed.x, playerSpeed.y);
         //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
         
-        platform1.CheckCollision(player, 1.0f);
-        */
+        //platform1.CheckCollision(player, 1.0f);
+        
+
+        //if(platform1.CheckCollision(Alpha, direction, 1.0f))
+        //    Alpha.OnCollision(direction);
+
+
+        //Alpha.Update(deltaTime);
+
+
+        /// DRAW
         window.clear(Color::Black);
 
         //defaultGameObject.Draw(window);
-        /*
         player.Draw(window);
-        */
 
         Vector2f direction;
 
-        if(platform1.CheckCollision(Alpha, direction, 1.0f))
-            Alpha.OnCollision(direction);
         
-        
-        Alpha.Update(deltaTime);
-        Alpha.Draw(window);
-        platform1.Draw(window);
+        //Alpha.Draw(window);
+        //platform1.Draw(window);
 
         //window.draw(text);
 
