@@ -24,9 +24,11 @@ public:
 	~GameObject();
 
 
-	void Update(float deltaTime); //Single Texture
+	//void Update(float deltaTime); //Single Texture DEPRICATED
 	void Update(int row, float deltaTime, bool faceRight); //1Row Animation, Single Texture from Texture Sheet
 	void Update(Vector2i start, Vector2i finish, float deltaTime);//Proper Animation
+	void Update(float deltaTime);//Proper Animation
+
 
 	void Draw(RenderWindow& window);
 	void Move(float speedX, float speedY);//Simple Move
