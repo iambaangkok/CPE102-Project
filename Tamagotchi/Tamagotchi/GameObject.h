@@ -24,16 +24,6 @@ public:
 	~GameObject();
 
 
-	bool enabled = true; 
-
-	Texture texture;
-	RectangleShape rectangleShape;
-
-	Animation animation;
-
-	bool faceRight = true; //Set whether to Face Right
-
-
 	void Update(float deltaTime); //Single Texture
 	void Update(int row, float deltaTime, bool faceRight); //1Row Animation, Single Texture from Texture Sheet
 	void Update(Vector2i start, Vector2i finish, float deltaTime);//Proper Animation
@@ -54,6 +44,7 @@ public:
 	void SetFrameTime(float frameTime); // Set frametime
 
 	bool CheckCollision(GameObject &other ,Vector2f & direction, float push); //Check if 2 objects collide each other
+
 
 	bool enabled = true; 
 
