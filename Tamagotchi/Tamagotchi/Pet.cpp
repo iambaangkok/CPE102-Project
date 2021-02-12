@@ -49,11 +49,76 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		//Set more stuff
 	}
 
+
 }
 
 Pet::~Pet()
 {
 }
+
+void Pet::Initialize() {
+	speed = Vector2f(0, 0);
+}
+
+
+void Pet::Update(float deltaTime)
+{
+	if (!enabled) {
+		return;
+	}
+	totalTime += deltaTime;
+
+
+	animation.Update(deltaTime);
+	if (faceRight) {
+		rectangleShape.setScale(Vector2f(1, 1));
+	}
+	else {
+		rectangleShape.setScale(Vector2f(-1, 1));
+	}
+	rectangleShape.setTextureRect(animation.uvRect);
+	
+
+
+	cout << " " << currentHp << " " << currentHappiness << " " << currentExp << " " << currentFood << " " << currentPoop << endl;
+
+	if (currentHp < 0) {
+		isAlive = false;
+	}
+
+	if (isAlive && totalTime > tickTime) {//Still Alive and Growing
+
+		Move(speed.x, speed.y);
+
+		totalTime -= tickTime;
+
+		if ((float)currentFood < foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
+			currentHp -= int(hpChangeRate * hpChangeRateMultiplier);
+		}
+		else {
+			currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
+
+		}
+		currentExp += int(expChangeRate * expChangeMultiplier);
+		currentFood -= int(foodChangeRate * foodChangeMultiplier);
+		currentPoop += int(poopChangeRate * poopChangeMultiplier);
+
+		Clamp(&currentHp, hpMax[currentLevel],0);
+		Clamp(&currentHappiness, happinessMax[currentLevel],0);
+		Clamp(&currentExp, expPerEvolve[currentLevel],0);
+		Clamp(&currentFood, foodMax[currentLevel],0);
+		Clamp(&currentPoop, poopMax[currentLevel],0);
+
+	}
+}
+
+template<typename T>
+void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
+{
+	if (*clampVariable > upperClamp) *clampVariable = upperClamp;
+	if (*clampVariable < lowerClamp) *clampVariable = lowerClamp;
+}
+
 
 
 

@@ -24,6 +24,16 @@ public:
 	~Pet();
 
 
+	void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
+
+	void Update(float deltaTime);
+
+	template <typename T>
+	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
+
+
+	bool isAlive = true;
+
 	string name;
 	string type;
 	int currentLevel;
@@ -39,24 +49,30 @@ public:
 	float happinessChangeMultiplier = 1.0f;
 	float poopChangeMultiplier = 1.0f;
 
+	Vector2f speed = Vector2f(0,0);
+	Vector2f maxSpeed = Vector2f(5,5);
+
+	bool ateEvolveCandy = false;
 
 private:
+	float totalTime;
+	int tickTime = 60;
+
 	int levelMax;
-	int totalTime;
 	vector<int> hpMax; //HP
 	vector<int> expPerEvolve; //EXP
 	vector<int> happinessMax; //Happiness
 	vector<int> foodMax; //Food
 	vector<int> poopMax; //Poop
 
-	//All Rate are at 1 per X minute;
+	//All Rate are at 1 per X tickTime(seconds);
 	int hpChangeRate = 1;
 	int expChangeRate = 1;
 	int foodChangeRate = 1;
 	int happinessChangeRate = 1;
 	int poopChangeRate = 1;
 
-	float notEnoughFoodThreshold = 20; //If Food is below this PERCENT, HP starts to decay
+	float notEnoughFoodThreshold = 0.2f; //If Food is BELOW currentFood * this multiplier, HP , Happiness , starts to decay
 
 };
 
