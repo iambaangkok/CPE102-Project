@@ -32,7 +32,8 @@ public:
 	void Move(float speedX, float speedY);//Simple Move
 
 	Vector2f GetPosition(); //Returns Origin position
-	Vector2f GetSize();
+	Vector2f GetSize(); //Returns Dimensions
+	Vector2f GetDimensions(); //Same as GetSize()
 
 	void SetPosition(Vector2f position); // Set Position
 	void SetDimensions(Vector2f dimensions); // Set dimension

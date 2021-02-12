@@ -145,6 +145,11 @@ Vector2f GameObject::GetSize()
 	return rectangleShape.getSize();
 }
 
+Vector2f GameObject::GetDimensions()
+{
+	return rectangleShape.getSize();
+}
+
 void GameObject::SetPosition(Vector2f position) // Set Position
 {
 	rectangleShape.setPosition(position);
