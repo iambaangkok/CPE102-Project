@@ -33,9 +33,6 @@ public:
 	void Draw(RenderWindow& window);
 	void Move(float speedX, float speedY);//Simple Move
 
-	template <typename T>
-	void Clamp(T& clampVariable,T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize(); //Returns Dimensions
 	Vector2f GetDimensions(); //Same as GetSize()

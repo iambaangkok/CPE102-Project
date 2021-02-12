@@ -144,13 +144,6 @@ void GameObject::Move(float speedX, float speedY) {
 	rectangleShape.move(speedX, speedY);
 }
 
-template<typename T>
-void GameObject::Clamp(T& clampVariable, T upperClamp, T lowerClamp)
-{
-	if (clampVariable > upperClamp) clampVariable = upperClamp;
-	if (clampVariable < lowerClamp) clampVariable = lowerClamp;
-}
-
 Vector2f GameObject::GetPosition() {
 	return rectangleShape.getPosition();
 }
