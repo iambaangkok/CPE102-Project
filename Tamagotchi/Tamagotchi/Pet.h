@@ -42,6 +42,7 @@ public:
 
 private:
 	int levelMax;
+	int totalTime;
 	vector<int> hpMax; //HP
 	vector<int> expPerEvolve; //EXP
 	vector<int> happinessMax; //Happiness
