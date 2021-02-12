@@ -18,10 +18,13 @@ GravityObject::~GravityObject()
 
 }
 
-void GravityObject::Update(float deltaTime)
+void GravityObject::Initialize()
 {
 	velocity.x = 0.0f;
+}
 
+void GravityObject::Update(float deltaTime)
+{
 	if (Keyboard::isKeyPressed(Keyboard::A)) {
 		velocity.x -= speed;
 	}
