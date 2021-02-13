@@ -119,6 +119,10 @@ void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
 	if (*clampVariable < lowerClamp) *clampVariable = lowerClamp;
 }
 
+void UseItem(Item item) {
+	//item.Use(this);
+}
+
 
 
 

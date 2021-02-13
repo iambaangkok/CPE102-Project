@@ -9,7 +9,7 @@
     <ClCompile Include="mainOld.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pet.cpp" />
-    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="PlatformObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -18,6 +18,6 @@
     <ClInclude Include="Guy.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Pet.h" />
-    <ClInclude Include="Platform.h" />
+    <ClInclude Include="PlatformObject.h" />
   </ItemGroup>
 </Project>

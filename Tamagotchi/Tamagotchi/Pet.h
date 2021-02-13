@@ -4,6 +4,7 @@
 #include <ctime>  
 #include <vector>
 #include "GameObject.h"
+#include "Item.h"
 
 using std::vector;
 
@@ -31,6 +32,8 @@ public:
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
 
+	void UseItem(Item item); //Use Item
+
 
 	bool isAlive = true;
 
@@ -52,7 +55,10 @@ public:
 	Vector2f speed = Vector2f(0,0);
 	Vector2f maxSpeed = Vector2f(5,5);
 
-	bool ateEvolveCandy = false;
+	bool ateEvolveStone = false;
+
+	vector<Item>  inventory;
+
 
 private:
 	float totalTime;
