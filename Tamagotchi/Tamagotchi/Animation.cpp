@@ -47,14 +47,13 @@ void Animation::Update(int row, float deltaTime, bool faceRight) {
         uvRect.top = currentImage.y * uvRect.height;
     }
     
-    if (faceRight) {
+    /*if (faceRight) {
         uvRect.left = currentImage.x * uvRect.width;
         uvRect.width = abs(uvRect.width);
     }
-    else {
         uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
         uvRect.width = -abs(uvRect.width);
-    }
+    }*/
 }
 
 // Proper Animation
@@ -100,7 +99,7 @@ void Animation::Update(Vector2i start, Vector2i finish, float deltaTime, bool fa
         uvRect.top = currentImage.y * uvRect.height;
     }
 
-    if (faceRight) {
+    /*if (faceRight) {
         uvRect.left = currentImage.x * uvRect.width;
         uvRect.width = abs(uvRect.width);
         cout << "R";
@@ -109,7 +108,54 @@ void Animation::Update(Vector2i start, Vector2i finish, float deltaTime, bool fa
         uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
         uvRect.width = -abs(uvRect.width);
         cout << "L";
+    }*/
+}
+
+void Animation::Update(float deltaTime) {
+    if (!enabled) {
+        return;
     }
+    
+    Vector2i start = startFrame;
+    Vector2i finish = finishFrame;
+
+    Vector2u startU(imageCount);
+    startU.x = start.x;
+    startU.y = start.y;
+    Vector2u finishU(imageCount);
+    finishU.x = finish.x + 1;
+    finishU.y = finish.y + 1;
+
+    if (!freezeFrame) {
+        totalTime += deltaTime;
+        if (totalTime >= frameTime) { //Change Frame
+            totalTime -= frameTime;
+            currentImage.x++;
+            if (start.y == finish.y) {
+                if (currentImage.x >= finishU.x) {
+                    currentImage.x = start.x;
+                }
+                currentImage.y = start.y;
+            }
+            else {
+
+
+                if (currentImage.x >= finishU.x) {
+                    currentImage.y++;
+                    if (currentImage.y >= finishU.y) {
+                        currentImage.x = start.x;
+                        currentImage.y = start.y;
+                    }
+                    else {
+                        currentImage.x = 0;
+                    }
+                }
+            }
+
+        }
+        uvRect.top = currentImage.y * uvRect.height;
+    }
+
 }
 
 void Animation::SetFrameTime(float frameTime) {

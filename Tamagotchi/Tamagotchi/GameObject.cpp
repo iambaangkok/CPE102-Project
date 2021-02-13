@@ -98,11 +98,19 @@ GameObject::~GameObject() {
 
 }
 
-void GameObject::Update(float deltaTime) {
+void GameObject::Update(float deltaTime) { // Proper Animation
 	if (!enabled) {
 		return;
 	}
-	rectangleShape.setTexture(&texture);
+	animation.Update(deltaTime);
+	if (faceRight) {
+		rectangleShape.setScale(Vector2f(1, 1));
+	}
+	else {
+		rectangleShape.setScale(Vector2f(-1, 1));
+	}
+	rectangleShape.setTextureRect(animation.uvRect);
+	//rectangleShape.setTexture(&texture);
 }
 
 void GameObject::Update(int row, float deltaTime,bool faceRight) {
@@ -141,6 +149,11 @@ Vector2f GameObject::GetPosition() {
 }
 
 Vector2f GameObject::GetSize()
+{
+	return rectangleShape.getSize();
+}
+
+Vector2f GameObject::GetDimensions()
 {
 	return rectangleShape.getSize();
 }
