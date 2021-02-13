@@ -14,11 +14,17 @@ public:
 	Item(Vector2f position, Vector2f dimensions, bool originIsCenter,
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime); //Proper Animation
 	Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, 
-		string name, string description, int hpChange, bool evoStone,
+		string type,string name,int itemId,int prince, string description, int hpChange, bool evoStone,
 		int foodChange, int happinessChange, bool minigameLife, float xpCoupon);//Item in shop.
+	Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
+		string name);
+
 	~Item();
 
+	string type;
 	string name;
+	int itemId;
+	int price;
 	string description;
 	int hpChange;
 	bool evoStone;
@@ -26,5 +32,7 @@ public:
 	int happinessChange;
 	bool minigameLife;
 	float xpCoupon;
+	
+	
 };
 

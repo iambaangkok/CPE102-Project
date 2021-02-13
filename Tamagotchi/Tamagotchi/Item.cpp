@@ -96,12 +96,15 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 
 //Item in shop
 Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
-	string name, string description, int hpChange, bool evoStone, int foodChange, int happinessChange, bool minigameLife, float xpCoupon)
+	string type, string name, int itemId, int prince, string description, int hpChange, bool evoStone,int foodChange, int happinessChange, bool minigameLife, float xpCoupon)
 	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime) {
 	
-	
-	this->name = name;					//this->{Tuaplae in class} = parameter;
+	this->type = type;
+	this->name = name;
+	this->itemId = itemId;
+	this->price = price;				//this->{Tuaplae in class} = parameter;
 	this->description = description;
+	this->hpChange = hpChange;
 	this->evoStone = evoStone;
 	this->foodChange = foodChange;
 	this->happinessChange = happinessChange;
@@ -109,6 +112,112 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->xpCoupon = xpCoupon;
 }
 
+Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
+	string name)
+	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime) {
+	this->name = name;
+	if (name == "cheeseCake")
+	{
+		type = "food";
+		itemId = 1;
+		price = 35;
+		description = description;
+		hpChange =-10;
+		evoStone = false;
+		foodChange = 20;
+		happinessChange = 25;
+		minigameLife = false;
+		xpCoupon = 0.0;
+	}
+	else if (name=="honeyPeach")
+	{
+		type = "food";
+		itemId = 2;
+		price = 15;
+		this->description = description;
+		this->hpChange = 5;
+		this->evoStone = false;
+		this->foodChange = 15;
+		this->happinessChange = -5;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+	}
+	else if (name=="milk")
+	{
+		type = "food";
+		itemId = 3;
+		this->price = 20;
+		this->description = description;
+		this->hpChange = 10;
+		this->evoStone = false;
+		this->foodChange = 15;
+		this->happinessChange = 5;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+	}
+	else if (name=="noodle69")
+	{
+		type = "food";
+		itemId = 4;
+		this->price = 69;
+		this->description = description;
+		this->hpChange = 69;
+		this->evoStone = false;
+		this->foodChange = 69;
+		this->happinessChange = 0;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+	}
+	else if (name=="icecream")
+	{
+		type = "food";
+		itemId = 5;
+		this->price = 5;
+		this->description = description;
+		this->hpChange = -5;
+		this->evoStone = evoStone;
+		this->foodChange = 15;
+		this->happinessChange = 0;
+		this->minigameLife = minigameLife;
+		this->xpCoupon = xpCoupon;
+	}
+	else if (name=="honeyRoll")
+	{
+		type = "food";
+		itemId = 6;
+		this->price = 25;
+		this->description = description;
+		this->hpChange = 5;
+		this->evoStone = false;
+		this->foodChange = 30;
+		this->happinessChange = 10;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+	}
+	else {
+		type = "not Item";
+		itemId = 10;
+		this->price = 0;
+		this->description = "Item not set";
+		this->hpChange = hpChange;
+		this->evoStone = false;
+		this->foodChange = foodChange;
+		this->happinessChange = happinessChange;
+		this->minigameLife = minigameLife;
+		this->xpCoupon = xpCoupon;
+	};
+	this->type = type;
+	this->name = name;
+	this->itemId = itemId;
+	this->price = price;				//this->{Tuaplae in class} = parameter;
+	this->description = description;
+	this->hpChange = hpChange;
+	this->evoStone = evoStone;
+	this->foodChange = foodChange;
+	this->happinessChange = happinessChange;
+	this->minigameLife = minigameLife;
+	this->xpCoupon = xpCoupon;
+}
 Item::~Item() {
 
 }
