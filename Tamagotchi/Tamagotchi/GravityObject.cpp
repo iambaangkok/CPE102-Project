@@ -36,12 +36,14 @@ void GravityObject::Update(float deltaTime)
 		velocity.y -= sqrt(2.0f * 981.0f * jumpHeight);
 	}
 	velocity.y += 981.0f * deltaTime;
-	
+	cout << velocity.x << " " << velocity.y <<endl;
 	Move(velocity.x * deltaTime , velocity.y * deltaTime);
 }
 
 void GravityObject::OnCollision(Vector2f direction)
 {
+	if (velocity.y < 0)
+		return;
 	if (direction.x < 0.0f) {
 		velocity.x = 0.0f;
 	}
