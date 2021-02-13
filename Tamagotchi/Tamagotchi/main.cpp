@@ -1,21 +1,19 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <iostream>
-#include <ctime>
 #include <cstdlib>
 #include <vector>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
 #include "Pet.h"
+#include "PlatformObject.h"
 using namespace sf;
 
 using std::cout;
 using std::endl;
 
 int main() {
-
-    srand(time(0));
 
     int windowWidth = 720;
     int windowHeight = 1040;
@@ -33,22 +31,8 @@ int main() {
     //GameObject defaultGameObject;
     //GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
     GravityObject Alpha(Vector2f(100.0f, 100.0f), Vector2f(playerWidth / 4, playerHeight / 3), true, 500.0f, 360.0f);
-    //Alpha.SetOrigin(Vector2f(50.0f, 100.0f));
-    int ux = windowWidth / 160;
-    int uy = windowHeight / 160;
-    vector<GameObject> platform(15);
-    for (unsigned int i = 0; i < platform.size(); ++i) {
-        platform[i].SetDimensions(Vector2f(50.0f, 10.0f));
-
-        float x = static_cast<float>(rand() % windowWidth);
-        float y = static_cast<float>(rand() % windowHeight);
-
-        /*float x = static_cast<float>((rand() % ux + 1) * 160);
-        float y = static_cast<float>((rand() % uy + 1) * 160);*/
-
-        platform[i].SetPosition(Vector2f(x , y));
-        platform[i].SetOrigin(Vector2f(25.0f , 5.0f));
-    }
+    PlatformObject Platform(Vector2f(100.0f, 10.0f), Vector2i(windowWidth, windowHeight), 10);
+    Platform.Initialize();
     //GameObject platform(Vector2f(100.0f, 800.0f), Vector2f(1000.0f, 50.0f), true);
 
     //Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
@@ -75,6 +59,8 @@ int main() {
         Event evnt;
         
         //player.Initialize();
+        
+
 
         ///  GET INPUT
         while (window.pollEvent(evnt)) {
@@ -126,31 +112,33 @@ int main() {
         //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
         */
-
+        Alpha.Update(deltaTime);
         //platform1.CheckCollision(player, 1.0f);
- 
-        for (unsigned int i = 0; i < platform.size(); ++i) {
-            if (Alpha.velocity.y > 0 && platform[i].CheckCollision(Alpha, 1.0f))
+        
+        for (unsigned int i = 0; i < Platform.platform.size(); ++i) {
+            if (Alpha.velocity.y > 0 && Platform.platform[i].CheckCollision(Alpha, 1.0f))
                 Alpha.OnCollision(Alpha.direction);
         }
         
         /*if(platform1.CheckCollision(Alpha, 1.0f))
             Alpha.OnCollision(Alpha.direction);*/
-
-        Alpha.Initialize();
-        Alpha.Update(deltaTime);
-
+        
+        
+        
 
         /// DRAW
         window.clear(Color::Black);
-
+        Platform.Draw(window);
+        Alpha.Draw(window);
         //defaultGameObject.Draw(window);
         //player.Draw(window);
         
-        Alpha.Draw(window);
+        
+        /*
         for (unsigned int i = 0; i < platform.size(); ++i) {
             platform[i].Draw(window);
         }
+        */
         //platform1.Draw(window);
 
         //window.draw(text);
