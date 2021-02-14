@@ -5,7 +5,6 @@
 #include <vector>
 #include "GameObject.h"
 #include "Item.h"
-#include "Game.h"
 using std::vector;
 
 class Pet :
