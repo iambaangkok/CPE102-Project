@@ -5,7 +5,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Item.h"
-
+#include "Game.h"
 using std::vector;
 
 class Pet :
@@ -37,14 +37,14 @@ public:
 
 	bool isAlive = true;
 
-	string name;
-	string type;
-	int currentLevel;
-	int currentHp;
-	int currentExp;
-	int currentHappiness;
-	int currentFood;
-	int currentPoop;
+	string name = "Unset Name";
+	string type = "Unset Type";
+	int currentLevel = 0;
+	int currentHp = 0;
+	int currentExp = 0;
+	int currentHappiness = 0;
+	int currentFood = 0;
+	int currentPoop = 0;
 
 	float hpChangeRateMultiplier = 1.0f;
 	float expChangeMultiplier = 1.0f;
@@ -61,10 +61,10 @@ public:
 
 
 private:
-	float totalTime;
+	float totalTime = 0;
 	int tickTime = 60;
 
-	int levelMax;
+	int levelMax = 0;
 	vector<int> hpMax; //HP
 	vector<int> expPerEvolve; //EXP
 	vector<int> happinessMax; //Happiness

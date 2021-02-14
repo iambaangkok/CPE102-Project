@@ -2,6 +2,7 @@
 
 Pet::Pet() : GameObject()
 {
+
 }
 
 Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Proper Animation
@@ -66,6 +67,10 @@ void Pet::Update(float deltaTime)
 	if (!enabled) {
 		return;
 	}
+
+
+
+
 	totalTime += deltaTime;
 
 
