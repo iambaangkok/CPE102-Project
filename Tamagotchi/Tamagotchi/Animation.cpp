@@ -115,7 +115,7 @@ void Animation::Update(float deltaTime) {
     if (!enabled) {
         return;
     }
-    
+    //cout << deltaTime << endl;
     Vector2i start = startFrame;
     Vector2i finish = finishFrame;
 
@@ -129,6 +129,7 @@ void Animation::Update(float deltaTime) {
     if (!freezeFrame) {
         totalTime += deltaTime;
         if (totalTime >= frameTime) { //Change Frame
+            //cout << "CHANGE FRAME" << endl;
             totalTime -= frameTime;
             currentImage.x++;
             if (start.y == finish.y) {
@@ -153,6 +154,7 @@ void Animation::Update(float deltaTime) {
             }
 
         }
+        uvRect.left = currentImage.x * uvRect.width;
         uvRect.top = currentImage.y * uvRect.height;
     }
 
