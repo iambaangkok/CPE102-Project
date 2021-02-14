@@ -8,7 +8,6 @@ public :
         float speed , float jumpHeight);
     ~GravityObject();
 
-    void Initialize();
     void Update(float deltaTime);
     void OnCollision(Vector2f direction);
 

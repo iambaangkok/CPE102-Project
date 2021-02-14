@@ -1,10 +1,13 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include <cstdlib>
+#include <vector>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
 #include "Pet.h"
+#include "PlatformObject.h"
 using namespace sf;
 
 using std::cout;
@@ -27,10 +30,13 @@ int main() {
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     //GameObject defaultGameObject;
     //GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    //GravityObject Alpha(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, 500.0f, 200.0f);
-    //GameObject platform1(Vector2f(400.0f, 800.0f), Vector2f(1000.0f, 100.0f), true);
-    Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
-        "Fluffball", "Dragon", 3, vector<int>{20,30,40}, vector<int>{ 100,200,300 }, vector<int>{ 30,30,30 }, vector<int>{ 20,25,30 }, vector<int>{ 10,10,10 });
+    GravityObject Alpha(Vector2f(100.0f, 100.0f), Vector2f(playerWidth / 4, playerHeight / 3), true, 500.0f, 360.0f);
+    PlatformObject Platform(Vector2f(100.0f, 10.0f), Vector2i(windowWidth, windowHeight), 10);
+    Platform.Initialize();
+    //GameObject platform(Vector2f(100.0f, 800.0f), Vector2f(1000.0f, 50.0f), true);
+
+    //Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
+    //    "Fluffball", "Dragon", 3, vector<int>{20,30,40}, vector<int>{ 100,200,300 }, vector<int>{ 30,30,30 }, vector<int>{ 20,25,30 }, vector<int>{ 10,10,10 });
 
     float deltaTime = 0.0f;
     Clock clock;
@@ -44,12 +50,17 @@ int main() {
     text.setString("BoBo is the best of game year."); // ��ͤ���
     text.setPosition(10.f, windowHeight/ 2);
     text.move(0.1f, 0.f);*/
+    float cnt = 0;
+    bool _switch = false;
+
     while (window.isOpen()) {
         ///INITIALIZE
         deltaTime = clock.restart().asSeconds();
         Event evnt;
         
-        player.Initialize();
+        //player.Initialize();
+        
+
 
         ///  GET INPUT
         while (window.pollEvent(evnt)) {
@@ -69,7 +80,7 @@ int main() {
             }
 
         }
-        
+        /*
         if (Keyboard::isKeyPressed(Keyboard::W)) {
             //playerSpeed.y = -maxPlayerSpeed.y;
             player.speed.y = -player.maxSpeed.y;
@@ -100,27 +111,34 @@ int main() {
         //player.Move(playerSpeed.x, playerSpeed.y);
         //player.Update(10,deltaTime, true);
         //player.Update(deltaTime);
-        
+        */
+        Alpha.Update(deltaTime);
         //platform1.CheckCollision(player, 1.0f);
         
-
-        //if(platform1.CheckCollision(Alpha, direction, 1.0f))
-        //    Alpha.OnCollision(direction);
-
-
-        //Alpha.Update(deltaTime);
-
+        for (unsigned int i = 0; i < Platform.platform.size(); ++i) {
+            if (Alpha.velocity.y > 0 && Platform.platform[i].CheckCollision(Alpha, 1.0f))
+                Alpha.OnCollision(Alpha.direction);
+        }
+        
+        /*if(platform1.CheckCollision(Alpha, 1.0f))
+            Alpha.OnCollision(Alpha.direction);*/
+        
+        
+        
 
         /// DRAW
         window.clear(Color::Black);
-
+        Platform.Draw(window);
+        Alpha.Draw(window);
         //defaultGameObject.Draw(window);
-        player.Draw(window);
-
-        Vector2f direction;
-
+        //player.Draw(window);
         
-        //Alpha.Draw(window);
+        
+        /*
+        for (unsigned int i = 0; i < platform.size(); ++i) {
+            platform[i].Draw(window);
+        }
+        */
         //platform1.Draw(window);
 
         //window.draw(text);
