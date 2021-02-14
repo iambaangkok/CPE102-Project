@@ -9,6 +9,8 @@
     <ClCompile Include="mainOld.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pet.cpp" />
+    <ClCompile Include="PlatformObject.cpp" />
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -17,5 +19,7 @@
     <ClInclude Include="Guy.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Pet.h" />
+    <ClInclude Include="PlatformObject.h" />
+    <ClInclude Include="Game.h" />
   </ItemGroup>
 </Project>
