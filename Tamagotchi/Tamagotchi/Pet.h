@@ -61,7 +61,7 @@ public:
 
 private:
 	float totalTime = 0;
-	int tickTime = 60;
+	int tickTime = 1;
 
 	int levelMax = 0;
 	vector<int> hpMax; //HP
