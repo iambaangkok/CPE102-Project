@@ -18,7 +18,6 @@ PlatformObject::PlatformObject(Vector2f size, Vector2i windowSize, int NO_OF_PLA
 		platform[i].rectangleShape.setFillColor(Color::Yellow);
 		platform[i].rectangleShape.setOutlineColor(Color::Red);
 		platform[i].rectangleShape.setOutlineThickness(2.0f);
-
 	}
 }
 
