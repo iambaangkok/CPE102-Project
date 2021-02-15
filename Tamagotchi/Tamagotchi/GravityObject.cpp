@@ -1,16 +1,13 @@
 #include "GravityObject.h"
 
-GravityObject::GravityObject(Vector2f position, Vector2f dimensions, bool originIsCenter, float speed, float jumpHeight)
+GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float speed, float jumpHeight)
 {
 	rectangleShape = RectangleShape(dimensions);
 	rectangleShape.setPosition(position);
-	if (originIsCenter) {
-		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
-	}
-	rectangleShape.setFillColor(Color::White);
+	rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	rectangleShape.setFillColor(Color::Blue);
 	this->speed = speed;
 	this->jumpHeight = jumpHeight;
-
 }
 
 GravityObject::~GravityObject()
@@ -34,12 +31,14 @@ void GravityObject::Update(float deltaTime)
 	velocity.y += 981.0f * deltaTime;
 	cout << velocity.x << " " << velocity.y <<endl;
 	Move(velocity.x * deltaTime , velocity.y * deltaTime);
+	if (rectangleShape.getPosition().x > 720.0)
+		rectangleShape.setPosition(Vector2f(0.0f, rectangleShape.getPosition().y));
+	if (rectangleShape.getPosition().x < 0.0f)
+		rectangleShape.setPosition(Vector2f(720.0f, rectangleShape.getPosition().y));
 }
 
 void GravityObject::OnCollision(Vector2f direction)
 {
-	if (velocity.y < 0)
-		return;
 	if (direction.x < 0.0f) {
 		velocity.x = 0.0f;
 	}

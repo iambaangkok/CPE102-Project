@@ -56,14 +56,14 @@ int main() {
     Vector2f maxPlayerSpeed = Vector2f(5, 5);
     Vector2f playerSpeed = Vector2f(0, 0);
     //float playerSpeed = 5.0f;
-    float playerWidth = 100;
-    float playerHeight = 100;
+    float playerWidth = 80.0f;
+    float playerHeight = 80.0f;
     
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     //GameObject defaultGameObject;
     //GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    GravityObject Alpha(Vector2f(100.0f, 100.0f), Vector2f(playerWidth / 4, playerHeight / 3), true, 500.0f, 360.0f);
-    PlatformObject Platform(Vector2f(100.0f, 10.0f), Vector2i(windowWidth, windowHeight), 10);
+    GravityObject Alpha(Vector2f(80.0f, 80.0f), Vector2f(playerWidth , playerHeight), 500.0f, 350.0f);
+    PlatformObject Platform(Vector2f(68.0f, 14.0f), Vector2i(windowWidth, windowHeight), 10);
     Platform.Initialize();
     //GameObject platform(Vector2f(100.0f, 800.0f), Vector2f(1000.0f, 50.0f), true);
 

@@ -4,8 +4,7 @@ class GravityObject :
     public GameObject
 {   
 public :
-    GravityObject(Vector2f position, Vector2f dimensions, bool originIsCenter,
-        float speed , float jumpHeight);
+    GravityObject(Vector2f position, Vector2f dimensions, float speed , float jumpHeight);
     ~GravityObject();
 
     void Update(float deltaTime);
@@ -15,6 +14,7 @@ public :
     float speed;
     float jumpHeight;
     bool canJump;
+    bool doodleEnabled = false;
 
 private :
 
