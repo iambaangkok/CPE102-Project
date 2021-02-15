@@ -2,6 +2,7 @@
 
 Pet::Pet() : GameObject()
 {
+
 }
 
 Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Proper Animation
@@ -66,30 +67,33 @@ void Pet::Update(float deltaTime)
 	if (!enabled) {
 		return;
 	}
+
+
+
+
 	totalTime += deltaTime;
-
-
-	animation.Update(deltaTime);
-	if (faceRight) {
-		rectangleShape.setScale(Vector2f(1, 1));
-	}
-	else {
-		rectangleShape.setScale(Vector2f(-1, 1));
-	}
-	rectangleShape.setTextureRect(animation.uvRect);
+	
 	
 
 
-	cout << " " << currentHp << " " << currentHappiness << " " << currentExp << " " << currentFood << " " << currentPoop << endl;
+	//cout << " " << currentHp << " " << currentHappiness << " " << currentExp << " " << currentFood << " " << currentPoop << endl;
+	//cout << speed.x << " " << speed.y << endl;
+	if (isAlive) {
+		Move(speed.x, speed.y);
+		if (faceRight) {
+			rectangleShape.setScale(Vector2f(1, 1));
+		}
+		else {
+			rectangleShape.setScale(Vector2f(-1, 1));
+		}
+	}
+	
 
 	if (currentHp < 0) {
 		isAlive = false;
 	}
 
 	if (isAlive && totalTime > tickTime) {//Still Alive and Growing
-
-		Move(speed.x, speed.y);
-
 		totalTime -= tickTime;
 
 		if ((float)currentFood < foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
@@ -108,8 +112,10 @@ void Pet::Update(float deltaTime)
 		Clamp(&currentExp, expPerEvolve[currentLevel],0);
 		Clamp(&currentFood, foodMax[currentLevel],0);
 		Clamp(&currentPoop, poopMax[currentLevel],0);
-
 	}
+
+	animation.Update(deltaTime);
+	rectangleShape.setTextureRect(animation.uvRect);
 }
 
 template<typename T>

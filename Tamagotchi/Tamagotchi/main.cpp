@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include "Game.h"
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
@@ -13,11 +14,41 @@ using namespace sf;
 using std::cout;
 using std::endl;
 
-int main() {
 
-    int windowWidth = 720;
-    int windowHeight = 1040;
-    RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
+int windowWidth = 720;
+int windowHeight = 1040;
+float playerSize = 100;
+string title = "Tamagotchi";
+RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
+Pet *pet;
+
+
+void LoadGameData() {
+    //Read save files and set data
+    pet = new Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
+        "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
+        "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
+}
+
+void SaveGameData() {
+    //Read variables then save as save file
+    //Delete dynamic memories
+    delete pet;
+}
+
+
+int main() {
+    
+    LoadGameData();
+
+    Game tamagotchi(window, pet);
+    tamagotchi.StartGameLoop();
+    
+    SaveGameData();
+
+    
+    
+    /*RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
     int frameRateLimit = 60;
     window.setFramerateLimit(60);
 
@@ -40,16 +71,16 @@ int main() {
 
     float deltaTime = 0.0f;
     Clock clock;
-    /*Font font;
-    if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
-        throw(" CLOUD NOT LOAD FONT! ");
-    Text text;
-    text.setFont(font);
-    text.setFillColor(Color::Black);
-    text.setCharacterSize(25);
-    text.setString("BoBo is the best of game year."); // ��ͤ���
-    text.setPosition(10.f, windowHeight/ 2);
-    text.move(0.1f, 0.f);*/
+    //Font font;
+    //if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
+    //    throw(" CLOUD NOT LOAD FONT! ");
+    //Text text;
+    //text.setFont(font);
+    //text.setFillColor(Color::Black);
+    //text.setCharacterSize(25);
+    //text.setString("BoBo is the best of game year."); // ��ͤ���
+    //text.setPosition(10.f, windowHeight/ 2);
+    //text.move(0.1f, 0.f);
     float cnt = 0;
     bool _switch = false;
 
@@ -80,38 +111,38 @@ int main() {
             }
 
         }
-        /*
-        if (Keyboard::isKeyPressed(Keyboard::W)) {
-            //playerSpeed.y = -maxPlayerSpeed.y;
-            player.speed.y = -player.maxSpeed.y;
-        }
-        if (Keyboard::isKeyPressed(Keyboard::A)) {
-            //playerSpeed.x = -maxPlayerSpeed.x;
-            player.speed.x = -player.maxSpeed.x;
-            player.faceRight = false;
-        }
-        if (Keyboard::isKeyPressed(Keyboard::S)) {
-            //playerSpeed.y = +maxPlayerSpeed.y;
-            player.speed.y = +player.maxSpeed.y;
-        }
-        if (Keyboard::isKeyPressed(Keyboard::D)) {
-            //playerSpeed.x = +maxPlayerSpeed.x;
-            player.speed.x = +player.maxSpeed.x;
-            player.faceRight = true;
-        }
+        
+        //if (Keyboard::isKeyPressed(Keyboard::W)) {
+        //    //playerSpeed.y = -maxPlayerSpeed.y;
+        //    player.speed.y = -player.maxSpeed.y;
+        //}
+        //if (Keyboard::isKeyPressed(Keyboard::A)) {
+        //    //playerSpeed.x = -maxPlayerSpeed.x;
+        //    player.speed.x = -player.maxSpeed.x;
+        //    player.faceRight = false;
+        //}
+        //if (Keyboard::isKeyPressed(Keyboard::S)) {
+        //    //playerSpeed.y = +maxPlayerSpeed.y;
+        //    player.speed.y = +player.maxSpeed.y;
+        //}
+        //if (Keyboard::isKeyPressed(Keyboard::D)) {
+        //    //playerSpeed.x = +maxPlayerSpeed.x;
+        //    player.speed.x = +player.maxSpeed.x;
+        //    player.faceRight = true;
+        //}
 
-        if (Mouse::isButtonPressed(Mouse::Left)) {
-            Vector2i mousePos = Mouse::getPosition(window);
-            player.rectangleShape.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
-        }
+        //if (Mouse::isButtonPressed(Mouse::Left)) {
+        //    Vector2i mousePos = Mouse::getPosition(window);
+        //    player.rectangleShape.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
+        //}
 
-        /// UPDATE
-        player.Update(deltaTime);
-        //player.Update(player.animation.startFrame, player.animation.finishFrame, deltaTime);
-        //player.Move(playerSpeed.x, playerSpeed.y);
-        //player.Update(10,deltaTime, true);
+        ///// UPDATE
         //player.Update(deltaTime);
-        */
+        ////player.Update(player.animation.startFrame, player.animation.finishFrame, deltaTime);
+        ////player.Move(playerSpeed.x, playerSpeed.y);
+        ////player.Update(10,deltaTime, true);
+        ////player.Update(deltaTime);
+        //
         Alpha.Update(deltaTime);
         //platform1.CheckCollision(player, 1.0f);
         
@@ -120,8 +151,8 @@ int main() {
                 Alpha.OnCollision(Alpha.direction);
         }
         
-        /*if(platform1.CheckCollision(Alpha, 1.0f))
-            Alpha.OnCollision(Alpha.direction);*/
+        //if(platform1.CheckCollision(Alpha, 1.0f))
+        //    Alpha.OnCollision(Alpha.direction);
         
         
         
@@ -134,11 +165,11 @@ int main() {
         //player.Draw(window);
         
         
-        /*
-        for (unsigned int i = 0; i < platform.size(); ++i) {
-            platform[i].Draw(window);
-        }
-        */
+        
+        //for (unsigned int i = 0; i < platform.size(); ++i) {
+        //    platform[i].Draw(window);
+        //}
+        
         //platform1.Draw(window);
 
         //window.draw(text);
@@ -146,7 +177,7 @@ int main() {
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;
 
-    }
+    }*/
 
     return 0;
 }
