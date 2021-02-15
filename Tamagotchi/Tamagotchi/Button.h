@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Game.h"
 #include <vector>
 using std::vector;
 class Button :
@@ -14,7 +15,7 @@ public:
 
     void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-    void Update(float deltaTime,RenderWindow window);
+    void Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress);
 
     vector<Color> color;
     string text;
