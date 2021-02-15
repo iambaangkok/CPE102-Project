@@ -49,7 +49,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	float x2 = posi.x + dimen.x / 2;
 	float y2 = posi.y + dimen.y / 2;
 	Vector2f b = Vector2f(x2, y2);
-	if (mousePress["M1"]) {
+	if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y && mousePress["M1"]) {
 		status = 2;
 		rectangleShape.setFillColor(color[2]);
 	}
