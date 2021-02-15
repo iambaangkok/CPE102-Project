@@ -55,10 +55,10 @@ void Game::GetInput() {
             CheckKeyPressRelease(&keyRelease);
             break;
         case Event::MouseButtonPressed:
-            CheckMousePressRelease(&mousePress);
+            //CheckMousePressRelease(&mousePress);
             break;
         case Event::MouseButtonReleased:
-            CheckMousePressRelease(&mouseRelease);
+            //CheckMousePressRelease(&mouseRelease);
             break;
         case Event::MouseWheelMoved:
             mouseWheelDelta = evnt.mouseWheel.delta;
@@ -68,7 +68,8 @@ void Game::GetInput() {
             break;
         }
     }
-
+    CheckMousePressRelease(&mousePress);
+    CheckMousePressRelease(&mouseRelease);
     CheckKeyPressRelease(&keyHold);
     /*CheckKeyPressRelease(&keyRelease);
     CheckMousePressRelease(&mousePress);
