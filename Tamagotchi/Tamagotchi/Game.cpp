@@ -2,6 +2,7 @@
 
 
 Game::Game(RenderWindow& mainWindow, Pet* mainPet) : window(mainWindow), pet(*mainPet){
+    
 	window.setFramerateLimit(frameRateLimit);  
 	deltaTime = 0;
 	clock.restart();

@@ -7,21 +7,16 @@ class Shop
 {
 public:
 	Shop();
-	Shop();
-
+	Shop(vector<Item> items, Text description, Text price, Text totalPrice,	Text amount, GameObject bg,	GameObject scrollbar,
+		Button food, Button dessert, Button booster); 
+	~Shop();
 	
 
-
-
-
-
+	vector<Item> items;
 	Text description;
-	Text price;
-	Text totalPrice;
-	Text amount;
+	vector<Text> price;
 	GameObject bg;
 	GameObject scrollbar;
-	GameObject picture;
 	Button food;
 	Button dessert;
 	Button booster;

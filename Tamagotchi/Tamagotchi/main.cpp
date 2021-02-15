@@ -22,13 +22,42 @@ float playerSize = 100;
 string title = "Tamagotchi";
 RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
 Pet *pet;
-
+vector<Item> items;
+vector<Text> descriptions;
 
 void LoadGameData() {
     //Read save files and set data
     pet = new Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
         "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
+    Vector2f itemPictureSize(200, 200);
+    Vector2u imageCount(1, 1);
+    Vector2i start(1, 1);
+    Vector2i finish(1, 1);
+    Item itemToPush(Vector2f(0,0),itemPictureSize,true,"",imageCount,start,finish,1,"cheeseCake");
+    items.push_back(itemToPush);
+    itemToPush = Item(Vector2f(0, 0), itemPictureSize, true, "", imageCount, start, finish, 1, "honeyPeach");
+    itemToPush = Item(Vector2f(0, 0), itemPictureSize, true, "", imageCount, start, finish, 1, "milk");
+    itemToPush = Item(Vector2f(0, 0), itemPictureSize, true, "", imageCount, start, finish, 1, "noodle69");
+    itemToPush = Item(Vector2f(0, 0), itemPictureSize, true, "", imageCount, start, finish, 1, "icecream");
+    itemToPush = Item(Vector2f(0, 0), itemPictureSize, true, "", imageCount, start, finish, 1, "honeyRoll");
+    Font font;
+    if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
+        throw(" CLOUD NOT LOAD FONT! ");
+    for (int i = 0; i < items.size(); ++i) {
+        Text description;
+        description.setFont(font);
+        description.setFillColor(Color(219, 138, 6, 125));
+        description.setCharacterSize(25);
+        description.setString(items[i].description);
+        description.setPosition(10.f, windowHeight / 2);
+        descriptions.push_back(description);
+    }
+    
+        
+        
+        
+ ;
 }
 
 void SaveGameData() {
