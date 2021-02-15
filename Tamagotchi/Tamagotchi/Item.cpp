@@ -1,5 +1,5 @@
 #include "Item.h"
-
+#include "Pet.h"
 Item::Item(){
 	Vector2f dimensions = Vector2f(100, 100);
 	Vector2f position = Vector2f(200, 200);
@@ -96,7 +96,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 
 //Item in shop
 Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
-	string type, string name, int itemId, int prince, string description, int hpChange, bool evoStone,int foodChange, int happinessChange, bool minigameLife, float xpCoupon)
+	string type, string name, int itemId, int prince, string description, int hpChange, bool evoStone,int foodChange, int happinessChange, bool minigameLife, float xpCoupon, int poopChange)
 	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime) {
 	
 	this->type = type;
@@ -110,6 +110,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->happinessChange = happinessChange;
 	this->minigameLife = minigameLife;
 	this->xpCoupon = xpCoupon;
+	this->poopChange = poopChange;
 }
 
 Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
@@ -128,6 +129,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		happinessChange = 25;
 		minigameLife = false;
 		xpCoupon = 0.0;
+		this->poopChange = 5;
 	}
 	else if (name=="honeyPeach")
 	{
@@ -141,6 +143,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->happinessChange = -5;
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
+		this->poopChange = 5;
 	}
 	else if (name=="milk")
 	{
@@ -154,6 +157,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->happinessChange = 5;
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
+		this->poopChange = 2;
 	}
 	else if (name=="noodle69")
 	{
@@ -167,6 +171,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->happinessChange = 0;
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
+		this->poopChange = 69;
 	}
 	else if (name=="icecream")
 	{
@@ -180,6 +185,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->happinessChange = 0;
 		this->minigameLife = minigameLife;
 		this->xpCoupon = xpCoupon;
+		this->poopChange = 5;
 	}
 	else if (name=="honeyRoll")
 	{
@@ -193,18 +199,21 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->happinessChange = 10;
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
+		this->poopChange = 10;
+
 	}
 	else {
 		type = "not Item";
 		itemId = 10;
 		this->price = 0;
 		this->description = "Item not set";
-		this->hpChange = hpChange;
+		this->hpChange = 0;
 		this->evoStone = false;
-		this->foodChange = foodChange;
-		this->happinessChange = happinessChange;
-		this->minigameLife = minigameLife;
-		this->xpCoupon = xpCoupon;
+		this->foodChange = 0;
+		this->happinessChange = 0;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 0;
 	};
 	this->type = type;
 	this->name = name;
@@ -217,7 +226,29 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->happinessChange = happinessChange;
 	this->minigameLife = minigameLife;
 	this->xpCoupon = xpCoupon;
+	this->poopChange = poopChange;
 }
 Item::~Item() {
 
+}
+
+void Item::UseItem(Pet *pet) {
+	pet->currentHp += hpChange;
+	pet->currentExp += xpCoupon;
+	pet->currentHappiness += happinessChange;
+	pet->currentFood += foodChange;
+	pet->currentPoop += poopChange;
+	//pet->hpChangeRateMultiplier +=  in to the Fu....
+	//pet->expChangeMultiplier +=
+	//pet->foodChangeMultiplier +=
+	//pet->happinessChangeMultiplier +=
+	//pet->poopChangeMultiplier +=
+	pet->ateEvolveStone = evoStone;
+
+	pet->Clamp(&pet->currentHp, pet->hpMax[pet->currentLevel]);
+	pet->Clamp(&pet->currentExp, pet->expPerEvolve[pet->currentLevel]);
+	pet->Clamp(&pet->currentHappiness, pet->happinessMax[pet->currentLevel]);
+	pet->Clamp(&pet->currentFood, pet->foodMax[pet->currentLevel]);
+	pet->Clamp(&pet->currentPoop, pet->poopMax[pet->currentLevel]);
+	
 }
