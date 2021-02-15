@@ -152,7 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GravityObject.cpp" />
@@ -162,10 +161,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="PlatformObject.cpp" />
+    <ClCompile Include="Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GravityObject.h" />
@@ -173,6 +172,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="PlatformObject.h" />
+    <ClInclude Include="Shop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

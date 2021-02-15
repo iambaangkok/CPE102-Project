@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -10,8 +10,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="PlatformObject.cpp" />
-    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -21,7 +21,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="PlatformObject.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Shop.h" />
   </ItemGroup>
 </Project>

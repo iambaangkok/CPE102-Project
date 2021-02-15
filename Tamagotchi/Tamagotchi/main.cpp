@@ -72,16 +72,16 @@ int main() {
 
     float deltaTime = 0.0f;
     Clock clock;
-    //Font font;
-    //if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
-    //    throw(" CLOUD NOT LOAD FONT! ");
-    //Text text;
-    //text.setFont(font);
-    //text.setFillColor(Color::Black);
-    //text.setCharacterSize(25);
-    //text.setString("BoBo is the best of game year."); // ��ͤ���
-    //text.setPosition(10.f, windowHeight/ 2);
-    //text.move(0.1f, 0.f);
+    Font font;
+    if (!font.loadFromFile("Assets/Fonts/arial.ttf"))// ��ʢͧfont
+        throw(" CLOUD NOT LOAD FONT! ");
+    Text text;
+    text.setFont(font);
+    text.setFillColor(Color(219,138,6,125));
+    text.setCharacterSize(25);
+    text.setString("BoBo is the best of game year."); // ��ͤ���
+    text.setPosition(10.f, windowHeight/ 2);
+    text.move(0.1f, 0.f);
     float cnt = 0;
     bool _switch = false;
     vector<Color> colorVector;
@@ -186,7 +186,7 @@ int main() {
         
         //platform1.Draw(window);
 
-        //window.draw(text);
+        window.draw(text);
 
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;
