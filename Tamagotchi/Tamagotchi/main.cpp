@@ -9,6 +9,7 @@
 #include "GravityObject.h"
 #include "Pet.h"
 #include "PlatformObject.h"
+#include "Button.h"
 using namespace sf;
 
 using std::cout;
@@ -42,13 +43,13 @@ int main() {
     LoadGameData();
 
     Game tamagotchi(window, pet);
-    tamagotchi.StartGameLoop();
+    //tamagotchi.StartGameLoop();
     
-    SaveGameData();
+    //SaveGameData();
 
     
     
-    /*RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
+    RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
     int frameRateLimit = 60;
     window.setFramerateLimit(60);
 
@@ -83,8 +84,14 @@ int main() {
     //text.move(0.1f, 0.f);
     float cnt = 0;
     bool _switch = false;
+    vector<Color> colorVector;
+    colorVector.push_back(Color(255,255, 255, 255));
+    colorVector.push_back(Color(20, 20, 20, 255));
+    colorVector.push_back(Color::Green);
+    colorVector.push_back(Color::Cyan);
+    Button testButton(Vector2f(20, 20), Vector2f(545, 566), true, "Assets/Textures/testbutton.jpg", Vector2u(1, 1), Vector2i(1, 1), Vector2i(1, 1), 100, colorVector, "Button", 0, "Dont know");
 
-    while (window.isOpen()) {
+    while (window.isOpen()) { //GAMELOOP
         ///INITIALIZE
         deltaTime = clock.restart().asSeconds();
         Event evnt;
@@ -94,6 +101,8 @@ int main() {
 
 
         ///  GET INPUT
+        tamagotchi.ReInitialize();
+        tamagotchi.GetInput();
         while (window.pollEvent(evnt)) {
 
             switch (evnt.type) {
@@ -143,6 +152,8 @@ int main() {
         ////player.Update(10,deltaTime, true);
         ////player.Update(deltaTime);
         //
+        tamagotchi.Update();
+        testButton.Update(deltaTime,window,tamagotchi.mousePress);
         Alpha.Update(deltaTime);
         //platform1.CheckCollision(player, 1.0f);
         
@@ -159,6 +170,9 @@ int main() {
 
         /// DRAW
         window.clear(Color::Black);
+        tamagotchi.Draw();
+        testButton.Draw(window);
+
         Platform.Draw(window);
         Alpha.Draw(window);
         //defaultGameObject.Draw(window);
@@ -177,7 +191,7 @@ int main() {
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;
 
-    }*/
+    }
 
     return 0;
 }
