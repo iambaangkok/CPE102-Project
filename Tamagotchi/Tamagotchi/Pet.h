@@ -36,7 +36,7 @@ public:
 	int aMax = 15;
 	a += aChange;
 	Clamp(&a, aMax);*/
-	void UseItem(Item item); //Use Item
+	void UseItem(int itemID); //Use Item
 
 
 	bool isAlive = true;

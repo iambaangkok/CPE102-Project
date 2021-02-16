@@ -3,6 +3,7 @@
 #include "Game.h"
 #include <vector>
 using std::vector;
+class Game;
 class Button :
     public GameObject
 {

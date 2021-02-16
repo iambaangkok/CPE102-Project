@@ -1,8 +1,17 @@
 #pragma once
-#include"GameObject.h"
+#include <SFML/Graphics.hpp>
+#include"Button.h"
 #include"Pet.h"
 #include"Item.h"
-#include"Button.h"
+#include <vector>
+#include <iostream>
+using namespace sf;
+
+using std::cout;
+using std::endl;
+
+class Button;
+
 class Shop
 {
 public:
@@ -17,9 +26,7 @@ public:
 	vector<Text> price;
 	GameObject bg;
 	GameObject scrollbar;
-	Button food;
-	Button dessert;
-	Button booster;
+	vector<Button> buttons;
 
 
 
