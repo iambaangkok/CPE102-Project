@@ -21,8 +21,8 @@ void Game::LoadGame() {
         "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
     pet = &p;
 
-    //static Shop s = Shop();
-    //shop = &s;
+    static Shop s = Shop();
+    shop = &s;
 }
 
 

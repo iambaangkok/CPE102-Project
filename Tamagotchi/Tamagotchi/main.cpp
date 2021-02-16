@@ -26,8 +26,9 @@ RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | 
 
 void LoadGameData() {
     //Read save files and set data
-   
- ;
+
+
+
 }
 
 void SaveGameData() {

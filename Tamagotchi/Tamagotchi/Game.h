@@ -52,7 +52,7 @@ public:
 
 
     Pet* pet;
-    //Shop* shop;
+    Shop* shop;
 
 
     int gameState = 0; //0 = main game, 1 = doodle jump, 2 = ?
