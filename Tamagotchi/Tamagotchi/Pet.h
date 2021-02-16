@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Item.h"
 using std::vector;
+class Item;
 
 class Pet :
     public GameObject
