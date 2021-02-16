@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Pet.h"
+class Pet;
+
 class Item :
     public GameObject
 {
