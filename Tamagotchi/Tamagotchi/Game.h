@@ -12,7 +12,9 @@
 #include "Pet.h"
 #include "PlatformObject.h"
 #include "Item.h"
-
+#include "Button.h"
+#include "Shop.h"
+class Button;
 using namespace sf;
 
 using std::vector;
@@ -27,7 +29,7 @@ class Game
 public:
 
     Game();
-    Game(RenderWindow& mainWindow, Pet *mainPet);
+    Game(RenderWindow& mainWindow);
     ~Game();
 
     void LoadGame();
@@ -47,7 +49,8 @@ public:
 
 
 
-    Pet &pet;
+    Pet* pet;
+    Shop* shop;
 
 
     int gameState = 0; //0 = main game, 1 = doodle jump, 2 = ?

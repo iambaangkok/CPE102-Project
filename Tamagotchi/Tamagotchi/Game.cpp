@@ -1,8 +1,8 @@
 #include "Game.h"
 
 
-Game::Game(RenderWindow& mainWindow, Pet* mainPet) : window(mainWindow), pet(*mainPet){
-    
+Game::Game(RenderWindow& mainWindow) : window(mainWindow){
+
 	window.setFramerateLimit(frameRateLimit);  
 	deltaTime = 0;
 	clock.restart();
@@ -15,7 +15,14 @@ Game::~Game() {
 
 void Game::LoadGame() {
     float playerSize = 100.0f;
-    
+
+    static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
+        "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
+        "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
+    pet = &p;
+
+    //static Shop s = Shop();
+    //shop = &s;
 }
 
 
@@ -32,7 +39,7 @@ void Game::ReInitialize() {
     deltaTime = clock.restart().asSeconds();
     ResetKeyboard();
     ResetMouse();
-    pet.Initialize();
+    pet->Initialize();
 }
 
 void Game::GetInput() {
@@ -82,31 +89,31 @@ void Game::GetInput() {
 
 void Game::Update() {
     if (keyHold["W"]) {
-        pet.speed.y = -pet.maxSpeed.y;
+        pet->speed.y = -pet->maxSpeed.y;
     }
     if (keyHold["A"]) {
-        pet.speed.x = -pet.maxSpeed.x;
-        pet.faceRight = false;
+        pet->speed.x = -pet->maxSpeed.x;
+        pet->faceRight = false;
     }
     if (keyHold["S"]) {
-        pet.speed.y = +pet.maxSpeed.y;
+        pet->speed.y = +pet->maxSpeed.y;
     }
     if (keyHold["D"]) {
-        pet.speed.x = +pet.maxSpeed.x;
-        pet.faceRight = true;
+        pet->speed.x = +pet->maxSpeed.x;
+        pet->faceRight = true;
     }
     if (mousePress["M1"]) {
-        pet.SetPosition(Vector2f(mousePosition.x, mousePosition.y));
+        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
     }
 
 
-    pet.Update(deltaTime);
+    pet->Update(deltaTime);
 }
 
 void Game::Draw() {
     window.clear(Color::Black);
     //Draw other things
-    pet.Draw(window);
+    pet->Draw(window);
     window.display();
 }
 
