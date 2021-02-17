@@ -4,7 +4,7 @@ a c++ project in 261102 - computer programming
 
 ชื่อกลุ่ม BoBo
 
-ชื่อโปรเเกรม Final_Ver69KakMak
+ชื่อโปรเเกรม "たまごっち Tamagotchi"
 
 
 This is a virtual pet simulator built on SFML game engine based on c++
