@@ -3,8 +3,14 @@
 
 GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height)
 {
+	playertexture.loadFromFile("Assets/Textures/doodle3.png");
+	player.rectangleShape.setTexture(&playertexture, true);
 	player.SetPosition(position);
 	player.SetDimensions(dimensions);
+	
+	player.SetOrigin(dimensions / 2.0f);
+	
+
 	this->Height = Height;
 	this->playerX = position.x;
 	this->playerY = position.y;
@@ -17,7 +23,6 @@ GravityObject::~GravityObject()
 
 bool GravityObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 {
-
 	Vector2f thisPos = player.GetPosition();
 	Vector2f thisHalfSize = player.GetSize() / 2.0f;
 

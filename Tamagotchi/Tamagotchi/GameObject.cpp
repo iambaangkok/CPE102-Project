@@ -189,9 +189,8 @@ void GameObject::SetOrigin(float x, float y)
 }
 void GameObject::SetTexture(string texturePath) // Set texture
 {
-	Texture newTexture;
-	newTexture.loadFromFile(texturePath);
-	rectangleShape.setTexture(&newTexture);
+	texture.loadFromFile(texturePath);
+	rectangleShape.setTexture(&texture);
 }
 void GameObject::SetImageCount(Texture& texture,Vector2u imageCount) // Set image count
 {

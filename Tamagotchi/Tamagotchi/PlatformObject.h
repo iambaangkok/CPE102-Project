@@ -14,11 +14,12 @@ public :
     ~PlatformObject();
 
     void Initialize();
-    void Update();
-    void Draw(RenderWindow& window);
+    void Draw(RenderWindow& window , int difficulty);
 
+    Texture platformtexture;
     GameObject platform;
     vector<Vector2f> platformPos;
+    vector<bool> enabled;
     int NO_OF_PLATFORM;
     Vector2i windowSize;
     Vector2f size;

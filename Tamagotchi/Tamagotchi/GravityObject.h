@@ -10,6 +10,7 @@ public :
     bool CheckCollision(Vector2f otherPos , Vector2f otherHalfSize);
 
     GameObject player;
+    Texture playertexture;
 
     float dy = 0;
     float Height;

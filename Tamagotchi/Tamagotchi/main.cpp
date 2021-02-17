@@ -12,6 +12,7 @@
 #include "Button.h"
 #include "Item.h"
 #include "Shop.h"
+#include "Doodle.h"
 using namespace sf;
 
 using std::cout;
@@ -34,7 +35,7 @@ void SaveGameData() {
 
 
 int main() {
-    
+    /*
     LoadGameData();
 
     Game tamagotchi(window);
@@ -42,9 +43,9 @@ int main() {
     tamagotchi.StartGameLoop();
     
     SaveGameData();
-
+    */
     
-    
+    srand(time(0));
     RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
     int frameRateLimit = 60;
     window.setFramerateLimit(60);
@@ -58,8 +59,8 @@ int main() {
     ////GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     ////GameObject defaultGameObject;
     ////GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    GravityObject Alpha(Vector2f(360.0f, 80.0f), Vector2f(playerWidth , playerHeight), 350.0f);
-    PlatformObject Platform(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 10);
+    GravityObject Alpha(Vector2f(360.0f, 80.0f), Vector2f(playerWidth , playerHeight), 400.0f);
+    PlatformObject Platform(Vector2f(100.0f, 14.0f), Vector2i(windowWidth, windowHeight), 10);
     //Platform.Initialize();
     Doodle doodle;
     doodle.Initialize(Platform);
@@ -184,9 +185,10 @@ int main() {
     //    //}
     //    
     //    //platform1.Draw(window);
+          
           doodle.Draw(Alpha, Platform, window);
     //    window.draw(text);
-
+          
           window.display();
     //    //cout << deltaTime << " " << animation.switchTime << endl;
 
