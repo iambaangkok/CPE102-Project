@@ -9,7 +9,6 @@
 #include "GravityObject.h"
 #include "Pet.h"
 #include "PlatformObject.h"
-#include "Doodle.h"
 #include "Button.h"
 #include "Item.h"
 #include "Shop.h"
@@ -21,15 +20,11 @@ using std::endl;
 
 int windowWidth = 720;
 int windowHeight = 1040;
-float playerSize = 100;
 string title = "Tamagotchi";
 RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
 
 void LoadGameData() {
     //Read save files and set data
-
-
-
 }
 
 void SaveGameData() {
@@ -39,8 +34,7 @@ void SaveGameData() {
 
 
 int main() {
-    srand(time(0));
-    /*
+    
     LoadGameData();
 
     Game tamagotchi(window);
@@ -49,7 +43,6 @@ int main() {
     
     SaveGameData();
 
-    */
     
     
     RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);

@@ -25,6 +25,7 @@ public:
 
 
 	//void Update(float deltaTime); //Single Texture DEPRICATED
+	void Initialize();
 	void Update(int row, float deltaTime, bool faceRight); //1Row Animation, Single Texture from Texture Sheet
 	void Update(Vector2i start, Vector2i finish, float deltaTime);//Proper Animation
 	void Update(float deltaTime);//Proper Animation
@@ -38,12 +39,17 @@ public:
 	Vector2f GetDimensions(); //Same as GetSize()
 
 	void SetPosition(Vector2f position); // Set Position
+	void SetPosition(float x, float y);
 	void SetDimensions(Vector2f dimensions); // Set dimension
+	void SetDimensions(float x, float y);
 	void SetOrigin(Vector2f origin); // Set origin
+	void SetOrigin(float x, float y);
 	void SetTexture(string texturePath); // Set texture
 	void SetImageCount(Texture& texture, Vector2u imageCount); // Set image count
 	void SetStartFrame(Vector2i start); // Set 1st Frame
+	void SetStartFrame(int x, int y);
 	void SetFinishFrame(Vector2i finish); // Set last frame
+	void SetFinishFrame(int x, int y);
 	void SetFrameTime(float frameTime); // Set frametime
 
 	
@@ -51,6 +57,8 @@ public:
 	
 
 	bool enabled = true; 
+
+	Vector2f speed = Vector2f(0, 0);
 
 	Texture texture;
 	RectangleShape rectangleShape;

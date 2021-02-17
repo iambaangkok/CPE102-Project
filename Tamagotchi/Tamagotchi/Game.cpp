@@ -14,8 +14,10 @@ Game::~Game() {
 }
 
 void Game::LoadGame() {
-    float playerSize = 100.0f;
 
+    //Opensavefile, Calculate expgain foodloss etc.
+
+    float playerSize = 100.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
         "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
@@ -23,6 +25,41 @@ void Game::LoadGame() {
 
     static Shop s = Shop();
     shop = &s;
+
+    static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    backgrounds.push_back(bg);
+
+    static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    static GameObject cloud2 = GameObject(Vector2f(0, +10), Vector2f(200, 80), false, "Assets/Textures/clouds_02.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    clouds.push_back(cloud1);
+    clouds.push_back(cloud2);
+    clouds.push_back(cloud1);
+    clouds.push_back(cloud2);
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
+    }
+
+    static GameObject ti = GameObject(Vector2f(-titlePanelGap-titlePanelWidth-titlePanelGap, 160), Vector2f(titlePanelWidth, titlePanelHeight), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    titlePanel = &ti;
+
+    Font font1;
+    if (!font1.loadFromFile("Assets/Fonts/Minecraftia.ttf"))
+        throw("COULD NOT LOAD FONT! ");
+    fonts.push_back(font1);
+
+    fpsText.setString(to_string(fps));
+    fpsText.setFont(fonts[0]);
+    fpsText.setFillColor(Color::Black);
+    fpsText.setCharacterSize(16);
+    fpsText.setPosition(windowWidth-40, 10);
+
+    pressAnyKeyToStartText.setString("Press Any Key to Start");
+    pressAnyKeyToStartText.setFont(fonts[0]);
+    pressAnyKeyToStartText.setFillColor(Color::White);
+    pressAnyKeyToStartText.setCharacterSize(25);
+    pressAnyKeyToStartText.setPosition(windowWidth/2 - 180, titlePanelHeight + 160 + 40);
+    pressAnyKeyToStartText.setStyle(Text::Bold);
+
 }
 
 
@@ -37,10 +74,107 @@ void Game::StartGameLoop() {
 
 void Game::ReInitialize() {
     deltaTime = clock.restart().asSeconds();
+    fps = 1 / deltaTime;
+
     ResetKeyboard();
     ResetMouse();
+    anyKeyPressed = anyMousePressed = false;
+
     pet->Initialize();
+    backgrounds[currentBackground].Initialize();
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].Initialize();
+    }
+    titlePanel->Initialize();
 }
+
+
+void Game::Update() {
+    
+
+    if (keyHold["W"]) {
+        pet->speed.y = -pet->maxSpeed.y;
+    }
+    if (keyHold["A"]) {
+        pet->speed.x = -pet->maxSpeed.x;
+        pet->faceRight = false;
+    }
+    if (keyHold["S"]) {
+        pet->speed.y = +pet->maxSpeed.y;
+    }
+    if (keyHold["D"]) {
+        pet->speed.x = +pet->maxSpeed.x;
+        pet->faceRight = true;
+    }
+    if (mousePress["M1"]) {
+        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
+    }
+
+
+    
+    pet->Update(deltaTime);
+    backgrounds[currentBackground].Update(deltaTime);
+    for(int i = 0 ; i < clouds.size(); ++i){
+        clouds[i].speed = Vector2f(cloudSpeed,0);
+        //cout << clouds[i].speed.x << " ";
+        
+        clouds[i].Update(deltaTime);
+        if (clouds[i].GetPosition().x > windowWidth) {
+            clouds[i].SetPosition(-((clouds.size()-2) * cloudGap), clouds[i].GetPosition().y);
+        }
+        //cout << clouds[i].GetPosition().x << " " << endl ;
+    }
+
+    titlePanel->speed.x = titlePanelSpeed;
+    titlePanel->Update(deltaTime);
+
+    if (titlePanel->GetPosition().x > titlePanelGap) {
+        titlePanelSpeed = 0;
+        titlePanel->SetPosition(titlePanelGap, 160);
+    }
+
+    string fpsString = to_string(fps);
+    fpsString.erase(fpsString.end() - 4, fpsString.end());
+    fpsText.setString(fpsString);
+
+    if (titlePanelSpeed == 0) {
+        pressAnyKeyToStartBlinkTotalTime += deltaTime;
+        if (pressAnyKeyToStartBlinkTotalTime > pressAnyKeyToStartBlinkTime) {
+            pressAnyKeyToStartBlinkTotalTime -= pressAnyKeyToStartBlinkTime;
+            pressAnyKeyToStartIsShown = !pressAnyKeyToStartIsShown;
+        }
+        if (anyKeyPressed || anyMousePressed) {
+            gameState = 1;
+        }
+    }
+    
+}
+
+void Game::Draw() {
+    window.clear(Color::Black);//Clear
+
+
+    //Draw other things
+    backgrounds[currentBackground].Draw(window);
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].Draw(window);
+    }
+
+    if (gameState == 0) {
+        titlePanel->Draw(window);
+        if (pressAnyKeyToStartIsShown) {
+            window.draw(pressAnyKeyToStartText);
+        }
+    }
+    if (gameState == 1) {
+        pet->Draw(window);
+    }
+    
+    window.draw(fpsText);
+
+    window.display();//Display
+}
+
 
 void Game::GetInput() {
     while (window.pollEvent(evnt)) {
@@ -57,12 +191,14 @@ void Game::GetInput() {
             }
             break;
         case Event::KeyPressed:
+            anyKeyPressed = true;
             CheckKeyPressRelease(&keyPress);
             break;
         case Event::KeyReleased:
             CheckKeyPressRelease(&keyRelease);
             break;
         case Event::MouseButtonPressed:
+            anyMousePressed = true;
             //CheckMousePressRelease(&mousePress);
             break;
         case Event::MouseButtonReleased:
@@ -83,38 +219,6 @@ void Game::GetInput() {
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);*/
 
-
-    
-}
-
-void Game::Update() {
-    if (keyHold["W"]) {
-        pet->speed.y = -pet->maxSpeed.y;
-    }
-    if (keyHold["A"]) {
-        pet->speed.x = -pet->maxSpeed.x;
-        pet->faceRight = false;
-    }
-    if (keyHold["S"]) {
-        pet->speed.y = +pet->maxSpeed.y;
-    }
-    if (keyHold["D"]) {
-        pet->speed.x = +pet->maxSpeed.x;
-        pet->faceRight = true;
-    }
-    if (mousePress["M1"]) {
-        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
-    }
-
-
-    pet->Update(deltaTime);
-}
-
-void Game::Draw() {
-    window.clear(Color::Black);
-    //Draw other things
-    pet->Draw(window);
-    window.display();
 }
 
 void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
@@ -212,3 +316,4 @@ void Game::ResetMouse() {
     };
     mousePress = mouseRelease = mouseResetState;
 }
+
