@@ -12,6 +12,7 @@
     <ClCompile Include="PlatformObject.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Doodle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -23,5 +24,6 @@
     <ClInclude Include="PlatformObject.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Doodle.h" />
   </ItemGroup>
 </Project>

@@ -1,13 +1,13 @@
 #include "GravityObject.h"
 
-GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float speed, float jumpHeight)
+
+GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height)
 {
-	rectangleShape = RectangleShape(dimensions);
-	rectangleShape.setPosition(position);
-	rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
-	rectangleShape.setFillColor(Color::Blue);
-	this->speed = speed;
-	this->jumpHeight = jumpHeight;
+	player.SetPosition(position);
+	player.SetDimensions(dimensions);
+	this->Height = Height;
+	this->playerX = position.x;
+	this->playerY = position.y;
 }
 
 GravityObject::~GravityObject()
@@ -15,41 +15,35 @@ GravityObject::~GravityObject()
 
 }
 
-void GravityObject::Update(float deltaTime)
+bool GravityObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 {
-	velocity.x = 0.0f;
-	if (Keyboard::isKeyPressed(Keyboard::A)) {
-		velocity.x -= speed;
-	}
-	if (Keyboard::isKeyPressed(Keyboard::D)) {
-		velocity.x += speed;
-	}
-	if (Keyboard::isKeyPressed(Keyboard::Space) && canJump) {
-		canJump = false;
-		velocity.y -= sqrt(2.0f * 981.0f * jumpHeight);
-	}
-	velocity.y += 981.0f * deltaTime;
-	cout << velocity.x << " " << velocity.y <<endl;
-	Move(velocity.x * deltaTime , velocity.y * deltaTime);
-	if (rectangleShape.getPosition().x > 720.0)
-		rectangleShape.setPosition(Vector2f(0.0f, rectangleShape.getPosition().y));
-	if (rectangleShape.getPosition().x < 0.0f)
-		rectangleShape.setPosition(Vector2f(720.0f, rectangleShape.getPosition().y));
-}
 
-void GravityObject::OnCollision(Vector2f direction)
-{
-	if (direction.x < 0.0f) {
-		velocity.x = 0.0f;
+	Vector2f thisPos = player.GetPosition();
+	Vector2f thisHalfSize = player.GetSize() / 2.0f;
+
+	float deltaX = otherPos.x - thisPos.x;
+	float deltaY = otherPos.y - thisPos.y;
+
+	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
+	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
+
+	if (intersectX < 0.0f && intersectY < 0.0f) {
+		if (intersectX > intersectY) {
+			if (deltaX > 0.0f) {
+
+			}
+			else {
+
+			}
+		}
+		else {
+			if (deltaY > 0.0f) {
+				return true;
+			}
+			else {
+				//return true;
+			}
+		}
 	}
-	else if (direction.x > 0.0f) {
-		velocity.x = 0.0f;
-	}
-	if (direction.y < 0.0f) {
-		velocity.y = 0.0f;
-		canJump = true;
-	}
-	else if(direction.y > 0.0f){
-		velocity.y = 0.0f;
-	}
+	return false;
 }

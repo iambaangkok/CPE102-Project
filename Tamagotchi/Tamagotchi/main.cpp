@@ -9,6 +9,7 @@
 #include "GravityObject.h"
 #include "Pet.h"
 #include "PlatformObject.h"
+#include "Doodle.h"
 using namespace sf;
 
 using std::cout;
@@ -38,7 +39,8 @@ void SaveGameData() {
 
 
 int main() {
-    
+    srand(time(0));
+    /*
     LoadGameData();
 
     Game tamagotchi(window, pet);
@@ -46,24 +48,27 @@ int main() {
     
     SaveGameData();
 
+    */
     
-    
-    /*RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
+    RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar);
     int frameRateLimit = 60;
     window.setFramerateLimit(60);
-
+    /*
     Vector2f maxPlayerSpeed = Vector2f(5, 5);
     Vector2f playerSpeed = Vector2f(0, 0);
+    */
     //float playerSpeed = 5.0f;
     float playerWidth = 80.0f;
     float playerHeight = 80.0f;
-    
+    /*
     //GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     //GameObject defaultGameObject;
     //GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    GravityObject Alpha(Vector2f(80.0f, 80.0f), Vector2f(playerWidth , playerHeight), 500.0f, 350.0f);
-    PlatformObject Platform(Vector2f(68.0f, 14.0f), Vector2i(windowWidth, windowHeight), 10);
-    Platform.Initialize();
+    */
+    GravityObject Alpha(Vector2f(250.0f, 151.0f), Vector2f(playerWidth , playerHeight), 150.0f);
+    PlatformObject Platform(Vector2f(100.0f, 15.0f), Vector2i(windowWidth, windowHeight), 10);
+    Doodle doodle;
+    doodle.Initialize(Platform);
     //GameObject platform(Vector2f(100.0f, 800.0f), Vector2f(1000.0f, 50.0f), true);
 
     //Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
@@ -143,24 +148,21 @@ int main() {
         ////player.Update(10,deltaTime, true);
         ////player.Update(deltaTime);
         //
-        Alpha.Update(deltaTime);
         //platform1.CheckCollision(player, 1.0f);
         
-        for (unsigned int i = 0; i < Platform.platform.size(); ++i) {
-            if (Alpha.velocity.y > 0 && Platform.platform[i].CheckCollision(Alpha, 1.0f))
-                Alpha.OnCollision(Alpha.direction);
-        }
         
         //if(platform1.CheckCollision(Alpha, 1.0f))
         //    Alpha.OnCollision(Alpha.direction);
         
         
-        
-
+        //Alpha.UpdateDoodle(deltaTime , Platform);
+        doodle.Update(Alpha , Platform , window);
+        //cout << Alpha.dy << "\n";
         /// DRAW
         window.clear(Color::Black);
-        Platform.Draw(window);
-        Alpha.Draw(window);
+        doodle.Draw(Alpha , Platform , window);
+        //Platform.Draw(window);
+        //Alpha.Draw(window);
         //defaultGameObject.Draw(window);
         //player.Draw(window);
         
@@ -177,7 +179,7 @@ int main() {
         window.display();
         //cout << deltaTime << " " << animation.switchTime << endl;
 
-    }*/
+    }
 
     return 0;
 }

@@ -13,12 +13,12 @@ public :
     PlatformObject(Vector2f size , Vector2i window, int NO_OF_PLATFORM);
     ~PlatformObject();
 
-
     void Initialize();
     void Update();
     void Draw(RenderWindow& window);
 
-    vector<GameObject> platform;
+    GameObject platform;
+    vector<Vector2f> platformPos;
     int NO_OF_PLATFORM;
     Vector2i windowSize;
     Vector2f size;
