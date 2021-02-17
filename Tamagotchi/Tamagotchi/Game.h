@@ -78,7 +78,8 @@ public:
     Text pressAnyKeyToStartText;
     
 
-    int gameState = 0; //0 = start screen, 1 = main game, 2 = doodle jump
+    int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump
+    
 
     int windowWidth = 720;
     int windowHeight = 1040;
