@@ -41,7 +41,7 @@ bool GravityObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 				return true;
 			}
 			else {
-				//return true;
+
 			}
 		}
 	}
