@@ -14,8 +14,10 @@ Game::~Game() {
 }
 
 void Game::LoadGame() {
-    float playerSize = 100.0f;
 
+    //Opensavefile, Calculate expgain foodloss etc.
+
+    float playerSize = 100.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
         "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
@@ -23,6 +25,20 @@ void Game::LoadGame() {
 
     static Shop s = Shop();
     shop = &s;
+
+    static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    backgrounds.push_back(bg);
+
+    static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    static GameObject cloud2 = GameObject(Vector2f(0, +10), Vector2f(200, 80), false, "Assets/Textures/clouds_02.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    clouds.push_back(cloud1);
+    clouds.push_back(cloud2);
+    clouds.push_back(cloud1);
+    clouds.push_back(cloud2);
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
+    }
+
 }
 
 
@@ -40,7 +56,65 @@ void Game::ReInitialize() {
     ResetKeyboard();
     ResetMouse();
     pet->Initialize();
+    backgrounds[currentBackground].Initialize();
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].Initialize();
+    }
 }
+
+
+void Game::Update() {
+    if (keyHold["W"]) {
+        pet->speed.y = -pet->maxSpeed.y;
+    }
+    if (keyHold["A"]) {
+        pet->speed.x = -pet->maxSpeed.x;
+        pet->faceRight = false;
+    }
+    if (keyHold["S"]) {
+        pet->speed.y = +pet->maxSpeed.y;
+    }
+    if (keyHold["D"]) {
+        pet->speed.x = +pet->maxSpeed.x;
+        pet->faceRight = true;
+    }
+    if (mousePress["M1"]) {
+        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
+    }
+
+    
+    pet->Update(deltaTime);
+    backgrounds[currentBackground].Update(deltaTime);
+    for(int i = 0 ; i < clouds.size(); ++i){
+        clouds[i].speed = Vector2f(cloudSpeed,0);
+        cout << clouds[i].speed.x << " ";
+        
+        clouds[i].Update(deltaTime);
+        if (clouds[i].GetPosition().x > windowWidth) {
+            cout << "True ";
+            clouds[i].SetPosition(-((clouds.size()-2) * cloudGap), clouds[i].GetPosition().y);
+        }
+        cout << clouds[i].GetPosition().x << " " << endl ;
+    }
+}
+
+void Game::Draw() {
+    window.clear(Color::Black);//Clear
+
+
+    //Draw other things
+    backgrounds[currentBackground].Draw(window);
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].Draw(window);
+    }
+
+    if (gameState == 1) {
+        pet->Draw(window);
+    }
+
+    window.display();//Display
+}
+
 
 void Game::GetInput() {
     while (window.pollEvent(evnt)) {
@@ -83,38 +157,6 @@ void Game::GetInput() {
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);*/
 
-
-    
-}
-
-void Game::Update() {
-    if (keyHold["W"]) {
-        pet->speed.y = -pet->maxSpeed.y;
-    }
-    if (keyHold["A"]) {
-        pet->speed.x = -pet->maxSpeed.x;
-        pet->faceRight = false;
-    }
-    if (keyHold["S"]) {
-        pet->speed.y = +pet->maxSpeed.y;
-    }
-    if (keyHold["D"]) {
-        pet->speed.x = +pet->maxSpeed.x;
-        pet->faceRight = true;
-    }
-    if (mousePress["M1"]) {
-        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
-    }
-
-
-    pet->Update(deltaTime);
-}
-
-void Game::Draw() {
-    window.clear(Color::Black);
-    //Draw other things
-    pet->Draw(window);
-    window.display();
 }
 
 void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
@@ -212,3 +254,4 @@ void Game::ResetMouse() {
     };
     mousePress = mouseRelease = mouseResetState;
 }
+

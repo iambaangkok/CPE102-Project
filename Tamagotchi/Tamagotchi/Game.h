@@ -53,12 +53,18 @@ public:
 
     Pet* pet;
     Shop* shop;
+    int currentBackground = 0;
+    vector<GameObject> backgrounds;
+    float cloudSpeed = 80;
+    float cloudGap = 400;
+    float cloudPosY = 350;
+    vector<GameObject> clouds;
 
 
-    int gameState = 0; //0 = main game, 1 = doodle jump, 2 = ?
+    int gameState = 0; //0 = start screen, 1 = main game, 2 = doodle jump
 
     int windowWidth = 720;
-    int windowHeight = 1040;    
+    int windowHeight = 1040;
     int frameRateLimit = 60;
     string title =  "Tamagotchi";
     
