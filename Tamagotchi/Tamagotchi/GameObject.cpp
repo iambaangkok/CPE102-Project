@@ -189,7 +189,9 @@ void GameObject::SetOrigin(float x, float y)
 }
 void GameObject::SetTexture(string texturePath) // Set texture
 {
-	rectangleShape.setTexture(&texture);
+	Texture newTexture;
+	newTexture.loadFromFile(texturePath);
+	rectangleShape.setTexture(&newTexture);
 }
 void GameObject::SetImageCount(Texture& texture,Vector2u imageCount) // Set image count
 {
@@ -214,55 +216,4 @@ void GameObject::SetFinishFrame(int x, int y)
 void GameObject::SetFrameTime(float frameTime) // Set frametime
 {
 	animation.SetFrameTime(frameTime);
-}
-
-bool GameObject::CheckCollision(GameObject& other,  float push)
-{
-
-	Vector2f otherPosition = other.GetPosition();
-	Vector2f otherHalfSize = other.GetSize() / 2.0f;
-	Vector2f thisPosition = GetPosition();
-	Vector2f thisHalfSize = GetSize() / 2.0f;
-
-	float deltaX = otherPosition.x - thisPosition.x;
-	float deltaY = otherPosition.y - thisPosition.y;
-
-	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
-	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
-	/*cout << deltaX << " " << deltaY << endl;*/
-	/*cout << intersectX << " " << intersectY << endl;*/
-
-	if (intersectX < 0.0f && intersectY < 0.0f) {
-		push = std::min(std::max(push, 0.0f), 1.0f);
-		if (intersectX > intersectY) {
-			if (deltaX > 0) {
-				Move(intersectX * (1.0f - push), 0.0f);
-				other.Move(-intersectX * push, 0.0f);
-				other.direction.x = 1.0f;
-				other.direction.y = 0.0f;
-			}
-			else {
-				Move(-intersectX * (1.0f - push), 0.0f);
-				other.Move(intersectX * push, 0.0f);
-				other.direction.x = -1.0f;
-				other.direction.y = 0.0f;
-			}
-		}
-		else {
-			if (deltaY > 0) {
-				Move(0.0f, intersectY * (1.0f - push));
-				other.Move(0.0f, -intersectY * push);
-				other.direction.x = 0.0f;
-				other.direction.y = 1.0f;
-			}
-			else {
-				Move(0.0f, -intersectY * (1.0f - push));
-				other.Move(0.0f, intersectY * push);
-				other.direction.x = 0.0f;
-				other.direction.y = -1.0f;
-			}
-		}
-		return true;
-	}
-	return false;
 }

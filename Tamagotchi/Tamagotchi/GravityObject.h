@@ -1,21 +1,19 @@
 #pragma once
 #include "GameObject.h"
-class GravityObject :
-    public GameObject
+
+class GravityObject
 {   
 public :
-    GravityObject(Vector2f position, Vector2f dimensions, float speed , float jumpHeight);
+    GravityObject(Vector2f position, Vector2f dimensions, float Height);
     ~GravityObject();
 
-    void Update(float deltaTime);
-    void OnCollision(Vector2f direction);
+    bool CheckCollision(Vector2f otherPos , Vector2f otherHalfSize);
 
-    Vector2f velocity;
-    float speed;
-    float jumpHeight;
-    bool canJump;
-    bool doodleEnabled = false;
+    GameObject player;
 
+    float dy = 0;
+    float Height;
+    float playerX, playerY;
 private :
 
 

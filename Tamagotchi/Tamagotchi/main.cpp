@@ -9,6 +9,7 @@
 #include "GravityObject.h"
 #include "Pet.h"
 #include "PlatformObject.h"
+#include "Doodle.h"
 #include "Button.h"
 #include "Item.h"
 #include "Shop.h"
@@ -38,7 +39,8 @@ void SaveGameData() {
 
 
 int main() {
-    
+    srand(time(0));
+    /*
     LoadGameData();
 
     Game tamagotchi(window);
@@ -47,6 +49,7 @@ int main() {
     
     SaveGameData();
 
+    */
     
     
     //RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
