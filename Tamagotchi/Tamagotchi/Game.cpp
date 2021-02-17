@@ -39,8 +39,27 @@ void Game::LoadGame() {
         clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
     }
 
-    static GameObject ti = GameObject(Vector2f(-50-640-50, 160), Vector2f(640, 250), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    static GameObject ti = GameObject(Vector2f(-titlePanelGap-titlePanelWidth-titlePanelGap, 160), Vector2f(titlePanelWidth, titlePanelHeight), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     titlePanel = &ti;
+
+    Font font1;
+    if (!font1.loadFromFile("Assets/Fonts/Minecraftia.ttf"))
+        throw("COULD NOT LOAD FONT! ");
+    fonts.push_back(font1);
+
+    fpsText.setString(to_string(fps));
+    fpsText.setFont(fonts[0]);
+    fpsText.setFillColor(Color::Black);
+    fpsText.setCharacterSize(16);
+    fpsText.setPosition(windowWidth-40, 10);
+
+    pressAnyKeyToStartText.setString("Press Any Key to Start");
+    pressAnyKeyToStartText.setFont(fonts[0]);
+    pressAnyKeyToStartText.setFillColor(Color::White);
+    pressAnyKeyToStartText.setCharacterSize(25);
+    pressAnyKeyToStartText.setPosition(windowWidth/2 - 180, titlePanelHeight + 160 + 40);
+    pressAnyKeyToStartText.setStyle(Text::Bold);
+
 }
 
 
@@ -55,8 +74,12 @@ void Game::StartGameLoop() {
 
 void Game::ReInitialize() {
     deltaTime = clock.restart().asSeconds();
+    fps = 1 / deltaTime;
+
     ResetKeyboard();
     ResetMouse();
+    anyKeyPressed = anyMousePressed = false;
+
     pet->Initialize();
     backgrounds[currentBackground].Initialize();
     for (int i = 0; i < clouds.size(); ++i) {
@@ -67,6 +90,8 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
+    
+
     if (keyHold["W"]) {
         pet->speed.y = -pet->maxSpeed.y;
     }
@@ -91,23 +116,38 @@ void Game::Update() {
     backgrounds[currentBackground].Update(deltaTime);
     for(int i = 0 ; i < clouds.size(); ++i){
         clouds[i].speed = Vector2f(cloudSpeed,0);
-        cout << clouds[i].speed.x << " ";
+        //cout << clouds[i].speed.x << " ";
         
         clouds[i].Update(deltaTime);
         if (clouds[i].GetPosition().x > windowWidth) {
-            cout << "True ";
             clouds[i].SetPosition(-((clouds.size()-2) * cloudGap), clouds[i].GetPosition().y);
         }
-        cout << clouds[i].GetPosition().x << " " << endl ;
+        //cout << clouds[i].GetPosition().x << " " << endl ;
     }
 
     titlePanel->speed.x = titlePanelSpeed;
     titlePanel->Update(deltaTime);
 
-    if (titlePanel->GetPosition().x > 50) {
+    if (titlePanel->GetPosition().x > titlePanelGap) {
         titlePanelSpeed = 0;
-        titlePanel->SetPosition(50, 160);
+        titlePanel->SetPosition(titlePanelGap, 160);
     }
+
+    string fpsString = to_string(fps);
+    fpsString.erase(fpsString.end() - 4, fpsString.end());
+    fpsText.setString(fpsString);
+
+    if (titlePanelSpeed == 0) {
+        pressAnyKeyToStartBlinkTotalTime += deltaTime;
+        if (pressAnyKeyToStartBlinkTotalTime > pressAnyKeyToStartBlinkTime) {
+            pressAnyKeyToStartBlinkTotalTime -= pressAnyKeyToStartBlinkTime;
+            pressAnyKeyToStartIsShown = !pressAnyKeyToStartIsShown;
+        }
+        if (anyKeyPressed || anyMousePressed) {
+            gameState = 1;
+        }
+    }
+    
 }
 
 void Game::Draw() {
@@ -120,12 +160,17 @@ void Game::Draw() {
         clouds[i].Draw(window);
     }
 
+    if (gameState == 0) {
+        titlePanel->Draw(window);
+        if (pressAnyKeyToStartIsShown) {
+            window.draw(pressAnyKeyToStartText);
+        }
+    }
     if (gameState == 1) {
         pet->Draw(window);
     }
-    if (gameState == 0) {
-        titlePanel->Draw(window);
-    }
+    
+    window.draw(fpsText);
 
     window.display();//Display
 }
@@ -146,12 +191,14 @@ void Game::GetInput() {
             }
             break;
         case Event::KeyPressed:
+            anyKeyPressed = true;
             CheckKeyPressRelease(&keyPress);
             break;
         case Event::KeyReleased:
             CheckKeyPressRelease(&keyRelease);
             break;
         case Event::MouseButtonPressed:
+            anyMousePressed = true;
             //CheckMousePressRelease(&mousePress);
             break;
         case Event::MouseButtonReleased:

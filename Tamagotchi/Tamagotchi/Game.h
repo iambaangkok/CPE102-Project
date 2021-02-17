@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <set>
 #include <utility>
+#include <cmath>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
@@ -47,20 +48,35 @@ public:
     void ResetKeyboard();
     void ResetMouse();
 
-
-
-
+   
 
     Pet* pet;
     Shop* shop;
+
     int currentBackground = 0;
     vector<GameObject> backgrounds;
+
     float cloudSpeed = 80;
     float cloudGap = 400;
     float cloudPosY = 350;
     vector<GameObject> clouds;
-    float titlePanelSpeed = 120;
+
+    float titlePanelSpeed = 150;
+    float titlePanelWidth = 610;
+    float titlePanelGap = 70;
+    float titlePanelHeight = ceil((float)(titlePanelWidth * 250 / 640)/10) * 10;
     GameObject* titlePanel;
+
+    vector<Font> fonts;
+
+    float fps = 0;
+    Text fpsText;
+
+    float pressAnyKeyToStartBlinkTime = 1.5f; //x seconds;
+    float pressAnyKeyToStartBlinkTotalTime = 0;
+    bool pressAnyKeyToStartIsShown = false;
+    Text pressAnyKeyToStartText;
+    
 
     int gameState = 0; //0 = start screen, 1 = main game, 2 = doodle jump
 
@@ -81,6 +97,8 @@ public:
     Vector2i mousePosition = Vector2i(0, 0);
     int mouseWheelDelta = 0;
 
+    bool anyKeyPressed = false;
+    bool anyMousePressed = false;
     
     unordered_map<string, bool> keyPress = { //1 Only when the first frame that the key is pressed
         {"W",0},{"A",0},{"S",0},{"D",0},
