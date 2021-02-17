@@ -45,22 +45,24 @@ int main() {
 
     
     
-    //RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
-    //int frameRateLimit = 60;
-    //window.setFramerateLimit(60);
+    RenderWindow window(VideoMode(windowWidth, windowHeight), "Tamagotchi", Style::Close | Style::Titlebar | Style::Resize);
+    int frameRateLimit = 60;
+    window.setFramerateLimit(60);
 
     //Vector2f maxPlayerSpeed = Vector2f(5, 5);
     //Vector2f playerSpeed = Vector2f(0, 0);
     ////float playerSpeed = 5.0f;
-    //float playerWidth = 80.0f;
-    //float playerHeight = 80.0f;
+    float playerWidth = 80.0f;
+    float playerHeight = 80.0f;
     //
     ////GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     ////GameObject defaultGameObject;
     ////GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    //GravityObject Alpha(Vector2f(80.0f, 80.0f), Vector2f(playerWidth , playerHeight), 500.0f, 350.0f);
-    //PlatformObject Platform(Vector2f(68.0f, 14.0f), Vector2i(windowWidth, windowHeight), 10);
+    GravityObject Alpha(Vector2f(360.0f, 80.0f), Vector2f(playerWidth , playerHeight), 350.0f);
+    PlatformObject Platform(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 10);
     //Platform.Initialize();
+    Doodle doodle;
+    doodle.Initialize(Platform);
     ////GameObject platform(Vector2f(100.0f, 800.0f), Vector2f(1000.0f, 50.0f), true);
 
     ////Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
@@ -87,10 +89,10 @@ int main() {
     //colorVector.push_back(Color::Cyan);
     //Button testButton(Vector2f(20, 20), Vector2f(545, 566), true, "Assets/Textures/testbutton.jpg", Vector2u(1, 1), Vector2i(1, 1), Vector2i(1, 1), 100, colorVector, "Button", 0, "Dont know");
 
-    //while (window.isOpen()) { //GAMELOOP
+    while (window.isOpen()) { //GAMELOOP
     //    ///INITIALIZE
-    //    deltaTime = clock.restart().asSeconds();
-    //    Event evnt;
+          //deltaTime = clock.restart().asSeconds();
+          Event evnt;
     //    
     //    //player.Initialize();
     //    
@@ -99,23 +101,23 @@ int main() {
     //    ///  GET INPUT
     //    tamagotchi.ReInitialize();
     //    tamagotchi.GetInput();
-    //    while (window.pollEvent(evnt)) {
+          while (window.pollEvent(evnt)) {
 
-    //        switch (evnt.type) {
-    //        case Event::Closed:
-    //            window.close();
-    //            break;
-    //        case Event::Resized:
-    //            cout << evnt.size.width << " " << evnt.size.height << endl;
-    //            break;
-    //        case Event::TextEntered:
-    //            if (evnt.text.unicode < 128) {
-    //                cout << (char)evnt.text.unicode;
-    //            }
+              switch (evnt.type) {
+              case Event::Closed:
+                  window.close();
+                  break;
+              case Event::Resized:
+                  cout << evnt.size.width << " " << evnt.size.height << endl;
+                  break;
+              case Event::TextEntered:
+                  if (evnt.text.unicode < 128) {
+                      cout << (char)evnt.text.unicode;
+                  }
 
-    //        }
+              }
 
-    //    }
+          }
     //    
     //    //if (Keyboard::isKeyPressed(Keyboard::W)) {
     //    //    //playerSpeed.y = -maxPlayerSpeed.y;
@@ -165,7 +167,8 @@ int main() {
     //    
 
     //    /// DRAW
-    //    window.clear(Color::Black);
+          window.clear(Color::Black);
+          doodle.Update(Alpha, Platform, window);
     //    tamagotchi.Draw();
     //    testButton.Draw(window);
 
@@ -181,13 +184,13 @@ int main() {
     //    //}
     //    
     //    //platform1.Draw(window);
-
+          doodle.Draw(Alpha, Platform, window);
     //    window.draw(text);
 
-    //    window.display();
+          window.display();
     //    //cout << deltaTime << " " << animation.switchTime << endl;
 
-    //    }
+    }
 
     return 0;
 }
