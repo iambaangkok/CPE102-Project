@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Item.h"
 using std::vector;
+class Item;
 
 class Pet :
     public GameObject
@@ -30,8 +31,12 @@ public:
 
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-
-	void UseItem(Item item); //Use Item
+	/*int a = 10;
+	int aCHange = 10;
+	int aMax = 15;
+	a += aChange;
+	Clamp(&a, aMax);*/
+	void UseItem(int itemID); //Use Item
 
 
 	bool isAlive = true;
@@ -59,7 +64,7 @@ public:
 	vector<Item>  inventory;
 
 
-private:
+//private:
 	float totalTime = 0;
 	int tickTime = 1;
 

@@ -1,5 +1,7 @@
 #include "Button.h"
-
+#include "Game.h"
+using std::cout;
+using std::endl;
 Button::Button() {
 
 }
@@ -24,7 +26,7 @@ void Button::Initialize() {
 
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Button::Update(float deltaTime,RenderWindow window) {
+void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress) {
 	if (!enabled) {
 		return;
 	}
@@ -35,6 +37,7 @@ void Button::Update(float deltaTime,RenderWindow window) {
 	else {
 		rectangleShape.setScale(Vector2f(-1, 1));
 	}
+	rectangleShape.setFillColor(color[0]);
 	rectangleShape.setTextureRect(animation.uvRect);
 	//rectangleShape.setTexture(&texture);
 	Vector2i mousePos = Mouse::getPosition(window);
@@ -46,6 +49,16 @@ void Button::Update(float deltaTime,RenderWindow window) {
 	float x2 = posi.x + dimen.x / 2;
 	float y2 = posi.y + dimen.y / 2;
 	Vector2f b = Vector2f(x2, y2);
-	
+	if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y && mousePress["M1"]) {
+		status = 2;
+		rectangleShape.setFillColor(color[2]);
+	}
+	else if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y) {
+		status = 1;
+		rectangleShape.setFillColor(color[1]);
+	}
+	else status = 0;
 
+
+	cout << mousePos.x << " " << mousePos.y << " " << mousePress["M1"] << " " << a.x << " " << a.y << " " << b.x << " " << b.y << " " << status << endl;
 }

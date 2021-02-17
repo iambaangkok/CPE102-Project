@@ -10,9 +10,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="PlatformObject.cpp" />
-    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Doodle.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -22,8 +23,9 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="PlatformObject.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Doodle.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="Button.h" />
   </ItemGroup>
 </Project>

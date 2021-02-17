@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObject.h"
+#include "Pet.h"
+class Pet;
+
 class Item :
     public GameObject
 {
@@ -15,11 +18,13 @@ public:
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime); //Proper Animation
 	Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, 
 		string type,string name,int itemId,int prince, string description, int hpChange, bool evoStone,
-		int foodChange, int happinessChange, bool minigameLife, float xpCoupon);//Item in shop.
+		int foodChange, int happinessChange, bool minigameLife, float xpCoupon,int poopChange);//Item in shop.
 	Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
 		string name);
-
+	
 	~Item();
+	
+	void UseItem(Pet *pet);
 
 	string type;
 	string name;
@@ -32,7 +37,7 @@ public:
 	int happinessChange;
 	bool minigameLife;
 	float xpCoupon;
-	
+	int poopChange;
 	
 };
 
