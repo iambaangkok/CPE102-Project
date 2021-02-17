@@ -19,9 +19,9 @@ void Doodle::Initialize(PlatformObject& Platform)
 void Doodle::Update(GravityObject& Alpha, PlatformObject& Platform, RenderWindow& window)
 {
 	if (Keyboard::isKeyPressed(Keyboard::A))
-		Alpha.playerX -= 4;
+		Alpha.playerX -= 8;
 	if (Keyboard::isKeyPressed(Keyboard::D))
-		Alpha.playerX += 4;
+		Alpha.playerX += 8;
 	
 	if (Alpha.playerX > 720)
 		Alpha.playerX = 0;
@@ -48,7 +48,8 @@ void Doodle::Update(GravityObject& Alpha, PlatformObject& Platform, RenderWindow
 
 	for (unsigned int i = 0; i < Platform.NO_OF_PLATFORM; ++i) {
 		if (Alpha.CheckCollision(Platform.platformPos[i], Platform.platform.GetSize() / 2.0f) && Alpha.dy > 0.0f) {
-			Alpha.dy -= 25.0f;
+			Alpha.dy = 0;
+			Alpha.dy -= 20.0f;
 		}
 	}
 	cout << Alpha.dy << "\n";
