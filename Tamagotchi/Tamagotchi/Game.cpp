@@ -39,6 +39,8 @@ void Game::LoadGame() {
         clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
     }
 
+    static GameObject ti = GameObject(Vector2f(-50-640-50, 160), Vector2f(640, 250), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    titlePanel = &ti;
 }
 
 
@@ -60,6 +62,7 @@ void Game::ReInitialize() {
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Initialize();
     }
+    titlePanel->Initialize();
 }
 
 
@@ -82,6 +85,7 @@ void Game::Update() {
         pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
     }
 
+
     
     pet->Update(deltaTime);
     backgrounds[currentBackground].Update(deltaTime);
@@ -95,6 +99,14 @@ void Game::Update() {
             clouds[i].SetPosition(-((clouds.size()-2) * cloudGap), clouds[i].GetPosition().y);
         }
         cout << clouds[i].GetPosition().x << " " << endl ;
+    }
+
+    titlePanel->speed.x = titlePanelSpeed;
+    titlePanel->Update(deltaTime);
+
+    if (titlePanel->GetPosition().x > 50) {
+        titlePanelSpeed = 0;
+        titlePanel->SetPosition(50, 160);
     }
 }
 
@@ -110,6 +122,9 @@ void Game::Draw() {
 
     if (gameState == 1) {
         pet->Draw(window);
+    }
+    if (gameState == 0) {
+        titlePanel->Draw(window);
     }
 
     window.display();//Display

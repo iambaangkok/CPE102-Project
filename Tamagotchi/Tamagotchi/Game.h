@@ -59,7 +59,8 @@ public:
     float cloudGap = 400;
     float cloudPosY = 350;
     vector<GameObject> clouds;
-
+    float titlePanelSpeed = 120;
+    GameObject* titlePanel;
 
     int gameState = 0; //0 = start screen, 1 = main game, 2 = doodle jump
 
