@@ -98,6 +98,10 @@ GameObject::~GameObject() {
 
 }
 
+void GameObject::Initialize() {
+	speed = Vector2f(0, 0);
+}
+
 void GameObject::Update(float deltaTime) { // Proper Animation
 	if (!enabled) {
 		return;
@@ -110,6 +114,7 @@ void GameObject::Update(float deltaTime) { // Proper Animation
 		rectangleShape.setScale(Vector2f(-1, 1));
 	}
 	rectangleShape.setTextureRect(animation.uvRect);
+	Move(speed.x * deltaTime, speed.y * deltaTime);
 	//rectangleShape.setTexture(&texture);
 }
 
@@ -162,14 +167,25 @@ void GameObject::SetPosition(Vector2f position) // Set Position
 {
 	rectangleShape.setPosition(position);
 }
+void GameObject::SetPosition(float x, float y)
+{
+	rectangleShape.setPosition(Vector2f(x,y));
+}
 void GameObject::SetDimensions(Vector2f dimensions) // Set dimension
 {
 	rectangleShape.setSize(dimensions);
-
+}
+void GameObject::SetDimensions(float x, float y) 
+{
+	rectangleShape.setSize(Vector2f(x, y));
 }
 void GameObject::SetOrigin(Vector2f origin) // Set origin
 {
 	rectangleShape.setOrigin(origin);
+}
+void GameObject::SetOrigin(float x, float y)
+{
+	rectangleShape.setOrigin(Vector2f(x, y));
 }
 void GameObject::SetTexture(string texturePath) // Set texture
 {
@@ -183,9 +199,17 @@ void GameObject::SetStartFrame(Vector2i start) // Set 1st Frame
 {
 	animation.SetStartFrame(start);
 }
+void GameObject::SetStartFrame(int x, int y)
+{
+	animation.SetStartFrame(Vector2i(x, y));
+}
 void GameObject::SetFinishFrame(Vector2i finish) // Set last frame
 {
 	animation.SetFinishFrame(finish);
+}
+void GameObject::SetFinishFrame(int x, int y)
+{
+	animation.SetFinishFrame(Vector2i(x, y));
 }
 void GameObject::SetFrameTime(float frameTime) // Set frametime
 {
