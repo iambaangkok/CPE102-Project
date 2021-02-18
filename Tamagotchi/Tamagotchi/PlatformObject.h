@@ -21,6 +21,7 @@ public :
     vector<Vector2f> platformPos;
     vector<bool> enabled;
     int NO_OF_PLATFORM;
+    int prev = 0;
     Vector2i windowSize;
     Vector2f size;
 

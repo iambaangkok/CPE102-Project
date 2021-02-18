@@ -53,13 +53,13 @@ int main() {
     //Vector2f maxPlayerSpeed = Vector2f(5, 5);
     //Vector2f playerSpeed = Vector2f(0, 0);
     ////float playerSpeed = 5.0f;
-    float playerWidth = 80.0f;
-    float playerHeight = 80.0f;
+    float playerWidth = 115.0f;
+    float playerHeight = 115.0f;
     //
     ////GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     ////GameObject defaultGameObject;
     ////GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    GravityObject Alpha(Vector2f(360.0f, 80.0f), Vector2f(playerWidth , playerHeight), 400.0f);
+    GravityObject Alpha(Vector2f(360.0f, 80.0f), Vector2f(playerWidth , playerHeight), 400.0f , "Assets/Textures/Sprite2.png");
     PlatformObject Platform(Vector2f(100.0f, 14.0f), Vector2i(windowWidth, windowHeight), 10);
     //Platform.Initialize();
     Doodle doodle;
@@ -168,7 +168,7 @@ int main() {
     //    
 
     //    /// DRAW
-          window.clear(Color::Black);
+          window.clear(Color::Blue);
           doodle.Update(Alpha, Platform, window);
     //    tamagotchi.Draw();
     //    testButton.Draw(window);

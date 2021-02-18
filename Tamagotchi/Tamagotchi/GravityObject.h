@@ -4,7 +4,7 @@
 class GravityObject
 {   
 public :
-    GravityObject(Vector2f position, Vector2f dimensions, float Height);
+    GravityObject(Vector2f position, Vector2f dimensions, float Height , string filepath);
     ~GravityObject();
 
     bool CheckCollision(Vector2f otherPos , Vector2f otherHalfSize);

@@ -2,6 +2,7 @@
 
 #include "GravityObject.h"
 #include "PlatformObject.h"
+#include <SFML/Audio.hpp>
 
 class Doodle
 {
@@ -15,13 +16,21 @@ public :
 
 	Font font;
 	Text scoreText;
+	Sprite background;
+	Texture backgroundtexture;
 
+	SoundBuffer buffer , buffer2;
+	Sound sound;
+	Sound music;
+	
 	int windowWidth = 720;
 	int windowHeight = 1040;
 
 	int difficulty = 0;
 
 	int score = 0;
+
+	bool gameover = false;
 
 };
 

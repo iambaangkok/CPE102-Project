@@ -1,9 +1,9 @@
 #include "GravityObject.h"
 
 
-GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height)
+GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath)
 {
-	playertexture.loadFromFile("Assets/Textures/doodle3.png");
+	playertexture.loadFromFile("Assets/Textures/Sprite2.png");
 	player.rectangleShape.setTexture(&playertexture, true);
 	player.SetPosition(position);
 	player.SetDimensions(dimensions);
