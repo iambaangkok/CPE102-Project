@@ -8,10 +8,9 @@ Button::Button() {
 
 Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
     string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime
-    , vector<Color> color, string text, int status, string type)
+    ,string text, int status, string type)
     : GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
-    this->color = color;
     this->text = text;
     this->status = status;
     this->type = type;
@@ -37,7 +36,6 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	else {
 		rectangleShape.setScale(Vector2f(-1, 1));
 	}
-	rectangleShape.setFillColor(color[0]);
 	rectangleShape.setTextureRect(animation.uvRect);
 	//rectangleShape.setTexture(&texture);
 	Vector2i mousePos = Mouse::getPosition(window);
@@ -50,15 +48,21 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	float y2 = posi.y + dimen.y / 2;
 	Vector2f b = Vector2f(x2, y2);
 	if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y && mousePress["M1"]) {
-		status = 2;
-		rectangleShape.setFillColor(color[2]);
+		OnClick();
 	}
 	else if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y) {
-		status = 1;
-		rectangleShape.setFillColor(color[1]);
+		OnHover();
 	}
 	else status = 0;
 
+}
 
-	cout << mousePos.x << " " << mousePos.y << " " << mousePress["M1"] << " " << a.x << " " << a.y << " " << b.x << " " << b.y << " " << status << endl;
+void Button::OnClick() {
+	status = 2;
+	animation.SetFrame();
+}
+
+void Button::OnHover() {
+	status = 1;
+	animation.SetFrame();
 }
