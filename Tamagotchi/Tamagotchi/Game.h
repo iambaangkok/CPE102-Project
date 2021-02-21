@@ -52,6 +52,8 @@ public:
 
     Pet* pet;
     Shop* shop;
+    Button* shopBut;
+    Button* miniBut;
 
     int currentBackground = 0;
     vector<GameObject> backgrounds;
