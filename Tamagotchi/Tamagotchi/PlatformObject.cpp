@@ -17,21 +17,18 @@ PlatformObject::PlatformObject(Vector2f size, Vector2i windowSize, int NO_OF_PLA
 	
 	platform.SetDimensions(size);
 	platform.SetOrigin(size / 2.0f);
+
+	int part = 1040 / NO_OF_PLATFORM;
+	for (unsigned int i = 0; i < NO_OF_PLATFORM; ++i) {
+		float ux = (rand() % (720 - 2 * (int)size.x)) + size.x;
+		float uy = rand() % (part - 30) + 15 + i * part;
+		platformPos.push_back(Vector2f(ux, uy));
+		enabled.push_back(true);
+	}
 }
 
 PlatformObject::~PlatformObject()
 {
-}
-
-void PlatformObject::Initialize()
-{
-	int part = 1040 / NO_OF_PLATFORM;
-	for (unsigned int i = 0; i < NO_OF_PLATFORM; ++i) {
-		float ux = (rand() % (720 - 2 * (int)size.x)) + size.x;
-		float uy = rand() % (part - 30) + 15 + i*part; 
-		platformPos.push_back(Vector2f(ux, uy));
-		enabled.push_back(true);
-	}
 }
 
 void PlatformObject::Draw(RenderWindow& window , int difficulty)

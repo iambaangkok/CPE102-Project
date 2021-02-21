@@ -3,7 +3,7 @@
 
 GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath)
 {
-	playertexture.loadFromFile("Assets/Textures/Sprite2.png");
+	playertexture.loadFromFile(filepath);
 	player.rectangleShape.setTexture(&playertexture, true);
 	player.SetPosition(position);
 	player.SetDimensions(dimensions);

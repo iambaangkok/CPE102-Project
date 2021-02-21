@@ -59,11 +59,9 @@ int main() {
     ////GameObject player(Vector2f(0, 0), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16,11), Vector2i(13, 10));
     ////GameObject defaultGameObject;
     ////GameObject player(Vector2f(100, 100), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png");
-    GravityObject Alpha(Vector2f(360.0f, 80.0f), Vector2f(playerWidth , playerHeight), 400.0f , "Assets/Textures/Sprite2.png");
-    PlatformObject Platform(Vector2f(100.0f, 14.0f), Vector2i(windowWidth, windowHeight), 10);
-    //Platform.Initialize();
+    
     Doodle doodle;
-    doodle.Initialize(Platform);
+    doodle.Initialize();
     ////GameObject platform(Vector2f(100.0f, 800.0f), Vector2f(1000.0f, 50.0f), true);
 
     ////Pet player(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerWidth, playerHeight), true, "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
@@ -111,11 +109,11 @@ int main() {
               case Event::Resized:
                   cout << evnt.size.width << " " << evnt.size.height << endl;
                   break;
-              case Event::TextEntered:
+              /*case Event::TextEntered:
                   if (evnt.text.unicode < 128) {
                       cout << (char)evnt.text.unicode;
                   }
-
+                */
               }
 
           }
@@ -169,7 +167,7 @@ int main() {
 
     //    /// DRAW
           window.clear(Color::Blue);
-          doodle.Update(Alpha, Platform, window);
+          doodle.Update(window);
     //    tamagotchi.Draw();
     //    testButton.Draw(window);
 
@@ -186,7 +184,7 @@ int main() {
     //    
     //    //platform1.Draw(window);
           
-          doodle.Draw(Alpha, Platform, window);
+          doodle.Draw(window);
     //    window.draw(text);
           
           window.display();
