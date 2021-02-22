@@ -20,16 +20,19 @@ public:
 		Button food, Button dessert, Button booster); */
 	~Shop();
 	void Initialize();
-	void Update(float detatime );
+	void Update(float deltaTime,int mouseWheelDelta );
 	void Draw(RenderWindow &window);
 
+
+
+
+	float speedscroll = 300;
 	bool isOpen = false;
 	int windowWidth = 720;
 	int windowHeight = 1040;
-	int topscroll = 0; // ระดับของแท่งเลื่อน
-	int lowscroll = 100;
+	int topscroll = 0;
+	int lowscroll = 200;
 	Vector2f position = Vector2f(0,0);
-
 	vector<Item> items;
 	vector<Text> descriptions;
 	vector<Text> prices;

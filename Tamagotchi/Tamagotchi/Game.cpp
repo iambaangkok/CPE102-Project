@@ -91,6 +91,8 @@ void Game::ReInitialize() {
     ResetKeyboard();
     ResetMouse();
     anyKeyPressed = anyMousePressed = false;
+    mouseWheelDelta = 0;
+
 
     pet->Initialize();
     backgrounds[currentBackground].Initialize();
@@ -164,6 +166,7 @@ void Game::Update() {
     miniBut->Update(deltaTime, window, mousePress);
 
     
+    shop->Update( deltaTime, mouseWheelDelta);
 }
 
 void Game::Draw() {
@@ -195,6 +198,7 @@ void Game::Draw() {
     window.draw(fpsText);
 
     window.display();//Display
+
 }
 
 
@@ -226,14 +230,15 @@ void Game::GetInput() {
         case Event::MouseButtonReleased:
             //CheckMousePressRelease(&mouseRelease);
             break;
-        case Event::MouseWheelMoved:
-            mouseWheelDelta = evnt.mouseWheel.delta;
+        case Event::MouseWheelScrolled:
+            mouseWheelDelta = evnt.mouseWheelScroll.delta;
             break;
         case Event::MouseMoved:
             mousePosition = Mouse::getPosition(window);
             break;
         }
     }
+    //mouseWheelDelta = evnt.mouseWheelScroll.delta;
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);
     CheckKeyPressRelease(&keyHold);
