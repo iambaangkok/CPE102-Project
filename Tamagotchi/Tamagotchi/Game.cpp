@@ -166,6 +166,9 @@ void Game::Draw() {
 
     //Draw other things
     backgrounds[currentBackground].Draw(window);
+    
+    shop->Draw(window);
+
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
     }
@@ -228,9 +231,7 @@ void Game::GetInput() {
     /*CheckKeyPressRelease(&keyRelease);
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);*/
-
 }
-
 void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
     int state = true;
     if (Keyboard::isKeyPressed(Keyboard::W)) {
