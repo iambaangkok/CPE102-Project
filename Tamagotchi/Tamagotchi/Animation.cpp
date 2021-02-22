@@ -170,8 +170,8 @@ void Animation::SetTexture(Texture* texture) {
 
 void Animation::SetFrame(Vector2i imageCoordinate) {
     cout << "SETFRAME " << imageCoordinate.x << ", " << imageCoordinate.y << endl;
-    currentImage.x = currentImage.x + imageCoordinate.x;
-    currentImage.y = currentImage.y + imageCoordinate.y;
+    currentImage.x = imageCoordinate.x;
+    currentImage.y = imageCoordinate.y;
     uvRect.left = currentImage.x * uvRect.width;
     uvRect.top = currentImage.y * uvRect.height;
 }
