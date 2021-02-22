@@ -23,6 +23,7 @@ public:
 	void Update(float detatime );
 	void Draw(RenderWindow &window);
 
+	bool isOpen = false;
 	int windowWidth = 720;
 	int windowHeight = 1040;
 	int topscroll = 0; // ระดับของแท่งเลื่อน

@@ -40,7 +40,13 @@ Shop::~Shop() {
 
 
 void Shop::Draw(RenderWindow &window) {
-    bg->Draw(window);
-    scrollbar->Draw(window);
+    if (isOpen) {
+        bg->Draw(window);
+        scrollbar->Draw(window);
+    }
+    else {
+
+    }
+    
 
 }
