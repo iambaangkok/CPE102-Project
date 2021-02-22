@@ -8,12 +8,14 @@ Button::Button() {
 
 Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
     string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime
-    ,string text, int status, string type)
+    ,string text, int status, string type,int &gstate,bool &shopIsOpen)
     : GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
     this->text = text;
     this->status = status;
     this->type = type;
+	this->gstate = &gstate;
+	this->shopIsOpen = &shopIsOpen;
 }
 //Proper Animation
 
@@ -59,10 +61,23 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 void Button::OnClick() {
 	status = 2;
-	animation.SetFrame();
+	animation.SetFrame(Vector2i(2,0));
+	if (type == "MAIN") {
+		*gstate = 0;
+	}
+	else if (type == "SHOP") {
+		if (*shopIsOpen == false) *shopIsOpen = true;
+		else *shopIsOpen = false;
+	}
+	else if (type == "MINIGAME") {
+		*gstate = 1;
+	}
+	else if (type == "SETTING") {
+		*gstate = 2;
+	}
 }
 
 void Button::OnHover() {
 	status = 1;
-	animation.SetFrame();
+	animation.SetFrame(Vector2i(1,0));
 }

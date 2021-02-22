@@ -26,14 +26,16 @@ void Game::LoadGame() {
     static Shop s = Shop();
     shop = &s;
 
-    static Button sB = Button(Vector2f(210,890), Vector2f(210,890), false,
+    static Button sB = Button(Vector2f(210,890), Vector2f(130,80), false,
         "Assets/Textures/testbutton2.png", Vector2u(4,1), Vector2i(0,0), Vector2i(0,0),1
-        ,"sB", 0 , "SHOPBUTTON");
+        ,"sB", 0 , "SHOPBUTTON",gameState,shop->isOpen);
+    sB.animation.freezeFrame = true;
     shopBut = &sB;
 
-    static Button mnB = Button(Vector2f(380, 890), Vector2f(380, 890), false,
+    static Button mnB = Button(Vector2f(380, 890), Vector2f(130,80), false,
         "Assets/Textures/testbutton2.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "mnB", 0, "MINIGAMEBUTTON");
+        , "mnB", 0, "MINIGAMEBUTTON", gameState, shop->isOpen);
+    mnB.animation.freezeFrame = true;
     miniBut = &mnB;
 
     static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
@@ -157,6 +159,10 @@ void Game::Update() {
             gameState = 1;
         }
     }
+
+    shopBut->Update(deltaTime, window, mousePress);
+    miniBut->Update(deltaTime, window, mousePress);
+
     
 }
 
@@ -183,6 +189,9 @@ void Game::Draw() {
         pet->Draw(window);
     }
     
+    shopBut->Draw(window);
+    miniBut->Draw(window);
+
     window.draw(fpsText);
 
     window.display();//Display
