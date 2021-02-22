@@ -35,9 +35,13 @@ void SaveGameData() {
 
 
 int main() {
+<<<<<<< Updated upstream
 
     srand(time(0));
 
+=======
+    
+>>>>>>> Stashed changes
     LoadGameData();
 
     Game tamagotchi(window);
@@ -45,6 +49,10 @@ int main() {
     tamagotchi.StartGameLoop();
     
     SaveGameData();
+<<<<<<< Updated upstream
 
+=======
+    
+>>>>>>> Stashed changes
     return 0;
 }
