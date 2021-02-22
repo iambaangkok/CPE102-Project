@@ -25,13 +25,22 @@ Shop::Shop() {
         descriptions.push_back(description);
     }
 
+    static GameObject bgr = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false,"Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    bg = &bgr;
 
-
-
+    static GameObject scroll = GameObject(Vector2f(500, 0), Vector2f(200, 550), false, "Assets/Textures/platform.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    scrollbar = &scroll;
 
 }
 
 
 Shop::~Shop() {
+
+}
+
+
+void Shop::Draw(RenderWindow &window) {
+    bg->Draw(window);
+    scrollbar->Draw(window);
 
 }
