@@ -24,10 +24,9 @@ Button::~Button() {
 }
 
 void Button::Initialize() {
-
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress) {
+void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition) {
 	if (!enabled) {
 		return;
 	}
@@ -39,29 +38,26 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 		rectangleShape.setScale(Vector2f(-1, 1));
 	}
 	rectangleShape.setTextureRect(animation.uvRect);
-	//rectangleShape.setTexture(&texture);
-	Vector2i mousePos = Mouse::getPosition(window);
-	Vector2f posi = GetPosition();
-	Vector2f dimen = GetDimensions();
-	float x1 = posi.x - dimen.x / 2;
-	float y1 = posi.y - dimen.y / 2;
-	Vector2f a = Vector2f(x1,y1);
-	float x2 = posi.x + dimen.x / 2;
-	float y2 = posi.y + dimen.y / 2;
-	Vector2f b = Vector2f(x2, y2);
-	if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y && mousePress["M1"]) {
+
+
+	
+	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
 		OnClick();
 	}
-	else if (mousePos.x > a.x && mousePos.x < b.x && mousePos.y > a.y && mousePos.y < b.y) {
+	else if (IsMouseOver(mousePosition)) {
 		OnHover();
 	}
-	else status = 0;
+	else {
+		status = 0;
+	}
+
+	animation.SetFrame(Vector2i(status, 0));
+
 
 }
 
 void Button::OnClick() {
 	status = 2;
-	animation.SetFrame(Vector2i(2,0));
 	if (type == "MAIN") {
 		*gstate = 0;
 	}
@@ -79,5 +75,18 @@ void Button::OnClick() {
 
 void Button::OnHover() {
 	status = 1;
-	animation.SetFrame(Vector2i(1,0));
+}
+
+
+bool Button::IsMouseOver(Vector2i& mousePosition) {
+
+	Vector2f posi = GetPosition();
+	Vector2f dimen = GetDimensions();
+	Vector2f a = Vector2f(posi.x, posi.y);
+	Vector2f b = Vector2f(posi.x+dimen.x, posi.y+dimen.y);
+
+	if (mousePosition.x > a.x && mousePosition.x < b.x && mousePosition.y > a.y && mousePosition.y < b.y) {
+		return true;
+	}
+	return false;
 }
