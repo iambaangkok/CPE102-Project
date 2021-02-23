@@ -24,26 +24,15 @@ int windowHeight = 1040;
 string title = "Tamagotchi";
 RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
 
-void LoadGameData() {
-    //Read save files and set data
-}
-
-void SaveGameData() {
-    //Read variables then save as save file
-    //Delete dynamic memories
-}
 
 
 int main() {
     srand(time(0));
    
-    LoadGameData();
-
     Game tamagotchi(window);
     tamagotchi.LoadGame();
     tamagotchi.StartGameLoop();
     
-    SaveGameData();
 
     return 0;
 }
