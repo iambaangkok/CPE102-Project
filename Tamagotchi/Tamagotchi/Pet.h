@@ -31,7 +31,7 @@ public:
 
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-	bool CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
+	int CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
 
 	void UseItem(int itemID); //Use Item
 
