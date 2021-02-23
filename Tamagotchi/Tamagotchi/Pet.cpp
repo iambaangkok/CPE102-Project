@@ -69,16 +69,39 @@ void Pet::Update(float deltaTime)
 	}
 
 
-
+	if (currentHp < 0) {
+		isAlive = false;
+	}
 
 	totalTime += deltaTime;
-	
+	randomMovementIntervalTime += deltaTime;
+	if (isRandomlyMoving) {
+		randomMovementMoveTotalTime += deltaTime;
+	}
 	
 
-
-	//cout << " " << currentHp << " " << currentHappiness << " " << currentExp << " " << currentFood << " " << currentPoop << endl;
-	//cout << speed.x << " " << speed.y << endl;
 	if (isAlive) {
+		//Calculate Random Movement
+		cout << randomMovementIntervalTime << " " << randomMovementMoveTotalTime << " " << randomMoveSpeed.x << " " << randomMoveSpeed.y << " " << speed.x << " " << speed.y;
+		if (randomMovementIntervalTime > randomMovementInterval) {
+			isRandomlyMoving = true;
+			randomMovementIntervalTime -= randomMovementInterval;
+
+			randomMoveSpeed = Vector2f((rand() % ((int)(maxSpeed.x)+1)) * pow(-1, rand() % 2), (rand() % ((int)(maxSpeed.y) + 1)) * pow(-1, rand() % 2));
+		}
+
+		if (isRandomlyMoving) {
+			if (randomMovementMoveTotalTime > randomMovementMoveTime) {
+				randomMovementMoveTotalTime -= randomMovementMoveTime;
+				isRandomlyMoving = false;
+				speed = Vector2f(0, 0);
+			}
+			else {
+				speed = randomMoveSpeed;
+			}
+		}
+
+		//Move
 		Move(speed.x, speed.y);
 		if (faceRight) {
 			rectangleShape.setScale(Vector2f(1, 1));
@@ -86,33 +109,31 @@ void Pet::Update(float deltaTime)
 		else {
 			rectangleShape.setScale(Vector2f(-1, 1));
 		}
+
+
+		if (totalTime > tickTime) {//Still Alive and Growing
+			totalTime -= tickTime;
+
+			if ((float)currentFood < foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
+				currentHp -= int(hpChangeRate * hpChangeRateMultiplier);
+			}
+			else {
+				currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
+
+			}
+			currentExp += int(expChangeRate * expChangeMultiplier);
+			currentFood -= int(foodChangeRate * foodChangeMultiplier);
+			currentPoop += int(poopChangeRate * poopChangeMultiplier);
+
+			Clamp(&currentHp, hpMax[currentLevel], 0);
+			Clamp(&currentHappiness, happinessMax[currentLevel], 0);
+			Clamp(&currentExp, expPerEvolve[currentLevel], 0);
+			Clamp(&currentFood, foodMax[currentLevel], 0);
+			Clamp(&currentPoop, poopMax[currentLevel], 0);
+		}
 	}
+
 	
-
-	if (currentHp < 0) {
-		isAlive = false;
-	}
-
-	if (isAlive && totalTime > tickTime) {//Still Alive and Growing
-		totalTime -= tickTime;
-
-		if ((float)currentFood < foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
-			currentHp -= int(hpChangeRate * hpChangeRateMultiplier);
-		}
-		else {
-			currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
-
-		}
-		currentExp += int(expChangeRate * expChangeMultiplier);
-		currentFood -= int(foodChangeRate * foodChangeMultiplier);
-		currentPoop += int(poopChangeRate * poopChangeMultiplier);
-
-		Clamp(&currentHp, hpMax[currentLevel],0);
-		Clamp(&currentHappiness, happinessMax[currentLevel],0);
-		Clamp(&currentExp, expPerEvolve[currentLevel],0);
-		Clamp(&currentFood, foodMax[currentLevel],0);
-		Clamp(&currentPoop, poopMax[currentLevel],0);
-	}
 
 	animation.Update(deltaTime);
 	rectangleShape.setTextureRect(animation.uvRect);
@@ -125,13 +146,39 @@ void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
 	if (*clampVariable < lowerClamp) *clampVariable = lowerClamp;
 }
 
-void UseItem(int itemID) {
+void Pet::UseItem(int itemID) {
 	//item.Use(this);
 }
 
 
+bool Pet::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
+{
+	Vector2f thisPos = GetPosition();
+	Vector2f thisHalfSize = GetSize() / 2.0f;
 
+	float deltaX = otherPos.x - thisPos.x;
+	float deltaY = otherPos.y - thisPos.y;
 
+	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
+	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
 
+	if (intersectX < 0.0f && intersectY < 0.0f) {
+		if (intersectX > intersectY) {
+			if (deltaX > 0.0f) {
 
+			}
+			else {
 
+			}
+		}
+		else {
+			if (deltaY > 0.0f) {
+				return true;
+			}
+			else {
+
+			}
+		}
+	}
+	return false;
+}

@@ -125,7 +125,7 @@ void Game::Update() {
     if (mousePress["M1"]) {
         pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
     }
-
+    
 
     
     pet->Update(deltaTime);
