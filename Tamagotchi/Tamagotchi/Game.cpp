@@ -26,8 +26,8 @@ void Game::LoadGame() {
     static Shop s = Shop();
     shop = &s;
 
-    static Button sB = Button(Vector2f(210,890), Vector2f(130, 130), false,
-        "Assets/Textures/button_01.png", Vector2u(4,1), Vector2i(0,0), Vector2i(0,0),1
+    static Button sB = Button(Vector2f(210,890), Vector2f(130, 140), false,
+        "Assets/Textures/button_green_01.png", Vector2u(5,1), Vector2i(0,0), Vector2i(0,0),1
         ,"sB", 0 , "SHOPBUTTON",gameState,shop->isOpen);
     sB.animation.freezeFrame = true;
     shopBut = &sB;
