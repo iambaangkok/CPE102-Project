@@ -24,16 +24,16 @@ void Game::LoadGame() {
     pet = &p;
 
     static Shop s = Shop();
-    shop = &s;
+    shop = &s;  
 
-    static Button sB = Button(Vector2f(210,890), Vector2f(130, 140), false,
-        "Assets/Textures/button_green_01.png", Vector2u(5,1), Vector2i(0,0), Vector2i(0,0),1
+    static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_green_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
         ,"sB", 0 , "SHOPBUTTON",gameState,shop->isOpen);
     sB.animation.freezeFrame = true;
     shopBut = &sB;
 
     static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 130), false,
-        "Assets/Textures/testbutton2.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
         , "mnB", 0, "MINIGAMEBUTTON", gameState, shop->isOpen);
     mnB.animation.freezeFrame = true;
     miniBut = &mnB;
@@ -100,6 +100,8 @@ void Game::ReInitialize() {
         clouds[i].Initialize();
     }
     titlePanel->Initialize();
+
+    
 }
 
 
@@ -162,8 +164,8 @@ void Game::Update() {
         }
     }
 
-    shopBut->Update(deltaTime, window, mousePress);
-    miniBut->Update(deltaTime, window, mousePress);
+    shopBut->Update(deltaTime, window, mousePress, mousePosition);
+    miniBut->Update(deltaTime, window, mousePress, mousePosition);
 
     
     shop->Update( deltaTime, mouseWheelDelta);
