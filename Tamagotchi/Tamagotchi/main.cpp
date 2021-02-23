@@ -37,7 +37,7 @@ void SaveGameData() {
 int main() {
 
     srand(time(0));
-
+    /*
     LoadGameData();
 
     Game tamagotchi(window);
@@ -45,6 +45,27 @@ int main() {
     tamagotchi.StartGameLoop();
     
     SaveGameData();
+    */
 
+    Doodle doodle;
+    doodle.Initialize();
+    Clock clock;
+
+    while (window.isOpen())
+    {
+        float deltaTime = clock.restart().asSeconds();
+
+        Event evnt;
+
+        while (window.pollEvent(evnt)) {
+            if (evnt.type == evnt.Closed) {
+                window.close();
+            }
+        }
+
+        doodle.Update(deltaTime);
+        doodle.Draw(window);
+        window.display();
+    }
     return 0;
 }
