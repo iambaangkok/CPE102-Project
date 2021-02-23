@@ -24,7 +24,19 @@ void Game::LoadGame() {
     pet = &p;
 
     static Shop s = Shop();
-    shop = &s;
+    shop = &s;  
+
+    static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_green_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
+        ,"sB", 0 , "SHOPBUTTON",gameState,shop->isOpen);
+    sB.animation.freezeFrame = true;
+    shopBut = &sB;
+
+    static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 130), false,
+        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , "mnB", 0, "MINIGAMEBUTTON", gameState, shop->isOpen);
+    mnB.animation.freezeFrame = true;
+    miniBut = &mnB;
 
     static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     backgrounds.push_back(bg);
@@ -79,6 +91,8 @@ void Game::ReInitialize() {
     ResetKeyboard();
     ResetMouse();
     anyKeyPressed = anyMousePressed = false;
+    mouseWheelDelta = 0;
+
 
     pet->Initialize();
     backgrounds[currentBackground].Initialize();
@@ -86,6 +100,8 @@ void Game::ReInitialize() {
         clouds[i].Initialize();
     }
     titlePanel->Initialize();
+
+    
 }
 
 
@@ -109,7 +125,7 @@ void Game::Update() {
     if (mousePress["M1"]) {
         pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
     }
-
+    
 
     
     pet->Update(deltaTime);
@@ -147,7 +163,12 @@ void Game::Update() {
             gameState = 1;
         }
     }
+
+    shopBut->Update(deltaTime, window, mousePress, mousePosition);
+    miniBut->Update(deltaTime, window, mousePress, mousePosition);
+
     
+    shop->Update( deltaTime, mouseWheelDelta);
 }
 
 void Game::Draw() {
@@ -156,6 +177,9 @@ void Game::Draw() {
 
     //Draw other things
     backgrounds[currentBackground].Draw(window);
+    
+    shop->Draw(window);
+
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
     }
@@ -170,9 +194,13 @@ void Game::Draw() {
         pet->Draw(window);
     }
     
+    shopBut->Draw(window);
+    miniBut->Draw(window);
+
     window.draw(fpsText);
 
     window.display();//Display
+
 }
 
 
@@ -204,23 +232,22 @@ void Game::GetInput() {
         case Event::MouseButtonReleased:
             //CheckMousePressRelease(&mouseRelease);
             break;
-        case Event::MouseWheelMoved:
-            mouseWheelDelta = evnt.mouseWheel.delta;
+        case Event::MouseWheelScrolled:
+            mouseWheelDelta = evnt.mouseWheelScroll.delta;
             break;
         case Event::MouseMoved:
             mousePosition = Mouse::getPosition(window);
             break;
         }
     }
+    //mouseWheelDelta = evnt.mouseWheelScroll.delta;
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);
     CheckKeyPressRelease(&keyHold);
     /*CheckKeyPressRelease(&keyRelease);
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);*/
-
 }
-
 void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
     int state = true;
     if (Keyboard::isKeyPressed(Keyboard::W)) {

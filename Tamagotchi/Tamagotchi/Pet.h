@@ -31,11 +31,8 @@ public:
 
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-	/*int a = 10;
-	int aCHange = 10;
-	int aMax = 15;
-	a += aChange;
-	Clamp(&a, aMax);*/
+	bool CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
+
 	void UseItem(int itemID); //Use Item
 
 
@@ -56,12 +53,20 @@ public:
 	float happinessChangeMultiplier = 1.0f;
 	float poopChangeMultiplier = 1.0f;
 
+	bool ateEvolveStone = false;
+
+
 	Vector2f speed = Vector2f(0,0);
 	Vector2f maxSpeed = Vector2f(5,5);
 
-	bool ateEvolveStone = false;
+	float randomMovementInterval = 5;
+	float randomMovementIntervalTime = 0;
+	float randomMovementMoveTime = 2;
+	float randomMovementMoveTotalTime = 0;
+	bool isRandomlyMoving = false;
+	Vector2f randomMoveSpeed = Vector2f(0, 0);
 
-	vector<Item>  inventory;
+//vector<Item>  inventory;
 
 
 //private:

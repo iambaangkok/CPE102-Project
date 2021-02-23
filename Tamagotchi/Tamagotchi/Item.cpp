@@ -122,7 +122,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		type = "food";
 		itemId = 1;
 		price = 35;
-		description = description;
+		description = "The fluffy cheesecake that perfectly sweet with a light and delicate texture, all wrapped in a crunchy Graham cracker and toasted pecan crust";
 		hpChange =-10;
 		evoStone = false;
 		foodChange = 20;
@@ -131,12 +131,12 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		xpCoupon = 0.0;
 		this->poopChange = 5;
 	}
-	else if (name=="honeyPeach")
+	else if (name=="honeyPeachSoda")
 	{
 		type = "food";
 		itemId = 2;
 		price = 15;
-		this->description = description;
+		this->description = "A nice addition to a meal especially when outdoors.";
 		this->hpChange = 5;
 		this->evoStone = false;
 		this->foodChange = 15;
@@ -150,7 +150,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		type = "food";
 		itemId = 3;
 		this->price = 20;
-		this->description = description;
+		this->description = "Everyone know that milk is milk , nothing to describe about this thing.";
 		this->hpChange = 10;
 		this->evoStone = false;
 		this->foodChange = 15;
@@ -164,7 +164,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		type = "food";
 		itemId = 4;
 		this->price = 69;
-		this->description = description;
+		this->description = "The super ultra mega ultimate noodle that the world ever have.";
 		this->hpChange = 69;
 		this->evoStone = false;
 		this->foodChange = 69;
@@ -178,7 +178,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		type = "food";
 		itemId = 5;
 		this->price = 5;
-		this->description = description;
+		this->description = "A sweetened frozen food that every fat boy in the world love, contain a ton of callories";
 		this->hpChange = -5;
 		this->evoStone = evoStone;
 		this->foodChange = 15;
@@ -187,12 +187,12 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = xpCoupon;
 		this->poopChange = 5;
 	}
-	else if (name=="honeyRoll")
+	else if (name=="yamRoll")
 	{
 		type = "food";
 		itemId = 6;
 		this->price = 25;
-		this->description = description;
+		this->description = "Light, soft and cottony cake";
 		this->hpChange = 5;
 		this->evoStone = false;
 		this->foodChange = 30;
