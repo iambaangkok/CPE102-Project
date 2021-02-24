@@ -17,24 +17,31 @@ void Game::LoadGame() {
 
     //Opensavefile, Calculate expgain foodloss etc.
 
-    float playerSize = 100.0f;
+    float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-        "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
+        "Assets/Textures/pet_01.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
     pet = &p;
+
+    static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(160, 80), true,
+        "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    pet->shadow = &pShadow;
+
+    //static GameObject pBorderLeft = GameObject(Vector2f())
+
 
     static Shop s = Shop();
     shop = &s;  
 
     static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_green_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
-        ,"sB", 0 , "SHOPBUTTON",gameState,shop->isOpen);
+        "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
+        ,"sB", 0 , "SHOP",gameState,shop->isOpen);
     sB.animation.freezeFrame = true;
     shopBut = &sB;
 
-    static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 130), false,
+    static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
         "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "mnB", 0, "MINIGAMEBUTTON", gameState, shop->isOpen);
+        , "mnB", 0, "MINI", gameState, shop->isOpen);
     mnB.animation.freezeFrame = true;
     miniBut = &mnB;
 
@@ -106,29 +113,10 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
-    
+   
+ 
+    pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mousePosition,mouseWheelDelta);
 
-    if (keyHold["W"]) {
-        pet->speed.y = -pet->maxSpeed.y;
-    }
-    if (keyHold["A"]) {
-        pet->speed.x = -pet->maxSpeed.x;
-        pet->faceRight = false;
-    }
-    if (keyHold["S"]) {
-        pet->speed.y = +pet->maxSpeed.y;
-    }
-    if (keyHold["D"]) {
-        pet->speed.x = +pet->maxSpeed.x;
-        pet->faceRight = true;
-    }
-    if (mousePress["M1"]) {
-        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
-    }
-    
-
-    
-    pet->Update(deltaTime);
     backgrounds[currentBackground].Update(deltaTime);
     for(int i = 0 ; i < clouds.size(); ++i){
         clouds[i].speed = Vector2f(cloudSpeed,0);

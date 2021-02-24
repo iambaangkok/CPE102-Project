@@ -3,9 +3,11 @@
 #include <chrono>
 #include <ctime>  
 #include <vector>
+#include <unordered_map>
 #include "GameObject.h"
 #include "Item.h"
 using std::vector;
+using std::unordered_map;
 class Item;
 
 class Pet :
@@ -27,7 +29,10 @@ public:
 
 	void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-	void Update(float deltaTime);
+	void Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease, 
+		unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, Vector2i mousePosition, int mouseWheelDelta);
+
+	void Draw(RenderWindow& window);
 
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
@@ -57,14 +62,19 @@ public:
 
 
 	Vector2f speed = Vector2f(0,0);
-	Vector2f maxSpeed = Vector2f(5,5);
+	Vector2f maxSpeed = Vector2f(1.5,1.5);
+	float runSpeedMultiplier = 1.75f;
+	bool isMoving = false;
 
 	float randomMovementInterval = 5;
 	float randomMovementIntervalTime = 0;
-	float randomMovementMoveTime = 2;
+	float randomMovementMoveTime = 1;
 	float randomMovementMoveTotalTime = 0;
 	bool isRandomlyMoving = false;
 	Vector2f randomMoveSpeed = Vector2f(0, 0);
+
+	GameObject* shadow;
+	float shadowYOffset = -45;
 
 //vector<Item>  inventory;
 

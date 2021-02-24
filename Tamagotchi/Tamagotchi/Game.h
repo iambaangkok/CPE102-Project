@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <vector>
 #include <unordered_map>
-#include <set>
-#include <utility>
+    #include <set>
+    #include <utility>
 #include <cmath>
 #include "Animation.h"
 #include "GameObject.h"
@@ -51,6 +51,8 @@ public:
    
 
     Pet* pet;
+    vector<GameObject> petBorder; //0 = right, 1 = left, 2 = bottom, 3 = top
+
     Shop* shop;
     Button* shopBut;
     Button* miniBut;

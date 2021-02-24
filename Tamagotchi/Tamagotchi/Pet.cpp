@@ -62,7 +62,8 @@ void Pet::Initialize() {
 }
 
 
-void Pet::Update(float deltaTime)
+void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease,
+	unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, Vector2i mousePosition, int mouseWheelDelta)
 {
 	if (!enabled) {
 		return;
@@ -78,16 +79,44 @@ void Pet::Update(float deltaTime)
 	if (isRandomlyMoving) {
 		randomMovementMoveTotalTime += deltaTime;
 	}
+
 	
 
 	if (isAlive) {
+		//Manual Input will override random movement
+		if (keyHold["W"]) {
+			speed.y = -maxSpeed.y;
+			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+		}
+		if (keyHold["A"]) {
+			speed.x = -maxSpeed.x;
+			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+		}
+		if (keyHold["S"]) {
+			speed.y = +maxSpeed.y;
+			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+		}
+		if (keyHold["D"]) {
+			speed.x = +maxSpeed.x;
+			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+		}
+		if (keyHold["LSHIFT"]) {
+			speed.x *= runSpeedMultiplier;
+			speed.y *= runSpeedMultiplier;
+		}
+		if (mousePress["M1"]) {
+			shadow->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
+			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+		}
 		//Calculate Random Movement
-		cout << randomMovementIntervalTime << " " << randomMovementMoveTotalTime << " " << randomMoveSpeed.x << " " << randomMoveSpeed.y << " " << speed.x << " " << speed.y;
 		if (randomMovementIntervalTime > randomMovementInterval) {
 			isRandomlyMoving = true;
 			randomMovementIntervalTime -= randomMovementInterval;
 
-			randomMoveSpeed = Vector2f((rand() % ((int)(maxSpeed.x)+1)) * pow(-1, rand() % 2), (rand() % ((int)(maxSpeed.y) + 1)) * pow(-1, rand() % 2));
+			float moveAngleDegree = rand() % 360;
+			float moveAngleRadian = moveAngleDegree * 3.14159 / 180;
+
+			randomMoveSpeed = Vector2f(maxSpeed.x*cos(moveAngleRadian),maxSpeed.y*sin(moveAngleRadian));
 		}
 
 		if (isRandomlyMoving) {
@@ -102,7 +131,16 @@ void Pet::Update(float deltaTime)
 		}
 
 		//Move
-		Move(speed.x, speed.y);
+		shadow->Move(speed.x, speed.y);
+		SetPosition(shadow->GetPosition().x, shadow->GetPosition().y + shadowYOffset - shadow->GetDimensions().y/2);
+
+		if (speed.x > 0) {
+			faceRight = true;
+		}
+		if (speed.x < 0) {
+			faceRight = false;
+		}
+
 		if (faceRight) {
 			rectangleShape.setScale(Vector2f(1, 1));
 		}
@@ -131,8 +169,19 @@ void Pet::Update(float deltaTime)
 			Clamp(&currentFood, foodMax[currentLevel], 0);
 			Clamp(&currentPoop, poopMax[currentLevel], 0);
 		}
+		isMoving = (speed != Vector2f(0, 0));
 	}
 
+
+
+	//Set Animation according to pet state
+	if (isMoving) {
+		animation.SetStartFinishFrame(1, 0, 2, 0);
+	}
+	else {
+		animation.SetStartFinishFrame(0, 0, 0, 0);
+
+	}
 	
 
 	animation.Update(deltaTime);
@@ -148,6 +197,11 @@ void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
 
 void Pet::UseItem(int itemID) {
 	//item.Use(this);
+}
+
+void Pet::Draw(RenderWindow& window) {
+	shadow->Draw(window);
+	window.draw(rectangleShape);
 }
 
 

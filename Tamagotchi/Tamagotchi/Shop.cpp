@@ -40,7 +40,7 @@ Shop::~Shop() {
 
 
 void Shop::Draw(RenderWindow &window) {
-    if (1) {
+    if (isOpen) {
         bg->Draw(window);
         scrollbar->Draw(window);
     }
@@ -50,7 +50,7 @@ void Shop::Draw(RenderWindow &window) {
 }
 
 void Shop::Update(float deltaTime, int mouseWheelDelta) {
-    if (1) {
+    if (isOpen) {
         cout << mouseWheelDelta;
         if (mouseWheelDelta != 0){
             scrollbar->SetPosition(500,scrollbar->GetPosition().y+0-mouseWheelDelta*deltaTime*speedscroll);
