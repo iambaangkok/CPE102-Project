@@ -10,7 +10,7 @@ using namespace sf;
 class PlatformObject
 {
 public : 
-    PlatformObject(Vector2f size , Vector2i window, int NO_OF_PLATFORM);
+    PlatformObject(Vector2f size , Vector2i window, int NO_OF_PLATFORM , string filepath);
     ~PlatformObject();
 
     void Draw(RenderWindow& window , int difficulty);

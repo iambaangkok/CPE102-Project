@@ -151,7 +151,7 @@ void Pet::UseItem(int itemID) {
 }
 
 
-bool Pet::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
+int Pet::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 {
 	Vector2f thisPos = GetPosition();
 	Vector2f thisHalfSize = GetSize() / 2.0f;
@@ -161,24 +161,29 @@ bool Pet::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 
 	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
 	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
+	
+	/*
+		state : 
+			0 - Pet doesn't hit object.
+			1 - The right side of pet hit object.
+			2 - The left side of pet hit object.
+			3 - The bottom side of pet hit object.
+			4 - The top side of pet hit object.
+	*/
 
 	if (intersectX < 0.0f && intersectY < 0.0f) {
 		if (intersectX > intersectY) {
-			if (deltaX > 0.0f) {
-
-			}
-			else {
-
-			}
+			if (deltaX > 0.0f)
+				return 1; 
+			else
+				return 2;
 		}
 		else {
-			if (deltaY > 0.0f) {
-				return true;
-			}
-			else {
-
-			}
+			if (deltaY > 0.0f)
+				return 3;
+			else 
+				return 4;
 		}
 	}
-	return false;
+	return 0;
 }

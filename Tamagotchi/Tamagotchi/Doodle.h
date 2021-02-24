@@ -11,7 +11,7 @@ public :
 	~Doodle();
 
 	void Initialize();
-	void Update(RenderWindow& window);
+	void Update(float deltaTime);
 	void Draw(RenderWindow& window);
 
 	GravityObject* Alpha;
@@ -29,8 +29,6 @@ public :
 	SoundBuffer buffer , buffer2;
 	Sound sound;
 	Sound music;
-	
-	float acc = 1.0f;
 
 	int windowWidth = 720;
 	int windowHeight = 1040;

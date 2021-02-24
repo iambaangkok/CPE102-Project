@@ -32,7 +32,6 @@ int main() {
     Game tamagotchi(window);
     tamagotchi.LoadGame();
     tamagotchi.StartGameLoop();
-    
 
     return 0;
 }
