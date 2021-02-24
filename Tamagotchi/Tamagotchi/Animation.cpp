@@ -169,9 +169,14 @@ void Animation::SetTexture(Texture* texture) {
 }
 
 void Animation::SetFrame(Vector2i imageCoordinate) {
-    //cout << "SETFRAME " << imageCoordinate.x << ", " << imageCoordinate.y << endl;
     currentImage.x = imageCoordinate.x;
     currentImage.y = imageCoordinate.y;
+    uvRect.left = currentImage.x * uvRect.width;
+    uvRect.top = currentImage.y * uvRect.height;
+}
+void Animation::SetFrame(int x, int y) {
+    currentImage.x = x;
+    currentImage.y = y;
     uvRect.left = currentImage.x * uvRect.width;
     uvRect.top = currentImage.y * uvRect.height;
 }
@@ -186,6 +191,16 @@ void Animation::SetStartFrame(Vector2i start) {
     startFrame = start;
 }
 
+void Animation::SetStartFrame(int x, int y) {
+    if (y > finishFrame.y ||
+        (y == finishFrame.y && x > finishFrame.x)) {
+        cout << "Error: startFrame can't be more that finishFrame" << endl;
+        return;
+    }
+
+    startFrame = Vector2i(x,y);
+}
+
 void Animation::SetFinishFrame(Vector2i finish) {
     if (startFrame.y > finish.y ||
         (startFrame.y == finish.y && startFrame.x > finish.x)) {
@@ -195,6 +210,29 @@ void Animation::SetFinishFrame(Vector2i finish) {
 
     finishFrame = finish;
 }
+
+void Animation::SetFinishFrame(int x, int y) {
+    if (startFrame.y > y ||
+        (startFrame.y == y && startFrame.x > x)) {
+        cout << "Error: finishFrame can't be less that startFrame" << endl;
+        return;
+    }
+
+    finishFrame = Vector2i(x,y);
+}
+
+void Animation::SetStartFinishFrame(int sx, int sy, int fx, int fy) {
+    if (sy > fy ||
+        (sy == fy && sx > fx)) {
+        cout << "Error: startFrame can't be more that finishFrame" << endl;
+        return;
+    }
+    
+
+    startFrame = Vector2i(sx, sy);
+    finishFrame = Vector2i(fx, fy);
+}
+
 
 void Animation::SetImageCount(Texture& texture,Vector2u imageCount) {
     this->imageCount = imageCount;
