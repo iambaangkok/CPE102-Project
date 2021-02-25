@@ -51,7 +51,6 @@ public:
    
 
     Pet* pet;
-    vector<GameObject> petBorder; //0 = right, 1 = left, 2 = bottom, 3 = top
 
     Shop* shop;
     Button* shopBut;
