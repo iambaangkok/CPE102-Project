@@ -59,6 +59,7 @@ Pet::~Pet()
 
 void Pet::Initialize() {
 	speed = Vector2f(0, 0);
+
 }
 
 
@@ -79,6 +80,12 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	if (isRandomlyMoving) {
 		randomMovementMoveTotalTime += deltaTime;
 	}
+	if (shadowYOffset > shadowNormalYOffset) {
+		isInAir = true;
+	}
+	else if (shadowYOffset == shadowNormalYOffset) {
+		isInAir = false;
+	}
 
 	
 
@@ -87,26 +94,42 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		if (keyHold["W"]) {
 			speed.y = -maxSpeed.y;
 			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+			isRandomlyMoving = false;
 		}
 		if (keyHold["A"]) {
 			speed.x = -maxSpeed.x;
 			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+			isRandomlyMoving = false;
 		}
 		if (keyHold["S"]) {
 			speed.y = +maxSpeed.y;
 			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+			isRandomlyMoving = false;
 		}
 		if (keyHold["D"]) {
 			speed.x = +maxSpeed.x;
 			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+			isRandomlyMoving = false;
 		}
 		if (keyHold["LSHIFT"]) {
 			speed.x *= runSpeedMultiplier;
 			speed.y *= runSpeedMultiplier;
 		}
+		if (keyHold["SPACE"]) {
+			if (!isInAir) {
+				shadowYOffsetSpeed = jumpAcceleration;
+				isInAir = true;
+			}
+		}
 		if (mousePress["M1"]) {
 			shadow->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
 			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+			isRandomlyMoving = false;
+			if (IsMouseOver(mousePosition)) {
+				
+				
+			}
+			
 		}
 		//Calculate Random Movement
 		if (randomMovementIntervalTime > randomMovementInterval) {
@@ -131,8 +154,25 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 
 		//Move
+
 		shadow->Move(speed.x, speed.y);
-		SetPosition(shadow->GetPosition().x, shadow->GetPosition().y + shadowYOffset - shadow->GetDimensions().y/2);
+		SetPosition(shadow->GetPosition().x, shadow->GetPosition().y - shadowYOffset - shadow->GetDimensions().y/2);
+
+		for (int i = 0; i < shadowBorder.size(); ++i) {
+			int shadowCollision = shadow->CheckCollision(shadowBorder[i]);
+			if (shadowCollision == 1) { //Right Collide
+				shadow->SetPosition(shadowBorder[i].GetPosition().x - shadowBorder[i].GetDimensions().x/2 - shadow->GetDimensions().x / 2, shadow->GetPosition().y);
+			}
+			else if (shadowCollision == 2) { //Left Collide
+				shadow->SetPosition(shadowBorder[i].GetPosition().x + shadowBorder[i].GetDimensions().x/2 + shadow->GetDimensions().x / 2, shadow->GetPosition().y);
+			}
+			else if (shadowCollision == 3) { //Bottom Collide
+				shadow->SetPosition(shadow->GetPosition().x, shadowBorder[i].GetPosition().y - shadowBorder[i].GetDimensions().y/2 - shadow->GetDimensions().y/2);
+			}
+			else if (shadowCollision == 4) { //Top Collide
+				shadow->SetPosition(shadow->GetPosition().x, shadowBorder[i].GetPosition().y + shadowBorder[i].GetDimensions().y/2 + shadow->GetDimensions().y/2);
+			}
+		}
 
 		if (speed.x > 0) {
 			faceRight = true;
@@ -170,18 +210,46 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			Clamp(&currentPoop, poopMax[currentLevel], 0);
 		}
 		isMoving = (speed != Vector2f(0, 0));
+
+		//Move ShadowYOffset
+		shadowYOffset += shadowYOffsetSpeed * deltaTime;
+		if (isInAir) {
+			shadowYOffsetSpeed -= gravity * deltaTime;
+		}
+		else {
+			shadowYOffsetSpeed = 0;
+		}
+		Clamp(&shadowYOffset, 500.0f,shadowNormalYOffset);
+
+
+		cout << shadowYOffsetSpeed << " " << shadowYOffset << endl;
+
 	}
 
 
 
 	//Set Animation according to pet state
-	if (isMoving) {
+	if (isInAir) {
+		animation.freezeFrame = true;
+		if (shadowYOffsetSpeed > 20) {
+			animation.SetFrame(3, 0);
+		}
+		else if (shadowYOffsetSpeed < -20) {
+			animation.SetFrame(4, 0);
+		}
+		else {
+			animation.SetFrame(0, 0);
+		}
+	}
+	else if (isMoving) {
+		animation.freezeFrame = false;
 		animation.SetStartFinishFrame(1, 0, 2, 0);
 	}
 	else {
+		animation.freezeFrame = false;
 		animation.SetStartFinishFrame(0, 0, 0, 0);
-
 	}
+	
 	
 
 	animation.Update(deltaTime);
@@ -201,43 +269,23 @@ void Pet::UseItem(int itemID) {
 
 void Pet::Draw(RenderWindow& window) {
 	shadow->Draw(window);
+	/*for (int i = 0; i < shadowBorder.size(); ++i) {
+		shadowBorder[i].Draw(window);
+	}*/
 	window.draw(rectangleShape);
+
 }
 
 
-int Pet::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
-{
-	Vector2f thisPos = GetPosition();
-	Vector2f thisHalfSize = GetSize() / 2.0f;
+bool Pet::IsMouseOver(Vector2i& mousePosition) {
 
-	float deltaX = otherPos.x - thisPos.x;
-	float deltaY = otherPos.y - thisPos.y;
+	Vector2f posi = GetPosition();
+	Vector2f dimen = GetDimensions();
+	Vector2f a = Vector2f(posi.x, posi.y);
+	Vector2f b = Vector2f(posi.x + dimen.x, posi.y + dimen.y);
 
-	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
-	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
-	
-	/*
-		state : 
-			0 - Pet doesn't hit object.
-			1 - The right side of pet hit object.
-			2 - The left side of pet hit object.
-			3 - The bottom side of pet hit object.
-			4 - The top side of pet hit object.
-	*/
-
-	if (intersectX < 0.0f && intersectY < 0.0f) {
-		if (intersectX > intersectY) {
-			if (deltaX > 0.0f)
-				return 1; 
-			else
-				return 2;
-		}
-		else {
-			if (deltaY > 0.0f)
-				return 3;
-			else 
-				return 4;
-		}
+	if (mousePosition.x > a.x && mousePosition.x < b.x && mousePosition.y > a.y && mousePosition.y < b.y) {
+		return true;
 	}
-	return 0;
+	return false;
 }

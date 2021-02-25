@@ -36,9 +36,11 @@ public:
 
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-	int CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
+
 
 	void UseItem(int itemID); //Use Item
+
+	bool IsMouseOver(Vector2i& mousePosition);
 
 
 	bool isAlive = true;
@@ -74,7 +76,16 @@ public:
 	Vector2f randomMoveSpeed = Vector2f(0, 0);
 
 	GameObject* shadow;
-	float shadowYOffset = -45;
+	float shadowNormalYOffset = 50;
+	float shadowYOffset = shadowNormalYOffset;
+	vector<GameObject> shadowBorder; //0 = right, 1 = left, 2 = bottom, 3 = top
+
+	float gravity = 9.8f * 300;
+	float jumpAcceleration = 100 * 10; //- x speedY;
+	float shadowYOffsetSpeed = 0;
+	bool isInAir;
+
+
 
 //vector<Item>  inventory;
 

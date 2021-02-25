@@ -149,6 +149,84 @@ void GameObject::Move(float speedX, float speedY) {
 	rectangleShape.move(speedX, speedY);
 }
 
+
+
+int GameObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
+{
+	Vector2f thisPos = GetPosition();
+	Vector2f thisHalfSize = GetSize() / 2.0f;
+
+	float deltaX = otherPos.x - thisPos.x;
+	float deltaY = otherPos.y - thisPos.y;
+
+	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
+	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
+
+	/*
+		state :
+			0 - Pet doesn't hit object.
+			1 - The right side of pet hit object.
+			2 - The left side of pet hit object.
+			3 - The bottom side of pet hit object.
+			4 - The top side of pet hit object.
+	*/
+
+	if (intersectX < 0.0f && intersectY < 0.0f) {
+		if (intersectX > intersectY) {
+			if (deltaX > 0.0f)
+				return 1;
+			else
+				return 2;
+		}
+		else {
+			if (deltaY > 0.0f)
+				return 3;
+			else
+				return 4;
+		}
+	}
+	return 0;
+}
+
+int GameObject::CheckCollision(GameObject& other) {
+	Vector2f thisPos = GetPosition();
+	Vector2f thisHalfSize = GetSize() / 2.0f;
+	Vector2f otherPos = other.GetPosition();
+	Vector2f otherHalfSize = other.GetDimensions() / 2.0f;
+
+	float deltaX = otherPos.x - thisPos.x;
+	float deltaY = otherPos.y - thisPos.y;
+
+	float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
+	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
+
+	/*
+		state :
+			0 - Pet doesn't hit object.
+			1 - The right side of pet hit object.
+			2 - The left side of pet hit object.
+			3 - The bottom side of pet hit object.
+			4 - The top side of pet hit object.
+	*/
+
+	if (intersectX < 0.0f && intersectY < 0.0f) {
+		if (intersectX > intersectY) {
+			if (deltaX > 0.0f)
+				return 1;
+			else
+				return 2;
+		}
+		else {
+			if (deltaY > 0.0f)
+				return 3;
+			else
+				return 4;
+		}
+	}
+	return 0;
+}
+
+
 Vector2f GameObject::GetPosition() {
 	return rectangleShape.getPosition();
 }
