@@ -34,6 +34,10 @@ public:
 	void Draw(RenderWindow& window);
 	void Move(float speedX, float speedY);//Simple Move
 
+	int CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
+	int CheckCollision(GameObject& other);
+
+
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize(); //Returns Dimensions
 	Vector2f GetDimensions(); //Same as GetSize()
@@ -51,6 +55,7 @@ public:
 	void SetFinishFrame(Vector2i finish); // Set last frame
 	void SetFinishFrame(int x, int y);
 	void SetFrameTime(float frameTime); // Set frametime
+
 
 	
 
