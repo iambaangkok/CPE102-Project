@@ -18,13 +18,22 @@ void Doodle::Initialize()
 	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 7 , "Assets/Textures/platform2.png");
 	Platform = &p;
 
-	static GravityObject a = GravityObject(Vector2f(520.0f, 400.0f), Vector2f(80.0f, 115.0f), 400.0f, "Assets/Textures/doodlenew2.png");
+	static GravityObject a = GravityObject(Vector2f(520.0f, 400.0f), Vector2f(100.0f, 100.0f), 400.0f, "Assets/Textures/pet_01.png");
 	Alpha = &a;
 
 	int r =  rand() % 5 + 1;
-	backgroundtexture.loadFromFile("Assets/Textures/background_0" + std::to_string(r) + ".png");
-	background.setTexture(backgroundtexture);
-	background.setScale(Vector2f(720.0f / backgroundtexture.getSize().x , 1040.0f / backgroundtexture.getSize().y));
+
+	for (int i = 0; i < 2; ++i) {
+		Sprite A;
+		//backgroundtexture.loadFromFile("Assets/Textures/background_0" + std::to_string(r) + ".png");
+		backgroundtexture.loadFromFile("Assets/Textures/bgex.png");
+		A.setTexture(backgroundtexture);
+		A.setScale(Vector2f(720.0f / backgroundtexture.getSize().x, 1040.0f / backgroundtexture.getSize().y));
+		background.push_back(A);
+	}
+
+	background[0].setPosition(Vector2f(0, -1040));
+	
 
 	Logo1T.loadFromFile("Assets/Textures/DoodleLogo1.png");
 	Logo2T.loadFromFile("Assets/Textures/DoodleLogo2.png");
@@ -52,7 +61,14 @@ void Doodle::Initialize()
 	scoreText.setFillColor(Color::Red);
 	scoreText.setString("Score: " + std::to_string(score));
 
-	buffer.loadFromFile("Assets/Sounds/Shot.wav");
+	YOUDIEDT.loadFromFile("Assets/Textures/GAMEOVER.png");
+	YOUDIED.setTexture(YOUDIEDT);
+	YOUDIED.setScale(Vector2f(10.0f, 10.0f));
+	FloatRect bound1 = YOUDIED.getLocalBounds();
+	YOUDIED.setOrigin(Vector2f(bound1.left + bound1.width / 2.0f, bound1.top + bound1.height / 2.0f));
+	YOUDIED.setPosition(Vector2f(360, 400));
+
+	buffer.loadFromFile("Assets/Sounds/Jump.wav");
 	sound.setBuffer(buffer);
 	buffer2.loadFromFile("Assets/Sounds/DoodleBG.wav");
 	music.setBuffer(buffer2);
@@ -62,11 +78,13 @@ void Doodle::Initialize()
 
 void Doodle::Update(float deltaTime)
 {
+	
+	Alpha->player.animation.SetFrame(Vector2i(0, 0));
 	if (gamestate == 0) {
 		if(Logo1.getPosition().x < 60.0f)
 			Logo1.move(Vector2f(600.0f * deltaTime, 0.0f));
 		if (Logo2.getPosition().x > 90.0f)
-			Logo2.move(Vector2f(-600.0f * deltaTime, 0.0f));
+			Logo2.move(Vector2f(-650.0f * deltaTime, 0.0f));
 		if (Keyboard::isKeyPressed(Keyboard::Space)) {
 			music.play();
 			gamestate = 1;
@@ -100,6 +118,11 @@ void Doodle::Update(float deltaTime)
 					Platform->platformPos[i].x = (rand() % (720 - 2 * (int)Platform->platform.GetSize().x)) + Platform->platform.GetSize().x;
 				}
 			}
+			for (unsigned int i = 0; i < 2; ++i) {
+				background[i].move(Vector2f(0, 100.0f * deltaTime));
+				if (background[i].getPosition().y > windowHeight)
+					background[i].setPosition(Vector2f(0, -1040));
+			}
 		}
 
 		for (unsigned int i = 0; i < Platform->NO_OF_PLATFORM; ++i) {
@@ -107,25 +130,34 @@ void Doodle::Update(float deltaTime)
 				sound.play();
 				Alpha->dy = 0.0f;
 				Alpha->dy -= 1500.0f;
-				
 			}
 		}
+		if(Alpha->dy < -150.0f)
+			Alpha->player.animation.SetFrame(Vector2i(3, 0));
+		else if (Alpha->dy > 100.0f)
+			Alpha->player.animation.SetFrame(Vector2i(4, 0));
+		else
+			Alpha->player.animation.SetFrame(Vector2i(1, 0));
 
 		if (Alpha->playerY > 1040)
 		{
 			FloatRect bound = scoreText.getLocalBounds();
 			scoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
-			scoreText.setPosition(360, 400);
+			scoreText.setPosition(360, 800);
 			gamestate = 2;
 		}
 		
 		Alpha->player.SetPosition(Vector2f(Alpha->playerX, Alpha->playerY));
+		Alpha->player.animation.Update(deltaTime);
+		Alpha->player.rectangleShape.setTextureRect(Alpha->player.animation.uvRect);
 	}
 }
 
 void Doodle::Draw(RenderWindow& window)
 {
-	window.draw(background);
+	window.draw(background[0]);
+	window.draw(background[1]);
+
 	if (gamestate == 0) {
 		window.draw(Logo1);
 		window.draw(Logo2);
@@ -139,6 +171,7 @@ void Doodle::Draw(RenderWindow& window)
 		window.draw(scoreText);
 	}
 	if (gamestate == 2) {
+		window.draw(YOUDIED);
 		window.draw(scoreText);
 	}
 		

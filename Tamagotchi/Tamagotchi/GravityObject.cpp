@@ -4,12 +4,12 @@
 GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath)
 {
 	playertexture.loadFromFile(filepath);
-	player.rectangleShape.setTexture(&playertexture, true);
 	player.SetPosition(position);
 	player.SetDimensions(dimensions);
-	
 	player.SetOrigin(dimensions / 2.0f);
-	
+	player.rectangleShape.setTexture(&playertexture, true);
+	player.animation = Animation(&playertexture, Vector2u(5, 3), 0.0f);
+	player.animation.freezeFrame = true;
 
 	this->Height = Height;
 	this->playerX = position.x;

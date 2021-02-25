@@ -17,14 +17,17 @@ public :
 	GravityObject* Alpha;
 	PlatformObject* Platform;
 
+	vector<Sprite> background;
+
 	Font font;
 	Text scoreText;
-	Sprite background;
 	Texture backgroundtexture;
 	Sprite Logo1, Logo2;
 	Texture Logo1T , Logo2T;
 	Sprite Press;
 	Texture PressT;
+	Sprite YOUDIED; 
+	Texture YOUDIEDT;
 
 	SoundBuffer buffer , buffer2;
 	Sound sound;
