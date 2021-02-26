@@ -15,6 +15,10 @@ Game::~Game() {
 
 void Game::LoadGame() {
 
+    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(10, 10), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/pet_01.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
+
+
     //Opensavefile, Calculate expgain foodloss etc.
 
     float playerSize = 160.0f;
@@ -180,6 +184,7 @@ void Game::Update() {
 void Game::Draw() {
     window.clear(Color::Black);//Clear
 
+    test1->Draw(window);
 
     //Draw other things
     backgrounds[currentBackground].Draw(window);

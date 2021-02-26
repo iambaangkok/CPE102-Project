@@ -15,6 +15,7 @@
 #include "Item.h"
 #include "Button.h"
 #include "Shop.h"
+#include "ParticleSystem.h"
 class Button;
 class Shop;
 class Button;
@@ -48,7 +49,8 @@ public:
 
     void ResetKeyboard();
     void ResetMouse();
-
+    
+    ParticleSystem* test1;
    
 
     Pet* pet;
