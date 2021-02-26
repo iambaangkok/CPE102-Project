@@ -55,6 +55,8 @@ public:
 
     Pet* pet;
 
+    GameObject* uiPanelTop;
+
     Shop* shop;
     Button* shopBut;
     Button* miniBut;

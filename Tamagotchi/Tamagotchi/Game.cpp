@@ -51,6 +51,8 @@ void Game::LoadGame() {
     pet->shadowBorder.push_back(pBorder4);
 
 
+    static GameObject uipt = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_cutout.png", Vector2u(1, 1), Vector2i(0,0), Vector2i(0,0), 10);
+    uiPanelTop = &uipt;
 
     static Shop s = Shop();
     shop = &s;  
@@ -129,7 +131,7 @@ void Game::ReInitialize() {
         clouds[i].Initialize();
     }
     titlePanel->Initialize();
-
+    uiPanelTop->Initialize();
     
 }
 
@@ -179,6 +181,7 @@ void Game::Update() {
 
     
     shop->Update( deltaTime, mouseWheelDelta);
+    uiPanelTop->Update(deltaTime);
 }
 
 void Game::Draw() {
@@ -206,8 +209,8 @@ void Game::Draw() {
     
     shopBut->Draw(window);
     miniBut->Draw(window);
+    uiPanelTop->Draw(window);
     test1->Draw(window);
-
 
     window.draw(fpsText);
 
