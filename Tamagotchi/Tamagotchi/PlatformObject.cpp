@@ -40,6 +40,7 @@ void PlatformObject::Draw(RenderWindow& window , int difficulty)
 			while (!enabled[random]) {
 				random = rand() % NO_OF_PLATFORM;
 			}
+			cout << random << endl;
 			enabled[random] = false;
 		}
 		platform.SetPosition(platformPos[i]);
