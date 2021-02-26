@@ -44,6 +44,7 @@ public:
 
     void CheckKeyPressRelease(unordered_map<string, bool> *keyFlag);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag);
+    void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag, Event* evnt);
 
     void ResetKeyboard();
     void ResetMouse();
@@ -64,7 +65,7 @@ public:
     float cloudPosY = 350;
     vector<GameObject> clouds;
 
-    float titlePanelSpeed = 150;
+    float titlePanelSpeed = 500;//150;
     float titlePanelWidth = 610;
     float titlePanelGap = 70;
     float titlePanelHeight = ceil((float)(titlePanelWidth * 250 / 640)/10) * 10;
@@ -134,6 +135,10 @@ public:
     };
 
     unordered_map<string, bool> mouseRelease = {
+        {"M1",0},{"M2",0},{"M3",0},
+    };
+
+    unordered_map<string, bool> mouseHold = {
         {"M1",0},{"M2",0},{"M3",0},
     };
 
