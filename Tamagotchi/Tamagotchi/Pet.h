@@ -29,8 +29,8 @@ public:
 
 	void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-	void Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease, 
-		unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, Vector2i mousePosition, int mouseWheelDelta);
+	void Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease,
+		unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, unordered_map<string, bool>& mouseHold, Vector2i mousePosition, int mouseWheelDelta);
 
 	void Draw(RenderWindow& window);
 
@@ -80,10 +80,19 @@ public:
 	float shadowYOffset = shadowNormalYOffset;
 	vector<GameObject> shadowBorder; //0 = right, 1 = left, 2 = bottom, 3 = top
 
-	float gravity = 9.8f * 300;
-	float jumpAcceleration = 100 * 10; //- x speedY;
+	float gravity = 9.8f * 300/2;
+	float jumpAcceleration = 100 * 10/1.5; //- x speedY;
 	float shadowYOffsetSpeed = 0;
 	bool isInAir;
+
+	bool mouseIsOver = false;
+	bool isDraggedByMouse = false;
+	Vector2f mousePositionRelativeToPet = Vector2f(0, 0);
+
+	Vector2f lastFramePosition = Vector2f(0, 0);
+	Vector2f deltaPosition = Vector2f(0, 0);
+	Vector2f throwSpeed = Vector2f(0, 0);
+	float windResistance = 120/2; // same as gravity but in x
 
 
 

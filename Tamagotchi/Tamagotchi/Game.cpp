@@ -15,6 +15,10 @@ Game::~Game() {
 
 void Game::LoadGame() {
 
+    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
+    test1 = &bobo;
+
     //Opensavefile, Calculate expgain foodloss etc.
 
     float playerSize = 160.0f;
@@ -30,7 +34,7 @@ void Game::LoadGame() {
 
     float grassFieldTopBorder = 560;
     float grassFieldHeight = 730 - 560;
-    float grassFieldThickness = 100;
+    float grassFieldThickness = 1000;
     //1 = right, 2 = left, 3 = bottom, 4 = top
     static GameObject pBorder1 = GameObject(Vector2f(windowWidth+grassFieldThickness/2,grassFieldTopBorder+grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
         "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -47,6 +51,8 @@ void Game::LoadGame() {
     pet->shadowBorder.push_back(pBorder4);
 
 
+    static GameObject uipt = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_cutout.png", Vector2u(1, 1), Vector2i(0,0), Vector2i(0,0), 10);
+    uiPanelTop = &uipt;
 
     static Shop s = Shop();
     shop = &s;  
@@ -125,7 +131,7 @@ void Game::ReInitialize() {
         clouds[i].Initialize();
     }
     titlePanel->Initialize();
-
+    uiPanelTop->Initialize();
     
 }
 
@@ -133,7 +139,7 @@ void Game::ReInitialize() {
 void Game::Update() {
    
  
-    pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mousePosition,mouseWheelDelta);
+    pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
 
     backgrounds[currentBackground].Update(deltaTime);
     for(int i = 0 ; i < clouds.size(); ++i){
@@ -175,6 +181,7 @@ void Game::Update() {
 
     
     shop->Update( deltaTime, mouseWheelDelta);
+    uiPanelTop->Update(deltaTime);
 }
 
 void Game::Draw() {
@@ -202,6 +209,8 @@ void Game::Draw() {
     
     shopBut->Draw(window);
     miniBut->Draw(window);
+    uiPanelTop->Draw(window);
+    test1->Draw(window);
 
     window.draw(fpsText);
 
@@ -233,9 +242,11 @@ void Game::GetInput() {
             break;
         case Event::MouseButtonPressed:
             anyMousePressed = true;
+            CheckMousePressRelease(&mousePress, &evnt);
             //CheckMousePressRelease(&mousePress);
             break;
         case Event::MouseButtonReleased:
+            CheckMousePressRelease(&mouseRelease, &evnt);
             //CheckMousePressRelease(&mouseRelease);
             break;
         case Event::MouseWheelScrolled:
@@ -247,8 +258,11 @@ void Game::GetInput() {
         }
     }
     //mouseWheelDelta = evnt.mouseWheelScroll.delta;
-    CheckMousePressRelease(&mousePress);
-    CheckMousePressRelease(&mouseRelease);
+
+    pet->Clamp(&mousePosition.x, windowWidth, 0);
+    pet->Clamp(&mousePosition.y, windowHeight, 0);
+
+    CheckMousePressRelease(&mouseHold);
     CheckKeyPressRelease(&keyHold);
     /*CheckKeyPressRelease(&keyRelease);
     CheckMousePressRelease(&mousePress);
@@ -331,6 +345,19 @@ void Game::CheckMousePressRelease(unordered_map<string, bool>* mouseFlag) {
     }
 }
 
+void Game::CheckMousePressRelease(unordered_map<string, bool>* mouseFlag, Event* evnt) {
+    int state = true;
+    if (evnt->mouseButton.button == Mouse::Left) {
+        (*mouseFlag)["M1"] = state;
+    }
+    if (evnt->mouseButton.button == Mouse::Right) {
+        (*mouseFlag)["M2"] = state;
+    }
+    if (evnt->mouseButton.button == Mouse::Middle) {
+        (*mouseFlag)["M3"] = state;
+    }
+}
+
 void Game::ResetKeyboard() {
     unordered_map<string, bool> keyboardResetState = {
         {"W",0},{"A",0},{"S",0},{"D",0},
@@ -347,6 +374,6 @@ void Game::ResetMouse() {
     unordered_map<string, bool> mouseResetState = {
         {"M1",0},{"M2",0},{"M3",0},
     };
-    mousePress = mouseRelease = mouseResetState;
+    mousePress = mouseRelease = mouseHold = mouseResetState;
 }
 

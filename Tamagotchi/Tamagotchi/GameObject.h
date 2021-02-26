@@ -13,8 +13,10 @@ class GameObject
 {
 public:
 	GameObject();
+	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter,
+		Color color); //Fill Color
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
-		string texturePath = "Assets/Textures/testTextureLARGE.png"); //Single Texture
+		string texturePath = "Assets/Textures/DefaultTexture.png"); //Single Texture
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
 		string texturePath, Vector2u imageCount, float frameTime); //1Row Animation from Texture Sheet
 	GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, 
@@ -41,6 +43,7 @@ public:
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize(); //Returns Dimensions
 	Vector2f GetDimensions(); //Same as GetSize()
+	Color GetColor();//Returns rectangleShape's Color
 
 	void SetPosition(Vector2f position); // Set Position
 	void SetPosition(float x, float y);
@@ -55,13 +58,14 @@ public:
 	void SetFinishFrame(Vector2i finish); // Set last frame
 	void SetFinishFrame(int x, int y);
 	void SetFrameTime(float frameTime); // Set frametime
-
+	void SetColor(Color color); // Set Color
 
 	
 
 	
 
 	bool enabled = true; 
+	bool IsUpdateAnimation = true;
 
 	Vector2f speed = Vector2f(0, 0);
 
