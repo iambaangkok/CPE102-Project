@@ -26,12 +26,13 @@ public:
 
 
 
-	float speedscroll = 300;
-	bool isOpen = false;
+	float speedscroll = 700;
+	bool isOpen = true;
 	int windowWidth = 720;
 	int windowHeight = 1040;
 	int topscroll = 0;
-	int lowscroll = 200;
+	int lowscroll = 790;
+	int positionscroll = 700;
 	Vector2f position = Vector2f(0,0);
 	vector<Item> items;
 	vector<Text> descriptions;
