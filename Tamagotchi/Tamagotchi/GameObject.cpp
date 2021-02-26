@@ -17,6 +17,20 @@ GameObject::GameObject() {
 	rectangleShape.setTexture(&texture);
 }
 
+//Fill Color
+GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, Color color) {
+
+	rectangleShape = RectangleShape(dimensions);
+	rectangleShape.setPosition(position);
+	if (originIsCenter) {
+		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
+	}
+
+	rectangleShape.setFillColor(color);
+	IsUpdateAnimation = false;
+	
+}
+
 //Single Texture
 GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath) {
 
@@ -106,14 +120,17 @@ void GameObject::Update(float deltaTime) { // Proper Animation
 	if (!enabled) {
 		return;
 	}
-	animation.Update(deltaTime);
-	if (faceRight) {
-		rectangleShape.setScale(Vector2f(1, 1));
+	if (IsUpdateAnimation) {
+		animation.Update(deltaTime);
+		if (faceRight) {
+			rectangleShape.setScale(Vector2f(1, 1));
+		}
+		else {
+			rectangleShape.setScale(Vector2f(-1, 1));
+		}
+		rectangleShape.setTextureRect(animation.uvRect);
 	}
-	else {
-		rectangleShape.setScale(Vector2f(-1, 1));
-	}
-	rectangleShape.setTextureRect(animation.uvRect);
+	
 	Move(speed.x * deltaTime, speed.y * deltaTime);
 	//rectangleShape.setTexture(&texture);
 }
@@ -241,6 +258,10 @@ Vector2f GameObject::GetDimensions()
 	return rectangleShape.getSize();
 }
 
+Color GameObject::GetColor() {
+	return rectangleShape.getFillColor();
+}
+
 void GameObject::SetPosition(Vector2f position) // Set Position
 {
 	rectangleShape.setPosition(position);
@@ -293,4 +314,8 @@ void GameObject::SetFinishFrame(int x, int y)
 void GameObject::SetFrameTime(float frameTime) // Set frametime
 {
 	animation.SetFrameTime(frameTime);
+}
+void GameObject::SetColor(Color color) 
+{
+	rectangleShape.setFillColor(color);
 }
