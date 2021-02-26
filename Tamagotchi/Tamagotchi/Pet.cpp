@@ -59,12 +59,13 @@ Pet::~Pet()
 
 void Pet::Initialize() {
 	speed = Vector2f(0, 0);
+	mouseIsOver = false;
 
 }
 
 
 void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease,
-	unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, Vector2i mousePosition, int mouseWheelDelta)
+	unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, unordered_map<string, bool>& mouseHold, Vector2i mousePosition, int mouseWheelDelta)
 {
 	if (!enabled) {
 		return;
@@ -86,7 +87,8 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	else if (shadowYOffset == shadowNormalYOffset) {
 		isInAir = false;
 	}
-
+	mouseIsOver = IsMouseOver(mousePosition);
+	lastFramePosition = GetPosition();
 	
 
 	if (isAlive) {
@@ -121,16 +123,32 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 				isInAir = true;
 			}
 		}
-		if (mousePress["M1"]) {
-			shadow->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
-			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
-			isRandomlyMoving = false;
-			if (IsMouseOver(mousePosition)) {
-				
-				
+		if (mouseHold["M1"]) {
+			if (mouseIsOver) {
+				if (!isDraggedByMouse) {
+					mousePositionRelativeToPet = GetPosition() - Vector2f(mousePosition.x, mousePosition.y);
+					isDraggedByMouse = true;
+				}
+				if (isDraggedByMouse) {
+					randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
+					isRandomlyMoving = false;
+				}
 			}
-			
+
 		}
+
+		if (mouseIsOver && !mouseHold["M1"]) {
+			isDraggedByMouse = false;
+		}
+
+		if (mouseRelease["M1"]) {
+			throwSpeed.x = deltaPosition.x/2;
+			throwSpeed.y = deltaPosition.y/2;
+			shadowYOffsetSpeed = throwSpeed.y;
+			cout << "MOUSE RELEASE" << " " << throwSpeed.x  << " "  << shadowYOffsetSpeed << endl << endl << endl;
+		}
+		
+
 		//Calculate Random Movement
 		if (randomMovementIntervalTime > randomMovementInterval) {
 			isRandomlyMoving = true;
@@ -155,8 +173,40 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 		//Move
 
-		shadow->Move(speed.x, speed.y);
-		SetPosition(shadow->GetPosition().x, shadow->GetPosition().y - shadowYOffset - shadow->GetDimensions().y/2);
+		if (isDraggedByMouse) {
+			float shadowX = mousePosition.x + mousePositionRelativeToPet.x;
+			Clamp(&shadowX, 720 - shadow->GetDimensions().x / 2, shadow->GetDimensions().x / 2);
+			shadow->SetPosition(shadowX, shadow->GetPosition().y);
+			SetPosition(shadow->GetPosition().x, std::min(shadow->GetPosition().y - shadowNormalYOffset - shadow->GetDimensions().y / 2, mousePosition.y + mousePositionRelativeToPet.y) );
+			shadowYOffset = shadow->GetPosition().y - shadow->GetDimensions().y / 2 - GetPosition().y;
+			if (shadowYOffset > shadowNormalYOffset) 
+				isInAir = true;
+			else if (shadowYOffset == shadowNormalYOffset)
+				isInAir = false;
+
+			shadowYOffsetSpeed = 0;
+		}
+		else {
+
+			if (isInAir) {
+				speed.x += throwSpeed.x;
+				
+				if ( abs(throwSpeed.x -windResistance*deltaTime) < windResistance*deltaTime)  {
+					throwSpeed.x = 0;
+				}
+				else if (throwSpeed.x > 0) {
+					throwSpeed.x -= windResistance * deltaTime;
+				}
+				else if (throwSpeed.x < 0) {
+					throwSpeed.x += windResistance * deltaTime;
+				}
+			}
+
+			shadow->Move(speed.x, speed.y);
+			SetPosition(shadow->GetPosition().x, shadow->GetPosition().y - shadowYOffset - shadow->GetDimensions().y / 2);
+
+		}
+		
 
 		for (int i = 0; i < shadowBorder.size(); ++i) {
 			int shadowCollision = shadow->CheckCollision(shadowBorder[i]);
@@ -174,10 +224,33 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			}
 		}
 
-		if (speed.x > 0) {
+
+		//Move ShadowYOffset
+		if (!isDraggedByMouse) {
+			shadowYOffset += shadowYOffsetSpeed * deltaTime;
+			if (isInAir) {
+				shadowYOffsetSpeed -= gravity * deltaTime;
+			}
+			else {
+				shadowYOffsetSpeed = 0;
+			}
+		}
+
+		Clamp(&shadowYOffset, 800.0f, shadowNormalYOffset);
+		Vector2f shadowPos = shadow->GetPosition();
+		Vector2f shadowDim = shadow->GetDimensions();
+		Clamp(&shadowPos.x, 720.0f-shadowDim.x/2, 0.0f+shadowDim.x / 2);
+		shadow->SetPosition(shadowPos.x, shadowPos.y);
+
+
+		deltaPosition = GetPosition() - lastFramePosition;
+		
+
+
+		if (deltaPosition.x > 0) {
 			faceRight = true;
 		}
-		if (speed.x < 0) {
+		if (deltaPosition.x < 0) {
 			faceRight = false;
 		}
 
@@ -211,18 +284,10 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 		isMoving = (speed != Vector2f(0, 0));
 
-		//Move ShadowYOffset
-		shadowYOffset += shadowYOffsetSpeed * deltaTime;
-		if (isInAir) {
-			shadowYOffsetSpeed -= gravity * deltaTime;
-		}
-		else {
-			shadowYOffsetSpeed = 0;
-		}
-		Clamp(&shadowYOffset, 500.0f,shadowNormalYOffset);
+		
 
-
-		cout << shadowYOffsetSpeed << " " << shadowYOffset << endl;
+		
+		cout << mouseRelease["M1"] << " " << deltaPosition.y <<  " "  << deltaPosition.x << " " << mouseIsOver << " " << isDraggedByMouse << " " <<  endl;
 
 	}
 
@@ -231,10 +296,10 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	//Set Animation according to pet state
 	if (isInAir) {
 		animation.freezeFrame = true;
-		if (shadowYOffsetSpeed > 20) {
+		if (deltaPosition.y < -3) {
 			animation.SetFrame(3, 0);
 		}
-		else if (shadowYOffsetSpeed < -20) {
+		else if (deltaPosition.y > 3) {
 			animation.SetFrame(4, 0);
 		}
 		else {
@@ -254,6 +319,11 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 	animation.Update(deltaTime);
 	rectangleShape.setTextureRect(animation.uvRect);
+
+
+
+
+
 }
 
 template<typename T>
@@ -281,8 +351,8 @@ bool Pet::IsMouseOver(Vector2i& mousePosition) {
 
 	Vector2f posi = GetPosition();
 	Vector2f dimen = GetDimensions();
-	Vector2f a = Vector2f(posi.x, posi.y);
-	Vector2f b = Vector2f(posi.x + dimen.x, posi.y + dimen.y);
+	Vector2f a = Vector2f(posi.x - dimen.x/2, posi.y - dimen.y/2);
+	Vector2f b = Vector2f(posi.x + dimen.x/2, posi.y + dimen.y/2);
 
 	if (mousePosition.x > a.x && mousePosition.x < b.x && mousePosition.y > a.y && mousePosition.y < b.y) {
 		return true;
