@@ -15,9 +15,9 @@ Game::~Game() {
 
 void Game::LoadGame() {
 
-    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(10, 10), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/pet_01.png",
+    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
-
+    test1 = &bobo;
 
     //Opensavefile, Calculate expgain foodloss etc.
 
@@ -184,7 +184,6 @@ void Game::Update() {
 void Game::Draw() {
     window.clear(Color::Black);//Clear
 
-    test1->Draw(window);
 
     //Draw other things
     backgrounds[currentBackground].Draw(window);
@@ -207,6 +206,8 @@ void Game::Draw() {
     
     shopBut->Draw(window);
     miniBut->Draw(window);
+    test1->Draw(window);
+
 
     window.draw(fpsText);
 

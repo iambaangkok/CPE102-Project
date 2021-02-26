@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <vector>
 #include <unordered_map>
-    #include <set>
-    #include <utility>
+#include <set>
+#include <utility>
 #include <cmath>
 #include "Animation.h"
 #include "GameObject.h"

@@ -19,14 +19,14 @@ ParticleSystem::ParticleSystem(int rate, float spread, float angle, float lifeti
 	minAngle = angle - spread;
 	maxAngle = angle + spread;
 
-	for (int i = 1; i <= numberOfParticle; ++i) {
+	for (int i = 0; i < numberOfParticle; ++i) {
 		amoutOfParticle.push_back(emitter);
 	}	
 }
 
 void ParticleSystem::Draw(RenderWindow& window) {
 
-	for (int i = 1; i <= numberOfParticle; ++i) {
+	for (int i = 0; i < numberOfParticle; ++i) {
 		amoutOfParticle[i].Draw(window);
 	}
 	
