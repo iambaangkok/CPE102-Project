@@ -41,9 +41,12 @@ public:
     void ReInitialize();
     void GetInput();
     void Update();
-    void UpdateUI();
     void Draw();
 
+
+    void UpdateUI();
+    void DrawUI(RenderWindow& window);
+    void SetTextUI(Text& text, string str, Font& font, Color color, int size, Vector2f position = Vector2f(720/2,1040/2));
 
     void CheckKeyPressRelease(unordered_map<string, bool> *keyFlag);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag);
@@ -58,13 +61,14 @@ public:
     Pet* pet;
 
     /// User Interface
+    Color col_BLACK1 = Color(24, 20, 37);
     Color col_RED1 = Color(244, 4, 69);
     Color col_GREEN1 = Color(99, 199, 77);
     Color col_BROWN1 = Color(184, 111, 80);
     Color col_YELLOW1 = Color(254, 231, 97);
     float ui_barWidth = 210;
     float ui_barHeight = 10;
-    float ui_expBarWidth = 470;
+    float ui_expBarWidth = 410;
     float ui_expBarHeight = 10;
     float ui_happinessBarWidth = 10;
     float ui_happinessBarMaxHeight = 90;
