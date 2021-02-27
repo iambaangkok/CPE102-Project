@@ -15,6 +15,7 @@
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -29,5 +30,6 @@
     <ClInclude Include="Shop.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="PowerUp.h" />
   </ItemGroup>
 </Project>

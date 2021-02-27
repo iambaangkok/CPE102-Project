@@ -13,7 +13,6 @@ PlatformObject::PlatformObject(Vector2f size, Vector2i windowSize, int NO_OF_PLA
 	
 	platformtexture.loadFromFile(filepath);
 	platform.rectangleShape.setTexture(&platformtexture, true);
-	//platform.SetTexture(platformtexture);
 	
 	platform.SetDimensions(size);
 	platform.SetOrigin(size / 2.0f);
@@ -40,7 +39,6 @@ void PlatformObject::Draw(RenderWindow& window , int difficulty)
 			while (!enabled[random]) {
 				random = rand() % NO_OF_PLATFORM;
 			}
-			cout << random << endl;
 			enabled[random] = false;
 		}
 		platform.SetPosition(platformPos[i]);

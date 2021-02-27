@@ -2,6 +2,7 @@
 
 #include "GravityObject.h"
 #include "PlatformObject.h"
+#include "PowerUp.h"
 #include <SFML/Audio.hpp>
 
 class Doodle
@@ -10,41 +11,44 @@ public :
 	Doodle();
 	~Doodle();
 
-	void Initialize();
-	void Update(float deltaTime);
-	void Draw(RenderWindow& window , float time_interval);
+	void Initialize();										// Call to initialize doodle 
+	void Update(float deltaTime);							// Update to GravityObject and PlatformObject
+	void Draw(RenderWindow& window , float time_interval);	// Draw GravityObject and PlatformObject
+
+	int gamestate = 0;										// 0 - Start, 1 - Playing, 2 - Gameover
 
 	GravityObject* Alpha;
 	PlatformObject* Platform;
-
-	vector<Sprite> background;
-
+	PowerUp* Power;
+	
 	Font font;
 	Text scoreText;
-	Texture backgroundtexture;
+	vector<Sprite> background;
 	Sprite Logo1, Logo2;
-	Texture Logo1T , Logo2T;
 	Sprite Press;
+	Sprite YOUDIED;
+
+	Texture backgroundT;
+	Texture Logo1T, Logo2T;
 	Texture PressT;
-	Sprite YOUDIED; 
 	Texture YOUDIEDT;
 
-	SoundBuffer buffer , buffer2;
-	Sound sound;
-	Sound music;
+	Sound sound, music , pw;
+	SoundBuffer soundB , musicB , pwB;
 
 	int windowWidth = 720;
 	int windowHeight = 1040;
 
-	int difficulty = 0;
+	int difficulty = 0;				// Adjust difficulty and score speed rate 
 	int score = 0;
-	int difficulty_rate = 50;
-	int score_rate = 500;
+	int difficulty_rate = 20;
+	int score_rate = 1000;
+	float finalspeed_rate = 0.1f;
 
-	int gamestate = 0; // 0 - Start, 1 - Playing, 2 - Gameover
-	int cnt = 0;
+	int FadeCnt = 0;				// Fade VFX
 	float FadeRate = 0.05f;
+	
+	bool sw = false;				// Blink VFX
 
-	bool sw = false;
 };
 
