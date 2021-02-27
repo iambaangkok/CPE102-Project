@@ -57,8 +57,12 @@ public:
 	void SetStartFrame(int x, int y);
 	void SetFinishFrame(Vector2i finish); // Set last frame
 	void SetFinishFrame(int x, int y);
+	void SetStartFinishFrame(int sx, int sy, int fx, int fy);
 	void SetFrameTime(float frameTime); // Set frametime
+	void SetFrame(Vector2i imageCoordinate);
+	void SetFrame(int x, int y);
 	void SetColor(Color color); // Set Color
+
 
 	
 

@@ -315,6 +315,15 @@ void GameObject::SetFrameTime(float frameTime) // Set frametime
 {
 	animation.SetFrameTime(frameTime);
 }
+void GameObject::SetStartFinishFrame(int sx, int sy, int fx, int fy) {
+	animation.SetStartFinishFrame(sx, sy, fx, fy);
+}
+void GameObject::SetFrame(Vector2i imageCoordinate) {
+	animation.SetFrame(imageCoordinate);
+}
+void GameObject::SetFrame(int x, int y) {
+	animation.SetFrame(x, y);
+}
 void GameObject::SetColor(Color color) 
 {
 	rectangleShape.setFillColor(color);
