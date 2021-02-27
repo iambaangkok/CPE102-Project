@@ -20,7 +20,7 @@ void Game::LoadGame() {
     fonts.push_back(font1);
 
 
-    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/dickko.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
     test1 = &bobo;
 
@@ -181,7 +181,9 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
- 
+   
+    test1->Update(deltaTime);
+    
     pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
 
     backgrounds[currentBackground].Update(deltaTime);
@@ -256,8 +258,13 @@ void Game::Draw() {
 
 
     backgrounds[currentBackground].Draw(window);
+ 
     
     DrawUI(window);
+
+
+
+
 
 
     shop->Draw(window);

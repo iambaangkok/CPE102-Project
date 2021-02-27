@@ -25,11 +25,15 @@ Shop::Shop() {
         descriptions.push_back(description);
     }
 
-    static GameObject bgr = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false,"Assets/Textures/testshop1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    static GameObject bgr = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false,"Assets/Textures/Shop/testshop1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     bg = &bgr;
 
+    static GameObject bgrshop = GameObject(Vector2f(310, 270), Vector2f(390, 520), false, "Assets/Textures/Shop/testnottest.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    bgs = &bgrshop;//Ba
+
     static GameObject scroll = GameObject(Vector2f(positionscrollX , 200), Vector2f(20, heightscrollbar), false, "Assets/Textures/panel_blue_72x20.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    scrollbar = &scroll;
+    scrollbar = &scroll; //Scroll
+
 
 }
 
@@ -42,6 +46,7 @@ Shop::~Shop() {
 void Shop::Draw(RenderWindow &window) {
     if (isOpen) {
         bg->Draw(window);
+        bgs->Draw(window);
         scrollbar->Draw(window);
     }
     else {
@@ -50,7 +55,7 @@ void Shop::Draw(RenderWindow &window) {
 
 void Shop::Update(float deltaTime, int mouseWheelDelta) {
     if (isOpen) {
-        cout << mouseWheelDelta;
+       
         if (mouseWheelDelta != 0){
             scrollbar->SetPosition(positionscrollX,scrollbar->GetPosition().y+0-mouseWheelDelta*deltaTime*speedscroll);
         }
