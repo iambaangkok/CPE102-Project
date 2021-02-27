@@ -236,8 +236,7 @@ void Game::Draw() {
 
 
     backgrounds[currentBackground].Draw(window);
-<<<<<<< HEAD
-=======
+ 
     
     ui_topPanel->Draw(window);
 
@@ -248,7 +247,10 @@ void Game::Draw() {
     ui_happinessBar->Draw(window);
     //ui_emotionIcon->Draw(window);
 
->>>>>>> 87629eaab35a1c2ba0b0b3d445001d08ea89b3d1
+
+
+
+
 
     shop->Draw(window);
 
