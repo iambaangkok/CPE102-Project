@@ -21,6 +21,7 @@ void Game::LoadGame() {
 
     //Opensavefile, Calculate expgain foodloss etc.
 
+    /// Pet
     float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
         "Assets/Textures/pet_01.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
@@ -51,11 +52,33 @@ void Game::LoadGame() {
     pet->shadowBorder.push_back(pBorder4);
 
 
-    static GameObject uipt = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_cutout.png", Vector2u(1, 1), Vector2i(0,0), Vector2i(0,0), 10);
-    uiPanelTop = &uipt;
+    /// User Interface
+    static GameObject ui_tp = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_cutout.png", Vector2u(1, 1), Vector2i(0,0), Vector2i(0,0), 10);
+    ui_topPanel = &ui_tp;
 
+    static GameObject ui_hpb = GameObject(Vector2f(90, 50), Vector2f((float)p.currentHp / p.hpMax[p.currentLevel] * ui_barWidth, ui_barHeight), false, col_RED1);
+    ui_hpBar = &ui_hpb;
+    static GameObject ui_fb = GameObject(Vector2f(90, 90), Vector2f((float)p.currentFood / p.foodMax[p.currentLevel] * ui_barWidth, ui_barHeight), false, col_GREEN1);
+    ui_foodBar = &ui_fb;
+    static GameObject ui_pb = GameObject(Vector2f(90, 130), Vector2f((float)p.currentPoop / p.poopMax[p.currentLevel] * ui_barWidth, ui_barHeight), false, col_BROWN1);
+    ui_poopBar = &ui_pb;
+
+    static GameObject ui_expb = GameObject(Vector2f(90, 170), Vector2f((float)p.currentExp / p.expPerEvolve[p.currentLevel] * ui_expBarWidth, ui_expBarHeight), false, col_YELLOW1);
+    ui_expBar = &ui_expb;
+
+    ui_happinessBarHeight = (float)p.currentHappiness / p.happinessMax[p.currentLevel] * ui_happinessBarMaxHeight;
+    static GameObject ui_hab = GameObject(Vector2f(410, ui_happinessBarFloorLevel - ui_happinessBarHeight), Vector2f(ui_happinessBarWidth , ui_happinessBarHeight), false, col_YELLOW1);
+    ui_happinessBar = &ui_hab;
+    //static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    //ui_emotionIcon = &ui_emoico;
+    //ui_emotionIcon->animation.freezeFrame = true;
+    //emotionFrame = 0;
+    //ui_emotionIcon->SetFrame(emotionFrame, 0);
+
+
+    /// Shop
     static Shop s = Shop();
-    shop = &s;  
+    shop = &s;      
 
     static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
         "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
@@ -63,12 +86,14 @@ void Game::LoadGame() {
     sB.animation.freezeFrame = true;
     shopBut = &sB;
 
+    /// Minigames
     static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
         "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
         , "mnB", 0, "MINI", gameState, shop->isOpen);
     mnB.animation.freezeFrame = true;
     miniBut = &mnB;
 
+    /// Miscellaneous
     static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     backgrounds.push_back(bg);
 
@@ -131,7 +156,7 @@ void Game::ReInitialize() {
         clouds[i].Initialize();
     }
     titlePanel->Initialize();
-    uiPanelTop->Initialize();
+    ui_topPanel->Initialize();
     
 }
 
@@ -181,16 +206,47 @@ void Game::Update() {
 
     
     shop->Update( deltaTime, mouseWheelDelta);
-    uiPanelTop->Update(deltaTime);
+
+
+    UpdateUI();
+
+}
+
+void Game::UpdateUI() {
+
+    ui_hpBar->SetDimensions((float)pet->currentHp / pet->hpMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
+    ui_foodBar->SetDimensions((float)pet->currentFood / pet->foodMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
+    ui_poopBar->SetDimensions((float)pet->currentPoop / pet->poopMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
+
+    ui_expBar->SetDimensions((float)pet->currentExp / pet->expPerEvolve[pet->currentLevel] * ui_expBarWidth, ui_expBarHeight);
+
+    ui_happinessBarHeight = (float)pet->currentHappiness / pet->happinessMax[pet->currentLevel] * ui_happinessBarMaxHeight;
+    ui_happinessBar->SetPosition(410, ui_happinessBarFloorLevel - ui_happinessBarHeight);
+    ui_happinessBar->SetDimensions(ui_happinessBarWidth, ui_happinessBarHeight);
+    //static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    //ui_emotionIcon = 0;
+    //ui_emotionIcon->SetFrame(emotionFrame, 0);
 }
 
 void Game::Draw() {
-    window.clear(Color::Black);//Clear
+    window.clear(Color::Black);
+    //Draw things here vvvv
 
 
-    //Draw other things
+
+
     backgrounds[currentBackground].Draw(window);
     
+    ui_topPanel->Draw(window);
+
+    ui_hpBar->Draw(window);
+    ui_foodBar->Draw(window);
+    ui_poopBar->Draw(window);
+    ui_expBar->Draw(window);
+    ui_happinessBar->Draw(window);
+    //ui_emotionIcon->Draw(window);
+
+
     shop->Draw(window);
 
     for (int i = 0; i < clouds.size(); ++i) {
@@ -209,13 +265,15 @@ void Game::Draw() {
     
     shopBut->Draw(window);
     miniBut->Draw(window);
-    uiPanelTop->Draw(window);
     test1->Draw(window);
 
     window.draw(fpsText);
 
-    window.display();//Display
 
+
+
+    //Display
+    window.display();
 }
 
 
