@@ -7,6 +7,7 @@ public :
     GravityObject(Vector2f position, Vector2f dimensions, float Height , string filepath);
     ~GravityObject();
 
+    void Update(float deltaTime , float speed_rate);
     bool CheckCollision(Vector2f otherPos , Vector2f otherHalfSize);
 
     GameObject player;

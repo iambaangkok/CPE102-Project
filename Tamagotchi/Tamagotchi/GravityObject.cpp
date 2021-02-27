@@ -21,6 +21,28 @@ GravityObject::~GravityObject()
 
 }
 
+void GravityObject::Update(float deltaTime , float speed_rate)
+{
+	if (Keyboard::isKeyPressed(Keyboard::A))
+		playerX -= 800.0f * deltaTime * (1.0f - speed_rate);
+	if (Keyboard::isKeyPressed(Keyboard::D))
+		playerX += 800.0f * deltaTime * (1.0f - speed_rate);
+	if (playerX > 720)
+		playerX = 720;
+	if (playerX < 0)
+		playerX = 0;
+
+	if (dy < -300.0f)
+		player.animation.SetFrame(Vector2i(3, 0));
+	else if (dy > 200.0f)
+		player.animation.SetFrame(Vector2i(4, 0));
+	else
+		player.animation.SetFrame(Vector2i(0, 0));
+
+	player.SetPosition(Vector2f(playerX, playerY));
+	player.rectangleShape.setTextureRect(player.animation.uvRect);
+}
+
 bool GravityObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 {
 	Vector2f thisPos = player.GetPosition();
