@@ -20,7 +20,7 @@ public:
 	Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Customize Pet
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
 		string name, string type, int levelMax, vector<int> hpMax, vector<int> expPerEvolve, vector<int> happinessMax, vector<int> foodMax, vector<int> poopMax,
-		int hpChangeRate = 1, int expChangeRate = 1, int foodChangeRate = 1, int happinessChangeRate = 1, int poopChangeRate = 1, float notEnoughFoodThreshold = 20);
+		int hpChangeRate = 1, int expChangeRate = 1, int foodChangeRate = 1, int happinessChangeRate = 1, int poopChangeRate = 1, float notEnoughFoodThreshold = 0.2f);
 	Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, 
 		string name, string type);
@@ -101,7 +101,7 @@ public:
 
 //private:
 	float totalTime = 0;
-	int tickTime = 1;
+	int tickTime = 2;
 
 	int levelMax = 0;
 	vector<int> hpMax; //HP

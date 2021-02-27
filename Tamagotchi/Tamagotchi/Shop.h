@@ -39,6 +39,7 @@ public:
 	vector<Text> descriptions;
 	vector<Text> prices;
 	GameObject *bg;
+	GameObject *bgs;
 	GameObject *scrollbar;
 	vector<Button> buttons;//0 = food, 1 = dessert, 2 = booster;
 };

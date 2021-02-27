@@ -20,15 +20,15 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Customize
 	this->name = name;
 	this->type = type;
 	this->levelMax = levelMax;
-	currentLevel = 1;
+	currentLevel = 0;
 	this->hpMax = hpMax;
-	currentHp = this->hpMax[0];
+	currentHp = this->hpMax[currentLevel];
 	this->expPerEvolve = expPerEvolve;
-	currentExp = expPerEvolve[0];
+	currentExp = expPerEvolve[currentLevel];
 	this->happinessMax = happinessMax;
-	currentHappiness = this->happinessMax[0];
+	currentHappiness = this->happinessMax[currentLevel];
 	this->foodMax = foodMax;
-	currentFood = this->foodMax[0];
+	currentFood = this->foodMax[currentLevel];
 	this->poopMax = poopMax;
 	currentPoop = 0;
 	this->hpChangeRate = hpChangeRate;
@@ -261,15 +261,16 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			rectangleShape.setScale(Vector2f(-1, 1));
 		}
 
-
-		if (totalTime > tickTime) {//Still Alive and Growing
+		/// Still Alive and Growing
+		//Calculate stats
+		if (totalTime > tickTime) {
 			totalTime -= tickTime;
 
-			if ((float)currentFood < foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
+			if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
 				currentHp -= int(hpChangeRate * hpChangeRateMultiplier);
+				currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
 			}
 			else {
-				currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
 
 			}
 			currentExp += int(expChangeRate * expChangeMultiplier);
@@ -287,7 +288,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		
 
 		
-		cout << mouseRelease["M1"] << " " << deltaPosition.y <<  " "  << deltaPosition.x << " " << mouseIsOver << " " << isDraggedByMouse << " " <<  endl;
+		cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
 
 	}
 
