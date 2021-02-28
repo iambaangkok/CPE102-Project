@@ -8,14 +8,15 @@ Button::Button() {
 
 Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
     string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime
-    ,string text, int status, string type,int &gstate,bool &shopIsOpen)
+    ,string text, int status, string type,int &gstate,Shop &shop,Pet &pet,int id)
     : GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
     this->text = text;
     this->status = status;
     this->type = type;
 	this->gstate = &gstate;
-	this->shopIsOpen = &shopIsOpen;
+	this->shop = &shop;
+	this->pet = &pet;
 }
 //Proper Animation
 
@@ -51,6 +52,8 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 		status = 0;
 	}
 
+	if (type == "BUYITEM" && pet->money < shop->items[id - 1].price) status = 3;
+
 	animation.SetFrame(Vector2i(status, 0));
 
 
@@ -62,14 +65,18 @@ void Button::OnClick() {
 		*gstate = 0;
 	}
 	else if (type == "SHOP") {
-		if (*shopIsOpen == false) *shopIsOpen = true;
-		else *shopIsOpen = false;
+		if (shop->isOpen == false) shop->isOpen = true;
+		else shop->isOpen = false;
 	}
 	else if (type == "MINIGAME") {
 		*gstate = 1;
 	}
 	else if (type == "SETTING") {
 		*gstate = 2;
+	}
+	if (type == "BUYITEM" && pet->money >= shop->items[id-1].price) {
+		pet->money -= shop->items[id - 1].price;
+		shop->items[id-1].UseItem(pet);
 	}
 }
 
