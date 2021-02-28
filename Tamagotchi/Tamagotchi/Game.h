@@ -109,6 +109,9 @@ public:
     /// Minigames
     Button* miniBut;
 
+    /// BuyItems
+    vector<Button> buyBut;
+
     /// Miscellaneous
     int currentBackground = 0;
     vector<GameObject> backgrounds;
