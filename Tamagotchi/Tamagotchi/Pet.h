@@ -44,7 +44,7 @@ public:
 
 
 	bool isAlive = true;
-
+	int money = 0;
 	string name = "Unset Name";
 	string type = "Unset Type";
 	int currentLevel = 0;
