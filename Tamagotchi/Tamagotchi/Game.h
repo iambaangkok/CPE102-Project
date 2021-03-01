@@ -46,7 +46,10 @@ public:
 
     void UpdateUI();
     void DrawUI(RenderWindow& window);
+    void ReInitializeUI();
+
     void SetTextUI(Text& text, string str, Font& font, Color color, int size, Vector2f position = Vector2f(720/2,1040/2));
+    void SetTextAlignment(Text& text, float anchorPositionX, int alignment); // alignment: 0 = left, 1 = right, 2 = middle
 
     void CheckKeyPressRelease(unordered_map<string, bool> *keyFlag);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag);
@@ -67,14 +70,15 @@ public:
     Color col_BROWN1 = Color(184, 111, 80);
     Color col_YELLOW1 = Color(254, 231, 97);
     float ui_barWidth = 210;
-    float ui_barHeight = 10;
+    float ui_barHeight = 30;
     float ui_expBarWidth = 410;
-    float ui_expBarHeight = 10;
-    float ui_happinessBarWidth = 10;
-    float ui_happinessBarMaxHeight = 90;
+    float ui_expBarHeight = 30;
+    float ui_happinessBarWidth = 18;
+    float ui_happinessBarMaxHeight = 104;
     float ui_happinessBarHeight = 0;
-    float ui_happinessBarFloorLevel = 140;
-    GameObject* ui_topPanel;
+    float ui_happinessBarFloorLevel = 147;
+    GameObject* ui_topPanel_front;
+    GameObject* ui_topPanel_back;
     GameObject* ui_hpBar;
     GameObject* ui_foodBar;
     GameObject* ui_poopBar;
