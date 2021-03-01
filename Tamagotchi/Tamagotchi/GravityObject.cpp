@@ -3,13 +3,15 @@
 
 GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath)
 {
-	playertexture.loadFromFile("Assets/Textures/Sprite2.png");
-	player.rectangleShape.setTexture(&playertexture, true);
+	playertexture.loadFromFile(filepath);
 	player.SetPosition(position);
 	player.SetDimensions(dimensions);
-	
 	player.SetOrigin(dimensions / 2.0f);
-	
+
+	player.rectangleShape.setTexture(&playertexture, true);
+	player.animation = Animation(&playertexture, Vector2u(5, 3), 0.0f);
+	player.animation.SetFrame(Vector2i(0, 0));
+	player.rectangleShape.setTextureRect(player.animation.uvRect);
 
 	this->Height = Height;
 	this->playerX = position.x;
@@ -19,6 +21,28 @@ GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Heigh
 GravityObject::~GravityObject()
 {
 
+}
+
+void GravityObject::Update(float deltaTime , float speed_rate)
+{
+	if (Keyboard::isKeyPressed(Keyboard::A))
+		playerX -= 800.0f * deltaTime * (1.0f - speed_rate);
+	if (Keyboard::isKeyPressed(Keyboard::D))
+		playerX += 800.0f * deltaTime * (1.0f - speed_rate);
+	if (playerX > 720)
+		playerX = 720;
+	if (playerX < 0)
+		playerX = 0;
+
+	if (dy < -300.0f)
+		player.animation.SetFrame(Vector2i(3, 0));
+	else if (dy > 200.0f)
+		player.animation.SetFrame(Vector2i(4, 0));
+	else
+		player.animation.SetFrame(Vector2i(0, 0));
+
+	player.SetPosition(Vector2f(playerX, playerY));
+	player.rectangleShape.setTextureRect(player.animation.uvRect);
 }
 
 bool GravityObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)

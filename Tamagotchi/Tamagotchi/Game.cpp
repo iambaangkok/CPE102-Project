@@ -14,18 +14,133 @@ Game::~Game() {
 }
 
 void Game::LoadGame() {
+    Font font1;
+    if (!font1.loadFromFile("Assets/Fonts/Minecraftia.ttf"))
+        throw("COULD NOT LOAD FONT! ");
+    fonts.push_back(font1);
+
+
+    static ParticleSystem bobo = ParticleSystem(3, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/dickko.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
+    test1 = &bobo;
 
     //Opensavefile, Calculate expgain foodloss etc.
 
-    float playerSize = 100.0f;
+    /// Pet
+    float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-        "Assets/Textures/testTextureLARGE.png", Vector2u(16, 11), Vector2i(12, 10), Vector2i(14, 10), 0.3f,
-        "Fluffball", "Dragon", 3, vector<int>{20, 30, 40}, vector<int>{ 100, 200, 300 }, vector<int>{ 30, 30, 30 }, vector<int>{ 20, 25, 30 }, vector<int>{ 10, 10, 10 });
+        "Assets/Textures/pet_01.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
+        "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 });
     pet = &p;
 
-    static Shop s = Shop();
-    shop = &s;
+    static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
+        "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    pet->shadow = &pShadow;
 
+    float grassFieldTopBorder = 560;
+    float grassFieldHeight = 730 - 560;
+    float grassFieldThickness = 1000;
+    //1 = right, 2 = left, 3 = bottom, 4 = top
+    static GameObject pBorder1 = GameObject(Vector2f(windowWidth+grassFieldThickness/2,grassFieldTopBorder+grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
+        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    static GameObject pBorder2 = GameObject(Vector2f(0-grassFieldThickness+grassFieldThickness / 2, grassFieldTopBorder + grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
+        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    static GameObject pBorder3 = GameObject(Vector2f(windowWidth/2, grassFieldTopBorder-grassFieldThickness/2), Vector2f(windowWidth, grassFieldThickness), true,
+        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    static GameObject pBorder4 = GameObject(Vector2f(windowWidth/2, grassFieldTopBorder+grassFieldHeight+grassFieldThickness/2), Vector2f(windowWidth, grassFieldThickness), true,
+        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    
+    pet->shadowBorder.push_back(pBorder1);
+    pet->shadowBorder.push_back(pBorder2);
+    pet->shadowBorder.push_back(pBorder3);
+    pet->shadowBorder.push_back(pBorder4);
+
+
+    /// User Interface
+    static GameObject ui_tp_f = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_front.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    ui_topPanel_front = &ui_tp_f;
+
+    static GameObject ui_tp_b = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_back.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    ui_topPanel_back = &ui_tp_b;
+
+
+    static GameObject ui_hpb = GameObject(Vector2f(90, 40), Vector2f((float)p.currentHp / p.hpMax[p.currentLevel] * ui_barWidth, ui_barHeight), false,
+        "Assets/Textures/panel_top_x3_hpBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    ui_hpBar = &ui_hpb;
+    static GameObject ui_fb = GameObject(Vector2f(90, 80), Vector2f((float)p.currentFood / p.foodMax[p.currentLevel] * ui_barWidth, ui_barHeight), false,
+        "Assets/Textures/panel_top_x3_foodBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    ui_foodBar = &ui_fb;
+    static GameObject ui_pb = GameObject(Vector2f(90, 120), Vector2f((float)p.currentPoop / p.poopMax[p.currentLevel] * ui_barWidth, ui_barHeight), false,
+        "Assets/Textures/panel_top_x3_poopBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    ui_poopBar = &ui_pb;
+
+    static GameObject ui_expb = GameObject(Vector2f(90, 160), Vector2f((float)p.currentExp / p.expPerEvolve[p.currentLevel] * ui_expBarWidth, ui_expBarHeight), false,
+        "Assets/Textures/panel_top_x3_expBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+    ui_expBar = &ui_expb;
+
+    ui_happinessBarHeight = (float)p.currentHappiness / p.happinessMax[p.currentLevel] * ui_happinessBarMaxHeight;
+    static GameObject ui_hab = GameObject(Vector2f(400, ui_happinessBarFloorLevel - ui_happinessBarHeight), Vector2f(ui_happinessBarWidth, ui_happinessBarHeight), false, Color(255,255,255));
+    ui_happinessBar = &ui_hab;
+    //static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    //ui_emotionIcon = &ui_emoico;
+    //ui_emotionIcon->animation.freezeFrame = true;
+    //emotionFrame = 0;
+    //ui_emotionIcon->SetFrame(emotionFrame, 0);
+
+    //SetTextUI(ui_hpText, "HP", fonts[0], col_BLACK1, 20, Vector2f(40, 40));
+
+    float gapXPlus = 20;
+    float gapXMinus = 10;
+
+    float fontSize = 14;
+    SetTextUI(ui_hpMax, "/" + to_string(pet->hpMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(335 + gapXPlus - 5 , 60));
+    SetTextUI(ui_currentHp, to_string(pet->currentHp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 50));
+
+    //SetTextUI(ui_foodText, "FOOD", fonts[0], col_BLACK1, 20, Vector2f(40, 80));
+    SetTextUI(ui_foodMax, "/" + to_string(pet->foodMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(330 + gapXPlus, 100));
+    SetTextUI(ui_currentFood, to_string(pet->currentFood), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 90));
+
+    //SetTextUI(ui_poopText, "POO", fonts[0], col_BLACK1, 20, Vector2f(40, 120));
+    SetTextUI(ui_poopMax, "/" + to_string(pet->poopMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(330 + gapXPlus, 140));
+    SetTextUI(ui_currentPoop, to_string(pet->currentPoop), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 130));
+
+    //SetTextUI(ui_expText, "EXP", fonts[0], col_BLACK1, 20, Vector2f(40, 160));
+    SetTextUI(ui_expMax, "/" + to_string(pet->expPerEvolve[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(520 + gapXPlus-5, 180));
+    SetTextUI(ui_currentExp, to_string(pet->currentExp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(520 - gapXMinus+5, 170));
+
+    //SetTextUI(ui_money, to_string(pet->currentExp), fonts[0], col_BLACK1, 20, Vector2f(310, 170));
+    SetTextUI(ui_levelText, "LEVEL", fonts[0], col_BLACK1, 20, Vector2f(600, 120));
+    SetTextUI(ui_currentLevel, to_string(pet->currentLevel+1), fonts[0], col_BLACK1, 20, Vector2f(635, 140));
+
+
+
+    /// Shop
+    static Shop s = Shop();
+    shop = &s;      
+
+    static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
+        ,"sB", 0 , "SHOP",gameState,*shop, *pet);
+    sB.animation.freezeFrame = true;
+    shopBut = &sB;
+
+    /// Minigames
+    static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , "mnB", 0, "MINI", gameState,*shop, *pet);
+    mnB.animation.freezeFrame = true;
+    miniBut = &mnB;
+
+    /// BuyItems
+    for (int i = 0; i < 18; ++i) {
+        static Button bB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "bB", 0, "BUYITEM", gameState, *shop,*pet, i+1);
+        bB.animation.freezeFrame = true;
+        buyBut.push_back(bB);
+    }
+
+    /// Miscellaneous
     static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     backgrounds.push_back(bg);
 
@@ -42,23 +157,18 @@ void Game::LoadGame() {
     static GameObject ti = GameObject(Vector2f(-titlePanelGap-titlePanelWidth-titlePanelGap, 160), Vector2f(titlePanelWidth, titlePanelHeight), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     titlePanel = &ti;
 
-    Font font1;
-    if (!font1.loadFromFile("Assets/Fonts/Minecraftia.ttf"))
-        throw("COULD NOT LOAD FONT! ");
-    fonts.push_back(font1);
-
-    fpsText.setString(to_string(fps));
-    fpsText.setFont(fonts[0]);
-    fpsText.setFillColor(Color::Black);
-    fpsText.setCharacterSize(16);
-    fpsText.setPosition(windowWidth-40, 10);
-
     pressAnyKeyToStartText.setString("Press Any Key to Start");
     pressAnyKeyToStartText.setFont(fonts[0]);
     pressAnyKeyToStartText.setFillColor(Color::White);
     pressAnyKeyToStartText.setCharacterSize(25);
     pressAnyKeyToStartText.setPosition(windowWidth/2 - 180, titlePanelHeight + 160 + 40);
     pressAnyKeyToStartText.setStyle(Text::Bold);
+
+    fpsText.setString(to_string(fps));
+    fpsText.setFont(fonts[0]);
+    fpsText.setFillColor(Color::Black);
+    fpsText.setCharacterSize(16);
+    fpsText.setPosition(windowWidth - 40, 10);
 
 }
 
@@ -79,6 +189,8 @@ void Game::ReInitialize() {
     ResetKeyboard();
     ResetMouse();
     anyKeyPressed = anyMousePressed = false;
+    mouseWheelDelta = 0;
+
 
     pet->Initialize();
     backgrounds[currentBackground].Initialize();
@@ -86,33 +198,17 @@ void Game::ReInitialize() {
         clouds[i].Initialize();
     }
     titlePanel->Initialize();
+
+    
 }
 
 
 void Game::Update() {
+   
+    test1->Update(deltaTime);
     
+    pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
 
-    if (keyHold["W"]) {
-        pet->speed.y = -pet->maxSpeed.y;
-    }
-    if (keyHold["A"]) {
-        pet->speed.x = -pet->maxSpeed.x;
-        pet->faceRight = false;
-    }
-    if (keyHold["S"]) {
-        pet->speed.y = +pet->maxSpeed.y;
-    }
-    if (keyHold["D"]) {
-        pet->speed.x = +pet->maxSpeed.x;
-        pet->faceRight = true;
-    }
-    if (mousePress["M1"]) {
-        pet->SetPosition(Vector2f(mousePosition.x, mousePosition.y));
-    }
-
-
-    
-    pet->Update(deltaTime);
     backgrounds[currentBackground].Update(deltaTime);
     for(int i = 0 ; i < clouds.size(); ++i){
         clouds[i].speed = Vector2f(cloudSpeed,0);
@@ -147,15 +243,33 @@ void Game::Update() {
             gameState = 1;
         }
     }
+
+    shopBut->Update(deltaTime, window, mousePress, mousePosition);
+    miniBut->Update(deltaTime, window, mousePress, mousePosition);
+
     
+    shop->Update( deltaTime, mouseWheelDelta);
+
+    ReInitializeUI();
+
+    UpdateUI();
+
 }
 
+
+
+
 void Game::Draw() {
-    window.clear(Color::Black);//Clear
+    window.clear(Color::Black);
+    //Draw things here vvvv
 
 
-    //Draw other things
     backgrounds[currentBackground].Draw(window);
+ 
+    DrawUI(window);
+
+    shop->Draw(window);
+
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
     }
@@ -170,11 +284,91 @@ void Game::Draw() {
         pet->Draw(window);
     }
     
+    shopBut->Draw(window);
+    miniBut->Draw(window);
+    test1->Draw(window);
+
     window.draw(fpsText);
 
-    window.display();//Display
+
+
+
+    //Display
+    window.display();
 }
 
+void Game::ReInitializeUI() {
+    ui_topPanel_front->Initialize();
+    ui_topPanel_back->Initialize();
+    ui_hpBar->Initialize();
+    ui_foodBar->Initialize();
+    ui_poopBar->Initialize();
+    ui_expBar->Initialize();
+    ui_happinessBar->Initialize();
+
+}
+
+void Game::UpdateUI() {
+
+    ui_hpBar->SetDimensions((float)pet->currentHp / pet->hpMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
+    ui_foodBar->SetDimensions((float)pet->currentFood / pet->foodMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
+    ui_poopBar->SetDimensions((float)pet->currentPoop / pet->poopMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
+
+    ui_expBar->SetDimensions((float)pet->currentExp / pet->expPerEvolve[pet->currentLevel] * ui_expBarWidth, ui_expBarHeight);
+
+    ui_happinessBarHeight = (float)pet->currentHappiness / pet->happinessMax[pet->currentLevel] * ui_happinessBarMaxHeight;
+    ui_happinessBar->SetPosition(410, ui_happinessBarFloorLevel - ui_happinessBarHeight);
+    ui_happinessBar->SetDimensions(ui_happinessBarWidth, ui_happinessBarHeight);
+
+    ui_currentHp.setString(to_string(pet->currentHp));
+    ui_currentFood.setString(to_string(pet->currentFood));
+    ui_currentPoop.setString(to_string(pet->currentPoop));
+    ui_currentExp.setString(to_string(pet->currentExp));
+    ui_currentLevel.setString(to_string(pet->currentLevel));
+
+    SetTextAlignment(ui_currentHp, 335+15, 1);
+    SetTextAlignment(ui_currentFood, 335+15, 1);
+    SetTextAlignment(ui_currentPoop, 335+15, 1);
+    SetTextAlignment(ui_currentExp, 520+20, 1);
+    SetTextAlignment(ui_currentLevel, 635, 2);
+
+        
+    //static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    //ui_emotionIcon = 0;
+    //ui_emotionIcon->SetFrame(emotionFrame, 0);
+}
+
+void Game::DrawUI(RenderWindow& window) {
+    ui_topPanel_back->Draw(window);
+
+    ui_hpBar->Draw(window);
+    ui_foodBar->Draw(window);
+    ui_poopBar->Draw(window);
+    ui_expBar->Draw(window);
+    ui_happinessBar->Draw(window);
+    //ui_emotionIcon->Draw(window);
+
+    //window.draw(ui_hpText);
+    window.draw(ui_hpMax);
+    window.draw(ui_currentHp);
+    //window.draw(ui_foodText);
+    window.draw(ui_foodMax);
+    window.draw(ui_currentFood);
+    //window.draw(ui_poopText);
+    window.draw(ui_poopMax);
+    window.draw(ui_currentPoop);
+    //window.draw(ui_expText);
+    window.draw(ui_expMax);
+    window.draw(ui_currentExp);
+
+    window.draw(ui_money);
+    window.draw(ui_levelText);
+    window.draw(ui_currentLevel);
+
+    ui_topPanel_front->Draw(window);
+
+
+}
 
 void Game::GetInput() {
     while (window.pollEvent(evnt)) {
@@ -199,28 +393,32 @@ void Game::GetInput() {
             break;
         case Event::MouseButtonPressed:
             anyMousePressed = true;
+            CheckMousePressRelease(&mousePress, &evnt);
             //CheckMousePressRelease(&mousePress);
             break;
         case Event::MouseButtonReleased:
+            CheckMousePressRelease(&mouseRelease, &evnt);
             //CheckMousePressRelease(&mouseRelease);
             break;
-        case Event::MouseWheelMoved:
-            mouseWheelDelta = evnt.mouseWheel.delta;
+        case Event::MouseWheelScrolled:
+            mouseWheelDelta = evnt.mouseWheelScroll.delta;
             break;
         case Event::MouseMoved:
             mousePosition = Mouse::getPosition(window);
             break;
         }
     }
-    CheckMousePressRelease(&mousePress);
-    CheckMousePressRelease(&mouseRelease);
+    //mouseWheelDelta = evnt.mouseWheelScroll.delta;
+
+    pet->Clamp(&mousePosition.x, windowWidth, 0);
+    pet->Clamp(&mousePosition.y, windowHeight, 0);
+
+    CheckMousePressRelease(&mouseHold);
     CheckKeyPressRelease(&keyHold);
     /*CheckKeyPressRelease(&keyRelease);
     CheckMousePressRelease(&mousePress);
     CheckMousePressRelease(&mouseRelease);*/
-
 }
-
 void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
     int state = true;
     if (Keyboard::isKeyPressed(Keyboard::W)) {
@@ -298,6 +496,19 @@ void Game::CheckMousePressRelease(unordered_map<string, bool>* mouseFlag) {
     }
 }
 
+void Game::CheckMousePressRelease(unordered_map<string, bool>* mouseFlag, Event* evnt) {
+    int state = true;
+    if (evnt->mouseButton.button == Mouse::Left) {
+        (*mouseFlag)["M1"] = state;
+    }
+    if (evnt->mouseButton.button == Mouse::Right) {
+        (*mouseFlag)["M2"] = state;
+    }
+    if (evnt->mouseButton.button == Mouse::Middle) {
+        (*mouseFlag)["M3"] = state;
+    }
+}
+
 void Game::ResetKeyboard() {
     unordered_map<string, bool> keyboardResetState = {
         {"W",0},{"A",0},{"S",0},{"D",0},
@@ -314,6 +525,27 @@ void Game::ResetMouse() {
     unordered_map<string, bool> mouseResetState = {
         {"M1",0},{"M2",0},{"M3",0},
     };
-    mousePress = mouseRelease = mouseResetState;
+    mousePress = mouseRelease = mouseHold = mouseResetState;
 }
 
+void Game::SetTextUI(Text& text, string str, Font& font, Color color, int size, Vector2f position) {
+    text.setString(str);
+    text.setFont(font);
+    text.setFillColor(color);
+    text.setCharacterSize(size);
+    text.setPosition(position);
+}
+
+void Game::SetTextAlignment(Text& text, float anchorPositionX, int alignment) {
+    if (alignment == 0) {
+        text.setPosition(anchorPositionX, text.getPosition().y);
+    }
+    else if (alignment == 1) {
+        text.setPosition(anchorPositionX - text.getLocalBounds().width, text.getPosition().y);
+    }
+    else if (alignment == 2) {
+        text.setPosition(anchorPositionX - text.getLocalBounds().width/2, text.getPosition().y);
+    }
+    
+
+}

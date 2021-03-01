@@ -161,8 +161,10 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="mainOld.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="PlatformObject.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,8 +176,10 @@
     <ClInclude Include="GravityObject.h" />
     <ClInclude Include="Guy.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="PlatformObject.h" />
+    <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Shop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

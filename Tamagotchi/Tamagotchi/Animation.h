@@ -19,8 +19,12 @@ public:
     void SetFrameTime(float frameTime);
     void SetTexture(Texture* texture);
     void SetFrame(Vector2i imageCoordinate);
+    void SetFrame(int x, int y);
     void SetStartFrame(Vector2i start);
+    void SetStartFrame(int x, int y);
     void SetFinishFrame(Vector2i finish);
+    void SetFinishFrame(int x, int y);
+    void SetStartFinishFrame(int sx, int sy, int fx, int fy);
     void SetImageCount(Texture& texture,Vector2u imageCount);
     bool enabled = true;
     bool freezeFrame = false;
