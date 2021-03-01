@@ -15,7 +15,7 @@ class ParticleSystem
 {
 public:
 	ParticleSystem();
-	ParticleSystem(int rate, float spread, float angleOngsa, float lifetime, float speed
+	ParticleSystem(float rate, float spread, float angleOngsa, float lifetime, float speed
 	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime);
 	~ParticleSystem();
 	void Initialize();
@@ -23,7 +23,7 @@ public:
 	void Draw(RenderWindow &window);
 	void Move();
 
-	int rate;
+	float rate;
 	float spread;
 	float angleOngsa;
 	float angleRadian;
@@ -36,6 +36,12 @@ public:
 	Vector2f emitterPosition;
 	vector<GameObject> amoutOfParticle;
 	vector<float> randedAngle;
+	vector<float> totalTime;
+	vector<float> currentTime;
+	int currentParticle = 0;
+	float spawnTime = 0;
+	float currentSpawnTime = 0;
+	vector<bool> started;
 	float speedx;
 	float speedy;
 };

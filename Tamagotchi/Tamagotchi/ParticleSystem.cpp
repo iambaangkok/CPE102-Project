@@ -2,7 +2,7 @@
 ParticleSystem::ParticleSystem() {
 
 }
-ParticleSystem::ParticleSystem(int rate, float spread, float angleOngsa, float lifetime, float speed
+ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float lifetime, float speed
 , Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime) {
 	this->rate = rate;
 	this->spread = spread;
@@ -38,14 +38,32 @@ ParticleSystem::ParticleSystem(int rate, float spread, float angleOngsa, float l
 	for (int i = 0; i < numberOfParticle; ++i) {
 		amoutOfParticle.push_back(emitter);
 		float randAngle;
-		randAngle  = rand() % angleDiff + minAngle;
+		randAngle = rand() % angleDiff + minAngle;
 		randedAngle.push_back(randAngle);
+		totalTime.push_back(lifetime);
+		started.push_back(0);
 	}
+	
+	spawnTime = 1/rate;
+	currentParticle = 0;
 }
 
 void ParticleSystem::Update(float deltaTime) {
+	
+	currentSpawnTime = currentSpawnTime + deltaTime;
+	for (int i = 0; i < numberOfParticle; ++i) {
+		if (currentSpawnTime > (i+1)*spawnTime) {
+			started[i] = 1;
+			//Move();
+			//currentSpawnTime = currentSpawnTime - spawnTime;
+		}
+		if (started[i] == 1) {
+			currentParticle = i;
+			Move();
+		}
+	}
 
-	Move();
+	cout << spawnTime << " " << currentSpawnTime << endl;
 
 }
 
@@ -53,6 +71,7 @@ void ParticleSystem::Draw(RenderWindow& window) {
 
 	for (int i = 0; i < numberOfParticle; ++i) {
 		amoutOfParticle[i].Draw(window);
+
 	}
 	
 
@@ -61,13 +80,14 @@ void ParticleSystem::Draw(RenderWindow& window) {
 
 void ParticleSystem::Move() {
 
-	for (int i = 0; i < numberOfParticle; ++i) {
-		angleOngsa = randedAngle[i];
+		angleOngsa = randedAngle[currentParticle];
 		angleRadian = angleOngsa * (3.1415926 / 180);
 		speedx = speed * cos(angleRadian);
 		speedy = speed * sin(angleRadian);
 
-		amoutOfParticle[i].Move(speedx, speedy);
+		amoutOfParticle[currentParticle].Move(speedx, speedy);
+		if(currentParticle < numberOfParticle){
+			currentParticle++;
 	}
 	
 }

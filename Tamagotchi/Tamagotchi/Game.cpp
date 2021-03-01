@@ -20,7 +20,7 @@ void Game::LoadGame() {
     fonts.push_back(font1);
 
 
-    static ParticleSystem bobo = ParticleSystem(5, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/dickko.png",
+    static ParticleSystem bobo = ParticleSystem(3, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/dickko.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
     test1 = &bobo;
 
