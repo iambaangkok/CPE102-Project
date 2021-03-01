@@ -13,13 +13,17 @@ PowerUp::~PowerUp()
 
 void PowerUp::Update(float deltaTime)
 {
-	//cout << state;
+	if (state != prev) {
+		cout << state;
+		prev = state;
+	}
+		
 	switch (state) {
 	case 0 :
 		POWERUP.SetPosition(0.0f,-100.0f);
 		break;
 	case 1 :
-		posx = rand() % 700 + 10;
+		posx = rand() % 520 + 100;
 		POWERUP.SetPosition(posx, -100.0f);
 		state = 2;
 		break;
@@ -48,7 +52,6 @@ bool PowerUp::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 	float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
 
 	if (intersectX < 0.0f && intersectY < 0.0f) {
-		state = 0;
 		return true;
 	}
 	return false;

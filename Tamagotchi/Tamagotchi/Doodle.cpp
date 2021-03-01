@@ -16,19 +16,24 @@ void Doodle::Initialize()
 	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 9, "Assets/Textures/platform2.png");
 	Platform = &p;
 
-	static GravityObject a = GravityObject(Vector2f(520.0f, 400.0f), Vector2f(100.0f, 100.0f), 400.0f, "Assets/Textures/pet_01.png");
+	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, "Assets/Textures/pet_01.png");
 	Alpha = &a;
-
+	Alpha->dy -= 1700.0f;
+	
 	static PowerUp power = PowerUp();
 	Power = &power;
 
-	int r = rand() % 3 + 1;
+	static GameObject l = GameObject(Vector2f(360,800) , Vector2f(720,480) , true , "Assets/Textures/background_land.png");
+	land = &l;
+	land_posy = 800.0f;
+	//GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath)
+	int r = rand() % 4 + 1;
 
 	for (int i = 0; i < 2; ++i)
 	{
 		Sprite A;
 		backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(r) + ".png");
-		//backgroundT.loadFromFile("Assets/Textures/bgex3.png");
+		//backgroundT.loadFromFile("Assets/Textures/bgex4.png");
 		A.setTexture(backgroundT);
 		A.setScale(Vector2f(720.0f / backgroundT.getSize().x, 1040.0f / backgroundT.getSize().y));
 		background.push_back(A);
@@ -77,12 +82,15 @@ void Doodle::Initialize()
 	music.setVolume(15.0f);
 	sound.setVolume(15.0f);
 
+	beta = rand() % power_range + 1;
+	//cout << beta;
 }
 
 void Doodle::Update(float deltaTime)
 {
 	if (gamestate == 0)
 	{
+		Alpha->player.animation.SetFrame(Vector2i(0, 0));
 		if (Logo1.getPosition().x < 60.0f)
 			Logo1.move(Vector2f(600.0f * deltaTime, 0.0f));
 		if (Logo2.getPosition().x > 90.0f)
@@ -90,6 +98,7 @@ void Doodle::Update(float deltaTime)
 		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
 			music.play();
+			sound.play();
 			gamestate = 1;
 		}
 	}
@@ -103,9 +112,10 @@ void Doodle::Update(float deltaTime)
 			difficulty = score / score_rate / difficulty_rate;
 			if (difficulty > Platform->NO_OF_PLATFORM - 1)
 				difficulty = Platform->NO_OF_PLATFORM - 1;
-			if ((score / score_rate) != 0 && ((score / score_rate) + 30) % 50 == 0) {
-				score += 1;
+			
+			if ((score / score_rate) != 0 && ((score / score_rate) + beta) % power_range == 0 && !Power->spawn) {
 				Power->state = 1;
+				Power->spawn = true;
 			}
 		}
 
@@ -118,6 +128,7 @@ void Doodle::Update(float deltaTime)
 			{
 				Alpha->playerY = Alpha->Height;
 				Platform->platformPos[i].y -= Alpha->dy * deltaTime;
+				land_posy -= Alpha->dy * deltaTime * 0.1f ;
 				if (Platform->enabled[i] && Platform->platformPos[i].y > windowHeight)
 				{
 					Platform->platformPos[i].y = 0;
@@ -144,8 +155,11 @@ void Doodle::Update(float deltaTime)
 
 		if (Power->CheckCollision(Alpha->player.GetPosition(), Alpha->player.GetSize() / 2.0f)) {
 			pw.play();
-			score += 7500;
-			Alpha->dy -= 3000.0f;
+			Power->spawn = false;
+			Power->state = 0;
+			score += 10000;
+			Alpha->dy = 0.0f;
+			Alpha->dy -= 6000.0f;
 		}
 
 		if (Alpha->playerY > 1040)
@@ -158,6 +172,7 @@ void Doodle::Update(float deltaTime)
 		float speed = (float)difficulty / (float)Platform->NO_OF_PLATFORM;
 		Alpha->Update(deltaTime, (speed * (1 - finalspeed_rate)));
 		Power->Update(deltaTime);
+		land->SetPosition(360 , land_posy);
 	}
 	else if (gamestate == 2)
 	{
@@ -175,10 +190,11 @@ void Doodle::Draw(RenderWindow &window, float time_interval)
 {
 	window.draw(background[0]);
 	window.draw(background[1]);
-
+	land->Draw(window);
+	
 	if (gamestate == 0)
 	{
-		switch ((int)(time_interval * 1.50f) % 2)
+		switch ((int)(time_interval * 3.0f) % 2)
 		{
 		case 0:
 			window.draw(Press);
@@ -188,13 +204,15 @@ void Doodle::Draw(RenderWindow &window, float time_interval)
 		}
 		window.draw(Logo1);
 		window.draw(Logo2);
+		
+		Alpha->player.Draw(window);
 	}
 	if (gamestate == 1)
 	{
 		Platform->Draw(window, difficulty);
-		Alpha->player.Draw(window);
 		window.draw(scoreText);
 		Power->Draw(window);
+		Alpha->player.Draw(window);
 	}
 	if (gamestate == 2)
 	{
@@ -202,4 +220,5 @@ void Doodle::Draw(RenderWindow &window, float time_interval)
 		window.draw(YOUDIED);
 		window.draw(scoreText);
 	}
+
 }
