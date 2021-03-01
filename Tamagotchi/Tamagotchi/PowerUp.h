@@ -16,6 +16,8 @@ public :
 	int posx;
 	Texture POWERUPT;
 
+	bool spawn = false;
 	int state = 0;
+	int prev = 0;
 };
 

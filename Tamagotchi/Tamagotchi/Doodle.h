@@ -19,6 +19,8 @@ public :
 
 	GravityObject* Alpha;
 	PlatformObject* Platform;
+	GameObject* land;
+	float land_posy;
 	PowerUp* Power;
 	
 	Font font;
@@ -41,14 +43,16 @@ public :
 
 	int difficulty = 0;				// Adjust difficulty and score speed rate 
 	int score = 0;
-	int difficulty_rate = 20;
-	int score_rate = 1000;
-	float finalspeed_rate = 0.1f;
+	int difficulty_rate = 30;
+	int score_rate = 1500;
+	float finalspeed_rate = 0.3f;
 
 	int FadeCnt = 0;				// Fade VFX
 	float FadeRate = 0.05f;
 	
 	bool sw = false;				// Blink VFX
 
+	int beta; 
+	int power_range = 40;
 };
 
