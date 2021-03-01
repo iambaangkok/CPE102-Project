@@ -186,7 +186,7 @@ void Doodle::Update(float deltaTime)
 	}
 }
 
-void Doodle::Draw(RenderWindow &window, float time_interval)
+void Doodle::Draw(RenderWindow &window)
 {
 	window.draw(background[0]);
 	window.draw(background[1]);
@@ -194,14 +194,7 @@ void Doodle::Draw(RenderWindow &window, float time_interval)
 	
 	if (gamestate == 0)
 	{
-		switch ((int)(time_interval * 3.0f) % 2)
-		{
-		case 0:
-			window.draw(Press);
-			break;
-		default:
-			break;
-		}
+		window.draw(Press);
 		window.draw(Logo1);
 		window.draw(Logo2);
 		

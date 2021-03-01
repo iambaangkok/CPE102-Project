@@ -13,7 +13,7 @@ public :
 
 	void Initialize();										// Call to initialize doodle 
 	void Update(float deltaTime);							// Update to GravityObject and PlatformObject
-	void Draw(RenderWindow& window , float time_interval);	// Draw GravityObject and PlatformObject
+	void Draw(RenderWindow& window);	// Draw GravityObject and PlatformObject
 
 	int gamestate = 0;										// 0 - Start, 1 - Playing, 2 - Gameover
 
