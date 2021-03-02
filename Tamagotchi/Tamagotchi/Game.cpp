@@ -131,6 +131,10 @@ void Game::LoadGame() {
     mnB.animation.freezeFrame = true;
     miniBut = &mnB;
 
+    static Doodle d = Doodle(gameState);
+    doodle = &d;
+    doodle->Initialize();
+
     /// BuyItems
     for (int i = 0; i < 18; ++i) {
         static Button bB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
@@ -204,7 +208,7 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
-   
+
     test1->Update(deltaTime);
     
     pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
@@ -246,14 +250,15 @@ void Game::Update() {
 
     shopBut->Update(deltaTime, window, mousePress, mousePosition);
     miniBut->Update(deltaTime, window, mousePress, mousePosition);
-
+    doodle->Update(deltaTime);
     
-    shop->Update( deltaTime, mouseWheelDelta);
+    //shop->Update( deltaTime, mouseWheelDelta);
 
     ReInitializeUI();
 
     UpdateUI();
 
+    
 }
 
 
@@ -291,8 +296,7 @@ void Game::Draw() {
 
     window.draw(fpsText);
 
-
-
+    doodle->Draw(window);
 
     //Display
     window.display();

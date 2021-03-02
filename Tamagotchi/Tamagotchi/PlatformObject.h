@@ -13,6 +13,7 @@ public :
     PlatformObject(Vector2f size , Vector2i window, int NO_OF_PLATFORM , string filepath);
     ~PlatformObject();
 
+    void Initialize();
     void Draw(RenderWindow& window , int difficulty);
 
     Texture platformtexture;

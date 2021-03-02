@@ -16,6 +16,7 @@
 #include "Button.h"
 #include "Shop.h"
 #include "ParticleSystem.h"
+#include "Doodle.h"
 class Button;
 class Shop;
 class Button;
@@ -112,6 +113,7 @@ public:
 
     /// Minigames
     Button* miniBut;
+    Doodle* doodle;
 
     /// BuyItems
     vector<Button> buyBut;
