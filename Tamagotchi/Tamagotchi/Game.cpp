@@ -127,7 +127,7 @@ void Game::LoadGame() {
     /// Minigames
     static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
         "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "mnB", 0, "MINI", gameState,*shop, *pet);
+        , "mnB", 0, "MINIGAME", gameState,*shop, *pet);
     mnB.animation.freezeFrame = true;
     miniBut = &mnB;
 
@@ -233,7 +233,7 @@ void Game::Update() {
     fpsString.erase(fpsString.end() - 4, fpsString.end());
     fpsText.setString(fpsString);
 
-    if (titlePanelSpeed == 0) {
+    if (titlePanelSpeed == 0 && gameState == 0) {
         pressAnyKeyToStartBlinkTotalTime += deltaTime;
         if (pressAnyKeyToStartBlinkTotalTime > pressAnyKeyToStartBlinkTime) {
             pressAnyKeyToStartBlinkTotalTime -= pressAnyKeyToStartBlinkTime;
@@ -274,6 +274,7 @@ void Game::Draw() {
         clouds[i].Draw(window);
     }
 
+    cout << "GAMESTATE = " << gameState << endl;
     if (gameState == 0) {
         titlePanel->Draw(window);
         if (pressAnyKeyToStartIsShown) {
