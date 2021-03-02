@@ -65,6 +65,8 @@ public:
     Pet* pet;
 
     /// User Interface
+    GameObject* mouseCursor;
+
     Color col_BLACK1 = Color(24, 20, 37);
     Color col_RED1 = Color(244, 4, 69);
     Color col_GREEN1 = Color(99, 199, 77);

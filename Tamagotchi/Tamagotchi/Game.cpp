@@ -29,7 +29,7 @@ void Game::LoadGame() {
     /// Pet
     float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-        "Assets/Textures/pet_01.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
+        "Assets/Textures/pet_01_x2.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 });
     pet = &p;
 
@@ -57,6 +57,9 @@ void Game::LoadGame() {
 
 
     /// User Interface
+    static GameObject mCS = GameObject(Vector2f(0, 0), Vector2f(64, 64), false, "Assets/Textures/mouseCursor.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    mouseCursor = &mCS;
+
     static GameObject ui_tp_f = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_front.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
     ui_topPanel_front = &ui_tp_f;
 
@@ -208,6 +211,9 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
+   
+    mouseCursor->SetPosition(mousePosition.x,mousePosition.y);
+    mouseCursor->Update(deltaTime);
 
     test1->Update(deltaTime);
     
@@ -297,6 +303,8 @@ void Game::Draw() {
     window.draw(fpsText);
 
     doodle->Draw(window);
+
+    mouseCursor->Draw(window);
 
     //Display
     window.display();
