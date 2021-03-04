@@ -1,6 +1,5 @@
 #include "Doodle.h"
-#include <cstdlib>
-#include <random>
+
 
 Doodle::Doodle(int& maingame_state)
 {
@@ -13,7 +12,9 @@ Doodle::Doodle(int& maingame_state)
 	Power = &power;
 	static GameObject l = GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
 	land = &l;
-	
+	static BlockBP b = BlockBP("Assets/Textures/background_03.png", "BG", "BOBO");
+	BP = &b;
+
 	int r = rand() % 4 + 1;
 	for (int i = 0; i < 2; ++i)
 	{
@@ -239,6 +240,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key)
 		{
 			music.stop();
 			callgame = false;
+			gstate = -1;
 			*maingame_state = 1;
 		}
 	}
@@ -283,6 +285,7 @@ void Doodle::Draw(RenderWindow &window)
 	}
 
 	if (gstate == 3) {
-		
+		BP->SetPos(Vector2f(360.0f, 500.0f));
+		BP->Draw(window);
 	}
 }

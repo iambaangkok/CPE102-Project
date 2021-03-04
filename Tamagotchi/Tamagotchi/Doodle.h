@@ -3,8 +3,11 @@
 #include "GravityObject.h"
 #include "PlatformObject.h"
 #include "PowerUp.h"
+#include "BlockBP.h"
 #include <unordered_map>
 #include <SFML/Audio.hpp>
+#include <cstdlib>
+#include <random>
 
 class Doodle
 {
@@ -25,7 +28,8 @@ public :
 	GameObject* land;
 	float land_posy;
 	PowerUp* Power;
-	
+	BlockBP* BP;
+
 	Font font;
 	Text scoreText;
 	vector<Sprite> background;
