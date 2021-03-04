@@ -3,6 +3,7 @@
 #include "GravityObject.h"
 #include "PlatformObject.h"
 #include "PowerUp.h"
+#include <unordered_map>
 #include <SFML/Audio.hpp>
 
 class Doodle
@@ -12,7 +13,7 @@ public :
 	~Doodle();
 
 	void Initialize();										// Call to initialize doodle 
-	void Update(float deltaTime);							// Update to GravityObject and PlatformObject
+	void Update(float deltaTime , unordered_map<string, bool> &key);							// Update to GravityObject and PlatformObject
 	void Draw(RenderWindow& window);	// Draw GravityObject and PlatformObject
 
 	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover
@@ -37,15 +38,15 @@ public :
 	Texture PressT;
 	Texture YOUDIEDT;
 
-	Sound sound, music , pw;
-	SoundBuffer soundB , musicB , pwB;
+	Sound sound, music , pw , dead;
+	SoundBuffer soundB , musicB , pwB ,deadB;
 
 	int windowWidth = 720;
 	int windowHeight = 1040;
 
 	int difficulty = 0;				// Adjust difficulty and score speed rate 
 	int score = 0;
-	int difficulty_rate = 30;
+	int difficulty_rate = 40;
 	int score_rate = 20;
 	float finalspeed_rate = 0.3f;
 
@@ -55,6 +56,6 @@ public :
 	bool sw = false;				// Blink VFX
 
 	int beta; 
-	int power_range = 40;
+	int power_range = 50;
 };
 
