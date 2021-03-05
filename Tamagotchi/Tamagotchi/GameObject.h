@@ -35,6 +35,7 @@ public:
 
 	void Draw(RenderWindow& window);
 	void Move(float speedX, float speedY);//Simple Move
+	void Rotate(float angle);//Simple rotation, angle+ : clockwise, origin calculated from origin
 
 	int CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
 	int CheckCollision(GameObject& other);
@@ -43,12 +44,14 @@ public:
 	Vector2f GetPosition(); //Returns Origin position
 	Vector2f GetSize(); //Returns Dimensions
 	Vector2f GetDimensions(); //Same as GetSize()
+	float GetRotation();//Returns rotation in degrees
 	Color GetColor();//Returns rectangleShape's Color
 
 	void SetPosition(Vector2f position); // Set Position
 	void SetPosition(float x, float y);
 	void SetDimensions(Vector2f dimensions); // Set dimension
 	void SetDimensions(float x, float y);
+	void SetRotation(float angle);//angle+ : clockwise, origin calculated from origin
 	void SetOrigin(Vector2f origin); // Set origin
 	void SetOrigin(float x, float y);
 	void SetTexture(string texturePath); // Set texture
