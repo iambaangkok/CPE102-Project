@@ -24,8 +24,6 @@ public:
 	void Draw(RenderWindow &window);
 
 
-
-
 	float speedscroll = 600;
 	bool isOpen = true;
 	int windowWidth = 720;
@@ -38,9 +36,11 @@ public:
 	vector<Item> items;
 	vector<Text> descriptions;
 	vector<Text> prices;
-	GameObject *bg;
-	GameObject *bgs;
-	GameObject *scrollbar;
+	GameObject* bg;
+	GameObject* bgs;
+	GameObject* scrollbar;
+	GameObject* picitem;
 	vector<Button> buttons;//0 = food, 1 = dessert, 2 = booster;
+
 };
 

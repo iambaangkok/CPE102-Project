@@ -258,7 +258,7 @@ void Game::Update() {
     miniBut->Update(deltaTime, window, mousePress, mousePosition);
     doodle->Update(deltaTime);
     
-    //shop->Update( deltaTime, mouseWheelDelta);
+    shop->Update( deltaTime, mouseWheelDelta);
 
     ReInitializeUI();
 
@@ -279,7 +279,7 @@ void Game::Draw() {
  
     DrawUI(window);
 
-    shop->Draw(window);
+   shop->Draw(window);
 
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
