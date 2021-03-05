@@ -14,7 +14,7 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	}
 	this->lifetime = lifetime;
 	this->speed = speed;
-
+	this->position = position;
 	static GameObject emitter = GameObject(position, dimensions, true, texturePath
 	, imageCount, start, finish , frameTime);
 	
@@ -60,10 +60,19 @@ void ParticleSystem::Update(float deltaTime) {
 		if (started[i] == 1) {
 			currentParticle = i;
 			Move();
+			totalTime[i] = totalTime[i] - deltaTime;
 		}
 	}
 
-	cout << spawnTime << " " << currentSpawnTime << endl;
+	for (int i = 0; i < numberOfParticle; ++i) {
+		if (totalTime[i] <= 0) {
+			amoutOfParticle[i].SetPosition(position);
+			totalTime[i] = lifetime;
+			float randAngle;
+			randAngle = rand() % angleDiff + minAngle;
+			randedAngle[i] = randAngle;
+		}
+	}
 
 }
 
