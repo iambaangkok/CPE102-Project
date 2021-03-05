@@ -149,7 +149,7 @@ void Game::LoadGame() {
     }
 
     /// Miscellaneous
-    static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/background_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/BGMain.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     backgrounds.push_back(bg);
 
     static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
@@ -259,7 +259,7 @@ void Game::Update() {
     miniBut->Update(deltaTime, window, mousePress, mousePosition);
     doodle->Update(deltaTime , keyPress);
     
-    //shop->Update( deltaTime, mouseWheelDelta);
+    shop->Update( deltaTime, mouseWheelDelta);
 
     ReInitializeUI();
 
@@ -280,7 +280,7 @@ void Game::Draw() {
  
     DrawUI(window);
 
-    shop->Draw(window);
+   shop->Draw(window);
 
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
