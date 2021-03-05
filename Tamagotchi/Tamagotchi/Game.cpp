@@ -20,7 +20,7 @@ void Game::LoadGame() {
     fonts.push_back(font1);
 
 
-    static ParticleSystem bobo = ParticleSystem(3, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/dickko.png",
+    static ParticleSystem bobo = ParticleSystem(3, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
     test1 = &bobo;
 
@@ -30,7 +30,8 @@ void Game::LoadGame() {
     float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
         "Assets/Textures/pet_01_x2.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
-        "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 });
+        "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 },
+        5,5,20,5,5,0.2f);
     pet = &p;
 
     static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
@@ -84,11 +85,11 @@ void Game::LoadGame() {
     ui_happinessBarHeight = (float)p.currentHappiness / p.happinessMax[p.currentLevel] * ui_happinessBarMaxHeight;
     static GameObject ui_hab = GameObject(Vector2f(400, ui_happinessBarFloorLevel - ui_happinessBarHeight), Vector2f(ui_happinessBarWidth, ui_happinessBarHeight), false, Color(255,255,255));
     ui_happinessBar = &ui_hab;
-    //static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    //ui_emotionIcon = &ui_emoico;
-    //ui_emotionIcon->animation.freezeFrame = true;
-    //emotionFrame = 0;
-    //ui_emotionIcon->SetFrame(emotionFrame, 0);
+    static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/panel_top_x3_emotionIcon.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    ui_emotionIcon = &ui_emoico;
+    ui_emotionIcon->animation.freezeFrame = true;
+    emotionFrame = 0;
+    ui_emotionIcon->SetFrame(emotionFrame, 0);
 
     //SetTextUI(ui_hpText, "HP", fonts[0], col_BLACK1, 20, Vector2f(40, 40));
 
@@ -111,7 +112,7 @@ void Game::LoadGame() {
     SetTextUI(ui_expMax, "/" + to_string(pet->expPerEvolve[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(520 + gapXPlus-5, 180));
     SetTextUI(ui_currentExp, to_string(pet->currentExp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(520 - gapXMinus+5, 170));
 
-    //SetTextUI(ui_money, to_string(pet->currentExp), fonts[0], col_BLACK1, 20, Vector2f(310, 170));
+    SetTextUI(ui_money, to_string(pet->currentExp), fonts[0], col_BLACK1, 20, Vector2f(630, 65));
     SetTextUI(ui_levelText, "LEVEL", fonts[0], col_BLACK1, 20, Vector2f(600, 120));
     SetTextUI(ui_currentLevel, to_string(pet->currentLevel+1), fonts[0], col_BLACK1, 20, Vector2f(635, 140));
 
@@ -345,10 +346,30 @@ void Game::UpdateUI() {
     SetTextAlignment(ui_currentExp, 520+20, 1);
     SetTextAlignment(ui_currentLevel, 635, 2);
 
-        
-    //static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    //ui_emotionIcon = 0;
-    //ui_emotionIcon->SetFrame(emotionFrame, 0);
+
+
+    float emotionPoint = (float)pet->currentHappiness / pet->happinessMax[pet->currentLevel];
+    if (pet->isAlive == false) {
+        emotionFrame = 4;
+    }
+    else if (emotionPoint > 210/310.0f) {
+        emotionFrame = 0;
+    }
+    else if (emotionPoint > 120 / 310.0f) {
+        emotionFrame = 1;
+    }
+    else if (emotionPoint > 50 / 310.0f) {
+        emotionFrame = 2;
+    }
+    else if (emotionPoint >= 0) {
+        emotionFrame = 3;
+    }
+    
+    ui_emotionIcon->SetFrame(emotionFrame, 0);
+    ui_emotionIcon->Update(deltaTime);
+
+    ui_money.setString(to_string(pet->money));
+    SetTextAlignment(ui_money, 630, 2);
 }
 
 void Game::DrawUI(RenderWindow& window) {
@@ -359,7 +380,7 @@ void Game::DrawUI(RenderWindow& window) {
     ui_poopBar->Draw(window);
     ui_expBar->Draw(window);
     ui_happinessBar->Draw(window);
-    //ui_emotionIcon->Draw(window);
+    ui_emotionIcon->Draw(window);
 
     //window.draw(ui_hpText);
     window.draw(ui_hpMax);
