@@ -256,7 +256,7 @@ void Game::Update() {
 
     shopBut->Update(deltaTime, window, mousePress, mousePosition);
     miniBut->Update(deltaTime, window, mousePress, mousePosition);
-    doodle->Update(deltaTime);
+    doodle->Update(deltaTime , keyPress);
     
     shop->Update( deltaTime, mouseWheelDelta);
 
@@ -493,6 +493,9 @@ void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
     }
     if (Keyboard::isKeyPressed(Keyboard::V)) {
         (*keyFlag)["V"] = state;
+    }
+    if (Keyboard::isKeyPressed(Keyboard::B)) {
+        (*keyFlag)["B"] = state;
     }
 }
 

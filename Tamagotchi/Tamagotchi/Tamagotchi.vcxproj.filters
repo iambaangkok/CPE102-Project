@@ -16,6 +16,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="BlockBP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -31,5 +32,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="BlockBP.h" />
   </ItemGroup>
 </Project>
