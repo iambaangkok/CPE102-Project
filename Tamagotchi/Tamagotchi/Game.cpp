@@ -6,6 +6,9 @@ Game::Game(RenderWindow& mainWindow) : window(mainWindow){
 	window.setFramerateLimit(frameRateLimit);  
 	deltaTime = 0;
 	clock.restart();
+    if (Shader::isAvailable()) {
+        //shader.loadFromFile("vertex_shader.shader", "fragment_shader.shader");
+    }
 }
 
 

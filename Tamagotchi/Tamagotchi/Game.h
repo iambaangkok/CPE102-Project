@@ -158,6 +158,8 @@ public:
     
     RenderWindow& window;
 
+    Shader shader;
+    
     Clock clock;
     float deltaTime = 0.0f;
 
