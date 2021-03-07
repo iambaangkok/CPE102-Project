@@ -1,37 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GravityObject.cpp" />
-    <ClCompile Include="Guy.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="mainOld.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pet.cpp" />
-    <ClCompile Include="PlatformObject.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Doodle.cpp" />
-    <ClCompile Include="Shop.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="PowerUp.cpp" />
-    <ClCompile Include="BlockBP.cpp" />
+    <ClCompile Include="Shop.cpp">
+      <Filter>Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Doodle.cpp">
+      <Filter>Doodle Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityObject.cpp">
+      <Filter>Doodle Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformObject.cpp">
+      <Filter>Doodle Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Doodle Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockBP.cpp">
+      <Filter>Doodle Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Pet.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GravityObject.h" />
-    <ClInclude Include="Guy.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Pet.h" />
-    <ClInclude Include="PlatformObject.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Doodle.h" />
-    <ClInclude Include="Shop.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="ParticleSystem.h" />
-    <ClInclude Include="PowerUp.h" />
-    <ClInclude Include="BlockBP.h" />
+    <ClInclude Include="Shop.h">
+      <Filter>Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Doodle.h">
+      <Filter>Doodle Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityObject.h">
+      <Filter>Doodle Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformObject.h">
+      <Filter>Doodle Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Doodle Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockBP.h">
+      <Filter>Doodle Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Pet.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shop">
+      <UniqueIdentifier>{845dd0e2-f4eb-48ff-8dfc-13618f8dbf42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doodle Jump">
+      <UniqueIdentifier>{b005dfca-c06c-47ec-8fbc-389ab2663d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic Game Component">
+      <UniqueIdentifier>{107247f4-06d9-48c1-a317-bc4161e9c05f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{ad2d853e-29d7-41bc-ae73-3bc3514f7ee2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
