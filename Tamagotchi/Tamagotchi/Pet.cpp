@@ -123,6 +123,14 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 				isInAir = true;
 			}
 		}
+		if (keyPress["Q"]) {
+			currentLevel += 1;
+			Clamp(&currentLevel, 2, 0);
+		}
+		if (keyPress["E"]) {
+			currentLevel -= 1;
+			Clamp(&currentLevel, 2, 0);
+		}
 		if (mouseHold["M1"]) {
 			if (mouseIsOver) {
 				if (!isDraggedByMouse) {
@@ -142,8 +150,8 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 
 		if (mouseRelease["M1"]) {
-			throwSpeed.x = deltaPosition.x/2;
-			throwSpeed.y = deltaPosition.y/2;
+			throwSpeed.x = deltaPosition.x/2 * 30;
+			throwSpeed.y = -deltaPosition.y/2 * 30;
 			shadowYOffsetSpeed = throwSpeed.y;
 			cout << "MOUSE RELEASE" << " " << throwSpeed.x  << " "  << shadowYOffsetSpeed << endl << endl << endl;
 		}
@@ -202,7 +210,8 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 				}
 			}
 
-			shadow->Move(speed.x, speed.y);
+			shadow->speed = speed;
+			shadow->Update(deltaTime);
 			SetPosition(shadow->GetPosition().x, shadow->GetPosition().y - shadowYOffset - shadow->GetDimensions().y / 2);
 
 		}
@@ -298,22 +307,22 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
-			animation.SetFrame(3, 0);
+			animation.SetFrame(3, currentLevel);
 		}
 		else if (deltaPosition.y > 3) {
-			animation.SetFrame(4, 0);
+			animation.SetFrame(4, currentLevel);
 		}
 		else {
-			animation.SetFrame(0, 0);
+			animation.SetFrame(0, currentLevel);
 		}
 	}
 	else if (isMoving) {
 		animation.freezeFrame = false;
-		animation.SetStartFinishFrame(1, 0, 2, 0);
+		animation.SetStartFinishFrame(1, currentLevel, 2, currentLevel);
 	}
 	else {
 		animation.freezeFrame = false;
-		animation.SetStartFinishFrame(0, 0, 0, 0);
+		animation.SetStartFinishFrame(0, currentLevel, 0, currentLevel);
 	}
 	
 	

@@ -64,7 +64,7 @@ public:
 
 
 	Vector2f speed = Vector2f(0,0);
-	Vector2f maxSpeed = Vector2f(1.5,1.5);
+	Vector2f maxSpeed = Vector2f(125,125);
 	float runSpeedMultiplier = 1.75f;
 	bool isMoving = false;
 
