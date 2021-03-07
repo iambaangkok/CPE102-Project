@@ -22,7 +22,8 @@ public:
 	void Update(float deltaTime);
 	void Draw(RenderWindow &window);
 	void Move();
-
+	
+	Vector2f position;
 	float rate; //number of particle that spawn in one second.
 	float spread; //the spread of the angle.
 	float angleOngsa; //angle in degree.
