@@ -223,13 +223,11 @@ void Game::Update() {
     backgrounds[currentBackground].Update(deltaTime);
     for(int i = 0 ; i < clouds.size(); ++i){
         clouds[i].speed = Vector2f(cloudSpeed,0);
-        //cout << clouds[i].speed.x << " ";
         
         clouds[i].Update(deltaTime);
         if (clouds[i].GetPosition().x > windowWidth) {
             clouds[i].SetPosition(-((clouds.size()-2) * cloudGap), clouds[i].GetPosition().y);
         }
-        //cout << clouds[i].GetPosition().x << " " << endl ;
     }
 
     titlePanel->speed.x = titlePanelSpeed;
@@ -265,7 +263,7 @@ void Game::Update() {
 
     UpdateUI();
 
-    
+    cout << deltaTime << " " << fps << endl;
 }
 
 
@@ -286,7 +284,6 @@ void Game::Draw() {
         clouds[i].Draw(window);
     }
 
-    cout << "GAMESTATE = " << gameState << endl;
     if (gameState == 0) {
         titlePanel->Draw(window);
         if (pressAnyKeyToStartIsShown) {
@@ -420,10 +417,10 @@ void Game::GetInput() {
             break;
         case Event::KeyPressed:
             anyKeyPressed = true;
-            CheckKeyPressRelease(&keyPress);
+            CheckKeyPressRelease(&keyPress, &evnt);
             break;
         case Event::KeyReleased:
-            CheckKeyPressRelease(&keyRelease);
+            CheckKeyPressRelease(&keyRelease, &evnt);
             break;
         case Event::MouseButtonPressed:
             anyMousePressed = true;
@@ -516,6 +513,73 @@ void Game::CheckKeyPressRelease(unordered_map<string, bool> *keyFlag) {
         (*keyFlag)["V"] = state;
     }
     if (Keyboard::isKeyPressed(Keyboard::B)) {
+        (*keyFlag)["B"] = state;
+    }
+}
+
+void Game::CheckKeyPressRelease(unordered_map<string, bool>* keyFlag, Event* evnt) {
+    int state = true;
+    if (evnt->key.code == (Keyboard::W)) {
+        (*keyFlag)["W"] = state;
+    }
+    if (evnt->key.code == (Keyboard::A)) {
+        (*keyFlag)["A"] = state;
+    }
+    if (evnt->key.code == (Keyboard::S)) {
+        (*keyFlag)["S"] = state;
+    }
+    if (evnt->key.code == (Keyboard::D)) {
+        (*keyFlag)["D"] = state;
+    }
+    if (evnt->key.code == (Keyboard::Space)) {
+        (*keyFlag)["SPACE"] = state;
+    }
+    if (evnt->key.code == (Keyboard::LShift)) {
+        (*keyFlag)["LSHIFT"] = state;
+    }
+    if (evnt->key.code == (Keyboard::LControl)) {
+        (*keyFlag)["LCTRL"] = state;
+    }
+    if (evnt->key.code == (Keyboard::Enter)) {
+        (*keyFlag)["ENTER"] = state;
+    }
+    if (evnt->key.code == (Keyboard::Escape)) {
+        (*keyFlag)["ESC"] = state;
+    }
+    if (evnt->key.code == (Keyboard::Tab)) {
+        (*keyFlag)["TAB"] = state;
+    }
+    if (evnt->key.code == (Keyboard::Q)) {
+        (*keyFlag)["Q"] = state;
+    }
+    if (evnt->key.code == (Keyboard::E)) {
+        (*keyFlag)["E"] = state;
+    }
+    if (evnt->key.code == (Keyboard::R)) {
+        (*keyFlag)["R"] = state;
+    }
+    if (evnt->key.code == (Keyboard::T)) {
+        (*keyFlag)["T"] = state;
+    }
+    if (evnt->key.code == (Keyboard::F)) {
+        (*keyFlag)["F"] = state;
+    }
+    if (evnt->key.code == (Keyboard::G)) {
+        (*keyFlag)["G"] = state;
+    }
+    if (evnt->key.code == (Keyboard::Z)) {
+        (*keyFlag)["Z"] = state;
+    }
+    if (evnt->key.code == (Keyboard::X)) {
+        (*keyFlag)["X"] = state;
+    }
+    if (evnt->key.code == (Keyboard::C)) {
+        (*keyFlag)["C"] = state;
+    }
+    if (evnt->key.code == (Keyboard::V)) {
+        (*keyFlag)["V"] = state;
+    }
+    if (evnt->key.code == (Keyboard::B)) {
         (*keyFlag)["B"] = state;
     }
 }

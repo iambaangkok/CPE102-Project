@@ -53,6 +53,7 @@ public:
     void SetTextAlignment(Text& text, float anchorPositionX, int alignment); // alignment: 0 = left, 1 = right, 2 = middle
 
     void CheckKeyPressRelease(unordered_map<string, bool> *keyFlag);
+    void CheckKeyPressRelease(unordered_map<string, bool>* keyFlag, Event* evnt);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag, Event* evnt);
 
