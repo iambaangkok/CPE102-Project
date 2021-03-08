@@ -27,7 +27,7 @@ Button::~Button() {
 void Button::Initialize() {
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition) {
+void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition, bool &quitGame) {
 	if (!enabled) {
 		return;
 	}
@@ -43,7 +43,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 	
 	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
-		OnClick(window);
+		OnClick(quitGame);
 	}
 	else if (IsMouseOver(mousePosition)) {
 		OnHover();
@@ -59,7 +59,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 }
 
-void Button::OnClick(RenderWindow &window) {
+void Button::OnClick(bool &quitGame) {
 	status = 2;
 	if (type == "MAIN") {
 		*gstate = 1;
@@ -83,7 +83,7 @@ void Button::OnClick(RenderWindow &window) {
 		pet->money -= shop->items[id - 1].price;
 		shop->items[id-1].UseItem(pet);
 	}
-	if (type == "EXIT") window.close();
+	if (type == "EXIT") quitGame = true;
 }
 
 void Button::OnHover() {
