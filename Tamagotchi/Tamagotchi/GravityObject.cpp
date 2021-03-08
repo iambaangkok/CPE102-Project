@@ -1,7 +1,7 @@
 #include "GravityObject.h"
 
 
-GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath , int curlevel)
+GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath)
 {
 	playertexture.loadFromFile(filepath);
 	player.SetPosition(position);
@@ -11,13 +11,12 @@ GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Heigh
 	player.rectangleShape.setTexture(&playertexture, true);
 	player.animation = Animation(&playertexture, Vector2u(5, 3), 0.0f);
 	player.animation.freezeFrame = true;
-	player.animation.SetFrame(Vector2i(0, curlevel));
+	player.animation.SetFrame(Vector2i(0, 0));
 	player.rectangleShape.setTextureRect(player.animation.uvRect);
 	
 	this->Height = Height;
 	this->playerX = position.x;
 	this->playerY = position.y;
-	this->curlevel = curlevel;
 }
 
 GravityObject::~GravityObject()
@@ -25,8 +24,8 @@ GravityObject::~GravityObject()
 
 }
 
-void GravityObject::Update(float deltaTime , float speed_rate)
-{
+void GravityObject::Update(float deltaTime , float speed_rate , int curlevel)
+{	
 	if (Keyboard::isKeyPressed(Keyboard::A))
 		playerX -= 800.0f * deltaTime * (1.0f - speed_rate);
 	if (Keyboard::isKeyPressed(Keyboard::D))

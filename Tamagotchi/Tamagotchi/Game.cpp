@@ -33,7 +33,7 @@ void Game::LoadGame() {
     /// Pet
     float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-        "Assets/Textures/pet_04.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
+        "Assets/Textures/pet_03.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 },
         5,5,20,5,5,0.2f);
     pet = &p;
@@ -141,7 +141,7 @@ void Game::LoadGame() {
 
     static Doodle d = Doodle(gameState , *pet);
     doodle = &d;
-    doodle->Initialize();
+    doodle->Initialize(pet->currentLevel);
 
     /// BuyItems
     for (int i = 0; i < 18; ++i) {
@@ -222,7 +222,7 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
-   
+  
     mouseCursor->SetPosition(mousePosition.x,mousePosition.y);
     mouseCursor->Update(deltaTime);
 
@@ -266,7 +266,7 @@ void Game::Update() {
     shopBut->Update(deltaTime, window, mousePress, mousePosition);
     miniBut->Update(deltaTime, window, mousePress, mousePosition);
     exitBut->Update(deltaTime, window, mousePress, mousePosition);
-    doodle->Update(deltaTime , keyPress);
+    doodle->Update(deltaTime , keyPress , pet->currentLevel);
     
     shop->Update( deltaTime, mouseWheelDelta);
 

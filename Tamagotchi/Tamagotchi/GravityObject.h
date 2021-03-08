@@ -4,15 +4,14 @@
 class GravityObject
 {   
 public :
-    GravityObject(Vector2f position, Vector2f dimensions, float Height , string filepath , int curlevel);
+    GravityObject(Vector2f position, Vector2f dimensions, float Height , string filepath);
     ~GravityObject();
 
-    void Update(float deltaTime , float speed_rate);
+    void Update(float deltaTime, float speed_rate, int curlevel);
     bool CheckCollision(Vector2f otherPos , Vector2f otherHalfSize);
 
     GameObject player;
     Texture playertexture;
-    int curlevel = 0;
 
     float dy = 0;
     float Height;

@@ -3,10 +3,11 @@
 
 Doodle::Doodle(int& maingame_state , Pet &pet)
 {
+	
 	this->maingame_state = &maingame_state;
 	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 7, "Assets/Textures/platform2.png");
 	Platform = &p;
-	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath , pet.currentLevel);
+	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
 	Alpha = &a;
 	static PowerUp power = PowerUp();
 	Power = &power;
@@ -76,10 +77,10 @@ Doodle::~Doodle()
 {
 }
 
-void Doodle::Initialize()
+void Doodle::Initialize(int curlevel)
 {
-	
-	Alpha->player.animation.SetFrame(Vector2i(0, 0));
+	this->curlevel = curlevel;
+	Alpha->player.animation.SetFrame(Vector2i(0, curlevel));
 	Alpha->player.rectangleShape.setTextureRect(Alpha->player.animation.uvRect);
 	Alpha->dy = 0;
 	Alpha->dy -= 1700.0f;
@@ -137,10 +138,10 @@ void Doodle::Initialize()
 
 }
 
-void Doodle::Update(float deltaTime , unordered_map<string, bool>&key)
+void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curlevel)
 {
 	if (*maingame_state == 2 && !callgame) {
-		Initialize();
+		Initialize(curlevel);
 		gstate = 0;
 		callgame = true;
 	}
@@ -233,7 +234,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key)
 		}
 
 		float speed = (float)difficulty / (float)Platform->NO_OF_PLATFORM;
-		Alpha->Update(deltaTime, (speed * (1 - finalspeed_rate)));
+		Alpha->Update(deltaTime, (speed * (1 - finalspeed_rate)) , curlevel);
 		Power->Update(deltaTime);
 		land->SetPosition(360 , land_posy);
 	}

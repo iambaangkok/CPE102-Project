@@ -16,8 +16,8 @@ public :
 	Doodle(int& maingame_state , Pet& pet);
 	~Doodle();
 
-	void Initialize();										// Call to initialize doodle 
-	void Update(float deltaTime , unordered_map<string, bool> &key);							// Update to GravityObject and PlatformObject
+	void Initialize(int curlevel);										// Call to initialize doodle 
+	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel);							// Update to GravityObject and PlatformObject
 	void Draw(RenderWindow& window);	// Draw GravityObject and PlatformObject
 
 	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover
@@ -45,6 +45,8 @@ public :
 
 	Sound sound, music , pw , dead;
 	SoundBuffer soundB , musicB , pwB ,deadB;
+
+	int curlevel = 0;
 
 	int windowWidth = 720;
 	int windowHeight = 1040;
