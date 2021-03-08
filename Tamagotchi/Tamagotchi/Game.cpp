@@ -96,9 +96,6 @@ void Game::LoadGame() {
     test1 = &bobo;
 
 
-    
-
-
     /// User Interface
     static GameObject mCS = GameObject(Vector2f(0, 0), Vector2f(64, 64), false, "Assets/Textures/mouseCursor.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     mouseCursor = &mCS;
@@ -177,7 +174,7 @@ void Game::LoadGame() {
     mnB.animation.freezeFrame = true;
     miniBut = &mnB;
 
-    static Doodle d = Doodle(gameState);
+    static Doodle d = Doodle(gameState , *pet);
     doodle = &d;
     doodle->Initialize();
 

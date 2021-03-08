@@ -69,7 +69,7 @@ public:
 
 	
 
-	
+	string filepath; 
 
 	bool enabled = true; 
 	bool IsUpdateAnimation = true;
