@@ -1,12 +1,12 @@
 #include "Doodle.h"
 
 
-Doodle::Doodle(int& maingame_state)
+Doodle::Doodle(int& maingame_state , Pet &pet)
 {
 	this->maingame_state = &maingame_state;
 	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 7, "Assets/Textures/platform2.png");
 	Platform = &p;
-	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, "Assets/Textures/pet_01.png");
+	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath);
 	Alpha = &a;
 	static PowerUp power = PowerUp();
 	Power = &power;
@@ -20,7 +20,6 @@ Doodle::Doodle(int& maingame_state)
 	{
 		Sprite A;
 		backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(r) + ".png");
-		//backgroundT.loadFromFile("Assets/Textures/bgex4.png");
 		A.setTexture(backgroundT);
 		A.setScale(Vector2f(720.0f / backgroundT.getSize().x, 1040.0f / backgroundT.getSize().y));
 		background.push_back(A);
@@ -47,6 +46,12 @@ Doodle::Doodle(int& maingame_state)
 	scoreText.setCharacterSize(50);
 	scoreText.setFillColor(Color::Red);
 	scoreText.setString("Score: " + std::to_string(score));
+	highscoreText.setFont(font);
+	highscoreText.setOutlineThickness(3.0f);
+	highscoreText.setOutlineColor(Color::White);
+	highscoreText.setCharacterSize(50);
+	highscoreText.setFillColor(Color::Red);
+	highscoreText.setString("Highscore: " + std::to_string(highscore));
 
 	YOUDIEDT.loadFromFile("Assets/Textures/GAMEOVER.png");
 	YOUDIED.setTexture(YOUDIEDT);
@@ -116,6 +121,11 @@ void Doodle::Initialize()
 	FloatRect bound = scoreText.getLocalBounds();
 	scoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
 	scoreText.setPosition(Vector2f(140.0f, 60.0f));
+
+	highscoreText.setString("Highscore: " + std::to_string(highscore));
+	FloatRect bound2 = highscoreText.getLocalBounds();
+	highscoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+	highscoreText.setPosition(Vector2f(-200.0f, 860.0f));
 	
 	difficulty = 0;
 
@@ -218,7 +228,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key)
 			dead.play();
 			FloatRect bound = scoreText.getLocalBounds();
 			scoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
-			scoreText.setPosition(-360, 800);
+			scoreText.setPosition(-200, 800);
 			gstate = 2;
 		}
 
@@ -229,8 +239,16 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key)
 	}
 	else if (gstate == 2) // Game Over
 	{
+		if (score / score_rate > highscore) {
+			highscore = score / score_rate;
+			highscoreText.setString("Highscore: " + std::to_string(highscore));
+		}
+		FloatRect bound = highscoreText.getLocalBounds();
+		highscoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
 		if (scoreText.getPosition().x < 360.0f)
 			scoreText.move(Vector2f(500.0f, 0.0f) * deltaTime);
+		if (highscoreText.getPosition().x < 360.0f)
+			highscoreText.move(Vector2f(500.0f, 0.0f) * deltaTime);
 		if (FadeCnt < 255.0f / FadeRate)
 		{
 			YOUDIED.setColor(Color::Color(255, 255, 255, FadeCnt * FadeRate));
@@ -282,6 +300,7 @@ void Doodle::Draw(RenderWindow &window)
 		window.clear(Color::White);
 		window.draw(YOUDIED);
 		window.draw(scoreText);
+		window.draw(highscoreText);
 	}
 
 	if (gstate == 3) {

@@ -42,6 +42,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	}
 
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 	
@@ -59,6 +60,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	}
 
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 	rectangleShape.setTexture(&texture);
@@ -78,6 +80,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 	
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 
@@ -100,6 +103,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	rectangleShape.setRotation(0);
 
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 	rectangleShape.setTexture(&texture);

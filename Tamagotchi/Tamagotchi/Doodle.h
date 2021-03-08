@@ -8,11 +8,12 @@
 #include <SFML/Audio.hpp>
 #include <cstdlib>
 #include <random>
+#include "Pet.h"
 
 class Doodle
 {
 public :
-	Doodle(int& maingame_state);
+	Doodle(int& maingame_state , Pet& pet);
 	~Doodle();
 
 	void Initialize();										// Call to initialize doodle 
@@ -31,7 +32,7 @@ public :
 	BlockBP* BP;
 
 	Font font;
-	Text scoreText;
+	Text scoreText , highscoreText;
 	vector<Sprite> background;
 	Sprite Logo1, Logo2;
 	Sprite Press;
@@ -50,9 +51,11 @@ public :
 
 	int difficulty = 0;				// Adjust difficulty and score speed rate 
 	int score = 0;
-	int difficulty_rate = 40;
-	int score_rate = 20;
+	int difficulty_rate = 25;
+	int score_rate = 30;
 	float finalspeed_rate = 0.3f;
+
+	int highscore = 0;
 
 	int FadeCnt = 0;				// Fade VFX
 	float FadeRate = 2.0f;
