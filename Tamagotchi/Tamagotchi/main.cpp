@@ -32,7 +32,6 @@ int main() {
     window.setMouseCursorVisible(false);
 
     Game tamagotchi(window);
-    tamagotchi.LoadGame();
     tamagotchi.StartGameLoop();
 
     return 0;
