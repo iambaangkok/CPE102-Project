@@ -7,6 +7,9 @@
 #include <set>
 #include <utility>
 #include <cmath>
+#include <chrono>
+#include <ctime>  
+#include <fstream>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
@@ -38,6 +41,7 @@ public:
     ~Game();
 
     void LoadGame();
+    void SaveGame();
     void StartGameLoop();
     void ReInitialize();
     void GetInput();
@@ -64,7 +68,7 @@ public:
    
     /// Pet
     Pet* pet;
-
+    
     /// User Interface
     GameObject* mouseCursor;
 
@@ -150,6 +154,7 @@ public:
     
 
     /// System variables
+    bool quitGame = false;
     int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump
     
     int windowWidth = 720;
@@ -164,6 +169,7 @@ public:
     Clock clock;
     float deltaTime = 0.0f;
 
+    
 
     /// Input variables
 
