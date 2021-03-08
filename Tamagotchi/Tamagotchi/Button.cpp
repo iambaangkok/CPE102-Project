@@ -43,7 +43,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 	
 	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
-		OnClick();
+		OnClick(window);
 	}
 	else if (IsMouseOver(mousePosition)) {
 		OnHover();
@@ -59,7 +59,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 }
 
-void Button::OnClick() {
+void Button::OnClick(RenderWindow &window) {
 	status = 2;
 	if (type == "MAIN") {
 		*gstate = 1;
@@ -83,6 +83,7 @@ void Button::OnClick() {
 		pet->money -= shop->items[id - 1].price;
 		shop->items[id-1].UseItem(pet);
 	}
+	if (type == "EXIT") window.close();
 }
 
 void Button::OnHover() {

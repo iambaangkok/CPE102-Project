@@ -122,6 +122,7 @@ public:
     vector<Button> buyBut;
 
     /// Miscellaneous
+    Button* exitBut;
     int currentBackground = 0;
     vector<GameObject> backgrounds;
 

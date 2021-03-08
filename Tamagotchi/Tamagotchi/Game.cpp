@@ -33,7 +33,7 @@ void Game::LoadGame() {
     /// Pet
     float playerSize = 160.0f;
     static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-        "Assets/Textures/pet_03.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
+        "Assets/Textures/pet_04.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
         "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 },
         5,5,20,5,5,0.2f);
     pet = &p;
@@ -153,6 +153,12 @@ void Game::LoadGame() {
     }
 
     /// Miscellaneous
+    static Button eB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , "eB", 0, "EXIT", gameState, *shop, *pet);
+    eB.animation.freezeFrame = true;
+    exitBut = &eB;
+
     static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/BGMain.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     backgrounds.push_back(bg);
 
@@ -259,6 +265,7 @@ void Game::Update() {
 
     shopBut->Update(deltaTime, window, mousePress, mousePosition);
     miniBut->Update(deltaTime, window, mousePress, mousePosition);
+    exitBut->Update(deltaTime, window, mousePress, mousePosition);
     doodle->Update(deltaTime , keyPress);
     
     shop->Update( deltaTime, mouseWheelDelta);
@@ -301,6 +308,7 @@ void Game::Draw() {
     shopBut->Draw(window);
     miniBut->Draw(window);
     test1->Draw(window);
+    exitBut->Draw(window);
 
     window.draw(fpsText);
 
