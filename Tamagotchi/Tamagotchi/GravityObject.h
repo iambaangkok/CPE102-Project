@@ -4,7 +4,7 @@
 class GravityObject
 {   
 public :
-    GravityObject(Vector2f position, Vector2f dimensions, float Height , string filepath);
+    GravityObject(Vector2f position, Vector2f dimensions, float Height , string filepath , int curlevel);
     ~GravityObject();
 
     void Update(float deltaTime , float speed_rate);
@@ -12,6 +12,7 @@ public :
 
     GameObject player;
     Texture playertexture;
+    int curlevel = 0;
 
     float dy = 0;
     float Height;

@@ -1,22 +1,23 @@
 #include "GravityObject.h"
 
 
-GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath)
+GravityObject::GravityObject(Vector2f position, Vector2f dimensions, float Height, string filepath , int curlevel)
 {
 	playertexture.loadFromFile(filepath);
 	player.SetPosition(position);
 	player.SetDimensions(dimensions);
 	player.SetOrigin(dimensions / 2.0f);
-
+	
 	player.rectangleShape.setTexture(&playertexture, true);
 	player.animation = Animation(&playertexture, Vector2u(5, 3), 0.0f);
 	player.animation.freezeFrame = true;
-	player.animation.SetFrame(Vector2i(0, 0));
+	player.animation.SetFrame(Vector2i(0, curlevel));
 	player.rectangleShape.setTextureRect(player.animation.uvRect);
 	
 	this->Height = Height;
 	this->playerX = position.x;
 	this->playerY = position.y;
+	this->curlevel = curlevel;
 }
 
 GravityObject::~GravityObject()
@@ -36,11 +37,11 @@ void GravityObject::Update(float deltaTime , float speed_rate)
 		playerX = 0;
 
 	if (dy < -300.0f)
-		player.animation.SetFrame(Vector2i(3, 0));
+		player.animation.SetFrame(Vector2i(3, curlevel));
 	else if (dy > 200.0f)
-		player.animation.SetFrame(Vector2i(4, 0));
+		player.animation.SetFrame(Vector2i(4, curlevel));
 	else
-		player.animation.SetFrame(Vector2i(0, 0));
+		player.animation.SetFrame(Vector2i(0, curlevel));
 
 	player.SetPosition(Vector2f(playerX, playerY));
 	player.rectangleShape.setTextureRect(player.animation.uvRect);
