@@ -67,10 +67,15 @@ void Pet::Initialize() {
 void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease,
 	unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, unordered_map<string, bool>& mouseHold, Vector2i mousePosition, int mouseWheelDelta)
 {
+	time_currentTime_sinceEpoch = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count(); //Update every frame
+	time_currentSession = time_currentTime_sinceEpoch - time_lastSession; //Update every frame
+	time_alive = time_currentTime_sinceEpoch - time_sinceBirth; //READ FROM FILE ONCE & Update every frame
+
+	cout << time_sinceBirth << " " << time_lastSession << " " << time_sinceLastSession << " " << time_currentTime_sinceEpoch << " " << time_currentSession << " " << time_alive << " " << endl;
+
 	if (!enabled) {
 		return;
 	}
-
 
 	if (currentHp < 0) {
 		isAlive = false;
@@ -209,6 +214,9 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 					throwSpeed.x += windResistance * deltaTime;
 				}
 			}
+			else {
+				throwSpeed = Vector2f(0, 0);
+			}
 
 			shadow->speed = speed;
 			shadow->Update(deltaTime);
@@ -251,7 +259,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		Clamp(&shadowPos.x, 720.0f-shadowDim.x/2, 0.0f+shadowDim.x / 2);
 		shadow->SetPosition(shadowPos.x, shadowPos.y);
 
-
+		
 		deltaPosition = GetPosition() - lastFramePosition;
 		
 

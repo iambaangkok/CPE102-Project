@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include "GameObject.h"
 #include "Item.h"
+
+
 using std::vector;
 using std::unordered_map;
 class Item;
@@ -42,6 +44,15 @@ public:
 
 	bool IsMouseOver(Vector2i& mousePosition);
 
+	
+
+	//all time in seconds
+	long long int time_sinceBirth = 0;
+	long long int time_lastSession = 0;
+	long long int time_sinceLastSession = 0;
+	long long int time_currentSession = 0;
+	long long int time_currentTime_sinceEpoch = 0;
+	long long int time_alive = 0;
 
 	bool isAlive = true;
 	int money = 0;
@@ -61,7 +72,6 @@ public:
 	float poopChangeMultiplier = 1.0f;
 
 	bool ateEvolveStone = false;
-
 
 	Vector2f speed = Vector2f(0,0);
 	Vector2f maxSpeed = Vector2f(125,125);
