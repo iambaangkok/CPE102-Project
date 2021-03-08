@@ -22,7 +22,7 @@ public:
 
     
 
-    void OnClick();
+    void OnClick(RenderWindow &window);
     void OnHover();
 
     bool IsMouseOver(Vector2i& mousePosition);
