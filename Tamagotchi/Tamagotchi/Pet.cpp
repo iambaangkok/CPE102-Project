@@ -367,6 +367,8 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 	}
 
+	drawLayer = GetSide("BOTTOM");
+
 
 
 	//Set Animation according to pet state
@@ -407,7 +409,7 @@ bool Pet::CanPoop() {
 	return currentPoop >= poopMax[currentLevel];
 }
 Poop* Pet::CreatePoop() {
-	Poop* newPoop = new Poop(GetPosition(), Vector2f(110, 80), true, "Assets/Textures/pet_poop.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10, 3);
+	Poop* newPoop = new Poop(GetPosition(), Vector2f(110*0.7, 80*0.7), true, "Assets/Textures/pet_poop.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10, 5, shadow->GetPosition().y);
 	currentPoop = 0;
 	return newPoop;
 }

@@ -10,6 +10,7 @@
 #include <chrono>
 #include <ctime>  
 #include <fstream>
+#include <algorithm>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
@@ -32,6 +33,10 @@ using std::unordered_map;
 using std::pair;
 using std::cout;
 using std::endl;
+using std::sort;
+
+bool CompareDrawLayer(GameObject*& x, GameObject*& y);
+
 
 class Game
 {
@@ -52,6 +57,7 @@ public:
     void ReInitializeUI();
     void UpdateUI();
     void DrawUI(RenderWindow& window);
+
 
     bool CheckPoopIntegrity(int index); //Returns true if poop should be deleted
     void DeletePoop(int index);
