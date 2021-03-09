@@ -1,5 +1,9 @@
 #include "Game.h"
 
+bool CompareDrawLayer(GameObject*& x, GameObject*& y) {
+    return x->drawLayer < y->drawLayer;
+}
+
 
 Game::Game(RenderWindow& mainWindow) : window(mainWindow){
 
@@ -391,7 +395,7 @@ void Game::Update() {
 
     UpdateUI();
 
-    cout << deltaTime << " " << fps << endl;
+    //cout << deltaTime << " " << fps << endl;
 }
 
 
@@ -404,7 +408,7 @@ void Game::Draw() {
  
     DrawUI(window);
 
-   shop->Draw(window);
+    shop->Draw(window);
 
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
@@ -417,10 +421,28 @@ void Game::Draw() {
         }
     }
     if (gameState == 1) {
-        pet->Draw(window);
+
+        vector<GameObject*> drawQueue;
+        drawQueue.push_back(pet);
+        for (int i = 0; i < poops.size(); ++i) {
+            drawQueue.push_back(poops[i]);
+        }
+        sort(drawQueue.begin(), drawQueue.end(), CompareDrawLayer);
+        for (int i = 0; i < drawQueue.size(); ++i) {
+            if (drawQueue[i] == pet) {
+                pet->Draw(window);
+            }
+            else {
+                drawQueue[i]->Draw(window);
+            }
+
+        }
+
+
+        /*pet->Draw(window);
         for (int i = 0; i < poops.size(); ++i) {
             poops[i]->Draw(window);
-        }
+        }*/
         shopBut->Draw(window);
         miniBut->Draw(window);
         exitBut->Draw(window);
@@ -538,6 +560,7 @@ void Game::DrawUI(RenderWindow& window) {
 
 
 }
+
 
 bool Game::CheckPoopIntegrity(int index) {
     return poops[index]->nClickToDestroy <= 0;
