@@ -12,7 +12,7 @@ class Poop :
 public:
 	Poop();
 	Poop(Vector2f position, Vector2f dimensions, bool originIsCenter,
-		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, int nClickToDestroy = 3); //Proper Animation
+		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, int nClickToDestroy = 3, float floorLine = 1040/2); //Proper Animation
 	~Poop();
 
 	void Initialize();
@@ -28,7 +28,10 @@ public:
 
 	int nClickToDestroy;
 	float basePoopSize = 1;
-	float lowestPoopSize = 0.6f;
+	float lowestPoopSize = 0.3f;
+	float floorLine = 1040/2;
+	float gravity = 9.8f * 300 / 2;
+
 
 };
 

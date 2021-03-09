@@ -5,10 +5,11 @@ Poop::Poop(){
 }
 
 Poop::Poop(Vector2f position, Vector2f dimensions, bool originIsCenter,
-	string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, int nClickToDestroy)
+	string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, int nClickToDestroy, float floorLine)
 	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
 	this->nClickToDestroy = nClickToDestroy;
+	this->floorLine = floorLine;
 }
 
 Poop::~Poop(){}
@@ -22,6 +23,20 @@ void Poop::Update(float deltaTime, RenderWindow& window, unordered_map<string, b
 	}
 	animation.Update(deltaTime);
 	float poopSize = (basePoopSize - lowestPoopSize)/3 * nClickToDestroy + lowestPoopSize;
+
+	if (GetPosition().y < floorLine) {
+		speed.y += gravity * deltaTime;
+		Move(speed.x * deltaTime, speed.y * deltaTime);
+	}
+	else {
+		speed = Vector2f(0, 0);
+		if (GetPosition().y > floorLine) {
+			SetPosition(GetPosition().x, floorLine);
+		}
+	}
+
+	drawLayer = GetSide("BOTTOM");
+
 	if (faceRight) {
 		rectangleShape.setScale(Vector2f(poopSize, poopSize));
 	}
