@@ -22,23 +22,50 @@ void Game::LoadGame() {
         throw("COULD NOT LOAD FONT! ");
     fonts.push_back(font1);
 
-    //Opensavefile, Calculate expgain foodloss etc.
     ifstream saveFile("Savefiles/save001.sav");
     string textline = "";
     string format = "";
+    string blankStr = "";
     long long int nLine = 1;
     while (getline(saveFile, textline)) {
+        nLine++;
         cout << textline << endl;
 
-        if (nLine >= 1 && nLine <= 3) {
+        if (nLine >= 1 && nLine <= 11) {
             /// Pet
+            getline(saveFile, textline); nLine++;
+            string name = "Unset Name";
+            string type = "Unset Type";
+            name = textline.substr(5, textline.size() - 5);
+            getline(saveFile, textline); nLine++;
+            type = textline.substr(5, textline.size() - 5);
+
+            cout << name << " " << type << endl;
 
             float playerSize = 160.0f;
+            string texturePath = "Assets/Textures/";
+            if (type == "Perry") { 
+                texturePath += "pet_01_x2.png";
+            }
+            else if (type == "Dicko") {
+                texturePath += "pet_02_x2.png";
+            }
+            else if (type == "Crok") {
+                texturePath += "pet_03.png";
+            }
+            else if (type == "Gyoza") {
+                texturePath += "pet_04.png";
+            }
+            else {
+                cout << "Invalid Pet Type." << endl;
+                window.close();
+            }
+
             static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-                "Assets/Textures/pet_02_x2.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
-                "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 },
-                5, 5, 20, 5, 5, 0.2f);
+                texturePath, Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
+                name, type);
             pet = &p;
+
             getline(saveFile, textline); nLine++;
             format = "time_sinceBirth %ld";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->time_sinceBirth)); //READ FROM FILE ONCE
@@ -59,7 +86,27 @@ void Game::LoadGame() {
             //const auto p2 = p1 - std::chrono::hours(24);
             //std::cout << "yesterday, hours since epoch: "<< std::chrono::duration_cast<std::chrono::hours>(p2.time_since_epoch()).count()<< '\n';
             }
-           
+            getline(saveFile, textline); nLine++;
+            format = "level %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->currentLevel));
+            getline(saveFile, textline); nLine++;
+            format = "exp %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->currentExp));
+            getline(saveFile, textline); nLine++;
+            format = "evolveStone %ld"; int ateEvolveStone = 0;
+            sscanf_s(textline.c_str(), format.c_str(), &(ateEvolveStone)); pet->ateEvolveStone = ((ateEvolveStone == 1) ? true : false);
+            getline(saveFile, textline); nLine++;
+            format = "hp %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->currentHp));
+            getline(saveFile, textline); nLine++;
+            format = "happiness %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->currentHappiness));
+            getline(saveFile, textline); nLine++;
+            format = "food %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->currentFood));
+            getline(saveFile, textline); nLine++;
+            format = "poop %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->currentPoop));
 
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -85,7 +132,6 @@ void Game::LoadGame() {
 
         }
 
-        nLine++;
     }
     saveFile.close();
     
@@ -94,37 +140,6 @@ void Game::LoadGame() {
     static ParticleSystem bobo = ParticleSystem(3, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
     test1 = &bobo;
-
-
-    /// Pet
-    float playerSize = 160.0f;
-    static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
-        "Assets/Textures/pet_03.png", Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
-        "Fluffball", "Dragon", 3, vector<int>{100, 150, 200}, vector<int>{ 100, 200, 300 }, vector<int>{ 100, 120, 140 }, vector<int>{ 100, 120, 140 }, vector<int>{ 80, 90, 100 },
-        5,5,20,5,5,0.2f);
-    pet = &p;
-
-    static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
-        "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    pet->shadow = &pShadow;
-
-    float grassFieldTopBorder = 560;
-    float grassFieldHeight = 730 - 560;
-    float grassFieldThickness = 1000;
-    //1 = right, 2 = left, 3 = bottom, 4 = top
-    static GameObject pBorder1 = GameObject(Vector2f(windowWidth+grassFieldThickness/2,grassFieldTopBorder+grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
-        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    static GameObject pBorder2 = GameObject(Vector2f(0-grassFieldThickness+grassFieldThickness / 2, grassFieldTopBorder + grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
-        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    static GameObject pBorder3 = GameObject(Vector2f(windowWidth/2, grassFieldTopBorder-grassFieldThickness/2), Vector2f(windowWidth, grassFieldThickness), true,
-        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    static GameObject pBorder4 = GameObject(Vector2f(windowWidth/2, grassFieldTopBorder+grassFieldHeight+grassFieldThickness/2), Vector2f(windowWidth, grassFieldThickness), true,
-        "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    
-    pet->shadowBorder.push_back(pBorder1);
-    pet->shadowBorder.push_back(pBorder2);
-    pet->shadowBorder.push_back(pBorder3);
-    pet->shadowBorder.push_back(pBorder4);
 
 
     /// User Interface
@@ -136,7 +151,6 @@ void Game::LoadGame() {
 
     static GameObject ui_tp_b = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_back.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
     ui_topPanel_back = &ui_tp_b;
-
 
     static GameObject ui_hpb = GameObject(Vector2f(90, 40), Vector2f((float)pet->currentHp / pet->hpMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
         "Assets/Textures/panel_top_x3_hpBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -261,8 +275,17 @@ void Game::SaveGame() {
     string format = "";
     long long int nLine = 1;
     saveFile << "#Pet" << endl;
+    saveFile << "name " << pet->name << endl;
+    saveFile << "type " << pet->type << endl;
     saveFile << "time_sinceBirth " << pet->time_sinceBirth << endl;
     saveFile << "time_lastSession " << pet->time_currentTime_sinceEpoch << endl;
+    saveFile << "level" << pet->currentLevel << endl;
+    saveFile << "exp " << pet->currentExp << endl;
+    saveFile << "evolveStone " << ((pet->ateEvolveStone) ? 1 : 0 ) << endl;
+    saveFile << "hp " << pet->currentHp << endl;
+    saveFile << "happiness " << pet->currentHappiness << endl;
+    saveFile << "food " << pet->currentFood << endl;
+    saveFile << "poop " << pet->currentPoop << endl;
     saveFile.close();
 }
 
@@ -347,7 +370,7 @@ void Game::Update() {
     shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
     miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
     exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-    doodle->Update(deltaTime , keyPress, pet->currentLevel));
+    doodle->Update(deltaTime , keyPress, pet->currentLevel);
     
     shop->Update( deltaTime, mouseWheelDelta);
 
@@ -357,8 +380,6 @@ void Game::Update() {
 
     cout << deltaTime << " " << fps << endl;
 }
-
-
 
 
 void Game::Draw() {

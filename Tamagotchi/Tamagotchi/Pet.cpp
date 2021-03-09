@@ -37,19 +37,77 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Customize
 	this->happinessChangeRate = happinessChangeRate;
 	this->poopChangeRate = poopChangeRate;
 	this->notEnoughFoodThreshold = notEnoughFoodThreshold;
+	ateEvolveStone = false;
+	money = 0;
 }
 
 Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
 	string name, string type) : GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
-	if (type == "Type1") {
-		//Set stuff
+	this->name = name;
+	this->type = type;
+	levelMax = 3;
+	if (type == "Perry") {
+		hpMax = vector<int>{ 100, 150, 200 };
+		expPerEvolve = vector<int>{ 100, 200, 300 };
+		happinessMax = vector<int>{ 100, 120, 140 };
+		foodMax = vector<int>{ 100, 120, 140 };
+		poopMax = vector<int>{ 80, 90, 100 };
+		hpChangeRate = 5;
+		expChangeRate = 5;
+		foodChangeRate = 5;
+		happinessChangeRate = 5;
+		poopChangeRate = 5;
+		notEnoughFoodThreshold = 0.2f;
 	}
-	else if (type == "Type2") {
-		//Set more stuff
+	else if (type == "Dicko") {
+		hpMax = vector<int>{ 100, 150, 200 };
+		expPerEvolve = vector<int>{ 100, 200, 300 };
+		happinessMax = vector<int>{ 100, 120, 140 };
+		foodMax = vector<int>{ 100, 120, 140 };
+		poopMax = vector<int>{ 80, 90, 100 };
+		hpChangeRate = 5;
+		expChangeRate = 5;
+		foodChangeRate = 5;
+		happinessChangeRate = 5;
+		poopChangeRate = 5;
+		notEnoughFoodThreshold = 0.2f;
 	}
-
+	else if (type == "Crok") {
+		hpMax = vector<int>{ 100, 150, 200 };
+		expPerEvolve = vector<int>{ 100, 200, 300 };
+		happinessMax = vector<int>{ 100, 120, 140 };
+		foodMax = vector<int>{ 100, 120, 140 };
+		poopMax = vector<int>{ 80, 90, 100 };
+		hpChangeRate = 5;
+		expChangeRate = 5;
+		foodChangeRate = 5;
+		happinessChangeRate = 5;
+		poopChangeRate = 5;
+		notEnoughFoodThreshold = 0.2f;
+	}
+	else if (type == "Gyoza") {
+		hpMax = vector<int>{ 100, 150, 200 };
+		expPerEvolve = vector<int>{ 100, 200, 300 };
+		happinessMax = vector<int>{ 100, 120, 140 };
+		foodMax = vector<int>{ 100, 120, 140 };
+		poopMax = vector<int>{ 80, 90, 100 };
+		hpChangeRate = 5;
+		expChangeRate = 5;
+		foodChangeRate = 5;
+		happinessChangeRate = 5;
+		poopChangeRate = 5;
+		notEnoughFoodThreshold = 0.2f;
+	}
+	currentLevel = 0;
+	currentHp = hpMax[currentLevel];
+	currentExp = expPerEvolve[currentLevel];
+	currentHappiness = happinessMax[currentLevel];
+	currentFood = foodMax[currentLevel];
+	currentPoop = 0;
+	ateEvolveStone = false;
+	money = 0;
 
 }
 

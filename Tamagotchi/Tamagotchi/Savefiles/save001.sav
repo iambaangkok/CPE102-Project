@@ -1,3 +1,12 @@
 #Pet
+name Autee
+type Dicko
 time_sinceBirth 1615208609
 time_lastSession 1615212825
+level 2
+exp 70
+evolveStone 0
+hp 80
+happiness 40
+food 70
+poop 50
