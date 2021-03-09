@@ -333,6 +333,19 @@ void Game::Update() {
     test1->Update(deltaTime);
     
     pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
+    if (pet->CanPoop()) {
+        poops.push_back(pet->CreatePoop());
+    }
+
+    for (int i = 0; i < poops.size(); ++i) {
+        if (CheckPoopIntegrity(i)) {
+            DeletePoop(i);
+        }
+    }
+
+    for (int i = 0; i < poops.size(); ++i) {
+        poops[i]->Update(deltaTime,window,mousePress,mousePosition);
+    }
 
     backgrounds[currentBackground].Update(deltaTime);
     for(int i = 0 ; i < clouds.size(); ++i){
@@ -405,12 +418,17 @@ void Game::Draw() {
     }
     if (gameState == 1) {
         pet->Draw(window);
+        for (int i = 0; i < poops.size(); ++i) {
+            poops[i]->Draw(window);
+        }
+        shopBut->Draw(window);
+        miniBut->Draw(window);
+        exitBut->Draw(window);
+
     }
     
-    shopBut->Draw(window);
-    miniBut->Draw(window);
+    
     test1->Draw(window);
-    exitBut->Draw(window);
 
     window.draw(fpsText);
 
@@ -519,6 +537,14 @@ void Game::DrawUI(RenderWindow& window) {
     ui_topPanel_front->Draw(window);
 
 
+}
+
+bool Game::CheckPoopIntegrity(int index) {
+    return poops[index]->nClickToDestroy <= 0;
+}
+void Game::DeletePoop(int index) {
+    delete poops[index];
+    poops.erase(poops.begin() + index);
 }
 
 void Game::GetInput() {

@@ -2,11 +2,11 @@
 name Autee
 type Dicko
 time_sinceBirth 1615208609
-time_lastSession 1615262341
-level 0
-exp 95
+time_lastSession 1615263466
+level 1
+exp 100
 evolveStone 0
 hp 80
 happiness 40
-food 45
-poop 75
+food 40
+poop 80

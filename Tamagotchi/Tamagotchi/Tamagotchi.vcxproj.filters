@@ -41,6 +41,9 @@
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Basic Game Component</Filter>
     </ClCompile>
+    <ClCompile Include="Poop.cpp">
+      <Filter>Basic Game Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shop.h">
@@ -80,6 +83,9 @@
       <Filter>Basic Game Component</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
+      <Filter>Basic Game Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Poop.h">
       <Filter>Basic Game Component</Filter>
     </ClInclude>
   </ItemGroup>

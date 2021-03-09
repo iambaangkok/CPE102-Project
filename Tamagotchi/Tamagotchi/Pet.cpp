@@ -402,6 +402,18 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 }
 
+
+bool Pet::CanPoop() {
+	return currentPoop >= poopMax[currentLevel];
+}
+Poop* Pet::CreatePoop() {
+	Poop* newPoop = new Poop(GetPosition(), Vector2f(110, 80), true, "Assets/Textures/pet_poop.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10, 3);
+	currentPoop = 0;
+	return newPoop;
+}
+
+
+
 template<typename T>
 void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
 {

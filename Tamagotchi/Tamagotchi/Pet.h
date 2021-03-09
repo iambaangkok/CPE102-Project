@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "GameObject.h"
 #include "Item.h"
-
+#include "Poop.h"
 
 using std::vector;
 using std::unordered_map;
@@ -36,9 +36,11 @@ public:
 
 	void Draw(RenderWindow& window);
 
+	bool CanPoop();
+	Poop* CreatePoop();
+
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-
 
 	void UseItem(int itemID); //Use Item
 
