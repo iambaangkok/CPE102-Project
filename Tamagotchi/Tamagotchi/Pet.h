@@ -111,7 +111,7 @@ public:
 
 //private:
 	float totalTime = 0;
-	int tickTime = 2;
+	int tickTime = 5;
 
 	int levelMax = 0;
 	vector<int> hpMax; //HP

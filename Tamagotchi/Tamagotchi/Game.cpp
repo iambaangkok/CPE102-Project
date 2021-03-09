@@ -279,7 +279,7 @@ void Game::SaveGame() {
     saveFile << "type " << pet->type << endl;
     saveFile << "time_sinceBirth " << pet->time_sinceBirth << endl;
     saveFile << "time_lastSession " << pet->time_currentTime_sinceEpoch << endl;
-    saveFile << "level" << pet->currentLevel << endl;
+    saveFile << "level " << pet->currentLevel << endl;
     saveFile << "exp " << pet->currentExp << endl;
     saveFile << "evolveStone " << ((pet->ateEvolveStone) ? 1 : 0 ) << endl;
     saveFile << "hp " << pet->currentHp << endl;
@@ -450,6 +450,12 @@ void Game::UpdateUI() {
     ui_currentPoop.setString(to_string(pet->currentPoop));
     ui_currentExp.setString(to_string(pet->currentExp));
     ui_currentLevel.setString(to_string(pet->currentLevel));
+
+    ui_hpMax.setString("/" + to_string(pet->hpMax[pet->currentLevel]));
+    ui_foodMax.setString("/" + to_string(pet->foodMax[pet->currentLevel]));
+    ui_poopMax.setString("/" + to_string(pet->poopMax[pet->currentLevel]));
+    ui_expMax.setString("/" + to_string(pet->expPerEvolve[pet->currentLevel]));
+
 
     SetTextAlignment(ui_currentHp, 335+15, 1);
     SetTextAlignment(ui_currentFood, 335+15, 1);
