@@ -23,6 +23,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 	rectangleShape = RectangleShape(dimensions);
 	rectangleShape.setPosition(position);
+	this->originIsCenter = originIsCenter;
 	if (originIsCenter) {
 		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
 	}
@@ -97,6 +98,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	rectangleShape = RectangleShape(dimensions);
 	rectangleShape.setPosition(position);
 	rectangleShape.setSize(dimensions);
+	this->originIsCenter = originIsCenter;
 	if (originIsCenter) {
 		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
 	}
@@ -266,6 +268,42 @@ float GameObject::GetRotation() {
 Color GameObject::GetColor() {
 	return rectangleShape.getFillColor();
 }
+float GameObject::GetSide(string side) {
+	Vector2f pos = GetPosition();
+	Vector2f dim = GetDimensions();
+	if (originIsCenter) {
+		dim = Vector2f(dim.x / 2, dim.y / 2);
+		if (side == "LEFT") {
+			return pos.x - dim.x;
+		}
+		else if (side == "RIGHT") {
+			return pos.x + dim.x;
+		}
+		else if (side == "TOP") {
+			return pos.y - dim.y;
+		}
+		else if (side == "BOTTOM") {
+			return pos.y + dim.y;
+		}
+	}
+	else {
+		if (side == "LEFT") {
+			return pos.x;
+		}
+		else if (side == "RIGHT") {
+			return pos.x + dim.x;
+		}
+		else if (side == "TOP") {
+			return pos.y;
+		}
+		else if (side == "BOTTOM") {
+			return pos.y + dim.y;
+		}
+	}
+	return -1;
+	
+}
+
 
 void GameObject::SetPosition(Vector2f position) // Set Position
 {
@@ -336,3 +374,7 @@ void GameObject::SetColor(Color color)
 {
 	rectangleShape.setFillColor(color);
 }
+
+//bool GameObject::CompareDrawLayer(const GameObject& x, const GameObject& y) {
+//	return x.drawLayer < y.drawLayer;
+//}
