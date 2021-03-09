@@ -18,11 +18,11 @@ public:
 
     void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-    void Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition);
+    void Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition, bool& quitGame);
 
     
 
-    void OnClick();
+    void OnClick(bool &quitGame);
     void OnHover();
 
     bool IsMouseOver(Vector2i& mousePosition);

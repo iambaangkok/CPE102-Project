@@ -152,14 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BlockBP.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Doodle.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GravityObject.cpp" />
-    <ClCompile Include="Guy.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="mainOld.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Pet.cpp" />
@@ -169,12 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BlockBP.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Doodle.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GravityObject.h" />
-    <ClInclude Include="Guy.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Pet.h" />

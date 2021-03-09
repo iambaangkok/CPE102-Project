@@ -19,18 +19,19 @@ using std::cout;
 using std::endl;
 
 
-int windowWidth = 720;
-int windowHeight = 1040;
-string title = "Tamagotchi";
-RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
-
 
 
 int main() {
     srand(time(0));
    
+
+    int windowWidth = 720;
+    int windowHeight = 1040;
+    string title = "Tamagotchi";
+    RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
+    window.setMouseCursorVisible(false);
+
     Game tamagotchi(window);
-    tamagotchi.LoadGame();
     tamagotchi.StartGameLoop();
 
     return 0;

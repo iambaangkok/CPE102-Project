@@ -1,5 +1,6 @@
 #include "GameObject.h"
 
+//Default
 GameObject::GameObject() {
 	Vector2f dimensions = Vector2f(100, 100);
 	Vector2f position = Vector2f(200, 200);
@@ -41,6 +42,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	}
 
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 	
@@ -58,6 +60,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	}
 
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 	rectangleShape.setTexture(&texture);
@@ -77,6 +80,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 	
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 
@@ -96,9 +100,10 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 	if (originIsCenter) {
 		rectangleShape.setOrigin(Vector2f(dimensions.x / 2, dimensions.y / 2));
 	}
-
+	rectangleShape.setRotation(0);
 
 	if (texture.loadFromFile(texturePath)) {
+		filepath = texturePath;
 		cout << "Loaded " + texturePath << endl;
 	}
 	rectangleShape.setTexture(&texture);
@@ -161,11 +166,12 @@ void GameObject::Update(Vector2i start, Vector2i finish, float deltaTime) {
 void GameObject::Draw(RenderWindow& window) {
 	window.draw(rectangleShape);
 }
-
 void GameObject::Move(float speedX, float speedY) {
 	rectangleShape.move(speedX, speedY);
 }
-
+void GameObject::Rotate(float angle) {
+	rectangleShape.rotate(angle);
+}
 
 
 int GameObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
@@ -204,7 +210,6 @@ int GameObject::CheckCollision(Vector2f otherPos, Vector2f otherHalfSize)
 	}
 	return 0;
 }
-
 int GameObject::CheckCollision(GameObject& other) {
 	Vector2f thisPos = GetPosition();
 	Vector2f thisHalfSize = GetSize() / 2.0f;
@@ -247,17 +252,17 @@ int GameObject::CheckCollision(GameObject& other) {
 Vector2f GameObject::GetPosition() {
 	return rectangleShape.getPosition();
 }
-
 Vector2f GameObject::GetSize()
 {
 	return rectangleShape.getSize();
 }
-
 Vector2f GameObject::GetDimensions()
 {
 	return rectangleShape.getSize();
 }
-
+float GameObject::GetRotation() {
+	return rectangleShape.getRotation();
+}
 Color GameObject::GetColor() {
 	return rectangleShape.getFillColor();
 }
@@ -278,6 +283,9 @@ void GameObject::SetDimensions(float x, float y)
 {
 	rectangleShape.setSize(Vector2f(x, y));
 }
+void GameObject::SetRotation(float angle) {
+	rectangleShape.setRotation(angle);
+}
 void GameObject::SetOrigin(Vector2f origin) // Set origin
 {
 	rectangleShape.setOrigin(origin);
@@ -289,7 +297,7 @@ void GameObject::SetOrigin(float x, float y)
 void GameObject::SetTexture(string texturePath) // Set texture
 {
 	texture.loadFromFile(texturePath);
-	rectangleShape.setTexture(&texture);
+	rectangleShape.setTexture(&texture , true);
 }
 void GameObject::SetImageCount(Texture& texture,Vector2u imageCount) // Set image count
 {

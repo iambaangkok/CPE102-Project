@@ -67,10 +67,15 @@ void Pet::Initialize() {
 void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unordered_map<string, bool>& keyHold, unordered_map<string, bool>& keyRelease,
 	unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseRelease, unordered_map<string, bool>& mouseHold, Vector2i mousePosition, int mouseWheelDelta)
 {
+	time_currentTime_sinceEpoch = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count(); //Update every frame
+	time_currentSession = time_currentTime_sinceEpoch - time_lastSession; //Update every frame
+	time_alive = time_currentTime_sinceEpoch - time_sinceBirth; //READ FROM FILE ONCE & Update every frame
+
+	cout << time_sinceBirth << " " << time_lastSession << " " << time_sinceLastSession << " " << time_currentTime_sinceEpoch << " " << time_currentSession << " " << time_alive << " " << endl;
+
 	if (!enabled) {
 		return;
 	}
-
 
 	if (currentHp < 0) {
 		isAlive = false;
@@ -123,6 +128,14 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 				isInAir = true;
 			}
 		}
+		if (keyPress["Q"]) {
+			currentLevel += 1;
+			Clamp(&currentLevel, 2, 0);
+		}
+		if (keyPress["E"]) {
+			currentLevel -= 1;
+			Clamp(&currentLevel, 2, 0);
+		}
 		if (mouseHold["M1"]) {
 			if (mouseIsOver) {
 				if (!isDraggedByMouse) {
@@ -142,8 +155,8 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 
 		if (mouseRelease["M1"]) {
-			throwSpeed.x = deltaPosition.x/2;
-			throwSpeed.y = deltaPosition.y/2;
+			throwSpeed.x = deltaPosition.x/2 * 30;
+			throwSpeed.y = -deltaPosition.y/2 * 30;
 			shadowYOffsetSpeed = throwSpeed.y;
 			cout << "MOUSE RELEASE" << " " << throwSpeed.x  << " "  << shadowYOffsetSpeed << endl << endl << endl;
 		}
@@ -201,8 +214,12 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 					throwSpeed.x += windResistance * deltaTime;
 				}
 			}
+			else {
+				throwSpeed = Vector2f(0, 0);
+			}
 
-			shadow->Move(speed.x, speed.y);
+			shadow->speed = speed;
+			shadow->Update(deltaTime);
 			SetPosition(shadow->GetPosition().x, shadow->GetPosition().y - shadowYOffset - shadow->GetDimensions().y / 2);
 
 		}
@@ -242,7 +259,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		Clamp(&shadowPos.x, 720.0f-shadowDim.x/2, 0.0f+shadowDim.x / 2);
 		shadow->SetPosition(shadowPos.x, shadowPos.y);
 
-
+		
 		deltaPosition = GetPosition() - lastFramePosition;
 		
 
@@ -288,7 +305,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		
 
 		
-		cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
+		//cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
 
 	}
 
@@ -298,22 +315,22 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
-			animation.SetFrame(3, 0);
+			animation.SetFrame(3, currentLevel);
 		}
 		else if (deltaPosition.y > 3) {
-			animation.SetFrame(4, 0);
+			animation.SetFrame(4, currentLevel);
 		}
 		else {
-			animation.SetFrame(0, 0);
+			animation.SetFrame(0, currentLevel);
 		}
 	}
 	else if (isMoving) {
 		animation.freezeFrame = false;
-		animation.SetStartFinishFrame(1, 0, 2, 0);
+		animation.SetStartFinishFrame(1, currentLevel, 2, currentLevel);
 	}
 	else {
 		animation.freezeFrame = false;
-		animation.SetStartFinishFrame(0, 0, 0, 0);
+		animation.SetStartFinishFrame(0, currentLevel, 0, currentLevel);
 	}
 	
 	

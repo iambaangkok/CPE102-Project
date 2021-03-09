@@ -7,6 +7,9 @@
 #include <set>
 #include <utility>
 #include <cmath>
+#include <chrono>
+#include <ctime>  
+#include <fstream>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
@@ -16,6 +19,7 @@
 #include "Button.h"
 #include "Shop.h"
 #include "ParticleSystem.h"
+#include "Doodle.h"
 class Button;
 class Shop;
 class Button;
@@ -37,6 +41,7 @@ public:
     ~Game();
 
     void LoadGame();
+    void SaveGame();
     void StartGameLoop();
     void ReInitialize();
     void GetInput();
@@ -52,6 +57,7 @@ public:
     void SetTextAlignment(Text& text, float anchorPositionX, int alignment); // alignment: 0 = left, 1 = right, 2 = middle
 
     void CheckKeyPressRelease(unordered_map<string, bool> *keyFlag);
+    void CheckKeyPressRelease(unordered_map<string, bool>* keyFlag, Event* evnt);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag);
     void CheckMousePressRelease(unordered_map <string, bool>* mouseFlag, Event* evnt);
 
@@ -62,8 +68,10 @@ public:
    
     /// Pet
     Pet* pet;
-
+    
     /// User Interface
+    GameObject* mouseCursor;
+
     Color col_BLACK1 = Color(24, 20, 37);
     Color col_RED1 = Color(244, 4, 69);
     Color col_GREEN1 = Color(99, 199, 77);
@@ -112,11 +120,13 @@ public:
 
     /// Minigames
     Button* miniBut;
+    Doodle* doodle;
 
     /// BuyItems
     vector<Button> buyBut;
 
     /// Miscellaneous
+    Button* exitBut;
     int currentBackground = 0;
     vector<GameObject> backgrounds;
 
@@ -144,6 +154,7 @@ public:
     
 
     /// System variables
+    bool quitGame = false;
     int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump
     
     int windowWidth = 720;
@@ -153,9 +164,12 @@ public:
     
     RenderWindow& window;
 
+    Shader shader;
+    
     Clock clock;
     float deltaTime = 0.0f;
 
+    
 
     /// Input variables
 

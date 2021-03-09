@@ -24,23 +24,24 @@ public:
 	void Draw(RenderWindow &window);
 
 
-
-
 	float speedscroll = 600;
 	bool isOpen = true;
 	int windowWidth = 720;
 	int windowHeight = 1040;
 	int topscroll = 200;
 	int lowscroll = 760;
-	int positionscrollX = 700;
+	int positionscrollX = 710;
 	int heightscrollbar = 150;
+	int corePosition = 310;
 	Vector2f position = Vector2f(0,0);
 	vector<Item> items;
 	vector<Text> descriptions;
 	vector<Text> prices;
-	GameObject *bg;
-	GameObject *bgs;
-	GameObject *scrollbar;
+	GameObject* bg;
+	GameObject* bgs;
+	GameObject* scrollbar;
+	GameObject* picitem;
 	vector<Button> buttons;//0 = food, 1 = dessert, 2 = booster;
+
 };
 
