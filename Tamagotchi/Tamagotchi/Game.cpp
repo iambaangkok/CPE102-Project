@@ -94,22 +94,22 @@ void Game::LoadGame() {
             format = "level %d";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentLevel));
             getline(saveFile, textline); nLine++;
-            format = "exp %d";
+            format = "exp %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentExp));
             getline(saveFile, textline); nLine++;
             format = "evolveStone %ld"; int ateEvolveStone = 0;
             sscanf_s(textline.c_str(), format.c_str(), &(ateEvolveStone)); pet->ateEvolveStone = ((ateEvolveStone == 1) ? true : false);
             getline(saveFile, textline); nLine++;
-            format = "hp %d";
+            format = "hp %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentHp));
             getline(saveFile, textline); nLine++;
-            format = "happiness %d";
+            format = "happiness %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentHappiness));
             getline(saveFile, textline); nLine++;
-            format = "food %d";
+            format = "food %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentFood));
             getline(saveFile, textline); nLine++;
-            format = "poop %d";
+            format = "poop %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentPoop));
 
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
@@ -487,16 +487,27 @@ void Game::UpdateUI() {
     ui_happinessBar->SetPosition(410, ui_happinessBarFloorLevel - ui_happinessBarHeight);
     ui_happinessBar->SetDimensions(ui_happinessBarWidth, ui_happinessBarHeight);
 
-    ui_currentHp.setString(to_string(pet->currentHp));
-    ui_currentFood.setString(to_string(pet->currentFood));
-    ui_currentPoop.setString(to_string(pet->currentPoop));
-    ui_currentExp.setString(to_string(pet->currentExp));
-    ui_currentLevel.setString(to_string(pet->currentLevel));
+    string tempStr = "";
 
-    ui_hpMax.setString("/" + to_string(pet->hpMax[pet->currentLevel]));
-    ui_foodMax.setString("/" + to_string(pet->foodMax[pet->currentLevel]));
-    ui_poopMax.setString("/" + to_string(pet->poopMax[pet->currentLevel]));
-    ui_expMax.setString("/" + to_string(pet->expPerEvolve[pet->currentLevel]));
+    tempStr = to_string(pet->currentHp);   tempStr.erase(tempStr.begin() + tempStr.find('.') + 2, tempStr.end());
+    ui_currentHp.setString(tempStr);
+    tempStr = to_string(pet->currentFood);   tempStr.erase(tempStr.begin() + tempStr.find('.') + 2, tempStr.end());
+    ui_currentFood.setString(tempStr);
+    tempStr = to_string(pet->currentPoop);   tempStr.erase(tempStr.begin() + tempStr.find('.') + 2, tempStr.end());
+    ui_currentPoop.setString(tempStr);
+    tempStr = to_string(pet->currentExp);   tempStr.erase(tempStr.begin() + tempStr.find('.'), tempStr.end());
+    ui_currentExp.setString(tempStr);
+    ui_currentLevel.setString(to_string(pet->currentLevel + 1));
+     
+    
+    tempStr = to_string(pet->hpMax[pet->currentLevel]);  tempStr.erase(tempStr.begin() + tempStr.find('.'), tempStr.end());
+    ui_hpMax.setString("/" + tempStr);
+    tempStr = to_string(pet->foodMax[pet->currentLevel]);  tempStr.erase(tempStr.begin() + tempStr.find('.'), tempStr.end());
+    ui_foodMax.setString("/" + tempStr);
+    tempStr = to_string(pet->poopMax[pet->currentLevel]);  tempStr.erase(tempStr.begin() + tempStr.find('.'), tempStr.end());
+    ui_poopMax.setString("/" + tempStr);
+    tempStr = to_string(pet->expPerEvolve[pet->currentLevel]);  tempStr.erase(tempStr.begin() + tempStr.find('.'), tempStr.end());
+    ui_expMax.setString("/" + tempStr);
 
 
     SetTextAlignment(ui_currentHp, 335+15, 1);
@@ -528,7 +539,7 @@ void Game::UpdateUI() {
     ui_emotionIcon->Update(deltaTime);
 
     ui_money.setString(to_string(pet->money));
-    SetTextAlignment(ui_money, 630, 2);
+    SetTextAlignment(ui_money, 640, 2);
 }
 
 void Game::DrawUI(RenderWindow& window) {
