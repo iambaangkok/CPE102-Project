@@ -21,7 +21,7 @@ public:
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime);
 	Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Customize Pet
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
-		string name, string type, int levelMax, vector<int> hpMax, vector<int> expPerEvolve, vector<int> happinessMax, vector<int> foodMax, vector<int> poopMax,
+		string name, string type, int levelMax, vector<float> hpMax, vector<float> expPerEvolve, vector<float> happinessMax, vector<float> foodMax, vector<float> poopMax,
 		int hpChangeRate = 1, int expChangeRate = 1, int foodChangeRate = 20, int happinessChangeRate = 1, int poopChangeRate = 1, float notEnoughFoodThreshold = 0.2f);
 	Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, 
@@ -61,11 +61,11 @@ public:
 	string name = "Unset Name";
 	string type = "Unset Type";
 	int currentLevel = 0;
-	int currentHp = 0;
-	int currentExp = 0;
-	int currentHappiness = 0;
-	int currentFood = 0;
-	int currentPoop = 0;
+	float currentHp = 0;
+	float currentExp = 0;
+	float currentHappiness = 0;
+	float currentFood = 0;
+	float currentPoop = 0;
 
 	float hpChangeRateMultiplier = 1.0f;
 	float expChangeMultiplier = 1.0f;
@@ -117,19 +117,19 @@ public:
 	int tickTime = 1;
 
 	int levelMax = 0;
-	vector<int> hpMax; //HP
-	vector<int> expPerEvolve; //EXP
-	vector<int> happinessMax; //Happiness
-	vector<int> foodMax; //Food
-	vector<int> poopMax; //Poop
+	vector<float> hpMax; //HP
+	vector<float> expPerEvolve; //EXP
+	vector<float> happinessMax; //Happiness
+	vector<float> foodMax; //Food
+	vector<float> poopMax; //Poop
 
 	//All Rate are at 1 per X tickTime(seconds);
-	int hpChangeRate = 1;
-	int expChangeRate = 1;
-	int foodChangeRate = 1;
-	int happinessChangeRate = 1;
-	int baseHappinessChangeRate = 1;
-	int poopChangeRate = 1;
+	float hpChangeRate = 1;
+	float expChangeRate = 1;
+	float foodChangeRate = 1;
+	float happinessChangeRate = 1;
+	float baseHappinessChangeRate = 1;
+	float poopChangeRate = 1;
 	
 	
 	float notEnoughFoodThreshold = 0.2f; //If Food is BELOW currentFood * this multiplier, HP , Happiness , starts to decay

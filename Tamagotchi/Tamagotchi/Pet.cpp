@@ -13,7 +13,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Proper An
 
 Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//Customize Pet
 	string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
-	string name, string type, int levelMax, vector<int> hpMax, vector<int> expPerEvolve, vector<int> happinessMax, vector<int> foodMax, vector<int> poopMax,
+	string name, string type, int levelMax, vector<float> hpMax, vector<float> expPerEvolve, vector<float> happinessMax, vector<float> foodMax, vector<float> poopMax,
 	int hpChangeRate, int expChangeRate, int foodChangeRate, int happinessChangeRate, int poopChangeRate, float notEnoughFoodThreshold)
 	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
@@ -49,11 +49,11 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	this->type = type;
 	levelMax = 3;
 	if (type == "Perry") {
-		hpMax = vector<int>{ 100, 150, 200 };
-		expPerEvolve = vector<int>{ 100, 200, 300 };
-		happinessMax = vector<int>{ 100, 120, 140 };
-		foodMax = vector<int>{ 100, 120, 140 };
-		poopMax = vector<int>{ 80, 90, 100 };
+		hpMax = vector<float>{ 100, 150, 200 };
+		expPerEvolve = vector<float>{ 100, 200, 300 };
+		happinessMax = vector<float>{ 100, 120, 140 };
+		foodMax = vector<float>{ 100, 120, 140 };
+		poopMax = vector<float>{ 80, 90, 100 };
 		hpChangeRate = 5;
 		expChangeRate = 5;
 		foodChangeRate = 5;
@@ -62,11 +62,11 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "Dicko") {
-		hpMax = vector<int>{ 100, 150, 200 };
-		expPerEvolve = vector<int>{ 100, 200, 300 };
-		happinessMax = vector<int>{ 100, 120, 140 };
-		foodMax = vector<int>{ 100, 120, 140 };
-		poopMax = vector<int>{ 80, 90, 100 };
+		hpMax = vector<float>{ 100, 150, 200 };
+		expPerEvolve = vector<float>{ 100, 200, 300 };
+		happinessMax = vector<float>{ 100, 120, 140 };
+		foodMax = vector<float>{ 100, 120, 140 };
+		poopMax = vector<float>{ 80, 90, 100 };
 		hpChangeRate = 1;
 		expChangeRate = 1;
 		foodChangeRate = 1;
@@ -75,11 +75,11 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "Crok") {
-		hpMax = vector<int>{ 100, 150, 200 };
-		expPerEvolve = vector<int>{ 100, 200, 300 };
-		happinessMax = vector<int>{ 100, 120, 140 };
-		foodMax = vector<int>{ 100, 120, 140 };
-		poopMax = vector<int>{ 80, 90, 100 };
+		hpMax = vector<float>{ 100, 150, 200 };
+		expPerEvolve = vector<float>{ 100, 200, 300 };
+		happinessMax = vector<float>{ 100, 120, 140 };
+		foodMax = vector<float>{ 100, 120, 140 };
+		poopMax = vector<float>{ 80, 90, 100 };
 		hpChangeRate = 5;
 		expChangeRate = 5;
 		foodChangeMultiplier = 5;
@@ -88,11 +88,11 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "Gyoza") {
-		hpMax = vector<int>{ 100, 150, 200 };
-		expPerEvolve = vector<int>{ 100, 200, 300 };
-		happinessMax = vector<int>{ 100, 120, 140 };
-		foodMax = vector<int>{ 100, 120, 140 };
-		poopMax = vector<int>{ 80, 90, 100 };
+		hpMax = vector<float>{ 100, 150, 200 };
+		expPerEvolve = vector<float>{ 100, 200, 300 };
+		happinessMax = vector<float>{ 100, 120, 140 };
+		foodMax = vector<float>{ 100, 120, 140 };
+		poopMax = vector<float>{ 80, 90, 100 };
 		hpChangeRate = 5;
 		expChangeRate = 5;
 		foodChangeRate = 5;
@@ -155,7 +155,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	
 
 	if (isAlive) {
-		//Manual Input will override random movement
+		///Manual Input will override random movement
 		if (keyHold["W"]) {
 			speed.y = -maxSpeed.y;
 			randomMovementIntervalTime = randomMovementMoveTotalTime = 0;
@@ -220,7 +220,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 		
 
-		//Calculate Random Movement
+		///Calculate Random Movement
 		if (randomMovementIntervalTime > randomMovementInterval) {
 			isRandomlyMoving = true;
 			randomMovementIntervalTime -= randomMovementInterval;
@@ -300,7 +300,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 
 
-		//Move ShadowYOffset
+		///Move ShadowYOffset
 		if (!isDraggedByMouse) {
 			shadowYOffset += shadowYOffsetSpeed * deltaTime;
 			if (isInAir) {
@@ -338,11 +338,11 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 		/// Still Alive and Growing
 		//Calculate stats
-		if (totalTime > tickTime) {
-			totalTime -= tickTime;
+		//if (totalTime > tickTime) {
+		//	totalTime -= tickTime;
 
 			if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
-				currentHp -= int(hpChangeRate * hpChangeRateMultiplier);
+				currentHp -= hpChangeRate * hpChangeRateMultiplier * deltaTime / tickTime;
 			}
 			else {
 				happinessChangeRate -= baseHappinessChangeRate;
@@ -363,18 +363,18 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			}
 
 
-			currentExp += int(expChangeRate * expChangeMultiplier);
-			currentFood -= int(foodChangeRate * foodChangeMultiplier);
-			currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
-			currentPoop += int(poopChangeRate * poopChangeMultiplier);
+			currentExp += expChangeRate * expChangeMultiplier * deltaTime / tickTime;
+			currentFood -= foodChangeRate * foodChangeMultiplier * deltaTime / tickTime;
+			currentHappiness -= happinessChangeRate * happinessChangeMultiplier * deltaTime / tickTime;
+			currentPoop += poopChangeRate * poopChangeMultiplier * deltaTime / tickTime;
 
-			Clamp(&currentHp, hpMax[currentLevel], 0);
-			Clamp(&currentHappiness, happinessMax[currentLevel], 0);
-			Clamp(&currentExp, expPerEvolve[currentLevel], 0);
-			Clamp(&currentFood, foodMax[currentLevel], 0);
-			Clamp(&currentPoop, poopMax[currentLevel], 0);
-		}
-		isMoving = (speed != Vector2f(0, 0));
+			Clamp(&currentHp, hpMax[currentLevel], 0.0f);
+			Clamp(&currentHappiness, happinessMax[currentLevel], 0.0f);
+			Clamp(&currentExp, expPerEvolve[currentLevel], 0.0f);
+			Clamp(&currentFood, foodMax[currentLevel], 0.0f);
+			Clamp(&currentPoop, poopMax[currentLevel], 0.0f);
+		//}
+		//isMoving = (speed != Vector2f(0, 0));
 
 		
 
@@ -387,7 +387,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 
 
-	//Set Animation according to pet state
+	///Set Animation according to pet state
 	if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
