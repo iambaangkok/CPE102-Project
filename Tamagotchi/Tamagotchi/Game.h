@@ -134,6 +134,9 @@ public:
 
     /// BuyItems
     vector<Button> buyBut;
+    Button* maindishBut;
+    Button* dessertBut;
+    Button* etcBut;
 
     /// Miscellaneous
     Button* exitBut;

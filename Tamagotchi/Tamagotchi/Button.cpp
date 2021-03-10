@@ -84,6 +84,15 @@ void Button::OnClick(bool &quitGame) {
 		shop->items[id-1].UseItem(pet);
 	}
 	if (type == "EXIT") quitGame = true;
+	if (type == "MAINDISH") {
+
+	}
+	if (type == "DESSERT") {
+
+	}
+	if (type == "ETC") {
+
+	}
 }
 
 void Button::OnHover() {

@@ -236,6 +236,24 @@ void Game::LoadGame() {
         buyBut.push_back(bB);
     }
 
+    static Button mdB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , "mdB", 0, "MAINDISH", gameState, *shop, *pet);
+    mdB.animation.freezeFrame = true;
+    maindishBut = &mdB;
+
+    static Button dsB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , "dsB", 0, "DESSERT", gameState, *shop, *pet);
+    dsB.animation.freezeFrame = true;
+    dessertBut = &dsB;
+
+    static Button etcB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , "etcB", 0, "ETC", gameState, *shop, *pet);
+    etcB.animation.freezeFrame = true;
+    etcBut = &etcB;
+
     /// Miscellaneous
     static Button eB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
         "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
