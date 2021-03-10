@@ -27,11 +27,15 @@ public:
 
 
 	int nClickToDestroy;
+	int price = 1;
+	int startingPrice = 10;
+	int priceRange = 10;
+
 	float basePoopSize = 1;
 	float lowestPoopSize = 0.3f;
 	float floorLine = 1040/2;
 	float gravity = 9.8f * 300 / 2;
-
+	
 
 };
 

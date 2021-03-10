@@ -10,6 +10,7 @@ Poop::Poop(Vector2f position, Vector2f dimensions, bool originIsCenter,
 {
 	this->nClickToDestroy = nClickToDestroy;
 	this->floorLine = floorLine;
+	price = rand() % priceRange + startingPrice;
 }
 
 Poop::~Poop(){}
