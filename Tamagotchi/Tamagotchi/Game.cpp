@@ -336,6 +336,8 @@ void Game::Update() {
 
     test1->Update(deltaTime);
     
+
+    pet->happinessChangeRate += poops.size();
     pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
     if (pet->CanPoop()) {
         poops.push_back(pet->CreatePoop());
@@ -505,7 +507,7 @@ void Game::UpdateUI() {
 
 
 
-    float emotionPoint = (float)pet->currentHappiness / pet->happinessMax[pet->currentLevel];
+    float emotionPoint = pet->happinessPoint;
     if (pet->isAlive == false) {
         emotionFrame = 4;
     }
@@ -566,6 +568,7 @@ bool Game::CheckPoopIntegrity(int index) {
     return poops[index]->nClickToDestroy <= 0;
 }
 void Game::DeletePoop(int index) {
+    pet->money += poops[index]->price;
     delete poops[index];
     poops.erase(poops.begin() + index);
 }

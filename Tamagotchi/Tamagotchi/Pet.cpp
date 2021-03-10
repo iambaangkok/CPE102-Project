@@ -57,7 +57,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		hpChangeRate = 5;
 		expChangeRate = 5;
 		foodChangeRate = 5;
-		happinessChangeRate = 5;
+		happinessChangeRate = baseHappinessChangeRate = 5;
 		poopChangeRate = 5;
 		notEnoughFoodThreshold = 0.2f;
 	}
@@ -67,11 +67,11 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		happinessMax = vector<int>{ 100, 120, 140 };
 		foodMax = vector<int>{ 100, 120, 140 };
 		poopMax = vector<int>{ 80, 90, 100 };
-		hpChangeRate = 5;
-		expChangeRate = 5;
-		foodChangeRate = 5;
-		happinessChangeRate = 5;
-		poopChangeRate = 5;
+		hpChangeRate = 1;
+		expChangeRate = 1;
+		foodChangeRate = 1;
+		happinessChangeRate = baseHappinessChangeRate = 1;
+		poopChangeRate = 1;
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "Crok") {
@@ -82,8 +82,8 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<int>{ 80, 90, 100 };
 		hpChangeRate = 5;
 		expChangeRate = 5;
-		foodChangeRate = 5;
-		happinessChangeRate = 5;
+		foodChangeMultiplier = 5;
+		happinessChangeRate = baseHappinessChangeRate = 5;
 		poopChangeRate = 5;
 		notEnoughFoodThreshold = 0.2f;
 	}
@@ -96,7 +96,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		hpChangeRate = 5;
 		expChangeRate = 5;
 		foodChangeRate = 5;
-		happinessChangeRate = 5;
+		happinessChangeRate = baseHappinessChangeRate = 5;
 		poopChangeRate = 5;
 		notEnoughFoodThreshold = 0.2f;
 	}
@@ -118,7 +118,7 @@ Pet::~Pet()
 void Pet::Initialize() {
 	speed = Vector2f(0, 0);
 	mouseIsOver = false;
-
+	happinessChangeRate = baseHappinessChangeRate;
 }
 
 
@@ -343,13 +343,29 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 			if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
 				currentHp -= int(hpChangeRate * hpChangeRateMultiplier);
-				currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
 			}
 			else {
-
+				happinessChangeRate -= baseHappinessChangeRate;
 			}
+
+			happinessPoint = (float)currentHappiness / happinessMax[currentLevel];
+			if (happinessPoint > 210 / 310.0f) {
+				expChangeMultiplier = 1;
+			}
+			else if (happinessPoint > 120 / 310.0f) {
+				expChangeMultiplier = 0.8;
+			}
+			else if (happinessPoint > 50 / 310.0f) {
+				expChangeMultiplier = 0.6;
+			}
+			else if (happinessPoint >= 0) {
+				expChangeMultiplier = 0.3;
+			}
+
+
 			currentExp += int(expChangeRate * expChangeMultiplier);
 			currentFood -= int(foodChangeRate * foodChangeMultiplier);
+			currentHappiness -= int(happinessChangeRate * happinessChangeMultiplier);
 			currentPoop += int(poopChangeRate * poopChangeMultiplier);
 
 			Clamp(&currentHp, hpMax[currentLevel], 0);

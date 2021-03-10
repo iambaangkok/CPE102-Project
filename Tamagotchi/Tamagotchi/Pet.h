@@ -70,6 +70,7 @@ public:
 	float hpChangeRateMultiplier = 1.0f;
 	float expChangeMultiplier = 1.0f;
 	float foodChangeMultiplier = 1.0f;
+	float happinessPoint = 1.0f;
 	float happinessChangeMultiplier = 1.0f;
 	float poopChangeMultiplier = 1.0f;
 
@@ -113,7 +114,7 @@ public:
 
 //private:
 	float totalTime = 0;
-	int tickTime = 5;
+	int tickTime = 1;
 
 	int levelMax = 0;
 	vector<int> hpMax; //HP
@@ -127,8 +128,10 @@ public:
 	int expChangeRate = 1;
 	int foodChangeRate = 1;
 	int happinessChangeRate = 1;
+	int baseHappinessChangeRate = 1;
 	int poopChangeRate = 1;
-
+	
+	
 	float notEnoughFoodThreshold = 0.2f; //If Food is BELOW currentFood * this multiplier, HP , Happiness , starts to decay
 
 };
