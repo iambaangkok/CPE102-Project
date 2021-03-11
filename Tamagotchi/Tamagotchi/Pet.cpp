@@ -129,7 +129,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	time_currentSession = time_currentTime_sinceEpoch - time_lastSession; //Update every frame
 	time_alive = time_currentTime_sinceEpoch - time_sinceBirth; //READ FROM FILE ONCE & Update every frame
 
-	cout << time_sinceBirth << " " << time_lastSession << " " << time_sinceLastSession << " " << time_currentTime_sinceEpoch << " " << time_currentSession << " " << time_alive << " " << endl;
+	//cout << time_sinceBirth << " " << time_lastSession << " " << time_sinceLastSession << " " << time_currentTime_sinceEpoch << " " << time_currentSession << " " << time_alive << " " << endl;
 
 	if (!enabled) {
 		return;
@@ -341,40 +341,40 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		//if (totalTime > tickTime) {
 		//	totalTime -= tickTime;
 
-			if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
-				currentHp -= hpChangeRate * hpChangeRateMultiplier * deltaTime / tickTime;
-			}
-			else {
-				happinessChangeRate -= baseHappinessChangeRate;
-			}
+		if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
+			currentHp -= hpChangeRate * hpChangeRateMultiplier * deltaTime / tickTime;
+		}
+		else {
+			happinessChangeRate -= baseHappinessChangeRate;
+		}
 
-			happinessPoint = (float)currentHappiness / happinessMax[currentLevel];
-			if (happinessPoint > 210 / 310.0f) {
-				expChangeMultiplier = 1;
-			}
-			else if (happinessPoint > 120 / 310.0f) {
-				expChangeMultiplier = 0.8;
-			}
-			else if (happinessPoint > 50 / 310.0f) {
-				expChangeMultiplier = 0.6;
-			}
-			else if (happinessPoint >= 0) {
-				expChangeMultiplier = 0.3;
-			}
+		happinessPoint = (float)currentHappiness / happinessMax[currentLevel];
+		if (happinessPoint > 210 / 310.0f) {
+			expChangeMultiplier = 1;
+		}
+		else if (happinessPoint > 120 / 310.0f) {
+			expChangeMultiplier = 0.8;
+		}
+		else if (happinessPoint > 50 / 310.0f) {
+			expChangeMultiplier = 0.6;
+		}
+		else if (happinessPoint >= 0) {
+			expChangeMultiplier = 0.3;
+		}
 
 
-			currentExp += expChangeRate * expChangeMultiplier * deltaTime / tickTime;
-			currentFood -= foodChangeRate * foodChangeMultiplier * deltaTime / tickTime;
-			currentHappiness -= happinessChangeRate * happinessChangeMultiplier * deltaTime / tickTime;
-			currentPoop += poopChangeRate * poopChangeMultiplier * deltaTime / tickTime;
+		currentExp += expChangeRate * expChangeMultiplier * deltaTime / tickTime;
+		currentFood -= foodChangeRate * foodChangeMultiplier * deltaTime / tickTime;
+		currentHappiness -= happinessChangeRate * happinessChangeMultiplier * deltaTime / tickTime;
+		currentPoop += poopChangeRate * poopChangeMultiplier * deltaTime / tickTime;
 
-			Clamp(&currentHp, hpMax[currentLevel], 0.0f);
-			Clamp(&currentHappiness, happinessMax[currentLevel], 0.0f);
-			Clamp(&currentExp, expPerEvolve[currentLevel], 0.0f);
-			Clamp(&currentFood, foodMax[currentLevel], 0.0f);
-			Clamp(&currentPoop, poopMax[currentLevel], 0.0f);
+		Clamp(&currentHp, hpMax[currentLevel], 0.0f);
+		Clamp(&currentHappiness, happinessMax[currentLevel], 0.0f);
+		Clamp(&currentExp, expPerEvolve[currentLevel], 0.0f);
+		Clamp(&currentFood, foodMax[currentLevel], 0.0f);
+		Clamp(&currentPoop, poopMax[currentLevel], 0.0f);
 		//}
-		//isMoving = (speed != Vector2f(0, 0));
+		isMoving = (speed != Vector2f(0, 0));
 
 		
 
@@ -384,7 +384,6 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	}
 
 	drawLayer = GetSide("BOTTOM");
-
 
 
 	///Set Animation according to pet state

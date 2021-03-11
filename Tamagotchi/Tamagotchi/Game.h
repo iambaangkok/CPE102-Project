@@ -78,6 +78,15 @@ public:
     /// Pet
     Pet* pet;
     vector<Poop*> poops;
+    // First time playing
+    bool isFirstTimePlaying = false;
+    vector<Button*> petEggs;
+    vector<string> petEggDescriptions = 
+    {   "PERRY is a super ordinary, balanced, normal, whatever you say that means 'basic' pet.",
+        "DICKO likes to eat....I mean it would probably.",
+        "In a game where picking up shit gives money, CROK is the money maker.",
+        "If you want to speed run this game, GYOZA is for you. Beware this pet is super fragile."};
+    Text petEggDescription;
 
     /// User Interface
     GameObject* mouseCursor;
@@ -127,16 +136,17 @@ public:
     /// Shop
     Shop* shop;
     Button* shopBut;
+    vector<Button> buyBut;
+    Button* maindishBut;
+    Button* dessertBut;
+    Button* etcBut;
 
     /// Minigames
     Button* miniBut;
     Doodle* doodle;
 
-    /// BuyItems
-    vector<Button> buyBut;
-    Button* maindishBut;
-    Button* dessertBut;
-    Button* etcBut;
+    
+    
 
     /// Miscellaneous
     Button* exitBut;
@@ -168,7 +178,7 @@ public:
 
     /// System variables
     bool quitGame = false;
-    int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump
+    int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump, -1 = first time playing
     
     int windowWidth = 720;
     int windowHeight = 1040;

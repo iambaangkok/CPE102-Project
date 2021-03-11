@@ -31,7 +31,14 @@ void Game::LoadGame() {
     string format = "";
     string blankStr = "";
     long long int nLine = 1;
-    while (getline(saveFile, textline)) {
+    if (!getline(saveFile, textline)) { //First time playing 
+        static Button petEgg1 = Button(Vector2f(210, 200), Vector2f(130, 140), false,
+            "Assets/Textures/button_petEgg_01_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "sB", 0, "SHOP", gameState, *shop, *pet);
+        petEgg1.animation.freezeFrame = true;
+        petEggs.push_back(&petEgg1);
+    }
+    else  {
         nLine++;
         cout << textline << endl;
 
@@ -349,67 +356,72 @@ void Game::ReInitialize() {
 
 void Game::Update() {
   
-    mouseCursor->SetPosition(mousePosition.x,mousePosition.y);
-    mouseCursor->Update(deltaTime);
-
+    
     test1->Update(deltaTime);
+
     
 
-    pet->happinessChangeRate += poops.size();
-    pet->Update(deltaTime, keyPress,keyHold,keyRelease,mousePress,mouseRelease,mouseHold, mousePosition,mouseWheelDelta);
-    if (pet->CanPoop()) {
-        poops.push_back(pet->CreatePoop());
-    }
+    if (gameState == 0 || gameState == -1) {
+        titlePanel->speed.x = titlePanelSpeed;
+        titlePanel->Update(deltaTime);
 
-    for (int i = 0; i < poops.size(); ++i) {
-        if (CheckPoopIntegrity(i)) {
-            DeletePoop(i);
+        if (titlePanel->GetPosition().x > titlePanelGap) {
+            titlePanelSpeed = 0;
+            titlePanel->SetPosition(titlePanelGap, 160);
+        }
+
+        if (titlePanelSpeed == 0 && gameState == 0) {
+            pressAnyKeyToStartBlinkTotalTime += deltaTime;
+            if (pressAnyKeyToStartBlinkTotalTime > pressAnyKeyToStartBlinkTime) {
+                pressAnyKeyToStartBlinkTotalTime -= pressAnyKeyToStartBlinkTime;
+                pressAnyKeyToStartIsShown = !pressAnyKeyToStartIsShown;
+            }
+            if (anyKeyPressed || anyMousePressed) {
+                gameState = 1;
+            }
         }
     }
+    else if (gameState == 1 || gameState == 2) {
+        pet->happinessChangeRate += poops.size();
+        pet->Update(deltaTime, keyPress, keyHold, keyRelease, mousePress, mouseRelease, mouseHold, mousePosition, mouseWheelDelta);
+        if (pet->CanPoop()) {
+            poops.push_back(pet->CreatePoop());
+        }
 
-    for (int i = 0; i < poops.size(); ++i) {
-        poops[i]->Update(deltaTime,window,mousePress,mousePosition);
+        for (int i = 0; i < poops.size(); ++i) {
+            if (CheckPoopIntegrity(i)) {
+                DeletePoop(i);
+            }
+        }
+
+        for (int i = 0; i < poops.size(); ++i) {
+            poops[i]->Update(deltaTime, window, mousePress, mousePosition);
+        }
+        shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
+        miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
+        exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
+        doodle->Update(deltaTime, keyPress, pet->currentLevel);
+
+        shop->Update(deltaTime, mouseWheelDelta);
     }
 
-    backgrounds[currentBackground].Update(deltaTime);
-    for(int i = 0 ; i < clouds.size(); ++i){
-        clouds[i].speed = Vector2f(cloudSpeed,0);
+    mouseCursor->SetPosition(mousePosition.x, mousePosition.y);
+    mouseCursor->Update(deltaTime);
         
+    backgrounds[currentBackground].Update(deltaTime);
+    for (int i = 0; i < clouds.size(); ++i) {
+        clouds[i].speed = Vector2f(cloudSpeed, 0);
+
         clouds[i].Update(deltaTime);
         if (clouds[i].GetPosition().x > windowWidth) {
-            clouds[i].SetPosition(-((clouds.size()-2) * cloudGap), clouds[i].GetPosition().y);
+            clouds[i].SetPosition(-((clouds.size() - 2) * cloudGap), clouds[i].GetPosition().y);
         }
-    }
-
-    titlePanel->speed.x = titlePanelSpeed;
-    titlePanel->Update(deltaTime);
-
-    if (titlePanel->GetPosition().x > titlePanelGap) {
-        titlePanelSpeed = 0;
-        titlePanel->SetPosition(titlePanelGap, 160);
     }
 
     string fpsString = to_string(fps);
     fpsString.erase(fpsString.end() - 4, fpsString.end());
     fpsText.setString(fpsString);
-
-    if (titlePanelSpeed == 0 && gameState == 0) {
-        pressAnyKeyToStartBlinkTotalTime += deltaTime;
-        if (pressAnyKeyToStartBlinkTotalTime > pressAnyKeyToStartBlinkTime) {
-            pressAnyKeyToStartBlinkTotalTime -= pressAnyKeyToStartBlinkTime;
-            pressAnyKeyToStartIsShown = !pressAnyKeyToStartIsShown;
-        }
-        if (anyKeyPressed || anyMousePressed) {
-            gameState = 1;
-        }
-    }
-
-    shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-    miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-    exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-    doodle->Update(deltaTime , keyPress, pet->currentLevel);
     
-    shop->Update( deltaTime, mouseWheelDelta);
 
     ReInitializeUI();
 
