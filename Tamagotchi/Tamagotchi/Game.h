@@ -80,12 +80,14 @@ public:
     vector<Poop*> poops;
     // First time playing
     bool isFirstTimePlaying = false;
+    int selectedPet = -1;
     vector<Button*> petEggs;
+    vector<string> petEggType = {"PERRY", "DICKO", "CROK", "GYOZA" };
     vector<string> petEggDescriptions = 
-    {   "PERRY is a super ordinary, balanced, normal, whatever you say that means 'basic' pet.",
-        "DICKO likes to eat....I mean it would probably.",
-        "In a game where picking up shit gives money, CROK is the money maker.",
-        "If you want to speed run this game, GYOZA is for you. Beware this pet is super fragile."};
+    {   petEggType[0] + " is a super ordinary, balanced, normal, whatever you say that means 'basic' pet.",
+        petEggType[1] + " likes to eat....I mean it would probably.",
+        "In a game where picking up shit gives money, " + petEggType[2] + " is the money maker.",
+        "If you want to speed run this game, "+ petEggType[3] + " is for you. Beware this pet is super fragile."};
     Text petEggDescription;
 
     /// User Interface

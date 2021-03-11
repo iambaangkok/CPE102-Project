@@ -31,40 +31,71 @@ void Game::LoadGame() {
     string format = "";
     string blankStr = "";
     long long int nLine = 1;
-    if (!getline(saveFile, textline)) { //First time playing 
-        static Button petEgg1 = Button(Vector2f(210, 200), Vector2f(130, 140), false,
+    if (!getline(saveFile, textline) && selectedPet == -1) { //First time playing 
+        cout << "First Time Playing " << endl;
+        float petEggPosX = 70;
+        float petEggDimX = 130;
+        float petEggGapX = 20;
+        float petEggPosY = 300;
+        static Button petEgg1 = Button(Vector2f(petEggPosX + (petEggs.size())*petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
             "Assets/Textures/button_petEgg_01_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "sB", 0, "SHOP", gameState, *shop, *pet);
+            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, 0);
         petEgg1.animation.freezeFrame = true;
         petEggs.push_back(&petEgg1);
+        static Button petEgg2 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+            "Assets/Textures/button_petEgg_02_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, 1);
+        petEgg2.animation.freezeFrame = true;
+        petEggs.push_back(&petEgg2);
+        static Button petEgg3 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+            "Assets/Textures/button_petEgg_03_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, 2);
+        petEgg3.animation.freezeFrame = true;
+        petEggs.push_back(&petEgg3);
+        static Button petEgg4 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+            "Assets/Textures/button_petEgg_04_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, 3);
+        petEgg4.animation.freezeFrame = true;
+        petEggs.push_back(&petEgg4);
+
+        //gameState = -1;
+        isFirstTimePlaying = true;
+
     }
     else  {
         nLine++;
         cout << textline << endl;
 
-        if (nLine >= 1 && nLine <= 11) {
+        string name = "Unset Name";
+        string type = "Unset Type";
+        string texturePath = "Assets/Textures/";
+        float grassFieldTopBorder = 560;
+        float grassFieldHeight = 730 - 560;
+        float grassFieldThickness = 1000;
+        float playerSize = 160.0f;
+
+        if (selectedPet == -1 && !isFirstTimePlaying) {
+            cout << "Loading Save Data..." << endl;
             /// Pet
             getline(saveFile, textline); nLine++;
-            string name = "Unset Name";
-            string type = "Unset Type";
             name = textline.substr(5, textline.size() - 5);
+
             getline(saveFile, textline); nLine++;
             type = textline.substr(5, textline.size() - 5);
 
             cout << name << " " << type << endl;
 
             float playerSize = 160.0f;
-            string texturePath = "Assets/Textures/";
-            if (type == "Perry") { 
+            if (type == "PERRY") {
                 texturePath += "pet_01_x2.png";
             }
-            else if (type == "Dicko") {
+            else if (type == "DICKO") {
                 texturePath += "pet_02_x2.png";
             }
-            else if (type == "Crok") {
+            else if (type == "CROK") {
                 texturePath += "pet_03.png";
             }
-            else if (type == "Gyoza") {
+            else if (type == "GYOZA") {
                 texturePath += "pet_04.png";
             }
             else {
@@ -87,16 +118,12 @@ void Game::LoadGame() {
             pet->time_sinceLastSession = pet->time_currentTime_sinceEpoch - pet->time_lastSession; //Calculate once at start
             pet->time_currentSession = pet->time_currentTime_sinceEpoch - pet->time_lastSession; //Update every frame
             pet->time_alive = pet->time_currentTime_sinceEpoch - pet->time_sinceBirth; //READ FROM FILE ONCE & Update every frame
-            {
-            //const auto p0 = std::chrono::time_point<std::chrono::system_clock>{};
-            //const auto p1 = std::chrono::system_clock::now();
-
-            //std::time_t epochTime = std::chrono::system_clock::to_time_t(p0);
-            //std::cout << "seconds since epoch: " << std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()<< '\n';
-
-            //const auto p2 = p1 - std::chrono::hours(24);
-            //std::cout << "yesterday, hours since epoch: "<< std::chrono::duration_cast<std::chrono::hours>(p2.time_since_epoch()).count()<< '\n';
-            }
+            /*const auto p0 = std::chrono::time_point<std::chrono::system_clock>{};
+            const auto p1 = std::chrono::system_clock::now();
+            std::time_t epochTime = std::chrono::system_clock::to_time_t(p0);
+            std::cout << "seconds since epoch: " << std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()<< '\n';
+            const auto p2 = p1 - std::chrono::hours(24);
+            std::cout << "yesterday, hours since epoch: "<< std::chrono::duration_cast<std::chrono::hours>(p2.time_since_epoch()).count()<< '\n';*/
             getline(saveFile, textline); nLine++;
             format = "level %d";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentLevel));
@@ -123,9 +150,7 @@ void Game::LoadGame() {
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
             pet->shadow = &pShadow;
 
-            float grassFieldTopBorder = 560;
-            float grassFieldHeight = 730 - 560;
-            float grassFieldThickness = 1000;
+
             //1 = right, 2 = left, 3 = bottom, 4 = top
             static GameObject pBorder1 = GameObject(Vector2f(windowWidth + grassFieldThickness / 2, grassFieldTopBorder + grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
                 "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -142,6 +167,74 @@ void Game::LoadGame() {
             pet->shadowBorder.push_back(pBorder4);
 
         }
+        else {
+            cout << "Initializing FTP... " << endl;
+            /// Pet
+            name = petEggType[selectedPet];
+            type = name;
+            cout << name << " " << type << endl;
+
+            if (type == "PERRY") {
+                texturePath += "pet_01_x2.png";
+            }
+            else if (type == "DICKO") {
+                texturePath += "pet_02_x2.png";
+            }
+            else if (type == "CROK") {
+                texturePath += "pet_03.png";
+            }
+            else if (type == "GYOZA") {
+                texturePath += "pet_04.png";
+            }
+            else {
+                cout << "Invalid Pet Type." << endl;
+                window.close();
+            }
+
+            static Pet p = Pet(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(playerSize, playerSize), true,
+                texturePath, Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
+                name, type);
+            pet = &p;
+            
+
+            pet->time_sinceBirth = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            pet->time_lastSession = pet->time_sinceBirth;
+            pet->time_currentTime_sinceEpoch = pet->time_sinceBirth;
+            pet->time_sinceLastSession = pet->time_currentTime_sinceEpoch - pet->time_lastSession;
+            pet->time_currentSession = pet->time_currentTime_sinceEpoch - pet->time_lastSession;
+            pet->time_alive = pet->time_currentTime_sinceEpoch - pet->time_sinceBirth;/*const auto p0 = std::chrono::time_point<std::chrono::system_clock>{};
+            const auto p1 = std::chrono::system_clock::now();
+            std::time_t epochTime = std::chrono::system_clock::to_time_t(p0);
+            std::cout << "seconds since epoch: " << std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()<< '\n';
+            const auto p2 = p1 - std::chrono::hours(24);
+            std::cout << "yesterday, hours since epoch: "<< std::chrono::duration_cast<std::chrono::hours>(p2.time_since_epoch()).count()<< '\n';*/
+            pet->currentLevel = 0;
+            pet->currentExp = 0;
+            pet->ateEvolveStone = false;
+            pet->currentHp = 0;
+            pet->currentHappiness = 0;
+            pet->currentFood = 0;
+            pet->currentPoop = 0;
+
+            static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
+                "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+            pet->shadow = &pShadow;
+
+            //1 = right, 2 = left, 3 = bottom, 4 = top
+            static GameObject pBorder1 = GameObject(Vector2f(windowWidth + grassFieldThickness / 2, grassFieldTopBorder + grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
+                "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+            static GameObject pBorder2 = GameObject(Vector2f(0 - grassFieldThickness + grassFieldThickness / 2, grassFieldTopBorder + grassFieldHeight / 2), Vector2f(grassFieldThickness, grassFieldHeight), true,
+                "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+            static GameObject pBorder3 = GameObject(Vector2f(windowWidth / 2, grassFieldTopBorder - grassFieldThickness / 2), Vector2f(windowWidth, grassFieldThickness), true,
+                "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+            static GameObject pBorder4 = GameObject(Vector2f(windowWidth / 2, grassFieldTopBorder + grassFieldHeight + grassFieldThickness / 2), Vector2f(windowWidth, grassFieldThickness), true,
+                "Assets/Textures/DefaultTexture.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+
+            pet->shadowBorder.push_back(pBorder1);
+            pet->shadowBorder.push_back(pBorder2);
+            pet->shadowBorder.push_back(pBorder3);
+            pet->shadowBorder.push_back(pBorder4);
+        }
 
     }
     saveFile.close();
@@ -153,149 +246,154 @@ void Game::LoadGame() {
     test1 = &bobo;
 
 
-    /// User Interface
-    static GameObject mCS = GameObject(Vector2f(0, 0), Vector2f(64, 64), false, "Assets/Textures/mouseCursor.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    mouseCursor = &mCS;
+    if (pet != NULL) {
+        cout << "Loading User Interface..." << endl;
+        /// User Interface
+        static GameObject ui_tp_f = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_front.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+        ui_topPanel_front = &ui_tp_f;
 
-    static GameObject ui_tp_f = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_front.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    ui_topPanel_front = &ui_tp_f;
+        static GameObject ui_tp_b = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_back.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+        ui_topPanel_back = &ui_tp_b;
 
-    static GameObject ui_tp_b = GameObject(Vector2f(0, 0), Vector2f(windowWidth, 200), false, "Assets/Textures/panel_top_x3_back.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    ui_topPanel_back = &ui_tp_b;
+        static GameObject ui_hpb = GameObject(Vector2f(90, 40), Vector2f((float)pet->currentHp / pet->hpMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
+            "Assets/Textures/panel_top_x3_hpBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+        ui_hpBar = &ui_hpb;
+        static GameObject ui_fb = GameObject(Vector2f(90, 80), Vector2f((float)pet->currentFood / pet->foodMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
+            "Assets/Textures/panel_top_x3_foodBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+        ui_foodBar = &ui_fb;
+        static GameObject ui_pb = GameObject(Vector2f(90, 120), Vector2f((float)pet->currentPoop / pet->poopMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
+            "Assets/Textures/panel_top_x3_poopBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+        ui_poopBar = &ui_pb;
 
-    static GameObject ui_hpb = GameObject(Vector2f(90, 40), Vector2f((float)pet->currentHp / pet->hpMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
-        "Assets/Textures/panel_top_x3_hpBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    ui_hpBar = &ui_hpb;
-    static GameObject ui_fb = GameObject(Vector2f(90, 80), Vector2f((float)pet->currentFood / pet->foodMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
-        "Assets/Textures/panel_top_x3_foodBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    ui_foodBar = &ui_fb;
-    static GameObject ui_pb = GameObject(Vector2f(90, 120), Vector2f((float)pet->currentPoop / pet->poopMax[pet->currentLevel] * ui_barWidth, ui_barHeight), false,
-        "Assets/Textures/panel_top_x3_poopBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    ui_poopBar = &ui_pb;
+        static GameObject ui_expb = GameObject(Vector2f(90, 160), Vector2f((float)pet->currentExp / pet->expPerEvolve[pet->currentLevel] * ui_expBarWidth, ui_expBarHeight), false,
+            "Assets/Textures/panel_top_x3_expBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
+        ui_expBar = &ui_expb;
 
-    static GameObject ui_expb = GameObject(Vector2f(90, 160), Vector2f((float)pet->currentExp / pet->expPerEvolve[pet->currentLevel] * ui_expBarWidth, ui_expBarHeight), false,
-        "Assets/Textures/panel_top_x3_expBar.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
-    ui_expBar = &ui_expb;
+        ui_happinessBarHeight = (float)pet->currentHappiness / pet->happinessMax[pet->currentLevel] * ui_happinessBarMaxHeight;
+        static GameObject ui_hab = GameObject(Vector2f(400, ui_happinessBarFloorLevel - ui_happinessBarHeight), Vector2f(ui_happinessBarWidth, ui_happinessBarHeight), false, Color(255, 255, 255));
+        ui_happinessBar = &ui_hab;
+        static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/panel_top_x3_emotionIcon.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        ui_emotionIcon = &ui_emoico;
+        ui_emotionIcon->animation.freezeFrame = true;
+        emotionFrame = 0;
+        ui_emotionIcon->SetFrame(emotionFrame, 0);
 
-    ui_happinessBarHeight = (float)pet->currentHappiness / pet->happinessMax[pet->currentLevel] * ui_happinessBarMaxHeight;
-    static GameObject ui_hab = GameObject(Vector2f(400, ui_happinessBarFloorLevel - ui_happinessBarHeight), Vector2f(ui_happinessBarWidth, ui_happinessBarHeight), false, Color(255,255,255));
-    ui_happinessBar = &ui_hab;
-    static GameObject ui_emoico = GameObject(Vector2f(450, 40), Vector2f(110, 110), false, "Assets/Textures/panel_top_x3_emotionIcon.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    ui_emotionIcon = &ui_emoico;
-    ui_emotionIcon->animation.freezeFrame = true;
-    emotionFrame = 0;
-    ui_emotionIcon->SetFrame(emotionFrame, 0);
+        //SetTextUI(ui_hpText, "HP", fonts[0], col_BLACK1, 20, Vector2f(40, 40));
 
-    //SetTextUI(ui_hpText, "HP", fonts[0], col_BLACK1, 20, Vector2f(40, 40));
+        float gapXPlus = 20;
+        float gapXMinus = 10;
 
-    float gapXPlus = 20;
-    float gapXMinus = 10;
+        float fontSize = 14;
+        SetTextUI(ui_hpMax, "/" + to_string(pet->hpMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(335 + gapXPlus - 5, 60));
+        SetTextUI(ui_currentHp, to_string(pet->currentHp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 50));
 
-    float fontSize = 14;
-    SetTextUI(ui_hpMax, "/" + to_string(pet->hpMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(335 + gapXPlus - 5 , 60));
-    SetTextUI(ui_currentHp, to_string(pet->currentHp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 50));
+        //SetTextUI(ui_foodText, "FOOD", fonts[0], col_BLACK1, 20, Vector2f(40, 80));
+        SetTextUI(ui_foodMax, "/" + to_string(pet->foodMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(330 + gapXPlus, 100));
+        SetTextUI(ui_currentFood, to_string(pet->currentFood), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 90));
 
-    //SetTextUI(ui_foodText, "FOOD", fonts[0], col_BLACK1, 20, Vector2f(40, 80));
-    SetTextUI(ui_foodMax, "/" + to_string(pet->foodMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(330 + gapXPlus, 100));
-    SetTextUI(ui_currentFood, to_string(pet->currentFood), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 90));
+        //SetTextUI(ui_poopText, "POO", fonts[0], col_BLACK1, 20, Vector2f(40, 120));
+        SetTextUI(ui_poopMax, "/" + to_string(pet->poopMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(330 + gapXPlus, 140));
+        SetTextUI(ui_currentPoop, to_string(pet->currentPoop), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 130));
 
-    //SetTextUI(ui_poopText, "POO", fonts[0], col_BLACK1, 20, Vector2f(40, 120));
-    SetTextUI(ui_poopMax, "/" + to_string(pet->poopMax[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(330 + gapXPlus, 140));
-    SetTextUI(ui_currentPoop, to_string(pet->currentPoop), fonts[0], col_BLACK1, fontSize - 2, Vector2f(335 - gapXMinus, 130));
+        //SetTextUI(ui_expText, "EXP", fonts[0], col_BLACK1, 20, Vector2f(40, 160));
+        SetTextUI(ui_expMax, "/" + to_string(pet->expPerEvolve[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(520 + gapXPlus - 5, 180));
+        SetTextUI(ui_currentExp, to_string(pet->currentExp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(520 - gapXMinus + 5, 170));
 
-    //SetTextUI(ui_expText, "EXP", fonts[0], col_BLACK1, 20, Vector2f(40, 160));
-    SetTextUI(ui_expMax, "/" + to_string(pet->expPerEvolve[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(520 + gapXPlus-5, 180));
-    SetTextUI(ui_currentExp, to_string(pet->currentExp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(520 - gapXMinus+5, 170));
-
-    SetTextUI(ui_money, to_string(pet->currentExp), fonts[0], col_BLACK1, 20, Vector2f(630, 65));
-    SetTextUI(ui_levelText, "LEVEL", fonts[0], col_BLACK1, 20, Vector2f(600, 120));
-    SetTextUI(ui_currentLevel, to_string(pet->currentLevel+1), fonts[0], col_BLACK1, 20, Vector2f(635, 140));
-
+        SetTextUI(ui_money, to_string(pet->currentExp), fonts[0], col_BLACK1, 20, Vector2f(630, 65));
+        SetTextUI(ui_levelText, "LEVEL", fonts[0], col_BLACK1, 20, Vector2f(600, 120));
+        SetTextUI(ui_currentLevel, to_string(pet->currentLevel + 1), fonts[0], col_BLACK1, 20, Vector2f(635, 140));
 
 
-    /// Shop
-    static Shop s = Shop();
-    shop = &s;      
 
-    static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0),1
-        ,"sB", 0 , "SHOP",gameState,*shop, *pet);
-    sB.animation.freezeFrame = true;
-    shopBut = &sB;
+        /// Shop
+        static Shop s = Shop();
+        shop = &s;
 
-    /// Minigames
-    static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "mnB", 0, "MINIGAME", gameState,*shop, *pet);
-    mnB.animation.freezeFrame = true;
-    miniBut = &mnB;
+        static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "sB", 0, "SHOP", gameState, *shop, *pet);
+        sB.animation.freezeFrame = true;
+        shopBut = &sB;
 
-    static Doodle d = Doodle(gameState , *pet);
-    doodle = &d;
-    doodle->Initialize(pet->currentLevel);
-
-    /// BuyItems
-    for (int i = 0; i < 18; ++i) {
-        static Button bB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+        /// Minigames
+        static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "bB", 0, "BUYITEM", gameState, *shop,*pet, i+1);
-        bB.animation.freezeFrame = true;
-        buyBut.push_back(bB);
+            , "mnB", 0, "MINIGAME", gameState, *shop, *pet);
+        mnB.animation.freezeFrame = true;
+        miniBut = &mnB;
+
+        static Doodle d = Doodle(gameState, *pet);
+        doodle = &d;
+        doodle->Initialize(pet->currentLevel);
+
+        /// BuyItems
+        for (int i = 0; i < 18; ++i) {
+            static Button bB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+                "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+                , "bB", 0, "BUYITEM", gameState, *shop, *pet, i + 1);
+            bB.animation.freezeFrame = true;
+            buyBut.push_back(bB);
+        }
+
+        static Button mdB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "mdB", 0, "MAINDISH", gameState, *shop, *pet);
+        mdB.animation.freezeFrame = true;
+        maindishBut = &mdB;
+
+        static Button dsB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "dsB", 0, "DESSERT", gameState, *shop, *pet);
+        dsB.animation.freezeFrame = true;
+        dessertBut = &dsB;
+
+        static Button etcB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "etcB", 0, "ETC", gameState, *shop, *pet);
+        etcB.animation.freezeFrame = true;
+        etcBut = &etcB;
+
+        /// Miscellaneous
+        static Button eB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "eB", 0, "EXIT", gameState, *shop, *pet);
+        eB.animation.freezeFrame = true;
+        exitBut = &eB;
     }
+    if (selectedPet == -1 || !isFirstTimePlaying) {
+        static GameObject mCS = GameObject(Vector2f(0, 0), Vector2f(64, 64), false, "Assets/Textures/mouseCursor.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        mouseCursor = &mCS;
 
-    static Button mdB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "mdB", 0, "MAINDISH", gameState, *shop, *pet);
-    mdB.animation.freezeFrame = true;
-    maindishBut = &mdB;
+        static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/BGMain.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        backgrounds.push_back(bg);
 
-    static Button dsB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "dsB", 0, "DESSERT", gameState, *shop, *pet);
-    dsB.animation.freezeFrame = true;
-    dessertBut = &dsB;
+        static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        static GameObject cloud2 = GameObject(Vector2f(0, +10), Vector2f(200, 80), false, "Assets/Textures/clouds_02.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        clouds.push_back(cloud1);
+        clouds.push_back(cloud2);
+        clouds.push_back(cloud1);
+        clouds.push_back(cloud2);
+        for (int i = 0; i < clouds.size(); ++i) {
+            clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
+        }
 
-    static Button etcB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "etcB", 0, "ETC", gameState, *shop, *pet);
-    etcB.animation.freezeFrame = true;
-    etcBut = &etcB;
+        static GameObject ti = GameObject(Vector2f(-titlePanelGap - titlePanelWidth - titlePanelGap, 160), Vector2f(titlePanelWidth, titlePanelHeight), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        titlePanel = &ti;
 
-    /// Miscellaneous
-    static Button eB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
-        "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , "eB", 0, "EXIT", gameState, *shop, *pet);
-    eB.animation.freezeFrame = true;
-    exitBut = &eB;
+        pressAnyKeyToStartText.setString("Press Any Key to Start");
+        pressAnyKeyToStartText.setFont(fonts[0]);
+        pressAnyKeyToStartText.setFillColor(Color::White);
+        pressAnyKeyToStartText.setCharacterSize(25);
+        pressAnyKeyToStartText.setPosition(windowWidth / 2 - 180, titlePanelHeight + 160 + 40);
+        pressAnyKeyToStartText.setStyle(Text::Bold);
 
-    static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/BGMain.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    backgrounds.push_back(bg);
-
-    static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    static GameObject cloud2 = GameObject(Vector2f(0, +10), Vector2f(200, 80), false, "Assets/Textures/clouds_02.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    clouds.push_back(cloud1);
-    clouds.push_back(cloud2);
-    clouds.push_back(cloud1);
-    clouds.push_back(cloud2);
-    for (int i = 0; i < clouds.size(); ++i) {
-        clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
+        fpsText.setString(to_string(fps));
+        fpsText.setFont(fonts[0]);
+        fpsText.setFillColor(Color::Black);
+        fpsText.setCharacterSize(16);
+        fpsText.setPosition(windowWidth - 40, 10);
     }
-
-    static GameObject ti = GameObject(Vector2f(-titlePanelGap-titlePanelWidth-titlePanelGap, 160), Vector2f(titlePanelWidth, titlePanelHeight), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    titlePanel = &ti;
-
-    pressAnyKeyToStartText.setString("Press Any Key to Start");
-    pressAnyKeyToStartText.setFont(fonts[0]);
-    pressAnyKeyToStartText.setFillColor(Color::White);
-    pressAnyKeyToStartText.setCharacterSize(25);
-    pressAnyKeyToStartText.setPosition(windowWidth/2 - 180, titlePanelHeight + 160 + 40);
-    pressAnyKeyToStartText.setStyle(Text::Bold);
-
-    fpsText.setString(to_string(fps));
-    fpsText.setFont(fonts[0]);
-    fpsText.setFillColor(Color::Black);
-    fpsText.setCharacterSize(16);
-    fpsText.setPosition(windowWidth - 40, 10);
+    
 
 }
 void Game::SaveGame() {
@@ -342,8 +440,9 @@ void Game::ReInitialize() {
     anyKeyPressed = anyMousePressed = false;
     mouseWheelDelta = 0;
 
-
-    pet->Initialize();
+    if (gameState == 1) {
+        pet->Initialize();
+    }
     backgrounds[currentBackground].Initialize();
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Initialize();
@@ -355,7 +454,7 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
-  
+    cout << gameState << " ";
     
     test1->Update(deltaTime);
 
@@ -377,11 +476,31 @@ void Game::Update() {
                 pressAnyKeyToStartIsShown = !pressAnyKeyToStartIsShown;
             }
             if (anyKeyPressed || anyMousePressed) {
-                gameState = 1;
+                if (isFirstTimePlaying) {
+                    gameState = -1;
+                }
+                else {
+                    gameState = 1;
+                }
+            }
+        }
+
+        if (gameState == -1) {
+            for (int i = 0; i < petEggs.size(); ++i) {
+                petEggs[i]->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
+                if (gameState == 1) {
+                    if (isFirstTimePlaying) {
+                        isFirstTimePlaying = false;
+                        cout << "THIS1" << endl;
+                        LoadGame();
+                        cout << "THIS2" << endl;
+                    }
+                }
             }
         }
     }
     else if (gameState == 1 || gameState == 2) {
+        
         pet->happinessChangeRate += poops.size();
         pet->Update(deltaTime, keyPress, keyHold, keyRelease, mousePress, mouseRelease, mouseHold, mousePosition, mouseWheelDelta);
         if (pet->CanPoop()) {
@@ -397,13 +516,17 @@ void Game::Update() {
         for (int i = 0; i < poops.size(); ++i) {
             poops[i]->Update(deltaTime, window, mousePress, mousePosition);
         }
-        shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-        miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-        exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
+        shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
+        miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
+        exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
         doodle->Update(deltaTime, keyPress, pet->currentLevel);
 
         shop->Update(deltaTime, mouseWheelDelta);
+
+        UpdateUI();
+        ReInitializeUI();
     }
+
 
     mouseCursor->SetPosition(mousePosition.x, mousePosition.y);
     mouseCursor->Update(deltaTime);
@@ -414,6 +537,7 @@ void Game::Update() {
 
         clouds[i].Update(deltaTime);
         if (clouds[i].GetPosition().x > windowWidth) {
+
             clouds[i].SetPosition(-((clouds.size() - 2) * cloudGap), clouds[i].GetPosition().y);
         }
     }
@@ -423,9 +547,7 @@ void Game::Update() {
     fpsText.setString(fpsString);
     
 
-    ReInitializeUI();
 
-    UpdateUI();
 
     //cout << deltaTime << " " << fps << endl;
 }
@@ -438,13 +560,17 @@ void Game::Draw() {
 
     backgrounds[currentBackground].Draw(window);
  
-    DrawUI(window);
-
-    shop->Draw(window);
 
     for (int i = 0; i < clouds.size(); ++i) {
         clouds[i].Draw(window);
     }
+
+    if (gameState == -1 && isFirstTimePlaying) {
+        for (int i = 0; i < petEggs.size(); ++i) {
+            petEggs[i]->Draw(window);
+        }
+    }
+    
 
     if (gameState == 0) {
         titlePanel->Draw(window);
@@ -452,7 +578,11 @@ void Game::Draw() {
             window.draw(pressAnyKeyToStartText);
         }
     }
-    if (gameState == 1) {
+    if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
+        cout << "HERE2" << endl;
+
+        DrawUI(window);
+        shop->Draw(window);
 
         vector<GameObject*> drawQueue;
         drawQueue.push_back(pet);
@@ -470,14 +600,11 @@ void Game::Draw() {
 
         }
 
-
-        /*pet->Draw(window);
-        for (int i = 0; i < poops.size(); ++i) {
-            poops[i]->Draw(window);
-        }*/
         shopBut->Draw(window);
         miniBut->Draw(window);
         exitBut->Draw(window);
+
+        doodle->Draw(window);
 
     }
     
@@ -486,13 +613,13 @@ void Game::Draw() {
 
     window.draw(fpsText);
 
-    doodle->Draw(window);
 
     mouseCursor->Draw(window);
 
     //Display
     window.display();
 }
+
 
 void Game::ReInitializeUI() {
     ui_topPanel_front->Initialize();
@@ -504,7 +631,6 @@ void Game::ReInitializeUI() {
     ui_happinessBar->Initialize();
 
 }
-
 void Game::UpdateUI() {
 
     ui_hpBar->SetDimensions((float)pet->currentHp / pet->hpMax[pet->currentLevel] * ui_barWidth, ui_barHeight);
@@ -571,9 +697,11 @@ void Game::UpdateUI() {
     ui_money.setString(to_string(pet->money));
     SetTextAlignment(ui_money, 640, 2);
 }
-
 void Game::DrawUI(RenderWindow& window) {
+    cout << "HERE3" << endl;
+
     ui_topPanel_back->Draw(window);
+    cout << "HERE4" << endl;
 
     ui_hpBar->Draw(window);
     ui_foodBar->Draw(window);
