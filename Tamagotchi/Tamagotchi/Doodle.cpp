@@ -5,7 +5,7 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 {
 	
 	this->maingame_state = &maingame_state;
-	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 7, "Assets/Textures/platform2.png");
+	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 8, "Assets/Textures/platform2.png");
 	Platform = &p;
 	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
 	Alpha = &a;
@@ -95,7 +95,7 @@ void Doodle::Initialize(int curlevel)
 	land_posy = 800.0f;
 	land->SetPosition(Vector2f(360, land_posy));
 
-	SetBackground("Assets/Textures/bgex" + std::to_string(equip) + ".png");
+	SetBG("Assets/Textures/bgex" + std::to_string(equip) + ".png");
 
 	Logo1.setPosition(Vector2f(-250.0f, 120.0f));
 	Logo2.setPosition(Vector2f(970.0f, 255.0f));
@@ -181,15 +181,18 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			{
 				Platform->platformPos[i].y -= Alpha->dy * deltaTime;
 				land_posy -= Alpha->dy * deltaTime * 0.15f ;
-				if (Platform->enabled[i] && Platform->platformPos[i].y > windowHeight)
+
+				if (Platform->platformPos[i].y > windowHeight)
 				{
-					Platform->platformPos[i].y = 0;
+					if (!Platform->enabled[i])
+						Platform->pass[i] = true;
+					Platform->platformPos[i].y = Platform->platformPos[(i+1)% Platform->NO_OF_PLATFORM].y - 1040 / Platform->NO_OF_PLATFORM;
 					Platform->platformPos[i].x = (rand() % (720 - (int)Platform->platform.GetSize().x)) + Platform->platform.GetSize().x / 2;
 				}
 			}
 			for (unsigned int i = 0; i < 3; ++i)
 			{
-				background_posy[i] -= Alpha->dy * 0.01f;
+				background_posy[i] -= Alpha->dy * deltaTime * 0.1f;
 				if (background_posy[i] >= windowHeight) 
 					background_posy[i] = background_posy[(i-1)%3] - 1040.0f;
 				background[i].setPosition(Vector2f(0, background_posy[i]));
@@ -199,7 +202,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 		for (unsigned int i = 0; i < Platform->NO_OF_PLATFORM; ++i)
 		{
 			float change = 0.0f;
-			if (!(!Platform->enabled[i] && Platform->platformPos[i].y > windowHeight) && Alpha->CheckCollision(Platform->platformPos[i], Platform->platform.GetSize() / 2.0f) && Alpha->dy > 0.0f)
+			if ((Platform->enabled[i] || !Platform->pass[i]) && Alpha->CheckCollision(Platform->platformPos[i], Platform->platform.GetSize() / 2.0f) && Alpha->dy > 0.0f)
 			{
 				sound.play();
 				change = max(change, 1700.0f);
@@ -209,8 +212,9 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 				pw.play();
 				Power->spawn = false;
 				Power->state = 0;
-				change = max(change, 3000.0f);
+				change = max(change, 4000.0f);
 			}
+
 			if (change) {
 				Alpha->dy = 0.0f;
 				Alpha->dy -= change;
@@ -276,12 +280,12 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 		}
 		if (key["SPACE"]) {
 			equip = select;
-			SetBackground("Assets/Textures/bgex" + std::to_string(equip) + ".png");
+			SetBG("Assets/Textures/bgex" + std::to_string(equip) + ".png");
 		}
 	}
 }
 
-void Doodle::SetBackground(string filepath)
+void Doodle::SetBG(string filepath)
 {
 	for (int i = 0; i < 3; ++i)
 	{

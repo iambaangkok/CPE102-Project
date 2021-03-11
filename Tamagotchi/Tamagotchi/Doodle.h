@@ -19,7 +19,7 @@ public :
 	void Initialize(int curlevel);														// Call to initialize doodle 
 	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel);		// Update to GravityObject and PlatformObject
 	void Draw(RenderWindow& window);													// Draw GravityObject and PlatformObject
-	void SetBackground(string filepath);
+	void SetBG(string filepath);
 
 	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover , 3 - Background Customization
 	int* maingame_state;
@@ -31,7 +31,6 @@ public :
 	float land_posy;
 	PowerUp* Power;
 	
-
 	Font font;
 	Text scoreText , highscoreText;
 	vector<Sprite> background; 
@@ -57,7 +56,7 @@ public :
 	int score = 0;
 	int difficulty_rate = 25;
 	int score_rate = 30;
-	float finalspeed_rate = 0.3f;
+	float finalspeed_rate = 0.1f;
 
 	int highscore = 0;
 

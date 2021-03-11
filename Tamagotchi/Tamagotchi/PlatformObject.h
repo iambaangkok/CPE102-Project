@@ -19,7 +19,7 @@ public :
     Texture platformtexture;
     GameObject platform;
     vector<Vector2f> platformPos;
-    vector<bool> enabled;
+    vector<bool> enabled , pass;
     int NO_OF_PLATFORM;
     int prev = 0;
     Vector2i windowSize;
