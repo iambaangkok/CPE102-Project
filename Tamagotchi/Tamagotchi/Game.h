@@ -133,6 +133,7 @@ public:
     Text ui_levelText;
     Text ui_currentLevel;
 
+    /// Pet
     Button* evolveButton;
 
     /// Shop
@@ -145,6 +146,13 @@ public:
 
     /// Minigames
     Button* miniBut;
+    Button* startBut;
+    Button* exitdoodleBut;
+    Button* chooseBut;
+    Button* leftBut;
+    Button* rightBut;
+    Button* backBut;
+    Button* selectBut;
     Doodle* doodle;
 
     
