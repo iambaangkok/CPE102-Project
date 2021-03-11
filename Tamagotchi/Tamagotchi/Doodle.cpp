@@ -5,7 +5,7 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 {
 	
 	this->maingame_state = &maingame_state;
-	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 7, "Assets/Textures/platform2.png");
+	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 8, "Assets/Textures/platform2.png");
 	Platform = &p;
 	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
 	Alpha = &a;
@@ -13,17 +13,17 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Power = &power;
 	static GameObject l = GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
 	land = &l;
-	static BlockBP b = BlockBP("Assets/Textures/background_03.png", "BG", "BOBO");
+	static BlockBP b = BlockBP("Assets/Textures/bgex" + std::to_string(equip) + ".png", "BOBO");
 	BP = &b;
 
-	int r = rand() % 4 + 1;
-	for (int i = 0; i < 2; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		Sprite A;
-		backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(r) + ".png");
+		backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(equip) + ".png");
 		A.setTexture(backgroundT);
 		A.setScale(Vector2f(720.0f / backgroundT.getSize().x, 1040.0f / backgroundT.getSize().y));
 		background.push_back(A);
+		background_posy.push_back(i * -1040.0f);
 	}
 
 	Logo1T.loadFromFile("Assets/Textures/DoodleLogo1.png");
@@ -95,20 +95,8 @@ void Doodle::Initialize(int curlevel)
 	land_posy = 800.0f;
 	land->SetPosition(Vector2f(360, land_posy));
 
-	int r = rand() % 4 + 1;
-	for (int i = 0; i < 2; ++i)
-	{
-		Sprite A;
-		backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(r) + ".png");
-		//backgroundT.loadFromFile("Assets/Textures/bgex4.png");
-		A.setTexture(backgroundT);
-		A.setScale(Vector2f(720.0f / backgroundT.getSize().x, 1040.0f / backgroundT.getSize().y));
-		background[i] = A;
-	}
+	SetBG("Assets/Textures/bgex" + std::to_string(equip) + ".png");
 
-	background[0].setPosition(Vector2f(0, -1040));
-	background[1].setPosition(Vector2f(0, 0));
-	
 	Logo1.setPosition(Vector2f(-250.0f, 120.0f));
 	Logo2.setPosition(Vector2f(970.0f, 255.0f));
 	
@@ -180,17 +168,10 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 				Power->state = 1;
 				Power->spawn = true;
 			}
+			
 		}
 
-		if (Power->CheckCollision(Alpha->player.GetPosition(), Alpha->player.GetSize() / 2.0f)) {
-			pw.play();
-			Power->spawn = false;
-			Power->state = 0;
-			Alpha->dy = 0.0f;
-			Alpha->dy -= 3000.0f;
-		}
-
-		Alpha->dy += 20.0f;
+		Alpha->dy += 20.0f ;
 		Alpha->playerY += Alpha->dy * deltaTime;
 
 		if (Alpha->playerY < Alpha->Height)
@@ -198,29 +179,45 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			Alpha->playerY = Alpha->Height;
 			for (unsigned int i = 0; i < Platform->NO_OF_PLATFORM; ++i)
 			{
-				Platform->platformPos[i].y -= Alpha->dy * deltaTime ;
+				Platform->platformPos[i].y -= Alpha->dy * deltaTime;
 				land_posy -= Alpha->dy * deltaTime * 0.15f ;
-				if (Platform->enabled[i] && Platform->platformPos[i].y > windowHeight)
+
+				if (Platform->platformPos[i].y > windowHeight)
 				{
-					Platform->platformPos[i].y = 0;
+					if (!Platform->enabled[i])
+						Platform->pass[i] = true;
+					Platform->platformPos[i].y = Platform->platformPos[(i+1)% Platform->NO_OF_PLATFORM].y - 1040 / Platform->NO_OF_PLATFORM;
 					Platform->platformPos[i].x = (rand() % (720 - (int)Platform->platform.GetSize().x)) + Platform->platform.GetSize().x / 2;
 				}
 			}
-			for (unsigned int i = 0; i < 2; ++i)
+			for (unsigned int i = 0; i < 3; ++i)
 			{
-				background[i].move(Vector2f(0, - Alpha->dy * deltaTime * 0.01f));
-				if (background[i].getPosition().y > windowHeight)
-					background[i].setPosition(Vector2f(0, -1040));
+				background_posy[i] -= Alpha->dy * deltaTime * 0.1f;
+				if (background_posy[i] >= windowHeight) 
+					background_posy[i] = background_posy[(i-1)%3] - 1040.0f;
+				background[i].setPosition(Vector2f(0, background_posy[i]));
 			}
 		}
 
 		for (unsigned int i = 0; i < Platform->NO_OF_PLATFORM; ++i)
 		{
-			if (!(!Platform->enabled[i] && Platform->platformPos[i].y > windowHeight) && Alpha->CheckCollision(Platform->platformPos[i], Platform->platform.GetSize() / 2.0f) && Alpha->dy > 0.0f)
+			float change = 0.0f;
+			if ((Platform->enabled[i] || !Platform->pass[i]) && Alpha->CheckCollision(Platform->platformPos[i], Platform->platform.GetSize() / 2.0f) && Alpha->dy > 0.0f)
 			{
 				sound.play();
+				change = max(change, 1700.0f);
+			}
+
+			if (Power->CheckCollision(Alpha->player.GetPosition(), Alpha->player.GetSize() / 2.0f)) {
+				pw.play();
+				Power->spawn = false;
+				Power->state = 0;
+				change = max(change, 4000.0f);
+			}
+
+			if (change) {
 				Alpha->dy = 0.0f;
-				Alpha->dy -= 1700.0f;
+				Alpha->dy -= change;
 			}
 		}
 
@@ -263,22 +260,51 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			*maingame_state = 1;
 		}
 	}
-	else if (gstate == 3) {	// Battle Pass
+	else if (gstate == 3) {	// Background Customization
 		if (key["B"])
 		{
-			//music.play();
 			sound.play();
 			gstate = 0;
 		}
+		if (key["A"]) {
+			select++;
+			if (select > 4)
+				select = 1;
+			BP->Object.SetTexture("Assets/Textures/bgex" + std::to_string(select) + ".png");
+		}
+		if (key["D"]) {
+			select--;
+			if (select < 1)
+				select = 4;
+			BP->Object.SetTexture("Assets/Textures/bgex" + std::to_string(select) + ".png");
+		}
+		if (key["SPACE"]) {
+			equip = select;
+			SetBG("Assets/Textures/bgex" + std::to_string(equip) + ".png");
+		}
 	}
 }
+
+void Doodle::SetBG(string filepath)
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		Sprite A;
+		backgroundT.loadFromFile(filepath);
+		A.setTexture(backgroundT);
+		A.setScale(Vector2f(720.0f / backgroundT.getSize().x, 1040.0f / backgroundT.getSize().y));
+		background[i] = A;
+		background_posy[i] = i * -1040.0f;
+	}
+}
+
 
 void Doodle::Draw(RenderWindow &window)
 {
 	if (*maingame_state != 2)
 		return;
-	window.draw(background[0]);
-	window.draw(background[1]);
+	for (int i = 0; i < 3; ++i)
+		window.draw(background[i]);
 	land->Draw(window);
 	
 	if (gstate == 0)
@@ -305,7 +331,8 @@ void Doodle::Draw(RenderWindow &window)
 	}
 
 	if (gstate == 3) {
-		BP->SetPos(Vector2f(360.0f, 500.0f));
+		BP->SetPos(Vector2f(360.0f, 520.0f));
 		BP->Draw(window);
 	}
 }
+

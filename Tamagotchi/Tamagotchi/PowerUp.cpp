@@ -13,11 +13,8 @@ PowerUp::~PowerUp()
 
 void PowerUp::Update(float deltaTime)
 {
-	if (state != prev) {
-		cout << state;
-		prev = state;
-	}
-		
+	if (POWERUP.GetPosition().y > 1040.0f)
+		state = 0;
 	switch (state) {
 	case 0 :
 		POWERUP.SetPosition(0.0f,-100.0f);

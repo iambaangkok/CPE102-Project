@@ -5,7 +5,7 @@
 class BlockBP
 {
 public :
-	BlockBP(string filepath , string type , string name);
+	BlockBP(string filepath , string name);
 	~BlockBP();
 
 	void SetPos(Vector2f pos);
@@ -13,7 +13,6 @@ public :
 
 	GameObject Border , Object ;
 	Text DES;
-	string type;
 	Font font;
 };
 

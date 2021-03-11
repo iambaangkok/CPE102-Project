@@ -12,9 +12,10 @@ public :
 	bool CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
 
 	GameObject POWERUP; 
+	Texture POWERUPT;
 
 	int posx;
-	Texture POWERUPT;
+	
 
 	bool spawn = false;
 	int state = 0;
