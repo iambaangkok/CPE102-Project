@@ -1,17 +1,12 @@
 #Pet
-<<<<<<< Updated upstream
-name Autee
-type Dicko
-time_sinceBirth 1615208609
-time_lastSession 1615263466
-level 1
-exp 100
+name CROK
+type CROK
+time_sinceBirth 1615459700
+time_lastSession 1615459753
+level 2
+exp 70.3939
 evolveStone 0
-hp 120
-happiness 40
-food 40
-poop 80
-=======
-time_sinceBirth 0
-time_lastSession 1615298171
->>>>>>> Stashed changes
+hp 0
+happiness 0
+food 0
+poop 49.6593
