@@ -407,7 +407,7 @@ void Game::Update() {
     shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
     miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
     exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame);
-    doodle->Update(deltaTime , keyPress, pet->currentLevel);
+    doodle->Update(deltaTime , keyPress, pet->currentLevel , *pet);
     
     shop->Update( deltaTime, mouseWheelDelta);
 

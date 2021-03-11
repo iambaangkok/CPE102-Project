@@ -17,9 +17,11 @@ public :
 	~Doodle();
 
 	void Initialize(int curlevel);														// Call to initialize doodle 
-	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel);		// Update to GravityObject and PlatformObject
+	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel , Pet &pet);		// Update to GravityObject and PlatformObject
 	void Draw(RenderWindow& window);													// Draw GravityObject and PlatformObject
 	void SetBG(string filepath);
+	void SetSpriteCenter(Sprite &S);
+	void SetTextCenter(Text& T);
 
 	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover , 3 - Background Customization
 	int* maingame_state;
@@ -29,23 +31,17 @@ public :
 	PlatformObject* Platform;
 	GameObject* land;
 	float land_posy;
-	PowerUp* Power;
+	PowerUp* Power , * CoinP;
 	
 	Font font;
-	Text scoreText , highscoreText;
+	Text scoreText , highscoreText , money;
 	vector<Sprite> background; 
 	vector<float> background_posy;
-	Sprite Logo1, Logo2;
-	Sprite Press;
-	Sprite YOUDIED;
+	Sprite Logo1, Logo2 , Press , YOUDIED , SelectBG;
+	Texture backgroundT , Logo1T, Logo2T , PressT , YOUDIEDT , SelectBGT;
 
-	Texture backgroundT;
-	Texture Logo1T, Logo2T;
-	Texture PressT;
-	Texture YOUDIEDT;
-
-	Sound sound, music , pw , dead;
-	SoundBuffer soundB , musicB , pwB ,deadB;
+	Sound sound, music , pw , dead , coin;
+	SoundBuffer soundB , musicB , pwB ,deadB , coinB;
 
 	int curlevel = 0;
 
@@ -57,14 +53,16 @@ public :
 	int difficulty_rate = 25;
 	int score_rate = 30;
 	float finalspeed_rate = 0.1f;
-
+	int Money = 0;
+	int MoneyPickup = 0;
+	int money_rate = 5;
 	int highscore = 0;
 
 	int FadeCnt = 0;				// Fade VFX
 	float FadeRate = 2.0f;
 
-	int beta; 
-	int power_range = 50;
+	int power_range = 30;
+	int coin_range = 19;
 
 	int equip = 1;					// Background Customization
 	int select = 1;

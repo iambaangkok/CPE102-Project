@@ -1,5 +1,4 @@
 #Pet
-<<<<<<< Updated upstream
 name Autee
 type Dicko
 time_sinceBirth 1615208609
@@ -14,4 +13,4 @@ poop 80
 =======
 time_sinceBirth 0
 time_lastSession 1615298171
->>>>>>> Stashed changes
+

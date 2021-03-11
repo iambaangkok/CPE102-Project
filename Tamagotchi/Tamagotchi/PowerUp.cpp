@@ -1,9 +1,9 @@
 #include "PowerUp.h"
 
-PowerUp::PowerUp()
+PowerUp::PowerUp(string filepath , Vector2f size)
 {
-	POWERUP.SetDimensions(19.0f * 2, 34.0f * 2);
-	POWERUPT.loadFromFile("Assets/Textures/PowerUp.png");
+	POWERUP.SetDimensions(size);
+	POWERUPT.loadFromFile(filepath);
 	POWERUP.rectangleShape.setTexture(&POWERUPT , true);
 }
 
@@ -13,6 +13,7 @@ PowerUp::~PowerUp()
 
 void PowerUp::Update(float deltaTime)
 {
+	//cout << state << endl;
 	if (POWERUP.GetPosition().y > 1040.0f)
 		state = 0;
 	switch (state) {

@@ -2,19 +2,17 @@
 
 BlockBP::BlockBP(string filepath, string name)
 {
-	Border.SetDimensions(Vector2f(720.0f / 1.50f , 1040.0f / 1.50f));
-	Border.SetTexture("Assets/Textures/border.png");
-	Border.rectangleShape.setFillColor(Color::Yellow);
-	Border.SetOrigin(Vector2f(720.0f / 3.0f, 1040.0f / 3.0f));
-
-	font.loadFromFile("Assets/Fonts/Minecraftia.ttf");
-	DES.setFont(font);
-	DES.setString(name);
-	DES.setFillColor(Color::Red);
+	float size_x = 720.0f / 1.60f;
+	float size_y = 1040.0f / 1.60f;
+	float offset = 20.0f;
 
 	Object.SetTexture(filepath);
-	Object.SetDimensions(Vector2f(720.0f / 1.60f, 1040.0f / 1.60f));
-	Object.SetOrigin(Vector2f(720.0f / 3.20f, 1040.0f / 3.20f));
+	Object.SetDimensions(Vector2f(size_x , size_y));
+	Object.SetOrigin(Vector2f(size_x / 2.0f, size_y / 2.0f));
+
+	Border.SetDimensions(Vector2f(size_x + offset , size_y + offset));
+	Border.SetTexture("Assets/Textures/Orange.png");
+	Border.SetOrigin(Vector2f((size_x + offset) / 2.0f, (size_y + offset) / 2.0f));
 }
 
 BlockBP::~BlockBP()
@@ -25,12 +23,10 @@ void BlockBP::SetPos(Vector2f pos)
 {
 	Border.SetPosition(pos);
 	Object.SetPosition(pos);
-	DES.setPosition(pos);
 }
 
 void BlockBP::Draw(RenderWindow& window)
 {
 	Border.Draw(window);
 	Object.Draw(window);
-	window.draw(DES);
 }

@@ -9,8 +9,10 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Platform = &p;
 	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
 	Alpha = &a;
-	static PowerUp power = PowerUp();
+	static PowerUp power = PowerUp("Assets/Textures/PowerUp.png", Vector2f(19.0f * 2, 34.0f * 2));
 	Power = &power;
+	static PowerUp ci = PowerUp("Assets/Textures/Coin.png" , Vector2f(34.0f * 2, 34.0f * 2));
+	CoinP = &ci;
 	static GameObject l = GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
 	land = &l;
 	static BlockBP b = BlockBP("Assets/Textures/bgex" + std::to_string(equip) + ".png", "BOBO");
@@ -30,10 +32,8 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Logo2T.loadFromFile("Assets/Textures/DoodleLogo2.png");
 	Logo1.setTexture(Logo1T);
 	Logo2.setTexture(Logo2T);
-	FloatRect bound = Logo1.getLocalBounds();
-	Logo1.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
-	bound = Logo2.getLocalBounds();
-	Logo2.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+	SetSpriteCenter(Logo1);
+	SetSpriteCenter(Logo2);
 
 	PressT.loadFromFile("Assets/Textures/PressAnyKeyToStartGame.png");
 	Press.setTexture(PressT);
@@ -41,24 +41,38 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Press.setOrigin(Vector2f(PressT.getSize().x / 2.0f, PressT.getSize().y / 2.0f));
 
 	font.loadFromFile("Assets/Fonts/Minecraftia.ttf");
+
 	scoreText.setFont(font);
-	scoreText.setOutlineThickness(3.0f);
-	scoreText.setOutlineColor(Color::White);
+	scoreText.setOutlineThickness(2.0f);
+	scoreText.setOutlineColor(Color::Black);
 	scoreText.setCharacterSize(50);
 	scoreText.setFillColor(Color::Red);
 	scoreText.setString("Score: " + std::to_string(score));
+
 	highscoreText.setFont(font);
-	highscoreText.setOutlineThickness(3.0f);
-	highscoreText.setOutlineColor(Color::White);
+	highscoreText.setOutlineThickness(2.0f);
+	highscoreText.setOutlineColor(Color::Black);
 	highscoreText.setCharacterSize(50);
 	highscoreText.setFillColor(Color::Red);
 	highscoreText.setString("Highscore: " + std::to_string(highscore));
 
+	money.setFont(font);
+	money.setOutlineThickness(2.0f);
+	money.setOutlineColor(Color::Black);
+	money.setCharacterSize(50);
+	money.setFillColor(Color::Yellow);
+	money.setString("Money: " + std::to_string(Money));
+
 	YOUDIEDT.loadFromFile("Assets/Textures/GAMEOVER.png");
 	YOUDIED.setTexture(YOUDIEDT);
 	YOUDIED.setScale(Vector2f(10.0f, 10.0f));
-	FloatRect bound1 = YOUDIED.getLocalBounds();
-	YOUDIED.setOrigin(Vector2f(bound1.left + bound1.width / 2.0f, bound1.top + bound1.height / 2.0f));
+	SetSpriteCenter(YOUDIED);
+
+	SelectBGT.loadFromFile("Assets/Textures/SelectBG.png");
+	SelectBG.setTexture(SelectBGT);
+	SetSpriteCenter(SelectBG);
+	SelectBG.setScale(Vector2f(8.0f, 8.0f));
+	SelectBG.setPosition(Vector2f(360.0f , 100.0f));
 
 	soundB.loadFromFile("Assets/Sounds/Jump.wav");
 	sound.setBuffer(soundB);
@@ -68,6 +82,8 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	pw.setBuffer(pwB);
 	deadB.loadFromFile("Assets/Sounds/SlowedOOF.wav");
 	dead.setBuffer(deadB);
+	coinB.loadFromFile("Assets/Sounds/Pickup_Coin.wav");
+	coin.setBuffer(coinB);
 	music.setLoop(true);
 	music.setVolume(15.0f);
 	sound.setVolume(15.0f);
@@ -91,6 +107,7 @@ void Doodle::Initialize(int curlevel)
 	Platform->Initialize();
 
 	Power->state = 0;
+	CoinP->state = 0;
 
 	land_posy = 800.0f;
 	land->SetPosition(Vector2f(360, land_posy));
@@ -107,13 +124,16 @@ void Doodle::Initialize(int curlevel)
 
 	score = 0;
 	scoreText.setString("Score: " + std::to_string(score));
-	FloatRect bound = scoreText.getLocalBounds();
-	scoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+	SetTextCenter(scoreText);
 	scoreText.setPosition(Vector2f(140.0f, 60.0f));
 
+	Money = 0;
+	money.setString("Money: " + std::to_string(0));
+	SetTextCenter(money);
+	money.setPosition(Vector2f(140.0f, 120.0f));
+
 	highscoreText.setString("Highscore: " + std::to_string(highscore));
-	FloatRect bound2 = highscoreText.getLocalBounds();
-	highscoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+	SetTextCenter(highscoreText);
 	highscoreText.setPosition(Vector2f(-200.0f, 860.0f));
 	
 	difficulty = 0;
@@ -122,11 +142,9 @@ void Doodle::Initialize(int curlevel)
 	YOUDIED.setColor(Color::Color(255, 255, 255, 0));
 	FadeCnt = 0;
 
-	beta = rand() % power_range + 1;
-
 }
 
-void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curlevel)
+void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curlevel , Pet &pet)
 {
 	if (*maingame_state == 2 && !callgame) {
 		Initialize(curlevel);
@@ -160,15 +178,20 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 		{
 			score += 1;
 			scoreText.setString("Score: " + std::to_string(score / score_rate));
+			int now = score / score_rate / money_rate;
+			if (now != Money) {
+				Money = now;
+				coin.play();
+			}
+			money.setString("Money: " + std::to_string(Money + MoneyPickup));
 			difficulty = score / score_rate / difficulty_rate;
 			if (difficulty > Platform->NO_OF_PLATFORM - 1)
 				difficulty = Platform->NO_OF_PLATFORM - 1;
 			
-			if ((score / score_rate) != 0 && ((score / score_rate) + beta) % power_range == 0 && !Power->spawn) {
+			if ((score / score_rate + 10) % power_range == 0 && Power->state == 0)
 				Power->state = 1;
-				Power->spawn = true;
-			}
-			
+			if ((score / score_rate + 8) % coin_range == 0 && CoinP->state == 0)
+				CoinP->state = 1;
 		}
 
 		Alpha->dy += 20.0f ;
@@ -210,7 +233,6 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 
 			if (Power->CheckCollision(Alpha->player.GetPosition(), Alpha->player.GetSize() / 2.0f)) {
 				pw.play();
-				Power->spawn = false;
 				Power->state = 0;
 				change = max(change, 4000.0f);
 			}
@@ -221,18 +243,26 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			}
 		}
 
+		if (CoinP->CheckCollision(Alpha->player.GetPosition(), Alpha->player.GetSize() / 2.0f)) {
+			coin.play();
+			CoinP->state = 0;
+			MoneyPickup++;
+			money.setString("Money: " + std::to_string(Money + MoneyPickup));
+		}
+
 		if (Alpha->playerY > 1040)
 		{
 			dead.play();
-			FloatRect bound = scoreText.getLocalBounds();
-			scoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+			SetTextCenter(scoreText);
 			scoreText.setPosition(-200, 800);
+			money.setPosition(-200, 930);
 			gstate = 2;
 		}
 
 		float speed = (float)difficulty / (float)Platform->NO_OF_PLATFORM;
 		Alpha->Update(deltaTime, (speed * (1 - finalspeed_rate)) , curlevel);
 		Power->Update(deltaTime);
+		CoinP->Update(deltaTime);
 		land->SetPosition(360 , land_posy);
 	}
 	else if (gstate == 2) // Game Over
@@ -241,12 +271,13 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			highscore = score / score_rate;
 			highscoreText.setString("Highscore: " + std::to_string(highscore));
 		}
-		FloatRect bound = highscoreText.getLocalBounds();
-		highscoreText.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+		SetTextCenter(highscoreText);
 		if (scoreText.getPosition().x < 360.0f)
 			scoreText.move(Vector2f(500.0f, 0.0f) * deltaTime);
 		if (highscoreText.getPosition().x < 360.0f)
 			highscoreText.move(Vector2f(500.0f, 0.0f) * deltaTime);
+		if (money.getPosition().x < 360.0f)
+			money.move(Vector2f(500.0f, 0.0f) * deltaTime);
 		if (FadeCnt < 255.0f / FadeRate)
 		{
 			YOUDIED.setColor(Color::Color(255, 255, 255, FadeCnt * FadeRate));
@@ -257,10 +288,12 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			music.stop();
 			callgame = false;
 			gstate = -1;
+			pet.money += Money;
 			*maingame_state = 1;
 		}
 	}
 	else if (gstate == 3) {	// Background Customization
+		BP->SetPos(Vector2f(360.0f, 520.0f));
 		if (key["B"])
 		{
 			sound.play();
@@ -298,6 +331,18 @@ void Doodle::SetBG(string filepath)
 	}
 }
 
+void Doodle::SetSpriteCenter(Sprite& S)
+{
+	FloatRect bound = S.getLocalBounds();
+	S.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+}
+
+void Doodle::SetTextCenter(Text& T)
+{
+	FloatRect bound = T.getLocalBounds();
+	T.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+}
+
 
 void Doodle::Draw(RenderWindow &window)
 {
@@ -319,7 +364,9 @@ void Doodle::Draw(RenderWindow &window)
 	{
 		Platform->Draw(window, difficulty);
 		window.draw(scoreText);
+		window.draw(money);
 		Power->Draw(window);
+		CoinP->Draw(window);
 		Alpha->player.Draw(window);
 	}
 	if (gstate == 2)
@@ -328,11 +375,13 @@ void Doodle::Draw(RenderWindow &window)
 		window.draw(YOUDIED);
 		window.draw(scoreText);
 		window.draw(highscoreText);
+		window.draw(money);
 	}
 
 	if (gstate == 3) {
-		BP->SetPos(Vector2f(360.0f, 520.0f));
+		
 		BP->Draw(window);
+		window.draw(SelectBG);
 	}
 }
 
