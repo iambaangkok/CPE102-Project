@@ -16,11 +16,12 @@ public :
 	Doodle(int& maingame_state , Pet& pet);
 	~Doodle();
 
-	void Initialize(int curlevel);										// Call to initialize doodle 
-	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel);							// Update to GravityObject and PlatformObject
-	void Draw(RenderWindow& window);	// Draw GravityObject and PlatformObject
+	void Initialize(int curlevel);														// Call to initialize doodle 
+	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel);		// Update to GravityObject and PlatformObject
+	void Draw(RenderWindow& window);													// Draw GravityObject and PlatformObject
+	void SetBackground(string filepath);
 
-	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover
+	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover , 3 - Background Customization
 	int* maingame_state;
 	bool callgame = false;
 
@@ -29,11 +30,12 @@ public :
 	GameObject* land;
 	float land_posy;
 	PowerUp* Power;
-	BlockBP* BP;
+	
 
 	Font font;
 	Text scoreText , highscoreText;
-	vector<Sprite> background;
+	vector<Sprite> background; 
+	vector<float> background_posy;
 	Sprite Logo1, Logo2;
 	Sprite Press;
 	Sprite YOUDIED;
@@ -61,10 +63,12 @@ public :
 
 	int FadeCnt = 0;				// Fade VFX
 	float FadeRate = 2.0f;
-	
-	bool sw = false;				// Blink VFX
 
 	int beta; 
 	int power_range = 50;
+
+	int equip = 1;					// Background Customization
+	int select = 1;
+	BlockBP* BP;
 };
 

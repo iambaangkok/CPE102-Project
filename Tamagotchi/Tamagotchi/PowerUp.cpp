@@ -14,7 +14,6 @@ PowerUp::~PowerUp()
 void PowerUp::Update(float deltaTime)
 {
 	if (state != prev) {
-		cout << state;
 		prev = state;
 	}
 		
