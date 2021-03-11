@@ -519,7 +519,7 @@ void Game::Update() {
         shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
         miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
         exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
-        doodle->Update(deltaTime, keyPress, pet->currentLevel);
+        doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
 
         shop->Update(deltaTime, mouseWheelDelta);
 
