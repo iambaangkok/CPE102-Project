@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Shop.h"
 #include "Pet.h"
+#include "Doodle.h"
 #include <vector>
 using std::vector;
 class Game;
