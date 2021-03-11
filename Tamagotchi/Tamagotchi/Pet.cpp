@@ -48,7 +48,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	this->name = name;
 	this->type = type;
 	levelMax = 3;
-	if (type == "Perry") {
+	if (type == "PERRY") {
 		hpMax = vector<float>{ 100, 150, 200 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
@@ -61,7 +61,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopChangeRate = 5;
 		notEnoughFoodThreshold = 0.2f;
 	}
-	else if (type == "Dicko") {
+	else if (type == "DICKO") {
 		hpMax = vector<float>{ 100, 150, 200 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
@@ -74,7 +74,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopChangeRate = 1;
 		notEnoughFoodThreshold = 0.2f;
 	}
-	else if (type == "Crok") {
+	else if (type == "CROK") {
 		hpMax = vector<float>{ 100, 150, 200 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
@@ -87,7 +87,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopChangeRate = 5;
 		notEnoughFoodThreshold = 0.2f;
 	}
-	else if (type == "Gyoza") {
+	else if (type == "GYOZA") {
 		hpMax = vector<float>{ 100, 150, 200 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
@@ -99,6 +99,9 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		happinessChangeRate = baseHappinessChangeRate = 5;
 		poopChangeRate = 5;
 		notEnoughFoodThreshold = 0.2f;
+	}
+	else {
+		cout << "Invalid Pet Type" << endl;
 	}
 	currentLevel = 0;
 	currentHp = hpMax[currentLevel];
