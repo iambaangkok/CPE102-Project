@@ -17,6 +17,7 @@ Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
 	this->gstate = &gstate;
 	this->shop = &shop;
 	this->pet = &pet;
+	this->id = id;
 }
 //Proper Animation
 
@@ -27,7 +28,7 @@ Button::~Button() {
 void Button::Initialize() {
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition, bool &quitGame) {
+void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition, bool &quitGame, int& selectedPet) {
 	if (!enabled) {
 		return;
 	}
@@ -43,7 +44,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 	
 	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
-		OnClick(quitGame);
+		OnClick(quitGame,selectedPet);
 	}
 	else if (IsMouseOver(mousePosition)) {
 		OnHover();
@@ -59,7 +60,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 }
 
-void Button::OnClick(bool &quitGame) {
+void Button::OnClick(bool& quitGame, int& selectedPet) {
 	status = 2;
 	if (type == "MAIN") {
 		*gstate = 1;
@@ -92,6 +93,11 @@ void Button::OnClick(bool &quitGame) {
 	}
 	if (type == "ETC") {
 
+	}
+	if (type == "PETEGG") {
+		cout << "Pet ID = " << id << endl;
+		selectedPet = id;
+		*gstate = 1;
 	}
 }
 
