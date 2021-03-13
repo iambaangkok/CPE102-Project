@@ -75,12 +75,27 @@ void ParticleSystem::Update(float deltaTime) {
 		currentSpawnTime = currentSpawnTime + deltaTime;
 	}
 	for (int i = 0; i < numberOfParticle; ++i) {
-		if (currentSpawnTime > (i+1)*spawnTime) {
-			started[i] = 1;
-			//Move();
-			//currentSpawnTime = currentSpawnTime - spawnTime;
+		if (currentSpawnTime < (i + 1) * spawnTime && currentSpawnTime > (i)*spawnTime && !started[i]) {
+			started[i] = true;
+			amoutOfParticle[i].SetPosition(position);
+			totalTime[i] = lifetime;
+			float randAngle;
+			if (spread != 0) {
+				randAngle = rand() % angleDiff + minAngle;
+			}
+			else
+			{
+				randAngle = angleOngsa;
+			}
+			randedAngle[i] = randAngle;
+			angleOngsa = randedAngle[i];
+			angleRadian = angleOngsa * (3.1415926 / 180);
+			speedx = speed * cos(angleRadian);
+			speedy = speed * sin(angleRadian);
+			vectorspeedX[i] = speedx;
+			vectorspeedY[i] = speedy;
 		}
-		if (started[i] == 1) {
+		if (started[i] == true) {
 			currentParticle = i;
 			if (gravity_on == true) {
 				vectorspeedY[i] = vectorspeedY[i] + gravity * deltaTime;
@@ -89,7 +104,6 @@ void ParticleSystem::Update(float deltaTime) {
 			if (amoutOfParticle[i].GetPosition().y + amoutOfParticle[i].GetDimensions().y/2 >= floorLine) {
 				vectorspeedY[i] = 0;
 				amoutOfParticle[i].SetPosition(amoutOfParticle[i].GetPosition().x, floorLine - amoutOfParticle[i].GetDimensions().y / 2);
-
 			}
 			totalTime[i] = totalTime[i] - deltaTime;
 		}
@@ -98,31 +112,13 @@ void ParticleSystem::Update(float deltaTime) {
 	for (int i = 0; i < numberOfParticle; ++i) {
 		if (spawning_on == true) {
 			if (totalTime[i] <= 0) {
-				amoutOfParticle[i].SetPosition(position);
-				totalTime[i] = lifetime;
-				float randAngle;
-				if (spread != 0) {
-					randAngle = rand() % angleDiff + minAngle;
-				}
-				else
-				{
-					randAngle = angleOngsa;
-				}
-				randedAngle[i] = randAngle;
-				angleOngsa = randedAngle[i];
-				angleRadian = angleOngsa * (3.1415926 / 180);
-				speedx = speed * cos(angleRadian);
-				speedy = speed * sin(angleRadian);
-				vectorspeedX[i] = speedx;
-				vectorspeedY[i] = speedy;
+				started[i] = false;
 			}
 		}
-		else {
-			totalTime[i] = 0;
-			amoutOfParticle[i].SetPosition(1000,1000);
-			vectorspeedX[i] = 0;
-			vectorspeedY[i] = 0;
-		}
+	}
+
+	if (currentSpawnTime > spawnTime * numberOfParticle) {
+		currentSpawnTime -= spawnTime * numberOfParticle;
 	}
 
 }

@@ -48,5 +48,6 @@ public:
 	float gravity = 9.8;
 	bool gravity_on;
 	float floorLine;
+	bool spawning_on = true;
 };
 
