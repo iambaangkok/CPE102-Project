@@ -40,6 +40,7 @@ public:
 	int currentParticle = 0;
 	float spawnTime = 0;
 	float currentSpawnTime = 0;
+	int lastSpawnedParticle = 0;
 	vector<bool> started;
 	vector<float> vectorspeedY;
 	vector<float> vectorspeedX;

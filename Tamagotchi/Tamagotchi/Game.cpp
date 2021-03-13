@@ -241,8 +241,8 @@ void Game::LoadGame() {
     
 
 
-    static ParticleSystem bobo = ParticleSystem(10, 10, -60, 5, 10, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +100 , true);
+    static ParticleSystem bobo = ParticleSystem(20, 180, -70, 2, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , true);
     test1 = &bobo;
 
 
@@ -504,7 +504,7 @@ void Game::ReInitialize() {
 
 
 void Game::Update() {
-    cout << gameState << " ";
+    //cout << gameState << " ";
     
     test1->Update(deltaTime);
 
@@ -543,9 +543,7 @@ void Game::Update() {
                 if (gameState == 1) {
                     if (isFirstTimePlaying) {
                         isFirstTimePlaying = false;
-                        cout << "THIS1" << endl;
                         LoadGame();
-                        cout << "THIS2" << endl;
                     }
                 }
             }
@@ -631,7 +629,6 @@ void Game::Draw() {
         }
     }
     if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
-        cout << "HERE2" << endl;
 
         DrawUI(window);
         shop->Draw(window);
@@ -750,10 +747,8 @@ void Game::UpdateUI() {
     SetTextAlignment(ui_money, 640, 2);
 }
 void Game::DrawUI(RenderWindow& window) {
-    cout << "HERE3" << endl;
 
     ui_topPanel_back->Draw(window);
-    cout << "HERE4" << endl;
 
     ui_hpBar->Draw(window);
     ui_foodBar->Draw(window);

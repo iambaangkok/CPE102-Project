@@ -75,25 +75,38 @@ void ParticleSystem::Update(float deltaTime) {
 		currentSpawnTime = currentSpawnTime + deltaTime;
 	}
 	for (int i = 0; i < numberOfParticle; ++i) {
-		if (currentSpawnTime < (i + 1) * spawnTime && currentSpawnTime > (i)*spawnTime && !started[i]) {
-			started[i] = true;
-			amountOfParticle[i].SetPosition(position);
-			totalTime[i] = lifetime;
-			float randAngle;
-			if (spread != 0) {
-				randAngle = rand() % angleDiff + minAngle;
+		if (currentSpawnTime < (i + 1)* spawnTime && currentSpawnTime >(i)* spawnTime){//&& !started[i]) {//currentSpawnTime >= (i)*spawnTime && !started[i]) {
+			
+			cout << i << ": " << (i)*spawnTime << " " << currentSpawnTime << " " << (i + 1) * spawnTime << endl;
+			//cout << "STARTED" << endl;int j = i;
+			for (int j = i; j > lastSpawnedParticle && j >= 0; --j) {
+				started[j] = true;
+				amountOfParticle[j].SetPosition(position);
+				totalTime[j] = lifetime;
+				float randAngle;
+				if (spread != 0) {
+					randAngle = rand() % angleDiff + minAngle;
+				}
+				else
+				{
+					randAngle = angleDegree;
+				}
+				randedAngle[j] = randAngle;
+				angleDegree = randedAngle[j];
+				angleRadian = angleDegree * (3.1415926 / 180);
+				float speedx = speed * cos(angleRadian);
+				float speedy = speed * sin(angleRadian);
+				vectorspeedX[j] = speedx;
+				vectorspeedY[j] = speedy;
 			}
-			else
-			{
-				randAngle = angleDegree;
-			}
-			randedAngle[i] = randAngle;
-			angleDegree = randedAngle[i];
-			angleRadian = angleDegree * (3.1415926 / 180);
-			float speedx = speed * cos(angleRadian);
-			float speedy = speed * sin(angleRadian);
-			vectorspeedX[i] = speedx;
-			vectorspeedY[i] = speedy;
+			
+
+			lastSpawnedParticle = i;
+		}
+		else
+		{
+			//cout << "" << endl;
+
 		}
 		if (started[i] == true) {
 			currentParticle = i;
