@@ -6,11 +6,11 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 , Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, float floorLine, bool gravity_on) {
 	this->rate = rate;
 	this->spread = spread;
-	this->angleOngsa = angleOngsa;
+	this->angleDegree = angleOngsa;
 
-	while (this->angleOngsa > 360)
+	while (this->angleDegree > 360)
 	{
-		this->angleOngsa = this->angleOngsa - 360;
+		this->angleDegree = this->angleDegree - 360;
 	}
 	this->lifetime = lifetime;
 	this->speed = speed;
@@ -38,7 +38,7 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	angleDiff = maxAngle - minAngle;
 
 	for (int i = 0; i < numberOfParticle; ++i) {
-		amoutOfParticle.push_back(emitter);
+		amountOfParticle.push_back(emitter);
 		float randAngle;
 		if (spread != 0) {
 			randAngle = rand() % angleDiff + minAngle;
@@ -62,8 +62,8 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	{
 		angleOngsa = randedAngle[i];
 		angleRadian = angleOngsa * (3.1415926 / 180);
-		speedx = speed * cos(angleRadian);
-		speedy = speed * sin(angleRadian);
+		float speedx = speed * cos(angleRadian);
+		float speedy = speed * sin(angleRadian);
 		vectorspeedX.push_back(speedx);
 		vectorspeedY.push_back(speedy);
 	}
@@ -77,7 +77,7 @@ void ParticleSystem::Update(float deltaTime) {
 	for (int i = 0; i < numberOfParticle; ++i) {
 		if (currentSpawnTime < (i + 1) * spawnTime && currentSpawnTime > (i)*spawnTime && !started[i]) {
 			started[i] = true;
-			amoutOfParticle[i].SetPosition(position);
+			amountOfParticle[i].SetPosition(position);
 			totalTime[i] = lifetime;
 			float randAngle;
 			if (spread != 0) {
@@ -85,13 +85,13 @@ void ParticleSystem::Update(float deltaTime) {
 			}
 			else
 			{
-				randAngle = angleOngsa;
+				randAngle = angleDegree;
 			}
 			randedAngle[i] = randAngle;
-			angleOngsa = randedAngle[i];
-			angleRadian = angleOngsa * (3.1415926 / 180);
-			speedx = speed * cos(angleRadian);
-			speedy = speed * sin(angleRadian);
+			angleDegree = randedAngle[i];
+			angleRadian = angleDegree * (3.1415926 / 180);
+			float speedx = speed * cos(angleRadian);
+			float speedy = speed * sin(angleRadian);
 			vectorspeedX[i] = speedx;
 			vectorspeedY[i] = speedy;
 		}
@@ -101,9 +101,9 @@ void ParticleSystem::Update(float deltaTime) {
 				vectorspeedY[i] = vectorspeedY[i] + gravity * deltaTime;
 			}
 			Move();
-			if (amoutOfParticle[i].GetPosition().y + amoutOfParticle[i].GetDimensions().y/2 >= floorLine) {
+			if (amountOfParticle[i].GetPosition().y + amountOfParticle[i].GetDimensions().y/2 >= floorLine) {
 				vectorspeedY[i] = 0;
-				amoutOfParticle[i].SetPosition(amoutOfParticle[i].GetPosition().x, floorLine - amoutOfParticle[i].GetDimensions().y / 2);
+				amountOfParticle[i].SetPosition(amountOfParticle[i].GetPosition().x, floorLine - amountOfParticle[i].GetDimensions().y / 2);
 			}
 			totalTime[i] = totalTime[i] - deltaTime;
 		}
@@ -127,7 +127,7 @@ void ParticleSystem::Draw(RenderWindow& window) {
 
 	for (int i = 0; i < numberOfParticle; ++i) {
 			if (started[i] == 1) {
-				amoutOfParticle[i].Draw(window);
+				amountOfParticle[i].Draw(window);
 			}
 	}
 	
@@ -136,11 +136,10 @@ void ParticleSystem::Draw(RenderWindow& window) {
 }
 
 void ParticleSystem::Move() {
-		amoutOfParticle[currentParticle].Move(vectorspeedX[currentParticle], vectorspeedY[currentParticle]);
-		if(currentParticle < numberOfParticle){
+	amountOfParticle[currentParticle].Move(vectorspeedX[currentParticle], vectorspeedY[currentParticle]);
+	if(currentParticle < numberOfParticle){
 			currentParticle++;
 	}
-		
 }
 
 ParticleSystem::~ParticleSystem() {
