@@ -8,7 +8,7 @@ Button::Button() {
 
 Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
     string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime
-    ,string text, int status, string type,int &gstate,Shop &shop,Pet &pet,int id)
+    ,string text, int status, string type,int &gstate,Shop &shop,Pet &pet,Doodle &doodle,int id)
     : GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
     this->text = text;
@@ -17,7 +17,9 @@ Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
 	this->gstate = &gstate;
 	this->shop = &shop;
 	this->pet = &pet;
+	this->doodle = &doodle;
 	this->id = id;
+	
 }
 //Proper Animation
 
@@ -65,11 +67,11 @@ void Button::OnClick(bool& quitGame, int& selectedPet) {
 	if (type == "MAIN") {
 		*gstate = 1;
 	}
-	else if (type == "SHOP") {
+	if (type == "SHOP") {
 		if (shop->isOpen == false) shop->isOpen = true;
 		else shop->isOpen = false;
 	}
-	else if (type == "MINIGAME") {
+	if (type == "MINIGAME") {
 		if (*gstate == 1) {
 			*gstate = 2;
 		}
@@ -77,7 +79,7 @@ void Button::OnClick(bool& quitGame, int& selectedPet) {
 			*gstate = 1;
 		}
 	}
-	else if (type == "SETTING") {
+	if (type == "SETTING") {
 		*gstate = 3;
 	}
 	if (type == "BUYITEM" && pet->money >= shop->items[id-1].price) {
@@ -98,6 +100,27 @@ void Button::OnClick(bool& quitGame, int& selectedPet) {
 		cout << "Pet ID = " << id << endl;
 		selectedPet = id;
 		*gstate = 1;
+	}
+	if (type == "STARTDOODLE") {
+
+	}
+	if (type == "EXITDOODLE") {
+
+	}
+	if (type == "CHOOSEBG") {
+
+	}
+	if (type == "LEFTDOODLE") {
+
+	}
+	if (type == "RIGHTDOODLE") {
+
+	}
+	if (type == "BACKDOODLE") {
+
+	}
+	if (type == "SELECTBG") {
+
 	}
 }
 

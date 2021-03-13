@@ -4,7 +4,7 @@
 class PowerUp
 {
 public :
-	PowerUp();
+	PowerUp(string filepath , Vector2f size);
 	~PowerUp();
 
 	void Update(float deltaTime);
@@ -16,8 +16,6 @@ public :
 
 	int posx;
 	
-
-	bool spawn = false;
 	int state = 0;
 	int prev = 0;
 };

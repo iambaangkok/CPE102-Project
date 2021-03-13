@@ -12,7 +12,6 @@ public :
 	void Draw(RenderWindow &window);
 
 	GameObject Border , Object ;
-	Text DES;
 	Font font;
 };
 
