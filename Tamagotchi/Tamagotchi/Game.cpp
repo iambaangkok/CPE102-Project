@@ -241,8 +241,8 @@ void Game::LoadGame() {
     
 
 
-    static ParticleSystem bobo = ParticleSystem(3, 30, 60, 10, 10, Vector2f(100, 100), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f);
+    static ParticleSystem bobo = ParticleSystem(10, 10, -60, 5, 10, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +100 , true);
     test1 = &bobo;
 
 

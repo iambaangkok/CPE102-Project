@@ -16,7 +16,7 @@ class ParticleSystem
 public:
 	ParticleSystem();
 	ParticleSystem(float rate, float spread, float angleOngsa, float lifetime, float speed
-	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime);
+	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, float floorLine, bool gravity_on = true);
 	~ParticleSystem();
 	void Initialize();
 	void Update(float deltaTime);
@@ -43,5 +43,10 @@ public:
 	vector<bool> started;
 	float speedx; //speed in x.
 	float speedy; //speed in y.
+	vector<float> vectorspeedY;
+	vector<float> vectorspeedX;
+	float gravity = 9.8;
+	bool gravity_on;
+	float floorLine;
 };
 
