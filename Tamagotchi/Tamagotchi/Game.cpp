@@ -467,6 +467,7 @@ void Game::SaveGame() {
 
 void Game::StartGameLoop() {
     LoadGame();
+    deltaTime = clock.restart().asSeconds();
 	while (window.isOpen()) {
 		ReInitialize();
 		GetInput();
@@ -507,7 +508,9 @@ void Game::Update() {
     
     test1->Update(deltaTime);
 
-    
+    if (keyPress["G"]) {
+        test1->spawning_on = !test1->spawning_on;
+    }
 
     if (gameState == 0 || gameState == -1) {
         titlePanel->speed.x = titlePanelSpeed;
