@@ -151,7 +151,10 @@ public:
 		{"Assets/Sounds/Pet/pet_walk_02.wav", sfxVolume },
 		{"Assets/Sounds/Pet/pet_walk_03.wav", sfxVolume },
 		{"Assets/Sounds/Pet/pet_jump.wav", sfxVolume },
-		{"Assets/Sounds/Pet/pet_land_onground.wav", sfxVolume }
+		{"Assets/Sounds/Pet/pet_land_onground.wav", sfxVolume },
+		{"Assets/Sounds/Pet/pet_fart01.wav", sfxVolume},
+		{"Assets/Sounds/Pet/pet_fart02.wav", sfxVolume},
+		{"Assets/Sounds/Pet/pet_fart03.wav", sfxVolume}
 	};
 	
 	

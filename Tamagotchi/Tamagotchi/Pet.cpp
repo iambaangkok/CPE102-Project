@@ -80,7 +80,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
 		foodMax = vector<float>{ 100, 120, 140 };
-		poopMax = vector<float>{ 80, 90, 100 };
+		poopMax = vector<float>{ 20, 90, 100 };
 		hpChangeRate = 5;
 		expChangeRate = 5;
 		foodChangeMultiplier = 5;
@@ -466,6 +466,7 @@ bool Pet::CanPoop() {
 Poop* Pet::CreatePoop() {
 	Poop* newPoop = new Poop(GetPosition(), Vector2f(110*0.7, 80*0.7), true, "Assets/Textures/pet_poop.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10, 5, shadow->GetPosition().y);
 	currentPoop = 0;
+	sfx[rand() % 3 + 5].play();
 	return newPoop;
 }
 

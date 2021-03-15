@@ -11,6 +11,18 @@ Poop::Poop(Vector2f position, Vector2f dimensions, bool originIsCenter,
 	this->nClickToDestroy = nClickToDestroy;
 	this->floorLine = floorLine;
 	price = rand() % priceRange + startingPrice;
+
+	soundBuffers = vector<SoundBuffer>(sfxVariables.size(), SoundBuffer());
+	for (int i = 0; i < sfxVariables.size(); ++i) {
+		if (soundBuffers[i].loadFromFile(sfxVariables[i].filePath)) {
+			cout << "Loaded SFX " << sfxVariables[i].filePath << endl;
+		}
+		else {
+			cout << "Failed to load SFX " << sfxVariables[i].filePath << endl;
+		}
+		sfx.push_back(Sound(soundBuffers[i]));
+		sfx[i].setVolume(sfxVariables[i].volume);
+	}
 }
 
 Poop::~Poop(){}
@@ -62,6 +74,7 @@ void Poop::Update(float deltaTime, RenderWindow& window, unordered_map<string, b
 
 void Poop::OnClick() {
 	nClickToDestroy--;
+	sfx[0].play();
 }
 
 void Poop::OnHover() {
