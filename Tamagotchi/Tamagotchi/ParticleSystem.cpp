@@ -55,6 +55,7 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	spawnTime = 1/rate;
 	currentParticle = 0;
 	currentSpawnTime = 0;
+	loopCount = 0;
 
 
 	
