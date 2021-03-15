@@ -57,7 +57,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<float>{ 60, 80, 100 };
 		hpChangeRate = 0.02;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.02;
+		foodChangeRate = 0.1;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -70,7 +70,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<float>{ 80, 90, 100 };
 		hpChangeRate = 0.02;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.02;
+		foodChangeRate = 0.1;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -83,7 +83,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<float>{ 30, 25, 20 };
 		hpChangeRate = 0.02;
 		expChangeRate = 0.02;
-		foodChangeMultiplier = 0.02;
+		foodChangeRate = 0.1;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -94,7 +94,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		happinessMax = vector<float>{ 100, 120, 140 };
 		foodMax = vector<float>{ 50, 60, 70 };
 		poopMax = vector<float>{ 50, 80, 100 };
-		hpChangeRate = 0.1;
+		hpChangeRate = 0.2;
 		expChangeRate = 0.1;
 		foodChangeRate = 0.1;
 		happinessChangeRate = baseHappinessChangeRate = 0.1;
@@ -137,6 +137,7 @@ void Pet::Initialize() {
 	speed = Vector2f(0, 0);
 	mouseIsOver = false;
 	happinessChangeRate = baseHappinessChangeRate;
+	evolveButtonClicked = false;
 }
 
 
@@ -213,12 +214,13 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			currentLevel -= 1;
 			Clamp(&currentLevel, 2, 0);
 		}
-		if (keyHold["Q"] && keyHold["W"] && keyHold["E"] && keyHold["R"]) {
-			currentPoop = poopMax[currentLevel] - 5;
+		if (keyPress["R"]) {
+			currentPoop = poopMax[currentLevel] - 0.5;
 		}
-		if (keyHold["A"] && keyHold["S"] && keyHold["D"] && keyHold["F"]) {
-			currentExp = expPerEvolve[currentLevel] - 5;
+		if (keyPress["F"]) {
+			currentExp = expPerEvolve[currentLevel] - 0.5;
 		}
+		
 		if (mouseHold["M1"]) {
 			if (mouseIsOver) {
 				if (!isDraggedByMouse) {
@@ -398,6 +400,15 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		Clamp(&currentExp, expPerEvolve[currentLevel], 0.0f);
 		Clamp(&currentFood, foodMax[currentLevel], 0.0f);
 		Clamp(&currentPoop, poopMax[currentLevel], 0.0f);
+
+		if (currentExp >= expPerEvolve[currentLevel] && ateEvolveStone && evolveButtonClicked ) {
+			currentLevel += 1;
+			if (currentLevel > 2) {
+				currentLevel = 2;
+			}
+			currentExp = 0;
+			ateEvolveStone = false;
+		}
 
 		isMoving = (speed != Vector2f(0, 0));
 		//cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
