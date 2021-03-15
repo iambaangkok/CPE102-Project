@@ -240,9 +240,9 @@ void Game::LoadGame() {
     
     
 
-    static ParticleSystem bobo = ParticleSystem(20, 180, -70, 2, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , true);
-    test1 = &bobo;
+    test1.push_back(new ParticleSystem(20, 180, -70, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , 3, true, true));
+
 
 
     if (pet != NULL) {
@@ -518,11 +518,15 @@ void Game::ReInitialize() {
 
 void Game::Update() {
     //cout << gameState << " ";
-    
-    test1->Update(deltaTime);
+    for(int i = 0; i < test1.size() ; ++i){
+        if (test1[i]->Update(deltaTime)) {
+            DeleteParticle(i);
+        }
+    }
 
     if (keyPress["G"]) {
-        test1->spawning_on = !test1->spawning_on;
+        for (int i = 0; i < test1.size(); ++i) 
+            test1[i]->spawning_on = !test1[i]->spawning_on;
     }
 
     if (gameState == 0 || gameState == -1) {
@@ -683,9 +687,14 @@ void Game::Draw() {
         doodle->Draw(window);
 
     }
+    for (int i = 0; i < test1.size(); ++i) {
+        if (test1[i]) {
+            cout << "HERE1";
+            test1[i]->Draw(window);
+            cout << "HERE2";
+        }
+    }
     
-    
-    test1->Draw(window);
 
     window.draw(fpsText);
 
@@ -814,6 +823,12 @@ void Game::DeletePoop(int index) {
     pet->money += poops[index]->price;
     delete poops[index];
     poops.erase(poops.begin() + index);
+}
+
+void Game::DeleteParticle(int index)
+{
+    delete test1[index];
+    test1.erase(test1.begin() + index);
 }
 
 void Game::GetInput() {

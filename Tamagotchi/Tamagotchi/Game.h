@@ -62,7 +62,7 @@ public:
 
     bool CheckPoopIntegrity(int index); //Returns true if poop should be deleted
     void DeletePoop(int index);
-
+    void DeleteParticle(int index);
     void SetTextUI(Text& text, string str, Font& font, Color color, int size, Vector2f position = Vector2f(720/2,1040/2));
     void SetTextAlignment(Text& text, float anchorPositionX, int alignment); // alignment: 0 = left, 1 = right, 2 = middle
 
@@ -78,7 +78,7 @@ public:
 
 
     /// Testing
-    ParticleSystem* test1;
+    vector<ParticleSystem*> test1;
    
     /// Pet
     Pet* pet;
