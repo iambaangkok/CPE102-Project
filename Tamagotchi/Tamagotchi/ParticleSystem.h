@@ -48,5 +48,6 @@ public:
 	bool gravity_on;
 	float floorLine;
 	bool spawning_on = true;
+	int loopCount;
 };
 
