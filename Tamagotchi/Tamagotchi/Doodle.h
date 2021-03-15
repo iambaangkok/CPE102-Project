@@ -32,7 +32,7 @@ public :
 	GameObject* land;
 	float land_posy;
 	PowerUp* Power , * CoinP;
-	
+
 	Font font;
 	Text scoreText , highscoreText , money;
 	vector<Sprite> background; 

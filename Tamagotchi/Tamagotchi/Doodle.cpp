@@ -5,6 +5,7 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 {
 	
 	this->maingame_state = &maingame_state;
+
 	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 8, "Assets/Textures/platform2.png");
 	Platform = &p;
 	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
@@ -144,6 +145,7 @@ void Doodle::Initialize(int curlevel)
 	scoreText.setPosition(Vector2f(140.0f, 60.0f));
 
 	Money = 0;
+	MoneyPickup = 0;
 	money.setString("Money: " + std::to_string(0));
 	SetTextCenter(money);
 	money.setPosition(Vector2f(140.0f, 120.0f));
@@ -304,7 +306,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			music.stop();
 			callgame = false;
 			gstate = -1;
-			pet.money += Money;
+			pet.money += Money + MoneyPickup;
 			*maingame_state = 1;
 		}
 	}
