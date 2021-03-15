@@ -111,10 +111,11 @@ void Animation::Update(Vector2i start, Vector2i finish, float deltaTime, bool fa
     }*/
 }
 
-void Animation::Update(float deltaTime) {
+bool Animation::Update(float deltaTime) {
     if (!enabled) {
-        return;
+        return false;
     }
+    bool changedFrame = false;
     //cout << deltaTime << endl;
     Vector2i start = startFrame;
     Vector2i finish = finishFrame;
@@ -139,8 +140,6 @@ void Animation::Update(float deltaTime) {
                 currentImage.y = start.y;
             }
             else {
-
-
                 if (currentImage.x >= finishU.x) {
                     currentImage.y++;
                     if (currentImage.y >= finishU.y) {
@@ -152,22 +151,22 @@ void Animation::Update(float deltaTime) {
                     }
                 }
             }
-
+            changedFrame = true;
         }
         uvRect.left = currentImage.x * uvRect.width;
         uvRect.top = currentImage.y * uvRect.height;
     }
 
+    return changedFrame;
 }
+
 
 void Animation::SetFrameTime(float frameTime) {
     this->frameTime = frameTime;
 }
-
 void Animation::SetTexture(Texture* texture) {
     
 }
-
 void Animation::SetFrame(Vector2i imageCoordinate) {
     currentImage.x = imageCoordinate.x;
     currentImage.y = imageCoordinate.y;
@@ -180,7 +179,6 @@ void Animation::SetFrame(int x, int y) {
     uvRect.left = currentImage.x * uvRect.width;
     uvRect.top = currentImage.y * uvRect.height;
 }
-
 void Animation::SetStartFrame(Vector2i start) {
     if (start.y > finishFrame.y ||
         (start.y == finishFrame.y && start.x > finishFrame.x)) {
@@ -190,7 +188,6 @@ void Animation::SetStartFrame(Vector2i start) {
     
     startFrame = start;
 }
-
 void Animation::SetStartFrame(int x, int y) {
     if (y > finishFrame.y ||
         (y == finishFrame.y && x > finishFrame.x)) {
@@ -200,7 +197,6 @@ void Animation::SetStartFrame(int x, int y) {
 
     startFrame = Vector2i(x,y);
 }
-
 void Animation::SetFinishFrame(Vector2i finish) {
     if (startFrame.y > finish.y ||
         (startFrame.y == finish.y && startFrame.x > finish.x)) {
@@ -210,7 +206,6 @@ void Animation::SetFinishFrame(Vector2i finish) {
 
     finishFrame = finish;
 }
-
 void Animation::SetFinishFrame(int x, int y) {
     if (startFrame.y > y ||
         (startFrame.y == y && startFrame.x > x)) {
@@ -220,7 +215,6 @@ void Animation::SetFinishFrame(int x, int y) {
 
     finishFrame = Vector2i(x,y);
 }
-
 void Animation::SetStartFinishFrame(int sx, int sy, int fx, int fy) {
     if (sy > fy ||
         (sy == fy && sx > fx)) {
@@ -232,8 +226,6 @@ void Animation::SetStartFinishFrame(int sx, int sy, int fx, int fy) {
     startFrame = Vector2i(sx, sy);
     finishFrame = Vector2i(fx, fy);
 }
-
-
 void Animation::SetImageCount(Texture& texture,Vector2u imageCount) {
     this->imageCount = imageCount;
 

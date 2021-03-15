@@ -77,7 +77,7 @@ void ParticleSystem::Update(float deltaTime) {
 	for (int i = 0; i < numberOfParticle; ++i) {
 		if (currentSpawnTime < (i + 1)* spawnTime && currentSpawnTime >(i)* spawnTime){//&& !started[i]) {//currentSpawnTime >= (i)*spawnTime && !started[i]) {
 			
-			cout << i << ": " << (i)*spawnTime << " " << currentSpawnTime << " " << (i + 1) * spawnTime << endl;
+			//cout << i << ": " << (i)*spawnTime << " " << currentSpawnTime << " " << (i + 1) * spawnTime << endl;
 			//cout << "STARTED" << endl;int j = i;
 			for (int j = i; j > lastSpawnedParticle && j >= 0; --j) {
 				started[j] = true;

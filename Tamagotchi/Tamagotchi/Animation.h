@@ -14,7 +14,7 @@ public:
 
     void Update(int row, float deltaTime, bool faceRight = true);//1Row Animation
     void Update(Vector2i start, Vector2i finish,float deltaTime,bool faceRight = true);//Proper Animation
-    void Update(float deltaTime);
+    bool Update(float deltaTime);
 
     void SetFrameTime(float frameTime);
     void SetTexture(Texture* texture);

@@ -239,7 +239,7 @@ void Game::LoadGame() {
     }
     saveFile.close();
     
-
+    
 
     static ParticleSystem bobo = ParticleSystem(20, 180, -70, 2, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , true);
@@ -442,8 +442,22 @@ void Game::LoadGame() {
         fpsText.setCharacterSize(16);
         fpsText.setPosition(windowWidth - 40, 10);
     }
-    
 
+    if (soundBuffers.size() == 0) {
+        soundBuffers = vector<SoundBuffer>(bgmVariables.size(), SoundBuffer());
+        for (int i = 0; i < bgmVariables.size(); ++i) {
+            if (soundBuffers[i].loadFromFile(bgmVariables[i].filePath)) {
+                cout << "Loaded BGM " << bgmVariables[i].filePath << endl;
+            }
+            else {
+                cout << "Failed to load BGM " << bgmVariables[i].filePath << endl;
+            }
+        }
+        currentBgm = rand() % bgmVariables.size();
+        PlaySound(bgm, currentBgm);
+    }
+    
+    deltaTime = clock.restart().asSeconds();
 }
 void Game::SaveGame() {
     ofstream saveFile("Savefiles/save001.sav");
@@ -467,7 +481,7 @@ void Game::SaveGame() {
 
 void Game::StartGameLoop() {
     LoadGame();
-    deltaTime = clock.restart().asSeconds();
+    
 	while (window.isOpen()) {
 		ReInitialize();
 		GetInput();
@@ -597,7 +611,13 @@ void Game::Update() {
     fpsText.setString(fpsString);
     
 
-
+    if (bgm.getStatus() != SoundSource::Status::Playing) {
+        currentBgm++;
+        if (currentBgm >= bgmVariables.size()) {
+            currentBgm = 0;
+        }
+        PlaySound(bgm, currentBgm, "BGM");
+    }
 
     //cout << deltaTime << " " << fps << endl;
 }
@@ -1037,4 +1057,11 @@ void Game::SetTextAlignment(Text& text, float anchorPositionX, int alignment) {
     }
     
 
+}
+
+void Game::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
+    cout << "Playing " << type << " : " << soundBufferIndex << endl;
+    soundPlayer.setVolume(bgmVariables[soundBufferIndex].volume);
+    soundPlayer.setBuffer(soundBuffers[soundBufferIndex]);
+    soundPlayer.play();
 }
