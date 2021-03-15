@@ -23,6 +23,8 @@ public:
 		string name);
 	
 	~Item();
+
+	void Update(float deltaTime);
 	
 	void UseItem(Pet *pet);
 

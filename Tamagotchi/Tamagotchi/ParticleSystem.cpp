@@ -13,8 +13,9 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 		this->angleDegree = this->angleDegree - 360;
 	}
 	this->lifetime = lifetime;
-	this->speed = speed;
-	this->position = position;
+
+
+	
 	this->gravity_on = gravity_on;
 	this->floorLine = floorLine;
 	static GameObject emitter = GameObject(position, dimensions, true, texturePath

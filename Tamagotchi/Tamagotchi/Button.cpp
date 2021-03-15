@@ -55,7 +55,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 		status = 0;
 	}
 
-	if (type == "BUYITEM" && pet->money < shop->items[id - 1].price) status = 3;
+	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 3;
 
 	animation.SetFrame(Vector2i(status, 0));
 
@@ -82,9 +82,9 @@ void Button::OnClick(bool& quitGame, int& selectedPet) {
 	if (type == "SETTING") {
 		*gstate = 3;
 	}
-	if (type == "BUYITEM" && pet->money >= shop->items[id-1].price) {
-		pet->money -= shop->items[id - 1].price;
-		shop->items[id-1].UseItem(pet);
+	if (type == "BUYITEM" && pet->money >= shop->items[id-1]->price) {
+		pet->money -= shop->items[id - 1]->price;
+		shop->items[id-1]->UseItem(pet);
 	}
 	if (type == "EXIT") quitGame = true;
 	if (type == "MAINDISH") {

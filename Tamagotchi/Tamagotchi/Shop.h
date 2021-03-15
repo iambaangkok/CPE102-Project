@@ -22,7 +22,7 @@ public:
 	void Initialize();
 	void Update(float deltaTime,int mouseWheelDelta );
 	void Draw(RenderWindow &window);
-
+	void AddItem(string,string);
 
 	float speedscroll = 600;
 	bool isOpen = true;
@@ -34,7 +34,8 @@ public:
 	int heightscrollbar = 150;
 	int corePosition = 310;
 	Vector2f position = Vector2f(0,0);
-	vector<Item> items;
+	Item* test1;
+	vector<Item*> items;
 	vector<Text> descriptions;
 	vector<Text> prices;
 	GameObject* bg;
