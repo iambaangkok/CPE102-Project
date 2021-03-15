@@ -4,6 +4,7 @@
 #include <ctime>  
 #include <vector>
 #include <unordered_map>
+#include <SFML/Audio.hpp>
 #include "GameObject.h"
 #include "Item.h"
 #include "Poop.h"
@@ -46,15 +47,18 @@ public:
 
 	bool IsMouseOver(Vector2i& mousePosition);
 
-	
 
-	//all time in seconds
+	///Time Related Variables: all time in seconds
 	long long int time_sinceBirth = 0;
 	long long int time_lastSession = 0;
 	long long int time_sinceLastSession = 0;
 	long long int time_currentSession = 0;
 	long long int time_currentTime_sinceEpoch = 0;
 	long long int time_alive = 0;
+
+	///Stats
+	float totalTime = 0;
+	int tickTime = 1;
 
 	bool isAlive = true;
 	int money = 0;
@@ -67,54 +71,14 @@ public:
 	float currentFood = 0;
 	float currentPoop = 0;
 
+	bool ateEvolveStone = false;
+
 	float hpChangeRateMultiplier = 1.0f;
 	float expChangeMultiplier = 1.0f;
 	float foodChangeMultiplier = 1.0f;
 	float happinessPoint = 1.0f;
 	float happinessChangeMultiplier = 1.0f;
 	float poopChangeMultiplier = 1.0f;
-
-	bool ateEvolveStone = false;
-
-	Vector2f speed = Vector2f(0,0);
-	Vector2f maxSpeed = Vector2f(125,125);
-	float runSpeedMultiplier = 1.75f;
-	bool isMoving = false;
-
-	float randomMovementInterval = 5;
-	float randomMovementIntervalTime = 0;
-	float randomMovementMoveTime = 1;
-	float randomMovementMoveTotalTime = 0;
-	bool isRandomlyMoving = false;
-	Vector2f randomMoveSpeed = Vector2f(0, 0);
-
-	GameObject* shadow;
-	float shadowNormalYOffset = 50;
-	float shadowYOffset = shadowNormalYOffset;
-	vector<GameObject> shadowBorder; //0 = right, 1 = left, 2 = bottom, 3 = top
-
-	float gravity = 9.8f * 300/2;
-	float jumpAcceleration = 100 * 10/1.5; //- x speedY;
-	float shadowYOffsetSpeed = 0;
-	bool isInAir;
-
-	bool mouseIsOver = false;
-	bool isDraggedByMouse = false;
-	Vector2f mousePositionRelativeToPet = Vector2f(0, 0);
-
-	Vector2f lastFramePosition = Vector2f(0, 0);
-	Vector2f deltaPosition = Vector2f(0, 0);
-	Vector2f throwSpeed = Vector2f(0, 0);
-	float windResistance = 120/2; // same as gravity but in x
-
-
-
-//vector<Item>  inventory;
-
-
-//private:
-	float totalTime = 0;
-	int tickTime = 1;
 
 	int levelMax = 0;
 	vector<float> hpMax; //HP
@@ -123,16 +87,69 @@ public:
 	vector<float> foodMax; //Food
 	vector<float> poopMax; //Poop
 
-	//All Rate are at 1 per X tickTime(seconds);
+	//All Rate are at X per Y tickTime(default to 1 seconds);
 	float hpChangeRate = 1;
 	float expChangeRate = 1;
 	float foodChangeRate = 1;
 	float happinessChangeRate = 1;
 	float baseHappinessChangeRate = 1;
 	float poopChangeRate = 1;
-	
-	
+
 	float notEnoughFoodThreshold = 0.2f; //If Food is BELOW currentFood * this multiplier, HP , Happiness , starts to decay
+
+
+	///Moving
+	Vector2f speed = Vector2f(0,0);
+	Vector2f maxSpeed = Vector2f(125,125);
+	float runSpeedMultiplier = 1.75f;
+	bool isMoving = false;
+
+	///Random Movement
+	float randomMovementInterval = 5;
+	float randomMovementIntervalTime = 0;
+	float randomMovementMoveTime = 1;
+	float randomMovementMoveTotalTime = 0;
+	bool isRandomlyMoving = false;
+	Vector2f randomMoveSpeed = Vector2f(0, 0);
+
+	///Shadow
+	GameObject* shadow;
+	float shadowNormalYOffset = 50;
+	float shadowYOffset = shadowNormalYOffset;
+	vector<GameObject> shadowBorder; //0 = right, 1 = left, 2 = bottom, 3 = top
+
+	///Jumping
+	float gravity = 9.8f * 300/2;
+	float jumpAcceleration = 100 * 10/1.5; //- x speedY;
+	float shadowYOffsetSpeed = 0;
+	bool isInAir = false;
+	bool isInAirLastFrame = false;
+
+	///Dragging
+	bool mouseIsOver = false;
+	bool isDraggedByMouse = false;
+	Vector2f mousePositionRelativeToPet = Vector2f(0, 0);
+	Vector2f lastFramePosition = Vector2f(0, 0);
+	Vector2f deltaPosition = Vector2f(0, 0);
+	Vector2f throwSpeed = Vector2f(0, 0);
+	float windResistance = 120/2; // same as gravity but in x
+
+	///Sound
+	vector<Sound> sounds;
+	vector<SoundBuffer> soundBuffers;
+	struct SoundVariables {
+		string filePath = "";
+		float volume = 15.0f;
+	};
+	vector<SoundVariables> soundVariables = {
+		{"Assets/Sounds/Pet/pet_walk_01.wav", 10 },
+		{"Assets/Sounds/Pet/pet_walk_02.wav", 10 },
+		{"Assets/Sounds/Pet/pet_walk_03.wav", 10 },
+		{"Assets/Sounds/Pet/pet_jump.wav", 10 },
+		{"Assets/Sounds/Pet/pet_land_onground.wav", 10 }
+	};
+	
+	
 
 };
 
