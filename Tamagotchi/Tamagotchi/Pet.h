@@ -76,6 +76,7 @@ public:
 	float currentPoop = 0;
 
 	bool ateEvolveStone = false;
+	bool evolveButtonClicked = false;
 
 	float hpChangeRateMultiplier = 1.0f;
 	float expChangeMultiplier = 1.0f;
