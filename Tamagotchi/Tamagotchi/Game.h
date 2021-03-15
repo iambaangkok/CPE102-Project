@@ -47,8 +47,10 @@ public:
     Game(RenderWindow& mainWindow);
     ~Game();
 
+    void LoadPetEgg();
     void LoadGame();
     void SaveGame();
+    void ClearSave();
     void StartGameLoop();
     void ReInitialize();
     void GetInput();
@@ -205,7 +207,12 @@ public:
     
 
     /// System variables
+    bool muteBgm = false;
+    bool muteSfx = false;
+
+    bool clearSave = false;
     bool quitGame = false;
+
     int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump, -1 = first time playing
     
     int windowWidth = 720;
