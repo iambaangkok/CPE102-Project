@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -46,8 +47,10 @@ public:
     Game(RenderWindow& mainWindow);
     ~Game();
 
+    void LoadPetEgg();
     void LoadGame();
     void SaveGame();
+    void ClearSave();
     void StartGameLoop();
     void ReInitialize();
     void GetInput();
@@ -61,7 +64,7 @@ public:
 
     bool CheckPoopIntegrity(int index); //Returns true if poop should be deleted
     void DeletePoop(int index);
-
+    void DeleteParticle(int index);
     void SetTextUI(Text& text, string str, Font& font, Color color, int size, Vector2f position = Vector2f(720/2,1040/2));
     void SetTextAlignment(Text& text, float anchorPositionX, int alignment); // alignment: 0 = left, 1 = right, 2 = middle
 
@@ -72,8 +75,12 @@ public:
 
     void ResetKeyboard();
     void ResetMouse();
-    
-    ParticleSystem* test1;
+
+    void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "BGM");
+
+
+    /// Testing
+    vector<ParticleSystem*> test1;
    
     /// Pet
     Pet* pet;
@@ -155,7 +162,22 @@ public:
     Button* selectBut;
     Doodle* doodle;
 
-    
+
+    ///Sound
+    Sound bgm;
+    int currentBgm = 0;
+    struct SoundVariables {
+        string filePath = "";
+        float volume = 15.0f;
+    };
+    float bgmVolume = 12;
+    vector<SoundBuffer> soundBuffers;
+    vector<SoundVariables> bgmVariables = {
+        {"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },
+        {"Assets/Sounds/BGM/bgm_alonelycherrytree.wav", bgmVolume },
+        {"Assets/Sounds/BGM/bgm_mybestfriendisadog.wav", bgmVolume }
+        //{"Assets/Sounds/BGM/bgm_otherworld.wav", bgmVolume }
+    };
     
 
     /// Miscellaneous
@@ -174,8 +196,6 @@ public:
     float titlePanelHeight = ceil((float)(titlePanelWidth * 250 / 640)/10) * 10;
     GameObject* titlePanel;
 
-    
-
     float pressAnyKeyToStartBlinkTime = 1.5f; //x seconds;
     float pressAnyKeyToStartBlinkTotalTime = 0;
     bool pressAnyKeyToStartIsShown = false;
@@ -187,7 +207,12 @@ public:
     
 
     /// System variables
+    bool muteBgm = false;
+    bool muteSfx = false;
+
+    bool clearSave = false;
     bool quitGame = false;
+
     int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump, -1 = first time playing
     
     int windowWidth = 720;
@@ -205,7 +230,6 @@ public:
     
 
     /// Input variables
-
     Event evnt;
 
     Vector2i mousePosition = Vector2i(0, 0);

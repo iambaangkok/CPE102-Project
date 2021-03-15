@@ -32,7 +32,7 @@ public :
 	GameObject* land;
 	float land_posy;
 	PowerUp* Power , * CoinP;
-	
+
 	Font font;
 	Text scoreText , highscoreText , money;
 	vector<Sprite> background; 
@@ -66,6 +66,7 @@ public :
 
 	int equip = 1;					// Background Customization
 	int select = 1;
-	BlockBP* BP;
+	int no_pic = 4;
+	BlockBP* BP ,* BPL ,* BPR;
 };
 

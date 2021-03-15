@@ -5,6 +5,7 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 {
 	
 	this->maingame_state = &maingame_state;
+
 	static PlatformObject p = PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 8, "Assets/Textures/platform2.png");
 	Platform = &p;
 	static GravityObject a = GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
@@ -15,9 +16,25 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	CoinP = &ci;
 	static GameObject l = GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
 	land = &l;
+
+	int equipR = 0;
+	int equipL = 0;
+	if (equip + 1 > no_pic)
+		equipR = 1;
+	else
+		equipR = equip + 1;
+	if (equip - 1 < 1)
+		equipL = no_pic;
+	else
+		equipL = equip - 1;
+
 	static BlockBP b = BlockBP("Assets/Textures/bgex" + std::to_string(equip) + ".png", "BOBO");
 	BP = &b;
-
+	static BlockBP b2 = BlockBP("Assets/Textures/bgex" + std::to_string(equipR) + ".png", "BOBO");
+	BPR = &b2;
+	static BlockBP b3 = BlockBP("Assets/Textures/bgex" + std::to_string(equipL) + ".png", "BOBO");
+	BPL = &b3;
+	
 	for (int i = 0; i < 3; ++i)
 	{
 		Sprite A;
@@ -128,6 +145,7 @@ void Doodle::Initialize(int curlevel)
 	scoreText.setPosition(Vector2f(140.0f, 60.0f));
 
 	Money = 0;
+	MoneyPickup = 0;
 	money.setString("Money: " + std::to_string(0));
 	SetTextCenter(money);
 	money.setPosition(Vector2f(140.0f, 120.0f));
@@ -288,28 +306,54 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			music.stop();
 			callgame = false;
 			gstate = -1;
-			pet.money += Money;
+			pet.money += Money + MoneyPickup;
 			*maingame_state = 1;
 		}
 	}
 	else if (gstate == 3) {	// Background Customization
 		BP->SetPos(Vector2f(360.0f, 520.0f));
+		BPL->SetPos(Vector2f(-150.0f, 520.0f));
+		BPR->SetPos(Vector2f(870.0f, 520.0f));
 		if (key["B"])
 		{
 			sound.play();
 			gstate = 0;
 		}
 		if (key["A"]) {
+			int selectR = 0;
+			int selectL = 0;
 			select++;
-			if (select > 4)
+			if (select > no_pic)
 				select = 1;
+			if (select + 1 > no_pic)
+				selectR = 1;
+			else
+				selectR = select + 1;
+			if (select - 1 < 1)
+				selectL = no_pic;
+			else
+				selectL = select - 1;
 			BP->Object.SetTexture("Assets/Textures/bgex" + std::to_string(select) + ".png");
+			BPL->Object.SetTexture("Assets/Textures/bgex" + std::to_string(selectL) + ".png");
+			BPR->Object.SetTexture("Assets/Textures/bgex" + std::to_string(selectR) + ".png");
 		}
 		if (key["D"]) {
 			select--;
+			int selectR = 0;
+			int selectL = 0;
 			if (select < 1)
-				select = 4;
+				select = no_pic;
+			if (select + 1 > no_pic)
+				selectR = 1;
+			else
+				selectR = select + 1;
+			if (select - 1 < 1)
+				selectL = no_pic;
+			else
+				selectL = select - 1;
 			BP->Object.SetTexture("Assets/Textures/bgex" + std::to_string(select) + ".png");
+			BPL->Object.SetTexture("Assets/Textures/bgex" + std::to_string(selectL) + ".png");
+			BPR->Object.SetTexture("Assets/Textures/bgex" + std::to_string(selectR) + ".png");
 		}
 		if (key["SPACE"]) {
 			equip = select;
@@ -381,6 +425,8 @@ void Doodle::Draw(RenderWindow &window)
 	if (gstate == 3) {
 		
 		BP->Draw(window);
+		BPL->Draw(window);
+		BPR->Draw(window);
 		window.draw(SelectBG);
 	}
 }

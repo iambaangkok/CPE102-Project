@@ -20,6 +20,37 @@ Game::~Game() {
 
 }
 
+void Game::LoadPetEgg() {
+    cout << "First Time Playing " << endl;
+    float petEggPosX = 70;
+    float petEggDimX = 130;
+    float petEggGapX = 20;
+    float petEggPosY = 300;
+    static Button petEgg1 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+        "Assets/Textures/button_petEgg_01_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
+    petEgg1.animation.freezeFrame = true;
+    petEggs.push_back(&petEgg1);
+    static Button petEgg2 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+        "Assets/Textures/button_petEgg_02_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 1);
+    petEgg2.animation.freezeFrame = true;
+    petEggs.push_back(&petEgg2);
+    static Button petEgg3 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+        "Assets/Textures/button_petEgg_03_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 2);
+    petEgg3.animation.freezeFrame = true;
+    petEggs.push_back(&petEgg3);
+    static Button petEgg4 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
+        "Assets/Textures/button_petEgg_04_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 3);
+    petEgg4.animation.freezeFrame = true;
+    petEggs.push_back(&petEgg4);
+
+    //gameState = -1;
+    isFirstTimePlaying = true;
+}
+
 void Game::LoadGame() {
     Font font1;
     if (!font1.loadFromFile("Assets/Fonts/Minecraftia.ttf"))
@@ -31,37 +62,9 @@ void Game::LoadGame() {
     string format = "";
     string blankStr = "";
     long long int nLine = 1;
-    if (!getline(saveFile, textline) && selectedPet == -1) { //First time playing 
-        cout << "First Time Playing " << endl;
-        float petEggPosX = 70;
-        float petEggDimX = 130;
-        float petEggGapX = 20;
-        float petEggPosY = 300;
-        static Button petEgg1 = Button(Vector2f(petEggPosX + (petEggs.size())*petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
-            "Assets/Textures/button_petEgg_01_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
-        petEgg1.animation.freezeFrame = true;
-        petEggs.push_back(&petEgg1);
-        static Button petEgg2 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
-            "Assets/Textures/button_petEgg_02_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 1);
-        petEgg2.animation.freezeFrame = true;
-        petEggs.push_back(&petEgg2);
-        static Button petEgg3 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
-            "Assets/Textures/button_petEgg_03_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 2);
-        petEgg3.animation.freezeFrame = true;
-        petEggs.push_back(&petEgg3);
-        static Button petEgg4 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
-            "Assets/Textures/button_petEgg_04_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 3);
-        petEgg4.animation.freezeFrame = true;
-        petEggs.push_back(&petEgg4);
-
-        //gameState = -1;
-        isFirstTimePlaying = true;
-
-    }
+    if ((!getline(saveFile, textline) && selectedPet == -1 )) { //First time playing 
+        LoadPetEgg();
+    }    
     else  {
         nLine++;
         cout << textline << endl;
@@ -211,10 +214,10 @@ void Game::LoadGame() {
             pet->currentLevel = 0;
             pet->currentExp = 0;
             pet->ateEvolveStone = false;
-            pet->currentHp = 0;
-            pet->currentHappiness = 0;
-            pet->currentFood = 0;
-            pet->currentPoop = 0;
+            pet->currentHp = pet->hpMax[pet->currentLevel];
+            pet->currentHappiness = pet->happinessMax[pet->currentLevel];
+            pet->currentFood = pet->foodMax[pet->currentLevel];
+            pet->currentPoop = pet->poopMax[pet->currentLevel];
 
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -239,11 +242,11 @@ void Game::LoadGame() {
     }
     saveFile.close();
     
+    
 
+    test1.push_back(new ParticleSystem(20, 180, -70, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , 3, true, true));
 
-    static ParticleSystem bobo = ParticleSystem(20, 180, -70, 2, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , true);
-    test1 = &bobo;
 
 
     if (pet != NULL) {
@@ -416,16 +419,18 @@ void Game::LoadGame() {
         static GameObject bg = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/BGMain.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
         backgrounds.push_back(bg);
 
-        static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-        static GameObject cloud2 = GameObject(Vector2f(0, +10), Vector2f(200, 80), false, "Assets/Textures/clouds_02.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-        clouds.push_back(cloud1);
-        clouds.push_back(cloud2);
-        clouds.push_back(cloud1);
-        clouds.push_back(cloud2);
-        for (int i = 0; i < clouds.size(); ++i) {
-            clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
+        if (clouds.size() == 0) {
+            static GameObject cloud1 = GameObject(Vector2f(0, -10), Vector2f(120, 60), false, "Assets/Textures/clouds_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+            static GameObject cloud2 = GameObject(Vector2f(0, +10), Vector2f(200, 80), false, "Assets/Textures/clouds_02.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+            clouds.push_back(cloud1);
+            clouds.push_back(cloud2);
+            clouds.push_back(cloud1);
+            clouds.push_back(cloud2);
+            for (int i = 0; i < clouds.size(); ++i) {
+                clouds[i].SetPosition(-(i * cloudGap + 120), cloudPosY + clouds[i].GetPosition().y);
+            }
         }
-
+        
         static GameObject ti = GameObject(Vector2f(-titlePanelGap - titlePanelWidth - titlePanelGap, 160), Vector2f(titlePanelWidth, titlePanelHeight), false, "Assets/Textures/title_bordered.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
         titlePanel = &ti;
 
@@ -442,8 +447,22 @@ void Game::LoadGame() {
         fpsText.setCharacterSize(16);
         fpsText.setPosition(windowWidth - 40, 10);
     }
-    
 
+    if (soundBuffers.size() == 0) {
+        soundBuffers = vector<SoundBuffer>(bgmVariables.size(), SoundBuffer());
+        for (int i = 0; i < bgmVariables.size(); ++i) {
+            if (soundBuffers[i].loadFromFile(bgmVariables[i].filePath)) {
+                cout << "Loaded BGM " << bgmVariables[i].filePath << endl;
+            }
+            else {
+                cout << "Failed to load BGM " << bgmVariables[i].filePath << endl;
+            }
+        }
+        currentBgm = rand() % bgmVariables.size();
+        PlaySound(bgm, currentBgm);
+    }
+    
+    deltaTime = clock.restart().asSeconds();
 }
 void Game::SaveGame() {
     ofstream saveFile("Savefiles/save001.sav");
@@ -464,10 +483,14 @@ void Game::SaveGame() {
     saveFile << "poop " << pet->currentPoop << endl;
     saveFile.close();
 }
-
+void Game::ClearSave() {
+    ofstream saveFile("Savefiles/save001.sav");
+    saveFile << "";
+    saveFile.close();
+}
 void Game::StartGameLoop() {
     LoadGame();
-    deltaTime = clock.restart().asSeconds();
+    
 	while (window.isOpen()) {
 		ReInitialize();
 		GetInput();
@@ -475,6 +498,12 @@ void Game::StartGameLoop() {
 		Draw();
         if (quitGame) {
             SaveGame();
+            window.close();
+            cout << "Application Ended." << endl;
+        }
+        if (clearSave) {
+            ClearSave();
+            cout << "Game Reset." << endl;
             window.close();
             cout << "Application Ended." << endl;
         }
@@ -505,13 +534,25 @@ void Game::ReInitialize() {
 
 void Game::Update() {
     //cout << gameState << " ";
-    
-    test1->Update(deltaTime);
-
-    if (keyPress["G"]) {
-        test1->spawning_on = !test1->spawning_on;
+    for(int i = 0; i < test1.size() ; ++i){
+        if (test1[i]->Update(deltaTime)) {
+            DeleteParticle(i);
+        }
     }
 
+    if (keyPress["G"]) {
+        for (int i = 0; i < test1.size(); ++i) 
+            test1[i]->spawning_on = !test1[i]->spawning_on;
+    }
+    if (keyPress["V"]) {
+        clearSave = true;
+    }
+    if (keyPress["Z"]) {
+        muteSfx = !muteSfx;
+    }
+    if (keyPress["X"]) {
+        muteBgm = !muteBgm;
+    }
     if (gameState == 0 || gameState == -1) {
         titlePanel->speed.x = titlePanelSpeed;
         titlePanel->Update(deltaTime);
@@ -547,13 +588,21 @@ void Game::Update() {
                     }
                 }
             }
+
         }
     }
     else if (gameState == 1 || gameState == 2) {
         
-        pet->happinessChangeRate += poops.size();
+        pet->happinessChangeRate += poops.size()/10;
         pet->Update(deltaTime, keyPress, keyHold, keyRelease, mousePress, mouseRelease, mouseHold, mousePosition, mouseWheelDelta);
         if (pet->CanPoop()) {
+            if (pet->type == "DICKO") {
+                poops.push_back(pet->CreatePoop());
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x + 20, poops[poops.size() - 1]->GetPosition().y);
+                poops.push_back(pet->CreatePoop());
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x - 20, poops[poops.size() - 1]->GetPosition().y);
+
+            }
             poops.push_back(pet->CreatePoop());
         }
 
@@ -596,8 +645,40 @@ void Game::Update() {
     fpsString.erase(fpsString.end() - 4, fpsString.end());
     fpsText.setString(fpsString);
     
+    if (!muteBgm) {
+        if (bgm.getStatus() == SoundSource::Status::Paused || bgm.getStatus() == SoundSource::Status::Stopped) {
+            currentBgm++;
+            if (currentBgm >= bgmVariables.size()) {
+                currentBgm = 0;
+            }
+            PlaySound(bgm, currentBgm, "BGM");
+        }
+    }
+    else {
+        bgm.pause();
+    }
+    
+    if (!muteSfx) {
 
-
+    }
+    else {
+        for (int i = 0; i < pet->sfx.size(); ++i) {
+            if (pet->sfx[i].getStatus() == SoundSource::Status::Playing) {
+                cout << "pause pet sfx " << i << endl;
+                pet->sfx[i].pause();
+            }
+        }
+        for (int i = 0; i < poops.size(); ++i) {
+            
+            for (int j = 0; j < poops[i]->sfx.size(); ++j) {
+                if (poops[i]->sfx[j].getStatus() == SoundSource::Status::Playing) {
+                    cout << "pause poop " << i  << " sfx "  << " " << j << endl;
+                    poops[i]->sfx[j].pause();
+                }
+                
+            }
+        }
+    }
 
     //cout << deltaTime << " " << fps << endl;
 }
@@ -656,9 +737,14 @@ void Game::Draw() {
         doodle->Draw(window);
 
     }
+    for (int i = 0; i < test1.size(); ++i) {
+        if (test1[i]) {
+            cout << "HERE1";
+            test1[i]->Draw(window);
+            cout << "HERE2";
+        }
+    }
     
-    
-    test1->Draw(window);
 
     window.draw(fpsText);
 
@@ -787,6 +873,12 @@ void Game::DeletePoop(int index) {
     pet->money += poops[index]->price;
     delete poops[index];
     poops.erase(poops.begin() + index);
+}
+
+void Game::DeleteParticle(int index)
+{
+    delete test1[index];
+    test1.erase(test1.begin() + index);
 }
 
 void Game::GetInput() {
@@ -1037,4 +1129,11 @@ void Game::SetTextAlignment(Text& text, float anchorPositionX, int alignment) {
     }
     
 
+}
+
+void Game::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
+    cout << "Playing " << type << " : " << soundBufferIndex << endl;
+    soundPlayer.setVolume(bgmVariables[soundBufferIndex].volume);
+    soundPlayer.setBuffer(soundBuffers[soundBufferIndex]);
+    soundPlayer.play();
 }

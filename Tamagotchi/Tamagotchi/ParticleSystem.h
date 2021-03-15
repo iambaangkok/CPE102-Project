@@ -16,13 +16,14 @@ class ParticleSystem
 public:
 	ParticleSystem();
 	ParticleSystem(float rate, float spread, float angleOngsa, float lifetime, float speed
-	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, float floorLine, bool gravity_on = true);
+	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, float floorLine, float whelaTheePloyThangModbool, bool burst, bool gravity_on = true);
 	~ParticleSystem();
+
 	void Initialize();
-	void Update(float deltaTime);
+	int Update(float deltaTime);
 	void Draw(RenderWindow &window);
 	void Move();
-	
+
 	Vector2f position;
 	float rate; //number of particle that spawn in one second.
 	float spread; //the spread of the angle.
@@ -48,5 +49,10 @@ public:
 	bool gravity_on;
 	float floorLine;
 	bool spawning_on = true;
+	int loopCount;
+	float totalTimein1spawn;
+	float whelaTheePloyThangMod;
+	bool burst;
+	bool tangKhaTuaPlae = false;
 };
 
