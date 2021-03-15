@@ -66,6 +66,7 @@ public :
 
 	int equip = 1;					// Background Customization
 	int select = 1;
-	BlockBP* BP;
+	int no_pic = 4;
+	BlockBP* BP ,* BPL ,* BPR;
 };
 

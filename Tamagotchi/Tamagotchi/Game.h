@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -72,7 +73,11 @@ public:
 
     void ResetKeyboard();
     void ResetMouse();
-    
+
+    void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "BGM");
+
+
+    /// Testing
     ParticleSystem* test1;
    
     /// Pet
@@ -155,7 +160,22 @@ public:
     Button* selectBut;
     Doodle* doodle;
 
-    
+
+    ///Sound
+    Sound bgm;
+    int currentBgm = 0;
+    struct SoundVariables {
+        string filePath = "";
+        float volume = 15.0f;
+    };
+    float bgmVolume = 12;
+    vector<SoundBuffer> soundBuffers;
+    vector<SoundVariables> bgmVariables = {
+        {"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },
+        {"Assets/Sounds/BGM/bgm_alonelycherrytree.wav", bgmVolume },
+        {"Assets/Sounds/BGM/bgm_mybestfriendisadog.wav", bgmVolume }
+        //{"Assets/Sounds/BGM/bgm_otherworld.wav", bgmVolume }
+    };
     
 
     /// Miscellaneous
@@ -173,8 +193,6 @@ public:
     float titlePanelGap = 70;
     float titlePanelHeight = ceil((float)(titlePanelWidth * 250 / 640)/10) * 10;
     GameObject* titlePanel;
-
-    
 
     float pressAnyKeyToStartBlinkTime = 1.5f; //x seconds;
     float pressAnyKeyToStartBlinkTotalTime = 0;
@@ -205,7 +223,6 @@ public:
     
 
     /// Input variables
-
     Event evnt;
 
     Vector2i mousePosition = Vector2i(0, 0);

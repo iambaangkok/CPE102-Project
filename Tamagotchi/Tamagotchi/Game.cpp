@@ -60,8 +60,7 @@ void Game::LoadGame() {
 
         //gameState = -1;
         isFirstTimePlaying = true;
-
-    }
+    }       
     else  {
         nLine++;
         cout << textline << endl;
@@ -211,10 +210,10 @@ void Game::LoadGame() {
             pet->currentLevel = 0;
             pet->currentExp = 0;
             pet->ateEvolveStone = false;
-            pet->currentHp = 0;
-            pet->currentHappiness = 0;
-            pet->currentFood = 0;
-            pet->currentPoop = 0;
+            pet->currentHp = pet->hpMax[pet->currentLevel];
+            pet->currentHappiness = pet->happinessMax[pet->currentLevel];
+            pet->currentFood = pet->foodMax[pet->currentLevel];
+            pet->currentPoop = pet->poopMax[pet->currentLevel];
 
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -239,7 +238,7 @@ void Game::LoadGame() {
     }
     saveFile.close();
     
-
+    
 
     static ParticleSystem bobo = ParticleSystem(20, 180, -70, 2, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , true);
@@ -442,8 +441,22 @@ void Game::LoadGame() {
         fpsText.setCharacterSize(16);
         fpsText.setPosition(windowWidth - 40, 10);
     }
-    
 
+    if (soundBuffers.size() == 0) {
+        soundBuffers = vector<SoundBuffer>(bgmVariables.size(), SoundBuffer());
+        for (int i = 0; i < bgmVariables.size(); ++i) {
+            if (soundBuffers[i].loadFromFile(bgmVariables[i].filePath)) {
+                cout << "Loaded BGM " << bgmVariables[i].filePath << endl;
+            }
+            else {
+                cout << "Failed to load BGM " << bgmVariables[i].filePath << endl;
+            }
+        }
+        currentBgm = rand() % bgmVariables.size();
+        PlaySound(bgm, currentBgm);
+    }
+    
+    deltaTime = clock.restart().asSeconds();
 }
 void Game::SaveGame() {
     ofstream saveFile("Savefiles/save001.sav");
@@ -467,7 +480,7 @@ void Game::SaveGame() {
 
 void Game::StartGameLoop() {
     LoadGame();
-    deltaTime = clock.restart().asSeconds();
+    
 	while (window.isOpen()) {
 		ReInitialize();
 		GetInput();
@@ -547,13 +560,21 @@ void Game::Update() {
                     }
                 }
             }
+
         }
     }
     else if (gameState == 1 || gameState == 2) {
         
-        pet->happinessChangeRate += poops.size();
+        pet->happinessChangeRate += poops.size()/10;
         pet->Update(deltaTime, keyPress, keyHold, keyRelease, mousePress, mouseRelease, mouseHold, mousePosition, mouseWheelDelta);
         if (pet->CanPoop()) {
+            if (pet->type == "DICKO") {
+                poops.push_back(pet->CreatePoop());
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x + 20, poops[poops.size() - 1]->GetPosition().y);
+                poops.push_back(pet->CreatePoop());
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x - 20, poops[poops.size() - 1]->GetPosition().y);
+
+            }
             poops.push_back(pet->CreatePoop());
         }
 
@@ -597,7 +618,13 @@ void Game::Update() {
     fpsText.setString(fpsString);
     
 
-
+    if (bgm.getStatus() != SoundSource::Status::Playing) {
+        currentBgm++;
+        if (currentBgm >= bgmVariables.size()) {
+            currentBgm = 0;
+        }
+        PlaySound(bgm, currentBgm, "BGM");
+    }
 
     //cout << deltaTime << " " << fps << endl;
 }
@@ -1037,4 +1064,11 @@ void Game::SetTextAlignment(Text& text, float anchorPositionX, int alignment) {
     }
     
 
+}
+
+void Game::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
+    cout << "Playing " << type << " : " << soundBufferIndex << endl;
+    soundPlayer.setVolume(bgmVariables[soundBufferIndex].volume);
+    soundPlayer.setBuffer(soundBuffers[soundBufferIndex]);
+    soundPlayer.play();
 }

@@ -48,61 +48,63 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	this->name = name;
 	this->type = type;
 	levelMax = 3;
+
 	if (type == "PERRY") {
-		hpMax = vector<float>{ 100, 150, 200 };
+		hpMax = vector<float>{ 150, 260, 300 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
-		foodMax = vector<float>{ 100, 120, 140 };
-		poopMax = vector<float>{ 80, 90, 100 };
-		hpChangeRate = 5;
-		expChangeRate = 5;
-		foodChangeRate = 5;
-		happinessChangeRate = baseHappinessChangeRate = 5;
-		poopChangeRate = 5;
+		foodMax = vector<float>{ 200, 300, 400 };
+		poopMax = vector<float>{ 60, 80, 100 };
+		hpChangeRate = 0.02;
+		expChangeRate = 0.02;
+		foodChangeRate = 0.02;
+		happinessChangeRate = baseHappinessChangeRate = 0.02;
+		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "DICKO") {
-		hpMax = vector<float>{ 100, 150, 200 };
+		hpMax = vector<float>{ 150, 250, 500 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
-		foodMax = vector<float>{ 100, 120, 140 };
+		foodMax = vector<float>{ 400, 550, 700 };
 		poopMax = vector<float>{ 80, 90, 100 };
-		hpChangeRate = 1;
-		expChangeRate = 1;
-		foodChangeRate = 1;
-		happinessChangeRate = baseHappinessChangeRate = 1;
-		poopChangeRate = 1;
+		hpChangeRate = 0.02;
+		expChangeRate = 0.02;
+		foodChangeRate = 0.02;
+		happinessChangeRate = baseHappinessChangeRate = 0.02;
+		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "CROK") {
-		hpMax = vector<float>{ 100, 150, 200 };
+		hpMax = vector<float>{ 200, 300, 400 };
 		expPerEvolve = vector<float>{ 100, 200, 300 };
 		happinessMax = vector<float>{ 100, 120, 140 };
-		foodMax = vector<float>{ 100, 120, 140 };
-		poopMax = vector<float>{ 80, 90, 100 };
-		hpChangeRate = 5;
-		expChangeRate = 5;
-		foodChangeMultiplier = 5;
-		happinessChangeRate = baseHappinessChangeRate = 5;
-		poopChangeRate = 5;
+		foodMax = vector<float>{ 200, 250, 350 };
+		poopMax = vector<float>{ 30, 25, 20 };
+		hpChangeRate = 0.02;
+		expChangeRate = 0.02;
+		foodChangeMultiplier = 0.02;
+		happinessChangeRate = baseHappinessChangeRate = 0.02;
+		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else if (type == "GYOZA") {
-		hpMax = vector<float>{ 100, 150, 200 };
-		expPerEvolve = vector<float>{ 100, 200, 300 };
+		hpMax = vector<float>{ 100, 90, 80 };
+		expPerEvolve = vector<float>{ 20, 30, 40 };
 		happinessMax = vector<float>{ 100, 120, 140 };
-		foodMax = vector<float>{ 100, 120, 140 };
-		poopMax = vector<float>{ 80, 90, 100 };
-		hpChangeRate = 5;
-		expChangeRate = 5;
-		foodChangeRate = 5;
-		happinessChangeRate = baseHappinessChangeRate = 5;
-		poopChangeRate = 5;
+		foodMax = vector<float>{ 50, 60, 70 };
+		poopMax = vector<float>{ 50, 80, 100 };
+		hpChangeRate = 0.1;
+		expChangeRate = 0.1;
+		foodChangeRate = 0.1;
+		happinessChangeRate = baseHappinessChangeRate = 0.1;
+		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
 	}
 	else {
 		cout << "Invalid Pet Type" << endl;
 	}
+
 	currentLevel = 0;
 	currentHp = hpMax[currentLevel];
 	currentExp = expPerEvolve[currentLevel];
@@ -111,6 +113,19 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	currentPoop = 0;
 	ateEvolveStone = false;
 	money = 0;
+
+	soundBuffers = vector<SoundBuffer>(sfxVariables.size(), SoundBuffer());
+	for (int i = 0; i < sfxVariables.size(); ++i) {
+		if (soundBuffers[i].loadFromFile(sfxVariables[i].filePath)) {
+			cout << "Loaded SFX " << sfxVariables[i].filePath << endl;
+		}
+		else {
+			cout << "Failed to load SFX " << sfxVariables[i].filePath << endl;
+		}
+		sfx.push_back(Sound(soundBuffers[i]));
+		sfx[i].setVolume(sfxVariables[i].volume);
+	}
+	
 
 }
 
@@ -144,6 +159,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 	totalTime += deltaTime;
 	randomMovementIntervalTime += deltaTime;
+	isInAirLastFrame = isInAir;
 	if (isRandomlyMoving) {
 		randomMovementMoveTotalTime += deltaTime;
 	}
@@ -196,6 +212,12 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		if (keyPress["E"]) {
 			currentLevel -= 1;
 			Clamp(&currentLevel, 2, 0);
+		}
+		if (keyHold["Q"] && keyHold["W"] && keyHold["E"] && keyHold["R"]) {
+			currentPoop = poopMax[currentLevel] - 5;
+		}
+		if (keyHold["A"] && keyHold["S"] && keyHold["D"] && keyHold["F"]) {
+			currentExp = expPerEvolve[currentLevel] - 5;
 		}
 		if (mouseHold["M1"]) {
 			if (mouseIsOver) {
@@ -347,7 +369,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
 			currentHp -= hpChangeRate * hpChangeRateMultiplier * deltaTime / tickTime;
 		}
-		else {
+		else if((float)currentFood < (float)foodMax[currentLevel] * 0.5f){
 			happinessChangeRate -= baseHappinessChangeRate;
 		}
 
@@ -376,20 +398,16 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		Clamp(&currentExp, expPerEvolve[currentLevel], 0.0f);
 		Clamp(&currentFood, foodMax[currentLevel], 0.0f);
 		Clamp(&currentPoop, poopMax[currentLevel], 0.0f);
-		//}
+
 		isMoving = (speed != Vector2f(0, 0));
-
-		
-
-		
 		//cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
-
 	}
 
+	
 	drawLayer = GetSide("BOTTOM");
 
 
-	///Set Animation according to pet state
+	///Set Animation & Play Sound     according to pet state
 	if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
@@ -411,38 +429,25 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		animation.SetStartFinishFrame(0, currentLevel, 0, currentLevel);
 	}
 	
+	if (animation.Update(deltaTime)) {
+		if (isMoving) {
+			sfx[currentLevel].play();
+		}
+	}
+	if (isInAir && !isInAirLastFrame) {
+		if (!isDraggedByMouse) {
+			sfx[3].play();
+		}
+	}
+	if (!isInAir && isInAirLastFrame) {
+		sfx[4].play();
+	}
+
 	
 
-	animation.Update(deltaTime);
 	rectangleShape.setTextureRect(animation.uvRect);
 
 
-
-
-
-}
-
-
-bool Pet::CanPoop() {
-	return currentPoop >= poopMax[currentLevel];
-}
-Poop* Pet::CreatePoop() {
-	Poop* newPoop = new Poop(GetPosition(), Vector2f(110*0.7, 80*0.7), true, "Assets/Textures/pet_poop.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10, 5, shadow->GetPosition().y);
-	currentPoop = 0;
-	return newPoop;
-}
-
-
-
-template<typename T>
-void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
-{
-	if (*clampVariable > upperClamp) *clampVariable = upperClamp;
-	if (*clampVariable < lowerClamp) *clampVariable = lowerClamp;
-}
-
-void Pet::UseItem(int itemID) {
-	//item.Use(this);
 }
 
 void Pet::Draw(RenderWindow& window) {
@@ -454,6 +459,33 @@ void Pet::Draw(RenderWindow& window) {
 
 }
 
+void Pet::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
+	cout << "Playing " << type << " : " << soundBufferIndex << endl;
+	soundPlayer.setVolume(sfxVariables[soundBufferIndex].volume);
+	soundPlayer.setBuffer(soundBuffers[soundBufferIndex]);
+	soundPlayer.play();
+}
+
+bool Pet::CanPoop() {
+	return currentPoop >= poopMax[currentLevel];
+}
+Poop* Pet::CreatePoop() {
+	Poop* newPoop = new Poop(GetPosition(), Vector2f(110*0.7, 80*0.7), true, "Assets/Textures/pet_poop.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10, 5, shadow->GetPosition().y);
+	currentPoop = 0;
+	sfx[rand() % 3 + 5].play();
+	return newPoop;
+}
+
+template<typename T>
+void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)
+{
+	if (*clampVariable > upperClamp) *clampVariable = upperClamp;
+	if (*clampVariable < lowerClamp) *clampVariable = lowerClamp;
+}
+
+void Pet::UseItem(int itemID) {
+	//item.Use(this);
+}
 
 bool Pet::IsMouseOver(Vector2i& mousePosition) {
 
