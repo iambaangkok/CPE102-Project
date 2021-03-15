@@ -333,7 +333,6 @@ void Game::LoadGame() {
 
         static Doodle d = Doodle(gameState, *pet);
         doodle = &d;
-        doodle->Initialize(pet->currentLevel);
 
         /// BuyItems
         for (int i = 0; i < 18; ++i) {

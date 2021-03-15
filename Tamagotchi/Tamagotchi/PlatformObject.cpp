@@ -30,7 +30,7 @@ PlatformObject::~PlatformObject()
 {
 }
 
-void PlatformObject::Initialize() {
+void PlatformObject::Reset() {
 	int part = 1040 / NO_OF_PLATFORM;
 	for (unsigned int i = 0; i < NO_OF_PLATFORM; ++i) {
 		float ux = (rand() % (720 - (int)size.x)) + size.x / 2.0f;
