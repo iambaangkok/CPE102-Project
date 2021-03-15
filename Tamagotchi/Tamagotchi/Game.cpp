@@ -60,8 +60,7 @@ void Game::LoadGame() {
 
         //gameState = -1;
         isFirstTimePlaying = true;
-
-    }
+    }       
     else  {
         nLine++;
         cout << textline << endl;
@@ -211,10 +210,10 @@ void Game::LoadGame() {
             pet->currentLevel = 0;
             pet->currentExp = 0;
             pet->ateEvolveStone = false;
-            pet->currentHp = 0;
-            pet->currentHappiness = 0;
-            pet->currentFood = 0;
-            pet->currentPoop = 0;
+            pet->currentHp = pet->hpMax[pet->currentLevel];
+            pet->currentHappiness = pet->happinessMax[pet->currentLevel];
+            pet->currentFood = pet->foodMax[pet->currentLevel];
+            pet->currentPoop = pet->poopMax[pet->currentLevel];
 
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
@@ -561,13 +560,21 @@ void Game::Update() {
                     }
                 }
             }
+
         }
     }
     else if (gameState == 1 || gameState == 2) {
         
-        pet->happinessChangeRate += poops.size();
+        pet->happinessChangeRate += poops.size()/10;
         pet->Update(deltaTime, keyPress, keyHold, keyRelease, mousePress, mouseRelease, mouseHold, mousePosition, mouseWheelDelta);
         if (pet->CanPoop()) {
+            if (pet->type == "DICKO") {
+                poops.push_back(pet->CreatePoop());
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x + 20, poops[poops.size() - 1]->GetPosition().y);
+                poops.push_back(pet->CreatePoop());
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x - 20, poops[poops.size() - 1]->GetPosition().y);
+
+            }
             poops.push_back(pet->CreatePoop());
         }
 
