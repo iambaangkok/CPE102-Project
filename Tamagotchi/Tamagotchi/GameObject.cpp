@@ -71,7 +71,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 //Single Texture from Texture Sheet
 GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i imageCoordinate){ 
-	cout << "Con3" << endl;
+	//cout << "Con3" << endl;
 	rectangleShape = RectangleShape(dimensions);
 	rectangleShape.setPosition(position);
 	rectangleShape.setSize(dimensions);
@@ -94,7 +94,7 @@ GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCent
 
 //Proper Animation
 GameObject::GameObject(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish,float frameTime) { 
-	cout << "Con4" << endl;
+	//cout << "Con4" << endl;
 	rectangleShape = RectangleShape(dimensions);
 	rectangleShape.setPosition(position);
 	rectangleShape.setSize(dimensions);
