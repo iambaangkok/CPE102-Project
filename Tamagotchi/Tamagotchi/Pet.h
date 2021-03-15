@@ -37,6 +37,9 @@ public:
 
 	void Draw(RenderWindow& window);
 
+
+	void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "SFX");
+
 	bool CanPoop();
 	Poop* CreatePoop();
 
@@ -46,6 +49,7 @@ public:
 	void UseItem(int itemID); //Use Item
 
 	bool IsMouseOver(Vector2i& mousePosition);
+
 
 
 	///Time Related Variables: all time in seconds
@@ -135,19 +139,22 @@ public:
 	float windResistance = 120/2; // same as gravity but in x
 
 	///Sound
-	vector<Sound> sounds;
+	vector<Sound> sfx;
 	vector<SoundBuffer> soundBuffers;
 	struct SoundVariables {
 		string filePath = "";
 		float volume = 15.0f;
 	};
-	vector<SoundVariables> soundVariables = {
-		{"Assets/Sounds/Pet/pet_walk_01.wav", 10 },
-		{"Assets/Sounds/Pet/pet_walk_02.wav", 10 },
-		{"Assets/Sounds/Pet/pet_walk_03.wav", 10 },
-		{"Assets/Sounds/Pet/pet_jump.wav", 10 },
-		{"Assets/Sounds/Pet/pet_land_onground.wav", 10 }
+	float sfxVolume = 15;
+	vector<SoundVariables> sfxVariables = {
+		{"Assets/Sounds/Pet/pet_walk_01.wav", sfxVolume },
+		{"Assets/Sounds/Pet/pet_walk_02.wav", sfxVolume },
+		{"Assets/Sounds/Pet/pet_walk_03.wav", sfxVolume },
+		{"Assets/Sounds/Pet/pet_jump.wav", sfxVolume },
+		{"Assets/Sounds/Pet/pet_land_onground.wav", sfxVolume }
 	};
+	
+	
 	
 	
 

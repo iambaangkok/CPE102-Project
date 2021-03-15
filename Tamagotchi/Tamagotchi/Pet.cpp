@@ -114,12 +114,19 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	ateEvolveStone = false;
 	money = 0;
 
-	soundBuffers = vector<SoundBuffer>(soundVariables.size(), SoundBuffer());
-	for (int i = 0; i < soundBuffers.size(); ++i) {
-		soundBuffers[i].loadFromFile(soundVariables[i].filePath);
-		sounds.push_back(Sound(soundBuffers[i]));
-		sounds[i].setVolume(soundVariables[i].volume);
+	soundBuffers = vector<SoundBuffer>(sfxVariables.size(), SoundBuffer());
+	for (int i = 0; i < sfxVariables.size(); ++i) {
+		if (soundBuffers[i].loadFromFile(sfxVariables[i].filePath)) {
+			cout << "Loaded SFX " << sfxVariables[i].filePath << endl;
+		}
+		else {
+			cout << "Failed to load SFX " << sfxVariables[i].filePath << endl;
+		}
+		sfx.push_back(Sound(soundBuffers[i]));
+		sfx[i].setVolume(sfxVariables[i].volume);
 	}
+	
+
 }
 
 Pet::~Pet()
@@ -418,19 +425,19 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	
 	if (animation.Update(deltaTime)) {
 		if (isMoving) {
-			sounds[currentLevel].play();
+			sfx[currentLevel].play();
 		}
 	}
-	cout << isInAir << " " << isInAirLastFrame << endl;
 	if (isInAir && !isInAirLastFrame) {
 		if (!isDraggedByMouse) {
-			sounds[3].play();
+			sfx[3].play();
 		}
 	}
 	if (!isInAir && isInAirLastFrame) {
-		sounds[4].play();
+		sfx[4].play();
 	}
 
+	
 
 	rectangleShape.setTextureRect(animation.uvRect);
 
@@ -444,6 +451,13 @@ void Pet::Draw(RenderWindow& window) {
 	}*/
 	window.draw(rectangleShape);
 
+}
+
+void Pet::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
+	cout << "Playing " << type << " : " << soundBufferIndex << endl;
+	soundPlayer.setVolume(sfxVariables[soundBufferIndex].volume);
+	soundPlayer.setBuffer(soundBuffers[soundBufferIndex]);
+	soundPlayer.play();
 }
 
 bool Pet::CanPoop() {
