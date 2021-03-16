@@ -579,7 +579,7 @@ void Game::Update() {
 
         if (gameState == -1) {
             for (int i = 0; i < petEggs.size(); ++i) {
-                petEggs[i]->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
+                petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
                 if (gameState == 1) {
                     if (isFirstTimePlaying) {
                         isFirstTimePlaying = false;
@@ -614,9 +614,9 @@ void Game::Update() {
         for (int i = 0; i < poops.size(); ++i) {
             poops[i]->Update(deltaTime, window, mousePress, mousePosition);
         }
-        shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
-        miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
-        exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
+        shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
         doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
 
         shop->Update(deltaTime, mouseWheelDelta);
