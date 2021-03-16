@@ -30,7 +30,7 @@ Button::~Button() {
 void Button::Initialize() {
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, Vector2i& mousePosition, bool &quitGame, int& selectedPet) {
+void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition, bool &quitGame, int& selectedPet) {
 	if (!enabled) {
 		return;
 	}
@@ -45,25 +45,43 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 
 	
-	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
-		OnClick(quitGame,selectedPet);
+	if (IsMouseOver(mousePosition) && mouseHold["M1"]) {
+		OnHold();
 	}
 	else if (IsMouseOver(mousePosition)) {
 		OnHover();
 	}
+	else if (IsMouseOver(mousePosition) && mousePress["M1"]) {
+		OnClick();
+	}
 	else {
 		status = 0;
 	}
+	if (prevstatus == 3 && status == 1) OnRelease(quitGame, selectedPet);
+	cout << prevstatus << " " << status << endl;
+	prevstatus = status;
 
-	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 3;
+	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 4;
 
 	animation.SetFrame(Vector2i(status, 0));
 
 
 }
 
-void Button::OnClick(bool& quitGame, int& selectedPet) {
+void Button::OnClick() {
 	status = 2;
+}
+
+void Button::OnHover() {
+	status = 1;
+}
+
+void Button::OnHold() {
+	status = 3;
+}
+
+void Button::OnRelease(bool& quitGame, int& selectedPet) {
+	status = 0;
 	if (type == "MAIN") {
 		*gstate = 1;
 	}
@@ -82,9 +100,9 @@ void Button::OnClick(bool& quitGame, int& selectedPet) {
 	if (type == "SETTING") {
 		*gstate = 3;
 	}
-	if (type == "BUYITEM" && pet->money >= shop->items[id-1]->price) {
+	if (type == "BUYITEM" && pet->money >= shop->items[id - 1]->price) {
 		pet->money -= shop->items[id - 1]->price;
-		shop->items[id-1]->UseItem(pet);
+		shop->items[id - 1]->UseItem(pet);
 	}
 	if (type == "EXIT") quitGame = true;
 	if (type == "MAINDISH") {
@@ -102,30 +120,27 @@ void Button::OnClick(bool& quitGame, int& selectedPet) {
 		*gstate = 1;
 	}
 	if (type == "STARTDOODLE") {
-
+		doodle->gstate = 1;
 	}
 	if (type == "EXITDOODLE") {
-
+		doodle->gstate = -1;
+		*gstate = 1;
 	}
 	if (type == "CHOOSEBG") {
-
+		doodle->gstate = 3;
 	}
 	if (type == "LEFTDOODLE") {
-
+		doodle->equip++;
 	}
 	if (type == "RIGHTDOODLE") {
-
+		doodle->equip--;
 	}
 	if (type == "BACKDOODLE") {
-
+		doodle->gstate = 0;
 	}
 	if (type == "SELECTBG") {
-
+		doodle->InitBG();
 	}
-}
-
-void Button::OnHover() {
-	status = 1;
 }
 
 

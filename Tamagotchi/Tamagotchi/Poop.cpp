@@ -30,9 +30,9 @@ Poop::~Poop(){}
 void Poop::Initialize() {
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Poop::Update(float deltaTime, RenderWindow& window, unordered_map<string, bool>& mousePress, Vector2i& mousePosition) {
+bool Poop::Update(float deltaTime, RenderWindow& window, unordered_map<string, bool>& mousePress, Vector2i& mousePosition) {
 	if (!enabled) {
-		return;
+		return false;
 	}
 	animation.Update(deltaTime);
 	float poopSize = (basePoopSize - lowestPoopSize)/3 * nClickToDestroy + lowestPoopSize;
@@ -61,14 +61,12 @@ void Poop::Update(float deltaTime, RenderWindow& window, unordered_map<string, b
 
 	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
 		OnClick();
+		return true;
 	}
 	else if (IsMouseOver(mousePosition)) {
 		OnHover();
 	}
-	else {
-
-	}
-
+	return false;
 }
 
 

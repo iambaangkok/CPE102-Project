@@ -1,6 +1,6 @@
 #include "BlockBP.h"
 
-BlockBP::BlockBP(string filepath, string name)
+BlockBP::BlockBP(string filepath)
 {
 	float size_x = 720.0f / 1.60f;
 	float size_y = 1040.0f / 1.60f;

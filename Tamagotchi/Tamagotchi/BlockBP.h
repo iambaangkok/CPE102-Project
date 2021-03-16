@@ -5,7 +5,7 @@
 class BlockBP
 {
 public :
-	BlockBP(string filepath , string name);
+	BlockBP(string filepath);
 	~BlockBP();
 
 	void SetPos(Vector2f pos);

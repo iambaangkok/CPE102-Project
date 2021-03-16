@@ -35,7 +35,7 @@ public:
 	float minAngle; //the minimum angle that particle can spread.
 	float maxAngle; //the maximum angle that particle can spread.
 	int angleDiff; //max angle - min angle.
-	vector<GameObject> amountOfParticle; //amount of particle that had been created.
+	vector<GameObject*> amountOfParticle; //amount of particle that had been created.
 	vector<float> randedAngle; //randomed angle.
 	vector<float> totalTime; //lifetime of one particle.
 	int currentParticle = 0;

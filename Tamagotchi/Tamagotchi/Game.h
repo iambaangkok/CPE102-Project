@@ -79,8 +79,7 @@ public:
     void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "BGM");
 
 
-    /// Testing
-    vector<ParticleSystem*> test1;
+    
    
     /// Pet
     Pet* pet;
@@ -179,6 +178,8 @@ public:
         //{"Assets/Sounds/BGM/bgm_otherworld.wav", bgmVolume }
     };
     
+    /// ParticleSystem
+    vector<ParticleSystem*> particleSystems;
 
     /// Miscellaneous
     Button* exitBut;

@@ -19,7 +19,7 @@ public:
 
 	void Initialize();
 
-	void Update(float deltaTime, RenderWindow& window, unordered_map<string, bool>& mousePress, Vector2i& mousePosition);
+	bool Update(float deltaTime, RenderWindow& window, unordered_map<string, bool>& mousePress, Vector2i& mousePosition);
 
 
 	void OnClick();
