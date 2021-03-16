@@ -42,6 +42,8 @@ public:
 	GameObject* bgs;
 	GameObject* scrollbar;
 	GameObject* picitem;
+	GameObject* up;
+	GameObject* low;
 	vector<Button> buttons;//0 = food, 1 = dessert, 2 = booster;
 
 };

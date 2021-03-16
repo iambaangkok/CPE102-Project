@@ -27,15 +27,14 @@ Shop::Shop() {
     AddItem("evo1","ShopItem1.png");
     AddItem("evo2","ShopItem1.png");
     AddItem("evo3","ShopItem1.png");
-   
     for (int i = 0; i < items.size(); i++)    
     {
-        items[i]->SetPosition(corePosition, (i * 270) + 200);
+        items[i]->SetPosition(corePosition, (i * 180) + 270);
     }
     //static GameObject bgr = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false,"Assets/Textures/button_manu1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-   // bg = &bgr; 
+    // bg = &bgr; 
 
-    static GameObject bgrshop = GameObject(Vector2f(corePosition, 270-70), Vector2f(400, 70), false, "Assets/Textures/button_manu1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    static GameObject bgrshop = GameObject(Vector2f(corePosition, 200), Vector2f(400, 70), false, "Assets/Textures/button_manu1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     bgs = &bgrshop;//Ba
 
     static GameObject scroll = GameObject(Vector2f(positionscrollX , 200), Vector2f(10, heightscrollbar), false, "Assets/Textures/panel_blue_72x20.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
@@ -44,8 +43,13 @@ Shop::Shop() {
     static GameObject item = GameObject(Vector2f(corePosition, 270), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     picitem = &item; // shop in item.
 
-    static Item ii = Item(Vector2f(corePosition, 270+200), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, "noodle69");
-    test1 = &ii;
+   // static Item ii = Item(Vector2f(corePosition, 270+200), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, "noodle69");
+   // test1 = &ii;
+    static GameObject upper = GameObject(Vector2f(0,0), Vector2f(720,200), false, "Assets/Textures/Upper.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    up = &upper;
+    static GameObject lower = GameObject(Vector2f(0,820), Vector2f(720, 220), false, "Assets/Textures/Lower.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    low = &lower;
+
 }
 Shop::~Shop() {
 }
@@ -59,12 +63,13 @@ void Shop::AddItem(string itemName,string texturePath) {
     //static GameObject item = GameObject(Vector2f(corePosition, 270), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     Item* newItem = new Item(Vector2f(0, 0), itemPictureSize, false, "Assets/Textures/Shop/" + texturePath, imageCount, start, finish, 1, itemName);
     items.push_back(newItem);
-    
 }
 
 void Shop::Draw(RenderWindow &window) {
     if (isOpen) {
-       // bg->Draw(window);
+        //bg->Draw(window);
+        up->Draw(window);
+        low->Draw(window);
         bgs->Draw(window);
         scrollbar->Draw(window);
         //picitem->Draw(window);
@@ -73,6 +78,7 @@ void Shop::Draw(RenderWindow &window) {
             cout << "DRAWING " << i << endl;
             items[i]->Draw(window);
         }
+
         //test1->Draw(window);
     }
     else {
@@ -91,6 +97,7 @@ void Shop::Update(float deltaTime, int mouseWheelDelta) {
         if (scrollbar->GetPosition().y+heightscrollbar > lowscroll) {
             scrollbar->SetPosition(Vector2f(positionscrollX, lowscroll-heightscrollbar));
         }
+
         for (int i = 0; i < items.size(); i++)
         {
             items[i]->Update(deltaTime);
