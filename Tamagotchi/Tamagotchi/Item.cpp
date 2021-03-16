@@ -282,7 +282,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	{
 		type = "ect";
 		itemId = 13;
-		this->price = 1000;
+		this->price = 200;
 		this->description = "evolution";
 		this->hpChange = 0;
 		this->evoStone = true;
@@ -296,7 +296,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	{
 	type = "ect";
 	itemId = 14;
-	this->price = 1500;
+	this->price = 500;
 	this->description = "evolution";
 	this->hpChange = 0;
 	this->evoStone = true;
@@ -310,7 +310,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	{
 	type = "ect";
 	itemId = 15;
-	this->price = 2000;
+	this->price = 650;
 	this->description = "evolution";
 	this->hpChange = 0;
 	this->evoStone = true;
