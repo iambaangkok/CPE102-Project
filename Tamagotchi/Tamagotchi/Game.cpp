@@ -613,7 +613,7 @@ void Game::Update() {
 
         for (int i = 0; i < poops.size(); ++i) {
             if (poops[i]->Update(deltaTime, window, mousePress, mousePosition)) {
-                particleSystems.push_back(new ParticleSystem(10, 180, 0, 1.5, 2, Vector2f(100, 100), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine, 1, true, true));
+                particleSystems.push_back(new ParticleSystem(20, 180, 0, 0.5, 4, Vector2f(10, 10), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine+50, 1, true, true));
             }
         }
 

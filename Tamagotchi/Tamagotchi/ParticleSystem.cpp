@@ -20,8 +20,7 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	this->floorLine = floorLine;
 	this->burst = burst;
 	this->whelaTheePloyThangMod = whelaTheePloyThangMod;
-	static GameObject emitter = GameObject(position, dimensions, true, texturePath
-	, imageCount, start, finish , frameTime);
+	//static GameObject emitter = GameObject(position, dimensions, true, texturePath, imageCount, start, finish , frameTime);
 	
 	
 
@@ -41,7 +40,7 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	angleDiff = maxAngle - minAngle;
 
 	for (int i = 0; i < numberOfParticle; ++i) {
-		amountOfParticle.push_back(emitter);
+		amountOfParticle.push_back(new GameObject(position, dimensions, true, texturePath, imageCount, start, finish, frameTime));
 		float randAngle;
 		if (spread != 0) {
 			randAngle = rand() % angleDiff + minAngle;
@@ -93,7 +92,7 @@ int ParticleSystem::Update(float deltaTime) {
 		if (!tangKhaTuaPlae) {
 			for (int i = 0; i < numberOfParticle; ++i) {
 				started[i] = true;
-				amountOfParticle[i].SetPosition(position);
+				amountOfParticle[i]->SetPosition(position);
 				totalTime[i] = lifetime;
 				float randAngle;
 				if (spread != 0) {
@@ -116,13 +115,13 @@ int ParticleSystem::Update(float deltaTime) {
 		for (int i = 0; i < numberOfParticle; ++i) {
 			if (started[i] == true) {
 				currentParticle = i;
-				/*if (gravity_on == true) {
+				if (gravity_on == true) {
 					vectorspeedY[i] = vectorspeedY[i] + gravity * deltaTime;
-				}*/
+				}
 				Move();
-				if (amountOfParticle[i].GetPosition().y + amountOfParticle[i].GetDimensions().y / 2 >= floorLine) {
+				if (amountOfParticle[i]->GetPosition().y + amountOfParticle[i]->GetDimensions().y / 2 >= floorLine) {
 					vectorspeedY[i] = 0;
-					amountOfParticle[i].SetPosition(amountOfParticle[i].GetPosition().x, floorLine - amountOfParticle[i].GetDimensions().y / 2);
+					amountOfParticle[i]->SetPosition(amountOfParticle[i]->GetPosition().x, floorLine - amountOfParticle[i]->GetDimensions().y / 2);
 				}
 				totalTime[i] = totalTime[i] - deltaTime;
 			}
@@ -136,7 +135,7 @@ int ParticleSystem::Update(float deltaTime) {
 				//cout << "STARTED" << endl;int j = i;
 				for (int j = i; j > lastSpawnedParticle && j >= 0; --j) {
 					started[j] = true;
-					amountOfParticle[j].SetPosition(position);
+					amountOfParticle[j]->SetPosition(position);
 					totalTime[j] = lifetime;
 					float randAngle;
 					if (spread != 0) {
@@ -169,9 +168,9 @@ int ParticleSystem::Update(float deltaTime) {
 					vectorspeedY[i] = vectorspeedY[i] + gravity * deltaTime;
 				}
 				Move();
-				if (amountOfParticle[i].GetPosition().y + amountOfParticle[i].GetDimensions().y / 2 >= floorLine) {
+				if (amountOfParticle[i]->GetPosition().y + amountOfParticle[i]->GetDimensions().y / 2 >= floorLine) {
 					vectorspeedY[i] = 0;
-					amountOfParticle[i].SetPosition(amountOfParticle[i].GetPosition().x, floorLine - amountOfParticle[i].GetDimensions().y / 2);
+					amountOfParticle[i]->SetPosition(amountOfParticle[i]->GetPosition().x, floorLine - amountOfParticle[i]->GetDimensions().y / 2);
 				}
 				totalTime[i] = totalTime[i] - deltaTime;
 			}
@@ -199,7 +198,7 @@ int ParticleSystem::Update(float deltaTime) {
 void ParticleSystem::Draw(RenderWindow& window) {
 	for (int i = 0; i < numberOfParticle; ++i) {
 		if (started[i] == 1) {
-			amountOfParticle[i].Draw(window);
+			amountOfParticle[i]->Draw(window);
 		}
 	}
 	
@@ -208,12 +207,17 @@ void ParticleSystem::Draw(RenderWindow& window) {
 }
 
 void ParticleSystem::Move() {
-	amountOfParticle[currentParticle].Move(vectorspeedX[currentParticle], vectorspeedY[currentParticle]);
+	amountOfParticle[currentParticle]->Move(vectorspeedX[currentParticle], vectorspeedY[currentParticle]);
 	if(currentParticle < numberOfParticle){
 			currentParticle++;
 	}
 }
 
 ParticleSystem::~ParticleSystem() {
+	while (amountOfParticle.size() > 0) {
+		delete amountOfParticle[0];
+		amountOfParticle.erase(amountOfParticle.begin());
+	}
+
 	cout << "ParticleSystem deleted";
 }
