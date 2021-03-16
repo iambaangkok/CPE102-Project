@@ -714,9 +714,9 @@ void Game::Draw() {
     }
     if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
 
-        DrawUI(window);
+        
         shop->Draw(window);
-
+        DrawUI(window);
         vector<GameObject*> drawQueue;
         drawQueue.push_back(pet);
         for (int i = 0; i < poops.size(); ++i) {
