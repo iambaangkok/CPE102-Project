@@ -126,9 +126,9 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		sfx[i].setVolume(sfxVariables[i].volume);
 	}
 	
-	particleSystems.push_back(new ParticleSystem(frameTime * 2, 15, -170, 0.5, 3, Vector2f(15, 15), position, "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 100, false));
-	//particleSystems[0]->gravity = -5;
-	//particleSystems[0]->spawning_on = false;
+	particleSystems.push_back(new ParticleSystem(8, 60, -170, 0.5, 1.5, Vector2f(15, 15), position, "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 999, false));
+	particleSystems[0]->gravity = -1;
+	particleSystems[0]->spawning_on = false;
 	
 }
 
@@ -141,7 +141,7 @@ void Pet::Initialize() {
 	mouseIsOver = false;
 	happinessChangeRate = baseHappinessChangeRate;
 	evolveButtonClicked = false;
-	//particleSystems[0]->spawning_on = false;
+	particleSystems[0]->spawning_on = false;
 }
 
 
@@ -418,22 +418,30 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	///Set Animation & Play Sound     according to pet state  && ///ParticleSystem
 
 	
-
-	//particleSystems[0]->floorLine = shadow->GetPosition().y;
+	particleSystems[0]->position = shadow->GetPosition();
+	particleSystems[0]->floorLine = shadow->GetPosition().y;
 	if (deltaPosition.x > 0) {
 		faceRight = true;
-		//particleSystems[0]->angleDegree = 10;
-		//particleSystems[0]->spawning_on = true;
+		if (!isInAir) {
+			particleSystems[0]->angleDegree = 10;
+			particleSystems[0]->spawning_on = true;
+			particleSystems[0]->totalTimein1spawn = 0;
+		}
+		
 
 	}else if (deltaPosition.x < 0) {
 		faceRight = false;
-		//particleSystems[0]->angleDegree = -170;
-		//particleSystems[0]->spawning_on = true;
+		if (!isInAir) {
+			particleSystems[0]->angleDegree = -170;
+			particleSystems[0]->spawning_on = true;
+			particleSystems[0]->totalTimein1spawn = 0;
+		}
+		
 	}
 	else {
-		//particleSystems[0]->spawning_on = false;
 	}
 
+	cout << "PS->spon = " << particleSystems[0]->spawning_on << endl;
 	
 
 	if (faceRight) {
