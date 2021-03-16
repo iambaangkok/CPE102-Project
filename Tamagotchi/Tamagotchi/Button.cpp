@@ -131,10 +131,10 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 		doodle->gstate = 3;
 	}
 	if (type == "LEFTDOODLE") {
-		doodle->equip++;
+		doodle->equip--;
 	}
 	if (type == "RIGHTDOODLE") {
-		doodle->equip--;
+		doodle->equip++;
 	}
 	if (type == "BACKDOODLE") {
 		doodle->gstate = 0;

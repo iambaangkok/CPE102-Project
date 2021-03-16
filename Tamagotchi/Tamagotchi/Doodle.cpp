@@ -11,7 +11,7 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Power = new PowerUp("Assets/Textures/PowerUp.png", Vector2f(19.0f * 2, 34.0f * 2));
 	CoinP = new PowerUp("Assets/Textures/Coin.png" , Vector2f(34.0f * 2, 34.0f * 2));
 	land = new GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
-	landing = new ParticleSystem(20, 90, 270, 0.25, 3, Vector2f(10, 10), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/Yellow.png",
+	landing = new ParticleSystem(20, 90, 270, 0.25, 7, Vector2f(10, 10), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/Yellow.png",
 		Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.25f, windowHeight, 1, true, true);
 	landing->gravity = 200.0f;
 
@@ -236,10 +236,6 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			sound.play();
 			gstate = 0;
 		}
-		if (key["A"]) 
-			equip++;
-		if (key["D"]) 
-			equip--;
 		InitBGMenu();
 		if (key["SPACE"]) 
 			InitBG();
