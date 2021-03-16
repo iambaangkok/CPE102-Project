@@ -613,11 +613,10 @@ void Game::Update() {
 
         for (int i = 0; i < poops.size(); ++i) {
             if (poops[i]->Update(deltaTime, window, mousePress, mousePosition)) {
-                particleSystems.push_back(new ParticleSystem(20, 180, 0, 0.5, 4, Vector2f(10, 10), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine+50, 1, true, true));
+                particleSystems.push_back(new ParticleSystem(20, 180, 0, 0.5, 4, Vector2f(10, 10), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine+25, 1, true, true));
             }
         }
 
-        cout << particleSystems.size() << endl;
         shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
         miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
         exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
