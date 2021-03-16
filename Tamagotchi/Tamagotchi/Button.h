@@ -14,7 +14,7 @@ public:
     Button();
     Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
         string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime
-        , string text, int status, string type, int& gstate, Shop& shop, Pet& pet,Doodle &doodle, int id = -69); //Proper Animation
+        , string text, int status, string type, int& gstate, Shop& shop, Pet& pet,Doodle &doodle,Game &game, int id = -69); //Proper Animation
     ~Button();
 
     void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
@@ -38,6 +38,7 @@ public:
     Shop* shop;
     Pet* pet;
     Doodle* doodle;
+    Game* game;
     int id;
 };
 

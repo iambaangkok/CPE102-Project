@@ -188,8 +188,10 @@ int ParticleSystem::Update(float deltaTime) {
 		currentSpawnTime -= spawnTime * numberOfParticle;
 	}
 
-	if (totalTimein1spawn >= whelaTheePloyThangMod + lifetime) {
-		return 1;
+	if (whelaTheePloyThangMod != -1 && whelaTheePloyThangMod > 0) {
+		if (totalTimein1spawn >= whelaTheePloyThangMod + lifetime) {
+			return 1;
+		}
 	}
 	return 0;
 

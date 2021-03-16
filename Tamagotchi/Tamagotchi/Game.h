@@ -183,6 +183,10 @@ public:
 
     /// Miscellaneous
     Button* exitBut;
+    Button* resetBut;
+    Button* mutebgmBut;
+    Button* mutesfxBut;
+    Game* game;
     int currentBackground = 0;
     vector<GameObject> backgrounds;
 

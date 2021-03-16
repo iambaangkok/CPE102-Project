@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <SFML/Audio.hpp>
+#include "ParticleSystem.h"
 #include "GameObject.h"
 #include "Item.h"
 #include "Poop.h"
@@ -38,18 +39,17 @@ public:
 	void Draw(RenderWindow& window);
 
 
-	void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "SFX");
 
 	bool CanPoop();
 	Poop* CreatePoop();
 
+	void DeleteParticle(int index);
+
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
-
-	void UseItem(int itemID); //Use Item
-
 	bool IsMouseOver(Vector2i& mousePosition);
-
+	void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "SFX");
+	void UseItem(int itemID); //Use Item
 
 
 	///Time Related Variables: all time in seconds
@@ -138,6 +138,11 @@ public:
 	Vector2f deltaPosition = Vector2f(0, 0);
 	Vector2f throwSpeed = Vector2f(0, 0);
 	float windResistance = 120/2; // same as gravity but in x
+
+
+	///ParticleSystem
+	vector<ParticleSystem*> particleSystems;
+
 
 	///Sound
 	vector<Sound> sfx;
