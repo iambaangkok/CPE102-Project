@@ -244,7 +244,7 @@ void Game::LoadGame() {
     
     
 
-    test1.push_back(new ParticleSystem(20, 180, -70, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
+    particleSystems.push_back(new ParticleSystem(20, 180, -70, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
         Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , 3, true, true));
 
 
@@ -533,15 +533,15 @@ void Game::ReInitialize() {
 
 void Game::Update() {
     //cout << gameState << " ";
-    for(int i = 0; i < test1.size() ; ++i){
-        if (test1[i]->Update(deltaTime)) {
+    for(int i = 0; i < particleSystems.size() ; ++i){
+        if (particleSystems[i]->Update(deltaTime)) {
             DeleteParticle(i);
         }
     }
 
     if (keyPress["G"]) {
-        for (int i = 0; i < test1.size(); ++i) 
-            test1[i]->spawning_on = !test1[i]->spawning_on;
+        for (int i = 0; i < particleSystems.size(); ++i) 
+            particleSystems[i]->spawning_on = !particleSystems[i]->spawning_on;
     }
     if (keyPress["V"]) {
         clearSave = true;
@@ -612,8 +612,11 @@ void Game::Update() {
         }
 
         for (int i = 0; i < poops.size(); ++i) {
-            poops[i]->Update(deltaTime, window, mousePress, mousePosition);
+            if (poops[i]->Update(deltaTime, window, mousePress, mousePosition)) {
+                particleSystems.push_back(new ParticleSystem(10, 180, 0, 1.5, 2, Vector2f(100, 100), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine, 1, true, true));
+            }
         }
+        cout << particleSystems.size() << endl;
         shopBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
         miniBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
         exitBut->Update(deltaTime, window, mousePress, mousePosition, quitGame, selectedPet);
@@ -736,11 +739,9 @@ void Game::Draw() {
         doodle->Draw(window);
 
     }
-    for (int i = 0; i < test1.size(); ++i) {
-        if (test1[i]) {
-            cout << "HERE1";
-            test1[i]->Draw(window);
-            cout << "HERE2";
+    for (int i = 0; i < particleSystems.size(); ++i) {
+        if (particleSystems[i]) {
+            particleSystems[i]->Draw(window);
         }
     }
     
@@ -876,8 +877,8 @@ void Game::DeletePoop(int index) {
 
 void Game::DeleteParticle(int index)
 {
-    delete test1[index];
-    test1.erase(test1.begin() + index);
+    delete particleSystems[index];
+    particleSystems.erase(particleSystems.begin() + index);
 }
 
 void Game::GetInput() {

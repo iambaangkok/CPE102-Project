@@ -198,9 +198,9 @@ int ParticleSystem::Update(float deltaTime) {
 
 void ParticleSystem::Draw(RenderWindow& window) {
 	for (int i = 0; i < numberOfParticle; ++i) {
-			if (started[i] == 1) {
-				amountOfParticle[i].Draw(window);
-			}
+		if (started[i] == 1) {
+			amountOfParticle[i].Draw(window);
+		}
 	}
 	
 
@@ -215,5 +215,5 @@ void ParticleSystem::Move() {
 }
 
 ParticleSystem::~ParticleSystem() {
-	cout << "TITI NA HEE";
+	cout << "ParticleSystem deleted";
 }

@@ -70,7 +70,7 @@ void Shop::Draw(RenderWindow &window) {
         //picitem->Draw(window);
         for (int i = 0; i < items.size(); i++)
         {
-            cout << "DRAWING " << i << endl;
+            //cout << "DRAWING " << i << endl;
             items[i]->Draw(window);
         }
         //test1->Draw(window);
