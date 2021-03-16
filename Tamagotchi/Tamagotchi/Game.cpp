@@ -616,6 +616,7 @@ void Game::Update() {
                 particleSystems.push_back(new ParticleSystem(10, 180, 0, 1.5, 2, Vector2f(100, 100), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine, 1, true, true));
             }
         }
+
         cout << particleSystems.size() << endl;
         shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
         miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
