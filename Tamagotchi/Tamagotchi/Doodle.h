@@ -76,5 +76,7 @@ public :
 	int no_pic = 4;
 	vector<BlockBP*> BGMenu;
 
+	int landing_ind = 0;
+
 };
 
