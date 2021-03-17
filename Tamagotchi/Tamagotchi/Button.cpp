@@ -155,11 +155,9 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 		if (type == "SHOP") {
 			if (shop->isOpen == false) {
 				shop->isOpen = true;
-				status = 2;
 			}
 			else {
 				shop->isOpen = false;
-				status = 0;
 			}
 		}
 		if (type == "MAINDISH") {
@@ -174,21 +172,17 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 		if (type == "MUTEBGM") {
 			if (game->muteBgm == false) {
 				game->muteBgm = true;
-				status = 2;
 			}
 			else {
 				game->muteBgm = false;
-				status = 0;
 			}
 		}
 		if (text == "MUTESFX") {
 			if (game->muteSfx == false) {
 				game->muteSfx = true;
-				status = 2;
 			}
 			else{
 				game->muteSfx = false;
-				status = 0;
 			}
 		}
 	}	
