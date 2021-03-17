@@ -250,13 +250,6 @@ void Game::LoadGame() {
 
     }
     saveFile.close();
-    
-    
-
-    particleSystems.push_back(new ParticleSystem(20, 180, -70, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-        Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f , windowHeight/2 +300 , 3, true, true));
-
-
 
     if (pet != NULL) {
         cout << "Loading User Interface..." << endl;
