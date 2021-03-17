@@ -14,34 +14,53 @@ Shop::Shop() {
         //description.setPosition(100, 1040 / 2);
         //descriptions.push_back(description);
     //}
-    AddItem("cocola","ShopItem12.png");
     AddItem("hotdog","ShopItem8.png");
     AddItem("noodle69","ShopItem9.png");
     AddItem("chicken drumstick","ShopItem14.png");
     AddItem("waxwowald","ShopItem13.png");
+    
+    AddItem("cocola", "ShopItem12.png"); 
     AddItem("bubble tea1", "ShopItem2.png");
     AddItem("bubble tea2", "ShopItem3.png");
     AddItem("bubble tea3","ShopItem4.png");
     AddItem("mochi","ShopItem10.png");
     AddItem("dango","ShopItem11.png");
+   
     AddItem("evo1","ShopItem1.png");
     AddItem("evo2","ShopItem1.png");
     AddItem("evo3","ShopItem1.png");
-    for (int i = 0; i < items.size(); i++)    
+
+
+
+
+    
+    for (int i = 0; i < itemfood.size(); i++)    
     {
-        items[i]->SetPosition(corePosition, (i * 180) + 270);
-    }
+        itemfood[i]->SetPosition(corePosition, (i * 180) + 270);
+    }//food
+    for (int i = 0; i < itemcandy.size(); i++)
+    {
+        itemcandy[i]->SetPosition(corePosition, (i * 180) + 270);
+    }//candy
+    for (int i = 0; i < itemetc.size(); i++)
+    {
+        itemetc[i]->SetPosition(corePosition, (i * 180) + 270);
+    }//etc
     //static GameObject bgr = GameObject(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false,"Assets/Textures/button_manu1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     // bg = &bgr; 
 
     static GameObject bgrshop = GameObject(Vector2f(corePosition, 200), Vector2f(400, 70), false, "Assets/Textures/button_manu1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    bgs = &bgrshop;//Ba
+    bgbar = &bgrshop;//Ba
+
 
     static GameObject scroll = GameObject(Vector2f(positionscrollX , 200), Vector2f(10, heightscrollbar), false, "Assets/Textures/panel_blue_72x20.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     scrollbar = &scroll; //Scroll
     
-    static GameObject item = GameObject(Vector2f(corePosition, 270), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
-    picitem = &item; // shop in item.
+
+
+
+   //static GameObject item = GameObject(Vector2f(corePosition, 270), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+   // picitem = &item; // shop in item.
 
    // static Item ii = Item(Vector2f(corePosition, 270+200), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, "noodle69");
    // test1 = &ii;
@@ -54,7 +73,7 @@ Shop::Shop() {
 Shop::~Shop() {
 }
 
-void Shop::AddItem(string itemName,string texturePath) {
+void Shop::AddItem(string itemName, string texturePath) {
     Vector2f itemPictureSize(400, 180);
     Vector2u imageCount(1, 1);
     Vector2i start(0, 0);
@@ -62,23 +81,46 @@ void Shop::AddItem(string itemName,string texturePath) {
 
     //static GameObject item = GameObject(Vector2f(corePosition, 270), Vector2f(400, 180), false, "Assets/Textures/Shop/item/ShopItem99.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
     Item* newItem = new Item(Vector2f(0, 0), itemPictureSize, false, "Assets/Textures/Shop/" + texturePath, imageCount, start, finish, 1, itemName);
-    items.push_back(newItem);
-}
+    if (newItem->type == "food")
+    {
+        itemfood.push_back(newItem);
+    }
+    if (newItem->type == "candy")
+    {
+        itemcandy.push_back(newItem);
+    }
+    if (newItem->type == "etc")
+    {
+        itemetc.push_back(newItem);
+    }
 
+}
 void Shop::Draw(RenderWindow &window) {
     if (isOpen) {
         //bg->Draw(window);
         up->Draw(window);
-        low->Draw(window);
-        bgs->Draw(window);
+        bgbar->Draw(window);
         scrollbar->Draw(window);
         //picitem->Draw(window);
-        for (int i = 0; i < items.size(); i++)
-        {
-            //cout << "DRAWING " << i << endl;
-            items[i]->Draw(window);
+        if (buttons[0]==0) {
+            for (int i = 0; i < itemfood.size(); i++)
+            {
+                itemfood[i]->Draw(window);
+            }
         }
-
+        if (buttons[1]==1){
+            for (int i = 0; i < itemcandy.size(); i++)
+            {
+                itemcandy[i]->Draw(window);
+            }
+        }
+        if (buttons[2]==2) {
+            for (int i = 0; i < itemetc.size(); i++)
+            {
+                itemetc[i]->Draw(window);
+            }
+        }
+        low->Draw(window);
         //test1->Draw(window);
     }
     else {
@@ -97,10 +139,51 @@ void Shop::Update(float deltaTime, int mouseWheelDelta) {
         if (scrollbar->GetPosition().y+heightscrollbar > lowscroll) {
             scrollbar->SetPosition(Vector2f(positionscrollX, lowscroll-heightscrollbar));
         }
-
-        for (int i = 0; i < items.size(); i++)
+       
+       /* for (int i = 1; i < itemfood.size(); i++)
         {
-            items[i]->Update(deltaTime);
+            itemfood[i]->SetPosition(corePosition, (i * 180) + 270);
+        }//food
+        for (int i = 1; i < itemcandy.size(); i++)
+        {
+            itemcandy[i]->SetPosition(corePosition, (i * 180) + 270);
+        }//candy
+        for (int i = 1; i < itemetc.size(); i++)
+        {
+            itemetc[i]->SetPosition(corePosition, (i * 180) + 270);
+        }*/
+        
+        if () {
+            for (int i = 0; i < itemfood.size(); i++)
+            {
+                itemfood[i]->Update(deltaTime);
+            }
+            for (int i = 1; i < itemfood.size(); i++)
+            {
+                itemfood[i]->SetPosition(corePosition, (i * 180) + 270 - scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+            }//food
+
+
+        } // �Ѿവ 
+        if () {
+            for (int i = 0; i < itemcandy.size(); i++)
+            {
+                itemcandy[i]->Update(deltaTime);
+            }
+            for (int i = 1; i < itemcandy.size(); i++)
+            {
+                itemcandy[i]->SetPosition(corePosition, (i * 180) + 270 - scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+            }//candy
+        }
+        if () {
+            for (int i = 0; i < itemetc.size(); i++)
+            {
+                itemetc[i]->Update(deltaTime);
+            }
+            for (int i = 1; i < itemetc.size(); i++)
+            {
+                itemetc[i]->SetPosition(corePosition, (i * 180) + 270 - scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+            }
         }
         //test1->Update(deltaTime);
     }
