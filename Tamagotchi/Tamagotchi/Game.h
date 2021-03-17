@@ -47,10 +47,13 @@ public:
     Game(RenderWindow& mainWindow);
     ~Game();
 
+    void StartProgram();
+
     void LoadPetEgg();
     void LoadGame();
     void SaveGame();
     void ClearSave();
+
     void StartGameLoop();
     void ReInitialize();
     void GetInput();
@@ -170,13 +173,21 @@ public:
         float volume = 15.0f;
     };
     float bgmVolume = 12;
-    vector<SoundBuffer> soundBuffers;
+    vector<SoundBuffer> bgmSoundBuffers;
     vector<SoundVariables> bgmVariables = {
         {"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },
         {"Assets/Sounds/BGM/bgm_alonelycherrytree.wav", bgmVolume },
         {"Assets/Sounds/BGM/bgm_mybestfriendisadog.wav", bgmVolume }
         //{"Assets/Sounds/BGM/bgm_otherworld.wav", bgmVolume }
     };
+    vector<Sound> sfx;
+    vector<SoundBuffer> sfxSoundBuffers;
+    float sfxVolume = 15;
+    vector<SoundVariables> sfxVariables = {
+        {"Assets/Sounds/Pickup_Coin.wav", sfxVolume}
+    };
+    Sound startProgramSound;
+    SoundBuffer startProgramSoundBuffer;
     
     /// ParticleSystem
     vector<ParticleSystem*> particleSystems;

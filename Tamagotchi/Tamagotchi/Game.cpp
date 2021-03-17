@@ -15,9 +15,18 @@ Game::Game(RenderWindow& mainWindow) : window(mainWindow){
     }
 }
 
-
 Game::~Game() {
 
+}
+
+void Game::StartProgram() {
+    GameObject startProgram(Vector2f(0, 0), Vector2f(windowWidth, windowHeight), false, "Assets/Textures/startprogram.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+    startProgram.Draw(window);
+    window.display();
+    startProgramSoundBuffer.loadFromFile("Assets/Sounds/startprogram.wav");
+    startProgramSound = Sound(startProgramSoundBuffer);
+    startProgramSound.setVolume(25);
+    startProgramSound.play();
 }
 
 void Game::LoadPetEgg() {
@@ -465,10 +474,10 @@ void Game::LoadGame() {
         fpsText.setPosition(windowWidth - 40, 10);
     }
 
-    if (soundBuffers.size() == 0) {
-        soundBuffers = vector<SoundBuffer>(bgmVariables.size(), SoundBuffer());
+    if (bgmSoundBuffers.size() == 0) {
+        bgmSoundBuffers = vector<SoundBuffer>(bgmVariables.size(), SoundBuffer());
         for (int i = 0; i < bgmVariables.size(); ++i) {
-            if (soundBuffers[i].loadFromFile(bgmVariables[i].filePath)) {
+            if (bgmSoundBuffers[i].loadFromFile(bgmVariables[i].filePath)) {
                 cout << "Loaded BGM " << bgmVariables[i].filePath << endl;
             }
             else {
@@ -477,6 +486,18 @@ void Game::LoadGame() {
         }
         currentBgm = rand() % bgmVariables.size();
         PlaySound(bgm, currentBgm);
+    }
+    if (sfxSoundBuffers.size() == 0) {
+        sfxSoundBuffers = vector<SoundBuffer>(sfxVariables.size(), SoundBuffer());
+        for (int i = 0; i < sfxVariables.size(); ++i) {
+            if (sfxSoundBuffers[i].loadFromFile(sfxVariables[i].filePath)) {
+                sfx.push_back(Sound(sfxSoundBuffers[i]));
+                cout << "Loaded SFX " << sfxVariables[i].filePath << endl;
+            }
+            else {
+                cout << "Failed to load SFX " << sfxVariables[i].filePath << endl;
+            }
+        }
     }
     
     deltaTime = clock.restart().asSeconds();
@@ -506,6 +527,8 @@ void Game::ClearSave() {
     saveFile.close();
 }
 void Game::StartGameLoop() {
+
+    StartProgram();
     LoadGame();
     
 	while (window.isOpen()) {
@@ -570,6 +593,7 @@ void Game::Update() {
     if (keyPress["X"]) {
         muteBgm = !muteBgm;
     }
+
     if (gameState == 0 || gameState == -1) {
         titlePanel->speed.x = titlePanelSpeed;
         titlePanel->Update(deltaTime);
@@ -615,9 +639,9 @@ void Game::Update() {
         if (pet->CanPoop()) {
             if (pet->type == "DICKO") {
                 poops.push_back(pet->CreatePoop());
-                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x + 20, poops[poops.size() - 1]->GetPosition().y);
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x + 50, poops[poops.size() - 1]->GetPosition().y);
                 poops.push_back(pet->CreatePoop());
-                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x - 20, poops[poops.size() - 1]->GetPosition().y);
+                poops[poops.size() - 1]->SetPosition(poops[poops.size() - 1]->GetPosition().x - 50, poops[poops.size() - 1]->GetPosition().y);
 
             }
             poops.push_back(pet->CreatePoop());
@@ -625,6 +649,8 @@ void Game::Update() {
 
         for (int i = 0; i < poops.size(); ++i) {
             if (CheckPoopIntegrity(i)) {
+                sfx[0].play();
+                particleSystems.push_back(new ParticleSystem(1, 0, -90, 1, 7, Vector2f(40, 40), poops[i]->GetPosition(), "Assets/Textures/Coin.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->GetPosition().y+30, 1, true, true));
                 DeletePoop(i);
             }
         }
@@ -684,6 +710,12 @@ void Game::Update() {
 
     }
     else {
+        for (int i = 0; i < sfx.size(); ++i) {
+            if (sfx[i].getStatus() == SoundSource::Status::Playing) {
+                cout << "pause game sfx " << i << endl;
+                sfx[i].pause();
+            }
+        }
         for (int i = 0; i < pet->sfx.size(); ++i) {
             if (pet->sfx[i].getStatus() == SoundSource::Status::Playing) {
                 cout << "pause pet sfx " << i << endl;
@@ -691,7 +723,6 @@ void Game::Update() {
             }
         }
         for (int i = 0; i < poops.size(); ++i) {
-            
             for (int j = 0; j < poops[i]->sfx.size(); ++j) {
                 if (poops[i]->sfx[j].getStatus() == SoundSource::Status::Playing) {
                     cout << "pause poop " << i  << " sfx "  << " " << j << endl;
@@ -1159,6 +1190,6 @@ void Game::SetTextAlignment(Text& text, float anchorPositionX, int alignment) {
 void Game::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
     cout << "Playing " << type << " : " << soundBufferIndex << endl;
     soundPlayer.setVolume(bgmVariables[soundBufferIndex].volume);
-    soundPlayer.setBuffer(soundBuffers[soundBufferIndex]);
+    soundPlayer.setBuffer(bgmSoundBuffers[soundBufferIndex]);
     soundPlayer.play();
 }
