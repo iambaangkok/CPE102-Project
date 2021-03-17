@@ -237,8 +237,12 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			gstate = 0;
 		}
 		InitBGMenu();
-		if (key["SPACE"]) 
-			InitBG();
+		if (key["SPACE"]) {
+			if (unlocklvl[equip] <= highscore)
+				InitBG();
+			else
+				sound.play();
+		}
 	}
 }
 
@@ -247,9 +251,7 @@ void Doodle::Draw(RenderWindow& window)
 
 	if (*maingame_state != 2)
 		return;
-
 	
-
 	for (int i = 0; i < 3; ++i)
 		window.draw(background[i]);
 	land->Draw(window);
@@ -282,11 +284,15 @@ void Doodle::Draw(RenderWindow& window)
 	}
 
 	if (gstate == 3) {
-
 		BGMenu[1]->Draw(window);
 		BGMenu[0]->Draw(window);
 		BGMenu[2]->Draw(window);
 		window.draw(SelectBG);
+		if (unlocklvl[equip] > highscore) {
+			window.draw(unlocked);
+			window.draw(Lock);
+		}
+			
 	}
 
 	landing->Draw(window);
@@ -328,6 +334,31 @@ void Doodle::SetTextCenter(Text& T)
 {
 	FloatRect bound = T.getLocalBounds();
 	T.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+}
+
+void Doodle::muteBGM(bool mute)
+{
+	if (mute)
+		music.setVolume(0.0f);
+	else
+		music.setVolume(15.0f);
+}
+
+void Doodle::muteSFX(bool mute)
+{
+	if (mute) {
+		sound.setVolume(0.0f);
+		pw.setVolume(0.0f);
+		dead.setVolume(0.0f);
+		coin.setVolume(0.0f);
+	}
+	else {
+		sound.setVolume(15.0f);
+		pw.setVolume(15.0f);
+		dead.setVolume(15.0f);
+		coin.setVolume(15.0f);
+	}
+	
 }
 
 void Doodle::InitSound(float musicVolume, float soundVolume)
@@ -378,6 +409,14 @@ void Doodle::InitBGMenu()
 		BGMenu[0]->Object.SetTexture("Assets/Textures/bgex" + std::to_string(equipL) + ".png");
 		BGMenu[2]->Object.SetTexture("Assets/Textures/bgex" + std::to_string(equipR) + ".png");
 	}
+	unlocked.setFont(font);
+	unlocked.setString("Get < Highscore: " + to_string(unlocklvl[equip]) + " > to unlock.");
+	FloatRect bound = unlocked.getLocalBounds();
+	unlocked.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+	unlocked.setPosition(Vector2f(360.0f, 520.0f));
+	unlocked.setOutlineColor(Color::Black);
+	unlocked.setOutlineThickness(2.0f);
+	unlocked.setScale(Vector2f(0.7f,0.7f));
 }
 
 void Doodle::InitSprite()
@@ -406,6 +445,12 @@ void Doodle::InitSprite()
 	SetSpriteCenter(SelectBG);
 	SelectBG.setScale(Vector2f(8.0f, 8.0f));
 	SelectBG.setPosition(Vector2f(360.0f, 100.0f));
+
+	LockT.loadFromFile("Assets/Textures/Lock.png");
+	Lock.setTexture(LockT);
+	SetSpriteCenter(Lock);
+	Lock.setScale(Vector2f(6.0f, 6.0f));
+	Lock.setPosition(Vector2f(360.0f, 440.0f));
 
 }
 

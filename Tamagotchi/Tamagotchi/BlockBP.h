@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include <string>
 
 class BlockBP
 {
@@ -13,5 +14,6 @@ public :
 
 	GameObject Border , Object ;
 	Font font;
+	Text text;
 };
 
