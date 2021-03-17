@@ -358,7 +358,7 @@ void Game::LoadGame() {
         dessertBut = &dsB;
 
         static Button etcB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            "Assets/Textures/button_etc_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "TOGGLE", 0, "ETC", gameState, *shop, *pet, *doodle, *game);
         etcB.animation.freezeFrame = true;
         etcBut = &etcB;
