@@ -23,6 +23,7 @@ public:
 	int Update(float deltaTime);
 	void Draw(RenderWindow &window);
 	void Move();
+	void SetAngle(float);
 
 	Vector2f position;
 	float rate; //number of particle that spawn in one second.

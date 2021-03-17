@@ -215,6 +215,21 @@ void ParticleSystem::Move() {
 	}
 }
 
+void ParticleSystem::SetAngle(float angleDegree) {
+	this->angleDegree = angleDegree;
+	minAngle = angleDegree - spread;
+	while (minAngle > 360)
+	{
+		minAngle = minAngle - 360;
+	}
+	maxAngle = angleDegree + spread;
+	while (maxAngle > 360)
+	{
+		maxAngle = maxAngle - 360;
+	}
+	angleDiff = maxAngle - minAngle;
+}
+
 ParticleSystem::~ParticleSystem() {
 	while (amountOfParticle.size() > 0) {
 		delete amountOfParticle[0];
