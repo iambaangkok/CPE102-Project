@@ -364,20 +364,20 @@ void Game::LoadGame() {
         etcBut = &etcB;
 
         /// Doodle
-        static Button stB = Button(Vector2f(295, 360), Vector2f(130, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        static Button stB = Button(Vector2f(360 - 13 * 7, 360), Vector2f(26*7, 140), false,
+            "Assets/Textures/button_start.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "stB", 0, "STARTDOODLE", gameState, *shop, *pet, *doodle);
         stB.animation.freezeFrame = true;
         startBut = &stB;
 
-        static Button edB = Button(Vector2f(295, 700), Vector2f(130, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        static Button edB = Button(Vector2f(360 - 13*7, 720), Vector2f(26*7, 140), false,
+            "Assets/Textures/button_exit.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "edB", 0, "EXITDOODLE", gameState, *shop, *pet, *doodle);
         edB.animation.freezeFrame = true;
         exitdoodleBut = &edB;
 
-        static Button cbgB = Button(Vector2f(295, 530), Vector2f(130, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        static Button cbgB = Button(Vector2f(360 - 13 * 7, 540), Vector2f(26 * 7, 140), false,
+            "Assets/Textures/button_choosebg.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "cbgB", 0, "CHOOSEBG", gameState, *shop, *pet, *doodle);
         cbgB.animation.freezeFrame = true;
         chooseBut = &cbgB;
@@ -394,14 +394,14 @@ void Game::LoadGame() {
         rB.animation.freezeFrame = true;
         rightBut = &rB;
 
-        static Button bacB = Button(Vector2f(380, 800), Vector2f(130, 140), false,
+        static Button bacB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "DEFAULT", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bacB.animation.freezeFrame = true;
         backBut = &bacB;
 
-        static Button bac2B = Button(Vector2f(380, 500), Vector2f(130, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        static Button bac2B = Button(Vector2f(360 - 13 * 7, 570), Vector2f(26 * 7, 140), false,
+            "Assets/Textures/button_exit.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "GAMEOVER", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bac2B.animation.freezeFrame = true;
         back2But = &bac2B;
@@ -687,14 +687,33 @@ void Game::Update() {
             etcBut->enable = false;
         }
         else if (gameState == 2) {
-            leftBut->enable = true;
-            rightBut->enable = true;
-            selectBut->enable = true;
-            chooseBut->enable = true;
-            backBut->enable = true;
-            back2But->enable = true;
-            startBut->enable = true;
-            exitdoodleBut->enable = true;
+
+
+            startBut->enable = false;
+            exitdoodleBut->enable = false;
+            chooseBut->enable = false;
+            back2But->enable = false;
+            leftBut->enable = false;
+            rightBut->enable = false;
+            backBut->enable = false;
+            selectBut->enable = false;
+
+            if (doodle->gstate == 0) {
+                startBut->enable = true;
+                exitdoodleBut->enable = true;
+                chooseBut->enable = true;
+            }
+
+            if (doodle->gstate == 2) {
+                back2But->enable = true;
+            }
+
+            if (doodle->gstate == 3) {
+                leftBut->enable = true;
+                rightBut->enable = true;
+                backBut->enable = true;
+                selectBut->enable = true;
+            }
 
             shopBut->enable = false;
             miniBut->enable = false;
