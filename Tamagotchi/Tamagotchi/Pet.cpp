@@ -465,7 +465,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	}
 	if (!isAlive) {
 		animation.freezeFrame = true;
-		animation.SetFrame(4, currentLevel);
+		animation.SetFrame(5, currentLevel);
 	}
 	else if (isInAir) {
 		animation.freezeFrame = true;

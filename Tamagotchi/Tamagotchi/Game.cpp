@@ -431,7 +431,7 @@ void Game::LoadGame() {
         msfxB.animation.freezeFrame = true;
         mutesfxBut = &msfxB;
 
-        static GameObject ypd = GameObject(Vector2f(windowWidth / 2, windowHeight / 2 - 100), Vector2f(590 * 0.8, 290 * 0.8), true, "Assets/Textures/yourpetdied.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        static GameObject ypd = GameObject(Vector2f(0,0), Vector2f(windowWidth,windowHeight), false, "Assets/Textures/yourpetdied.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
         yourPetDied = &ypd;
 
     }
@@ -769,9 +769,28 @@ void Game::Draw() {
     }
     if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
 
+
         
         shop->Draw(window);
+
+        shopBut->Draw(window);
+        miniBut->Draw(window);
+        doodle->Draw(window);
+
+        if (doodle->gstate == 3) {
+            leftBut->Draw(window);
+            rightBut->Draw(window);
+        }
+        if (shop->isOpen = true) {
+            maindishBut->Draw(window);
+            dessertBut->Draw(window);
+            etcBut->Draw(window);
+        }
+
         DrawUI(window);
+
+        
+
         vector<GameObject*> drawQueue;
         drawQueue.push_back(pet);
         for (int i = 0; i < poops.size(); ++i) {
@@ -788,20 +807,12 @@ void Game::Draw() {
 
         }
 
-        shopBut->Draw(window);
-        miniBut->Draw(window);
-        exitBut->Draw(window);
-        doodle->Draw(window);
-        if (doodle->gstate == 3) {
-            leftBut->Draw(window);
-            rightBut->Draw(window);
-        }
-        if (shop->isOpen = true) {
-            maindishBut->Draw(window);
-            dessertBut->Draw(window);
-            etcBut->Draw(window);
+        if (pet != NULL && pet->isAlive == false) {
+            yourPetDied->Draw(window);
         }
 
+        exitBut->Draw(window);
+     
         
 
     }
@@ -811,9 +822,7 @@ void Game::Draw() {
         }
     }
 
-    if (pet->isAlive == false) {
-        yourPetDied->Draw(window);
-    }
+    
 
 
     window.draw(fpsText);
