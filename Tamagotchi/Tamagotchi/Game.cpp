@@ -582,9 +582,11 @@ void Game::Update() {
     }
     if (keyPress["Z"]) {
         muteSfx = !muteSfx;
+        doodle->muteSFX(muteSfx);
     }
     if (keyPress["X"]) {
         muteBgm = !muteBgm;
+        doodle->muteBGM(muteBgm);
     }
 
     if (gameState == 0 || gameState == -1) {
@@ -694,15 +696,15 @@ void Game::Update() {
             }
             PlaySound(bgm, currentBgm, "BGM");
         }
-        doodle->muteBGM(false);
+
     }
     else {
         bgm.pause();
-        doodle->muteBGM(true);
+
     }
     
     if (!muteSfx) {
-        doodle->muteSFX(false);
+
     }
     else {
         for (int i = 0; i < sfx.size(); ++i) {
@@ -726,7 +728,7 @@ void Game::Update() {
                 
             }
         }
-        doodle->muteSFX(true);
+
     }
 
     //cout << deltaTime << " " << fps << endl;
