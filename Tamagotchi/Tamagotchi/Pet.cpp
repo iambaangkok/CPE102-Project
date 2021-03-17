@@ -57,7 +57,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<float>{ 60, 80, 100 };
 		hpChangeRate = 0.05;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.1;
+		foodChangeRate = 0.05;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -70,7 +70,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<float>{ 80, 90, 100 };
 		hpChangeRate = 0.05;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.1;
+		foodChangeRate = 0.05;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -83,7 +83,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		poopMax = vector<float>{ 30, 25, 20 };
 		hpChangeRate = 0.05;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.1;
+		foodChangeRate = 0.05;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
