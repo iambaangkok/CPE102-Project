@@ -322,7 +322,7 @@ void Game::LoadGame() {
 
         static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "sB", 0, "SHOP", gameState, *shop, *pet, *doodle, *game);
+            , "TOGGLE", 0, "SHOP", gameState, *shop, *pet, *doodle, *game);
         sB.animation.freezeFrame = true;
         shopBut = &sB;
 
@@ -346,20 +346,20 @@ void Game::LoadGame() {
         }
 
         static Button mdB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "mdB", 0, "MAINDISH", gameState, *shop, *pet, *doodle, *game);
+            "Assets/Textures/button_food_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "TOGGLE", 0, "MAINDISH", gameState, *shop, *pet, *doodle, *game);
         mdB.animation.freezeFrame = true;
         maindishBut = &mdB;
 
         static Button dsB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-            "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "dsB", 0, "DESSERT", gameState, *shop, *pet, *doodle, *game);
+            "Assets/Textures/button_candy_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "TOGGLE", 0, "DESSERT", gameState, *shop, *pet, *doodle, *game);
         dsB.animation.freezeFrame = true;
         dessertBut = &dsB;
 
         static Button etcB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "etcB", 0, "ETC", gameState, *shop, *pet, *doodle, *game);
+            , "TOGGLE", 0, "ETC", gameState, *shop, *pet, *doodle, *game);
         etcB.animation.freezeFrame = true;
         etcBut = &etcB;
 
@@ -421,13 +421,13 @@ void Game::LoadGame() {
 
         static Button mbgmB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "BGM", 0, "MUTE", gameState, *shop, *pet, *doodle, *game);
+            , "TOGGLE", 0, "MUTEBGM", gameState, *shop, *pet, *doodle, *game);
         mbgmB.animation.freezeFrame = true;
         mutebgmBut = &mbgmB;
 
         static Button msfxB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "SFX", 0, "MUTE", gameState, *shop, *pet, *doodle, *game);
+            , "TOGGLE", 0, "MUTESFX", gameState, *shop, *pet, *doodle, *game);
         msfxB.animation.freezeFrame = true;
         mutesfxBut = &msfxB;
     }
