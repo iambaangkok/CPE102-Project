@@ -30,7 +30,7 @@ Button::~Button() {
 void Button::Initialize() {
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition, bool &quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx) {
+void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition, bool &quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx, Button& food, Button& candy , Button& etcc) {
 	if (!enabled) {
 		return;
 	}
@@ -45,7 +45,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 
 	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
-		OnClick(muteBgm,muteSfx);
+		OnClick(muteBgm,muteSfx,food,candy,etcc);
 	}
 	else if (IsMouseOver(mousePosition) && mouseHold["M1"]) {
 		OnHold();
@@ -69,7 +69,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 }
 
-void Button::OnClick(bool& muteBgm, bool& muteSfx) {
+void Button::OnClick(bool& muteBgm, bool& muteSfx, Button& food, Button& candy, Button& etcc) {
 	status = 2;
 	if (text == "TOGGLE") {
 		if (isPressed == false) {
@@ -89,13 +89,22 @@ void Button::OnClick(bool& muteBgm, bool& muteSfx) {
 			}
 		}
 		if (type == "MAINDISH") {
-			
+			status = 3;
+			candy.isPressed = false;
+			etcc.isPressed = false;
+			shop->status = "food";
 		}
 		if (type == "DESSERT") {
-
+			status = 3;
+			food.isPressed = false;
+			etcc.isPressed = false;
+			shop->status = "candy";
 		}
 		if (type == "ETC") {
-
+			status = 3;
+			food.isPressed = false;
+			candy.isPressed = false;
+			shop->status = "etc";
 		}
 		if (type == "MUTEBGM") {
 			cout << "MUTEBGM";
@@ -116,7 +125,6 @@ void Button::OnClick(bool& muteBgm, bool& muteSfx) {
 			}
 		}
 	}
-	cout << status << endl;
 }
 
 void Button::OnHover() {
@@ -134,11 +142,16 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 		*gstate = 1;
 	}
 	if (type == "MINIGAME") {
-		if (*gstate == 1) {
-			*gstate = 2;
+		if (pet->isAlive == true) {
+			if (*gstate == 1) {
+				*gstate = 2;
+			}
+			else {
+				*gstate = 1;
+			}
 		}
 		else {
-			*gstate = 1;
+			status = 4;
 		}
 	}
 	if (type == "SETTING") {

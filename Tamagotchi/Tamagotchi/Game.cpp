@@ -620,7 +620,7 @@ void Game::Update() {
 
         if (gameState == -1) {
             for (int i = 0; i < petEggs.size(); ++i) {
-                petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
+                petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
                 if (gameState == 1) {
                     if (isFirstTimePlaying) {
                         isFirstTimePlaying = false;
@@ -660,18 +660,18 @@ void Game::Update() {
             }
         }
 
-        shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        resetBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        mutebgmBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        mutesfxBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
+        shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        resetBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        mutebgmBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        mutesfxBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
 
         shop->Update(deltaTime, mouseWheelDelta);
