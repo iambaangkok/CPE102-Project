@@ -358,7 +358,6 @@ void Doodle::muteSFX(bool mute)
 		dead.setVolume(15.0f);
 		coin.setVolume(15.0f);
 	}
-	
 }
 
 void Doodle::InitSound(float musicVolume, float soundVolume)
@@ -375,7 +374,7 @@ void Doodle::InitSound(float musicVolume, float soundVolume)
 	coin.setBuffer(coinB);
 
 	music.setLoop(true);
-
+	
 	music.setVolume(musicVolume);
 	sound.setVolume(soundVolume);
 	pw.setVolume(soundVolume);
