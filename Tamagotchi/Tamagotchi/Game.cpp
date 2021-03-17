@@ -310,7 +310,7 @@ void Game::LoadGame() {
 
 
         /// Pet
-        static Button evB = Button(Vector2f(580, 135), Vector2f(110, 60), false,
+        static Button evB = Button(Vector2f(590, 150), Vector2f(110, 60), false,
             "Assets/Textures/button_evolve.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "evB", 0, "EVOLVE", gameState, *shop, *pet, *doodle);
         evB.animation.freezeFrame = true;
@@ -394,14 +394,14 @@ void Game::LoadGame() {
         rB.animation.freezeFrame = true;
         rightBut = &rB;
 
-        static Button bacB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        static Button bacB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "bacB", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bacB.animation.freezeFrame = true;
         backBut = &bacB;
 
         static Button slB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            "Assets/Textures/button_select.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "slB", 0, "SELECTBG", gameState, *shop, *pet, *doodle);
         slB.animation.freezeFrame = true;
         selectBut = &slB;
@@ -773,20 +773,14 @@ void Game::Draw() {
         }
     }
     if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
-
-
-        
+  
         shop->Draw(window);
-
-        
 
         if (shop->isOpen == true) {
             maindishBut->Draw(window);
             dessertBut->Draw(window);
             etcBut->Draw(window);
         }
-        
-
 
         DrawUI(window);
 
@@ -833,12 +827,9 @@ void Game::Draw() {
             particleSystems[i]->Draw(window);
         }
     }
-
     
 
-
     window.draw(fpsText);
-
 
     mouseCursor->Draw(window);
 

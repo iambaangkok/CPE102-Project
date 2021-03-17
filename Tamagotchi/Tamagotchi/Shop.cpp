@@ -106,7 +106,7 @@ void Shop::AddItem(string itemName, string texturePath) {
         itemcandy.push_back(newItem);
         vector<Text> thisItemsText;
 
-       for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
         for (int i = 0; i < itemfood.size(); ++i) {
@@ -182,7 +182,7 @@ void Shop::Draw(RenderWindow &window) {
 
 void Shop::Update(float deltaTime, int mouseWheelDelta) {
     if (isOpen) {
-        cout << mouseWheelDelta;
+        //cout << mouseWheelDelta;
         if (mouseWheelDelta != 0){
             scrollbar->SetPosition(positionscrollX,scrollbar->GetPosition().y+0-mouseWheelDelta*deltaTime*speedscroll);
         }
