@@ -430,6 +430,10 @@ void Game::LoadGame() {
             , "TOGGLE", 0, "MUTESFX", gameState, *shop, *pet, *doodle, *game);
         msfxB.animation.freezeFrame = true;
         mutesfxBut = &msfxB;
+
+        static GameObject ypd = GameObject(Vector2f(windowWidth / 2, windowHeight / 2 - 100), Vector2f(590 * 0.8, 290 * 0.8), true, "Assets/Textures/yourpetdied.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        yourPetDied = &ypd;
+
     }
     if (selectedPet == -1 || !isFirstTimePlaying) {
         static GameObject mCS = GameObject(Vector2f(0, 0), Vector2f(64, 64), false, "Assets/Textures/mouseCursor.png", Vector2u(4, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
@@ -806,7 +810,11 @@ void Game::Draw() {
             particleSystems[i]->Draw(window);
         }
     }
-    
+
+    if (pet->isAlive == false) {
+        yourPetDied->Draw(window);
+    }
+
 
     window.draw(fpsText);
 
