@@ -45,12 +45,12 @@ void Doodle::Reset(Pet &pet)
 	land_posy = 800.0f;
 	land->SetPosition(Vector2f(360, land_posy));
 
-	InitBG();
-
 	Logo1.setPosition(Vector2f(-250.0f, 120.0f));
 	Logo2.setPosition(Vector2f(970.0f, 255.0f));
 	
 	Press.setPosition(Vector2f(360.0f, 800.0f));
+
+	InitBG();
 
 	score = 0;
 	scoreText.setString("Score: " + std::to_string(score));
@@ -238,8 +238,10 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 		}
 		InitBGMenu();
 		if (key["SPACE"]) {
-			if (unlocklvl[equip] <= highscore)
+			if (unlocklvl[equip] <= highscore) {
+				equipnow = equip;
 				InitBG();
+			}
 			else
 				sound.play();
 		}
@@ -304,7 +306,7 @@ void Doodle::InitBG()
 		for (int i = 0; i < 3; ++i)
 		{
 			Sprite A;
-			backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(equip) + ".png");
+			backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(equipnow) + ".png");
 			A.setTexture(backgroundT);
 			A.setScale(Vector2f(windowWidth / backgroundT.getSize().x, windowHeight / backgroundT.getSize().y));
 			background.push_back(A);
@@ -315,7 +317,7 @@ void Doodle::InitBG()
 		for (int i = 0; i < 3; ++i)
 		{
 			Sprite A;
-			backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(equip) + ".png");
+			backgroundT.loadFromFile("Assets/Textures/bgex" + std::to_string(equipnow) + ".png");
 			A.setTexture(backgroundT);
 			A.setScale(Vector2f(windowWidth / backgroundT.getSize().x, windowHeight / backgroundT.getSize().y));
 			background[i] = A;

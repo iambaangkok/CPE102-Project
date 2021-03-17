@@ -76,12 +76,13 @@ public :
 	float FadeRate = 2.0f;
 
 	int equip = 1;					// Background customization
-	int no_pic = 4;
+	int equipnow = 1;
+	int no_pic = 5;
 	vector<BlockBP*> BGMenu;
 
 	int landing_ind = 0;
 
 	Text unlocked;
-	int unlocklvl[5] = { 0,0,10,20,30 };
+	int unlocklvl[6] = { -1,0,40,80,120,200 };
 };
 

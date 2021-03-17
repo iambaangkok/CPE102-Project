@@ -19,11 +19,10 @@ public:
 
     void Initialize();//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
-    void Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition, bool& quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx);
+    void Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition
+        , bool& quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx, Button& food, Button& candy, Button& etcc);
 
-    
-
-    void OnClick(bool& muteBgm, bool& muteSfx);
+    void OnClick(bool& muteBgm, bool& muteSfx, Button& food, Button& candy, Button& etcc);
     void OnHover();
     void OnHold();
     void OnRelease(bool& quitGame, int& selectedPet, bool& clearSave);
