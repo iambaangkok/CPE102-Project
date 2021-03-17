@@ -675,13 +675,15 @@ void Game::Update() {
             }
             PlaySound(bgm, currentBgm, "BGM");
         }
+        doodle->muteBGM(false);
     }
     else {
         bgm.pause();
+        doodle->muteBGM(true);
     }
     
     if (!muteSfx) {
-
+        doodle->muteSFX(false);
     }
     else {
         for (int i = 0; i < pet->sfx.size(); ++i) {
@@ -700,6 +702,7 @@ void Game::Update() {
                 
             }
         }
+        doodle->muteSFX(true);
     }
 
     //cout << deltaTime << " " << fps << endl;
