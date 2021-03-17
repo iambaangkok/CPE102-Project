@@ -220,6 +220,8 @@ public:
     vector<Font> fonts;
     float fps = 0;
     Text fpsText;
+
+    GameObject* yourPetDied;
     
 
     /// System variables

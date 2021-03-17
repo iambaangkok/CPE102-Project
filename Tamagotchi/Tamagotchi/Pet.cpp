@@ -134,7 +134,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		sfx[i].setVolume(sfxVariables[i].volume);
 	}
 	
-	particleSystems.push_back(new ParticleSystem(8, 40, -170, 0.5, 2, Vector2f(10, 10), position, "Assets/Textures/ps_pet_airburst_walk.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 999, false));
+	particleSystems.push_back(new ParticleSystem(8, 40, -170, 0.5, 2, Vector2f(10, 10), position, "Assets/Textures/ps_pet_airburst_walk.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, -1, false));
 	particleSystems[0]->gravity = -0.5;
 	particleSystems[0]->spawning_on = false;
 	
@@ -166,7 +166,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		return;
 	}
 
-	if (currentHp < 0) {
+	if (currentHp <= 0) {
 		isAlive = false;
 	}
 
@@ -233,6 +233,10 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 		if (keyPress["F"]) {
 			currentExp = expPerEvolve[currentLevel] - 0.5;
+		}
+		if (keyPress["C"]) {
+			currentFood = 10;
+			currentHp = 0.5;
 		}
 		
 		if (mouseHold["M1"]) {
@@ -415,16 +419,17 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		isMoving = (speed != Vector2f(0, 0));
 		//cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
 	}
+	else {
+		
+	}
+	
 
 	
 	drawLayer = GetSide("BOTTOM");
 
-	
-
 
 	
 	///Set Animation & Play Sound     according to pet state  && ///ParticleSystem
-
 	
 	particleSystems[0]->position = shadow->GetPosition();
 	particleSystems[0]->floorLine = shadow->GetPosition().y + 20;
@@ -458,7 +463,11 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	else {
 		rectangleShape.setScale(Vector2f(-1, 1));
 	}
-	if (isInAir) {
+	if (!isAlive) {
+		animation.freezeFrame = true;
+		animation.SetFrame(5, currentLevel);
+	}
+	else if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
 			animation.SetFrame(3, currentLevel);
