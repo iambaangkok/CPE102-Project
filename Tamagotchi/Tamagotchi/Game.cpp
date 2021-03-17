@@ -351,13 +351,13 @@ void Game::LoadGame() {
         mdB.animation.freezeFrame = true;
         maindishBut = &mdB;
 
-        static Button dsB = Button(Vector2f(435, 200), Vector2f(155, 70), false,
+        static Button dsB = Button(Vector2f(435, 200), Vector2f(145, 70), false,
             "Assets/Textures/button_candy_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "TOGGLE", 0, "DESSERT", gameState, *shop, *pet, *doodle);
         dsB.animation.freezeFrame = true;
         dessertBut = &dsB;
 
-        static Button etcB = Button(Vector2f(585, 200), Vector2f(125, 70), false,
+        static Button etcB = Button(Vector2f(580, 200), Vector2f(130, 70), false,
             "Assets/Textures/button_etc_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "TOGGLE", 0, "ETC", gameState, *shop, *pet, *doodle);
         etcB.animation.freezeFrame = true;

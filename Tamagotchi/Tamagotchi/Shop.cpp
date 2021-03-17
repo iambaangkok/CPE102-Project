@@ -19,16 +19,16 @@ Shop::Shop(int& gstate, Pet& pet, Doodle& doodle) {
     AddItem("Waxwowald","ShopItem13.png", gstate, this, pet, doodle);
     
     AddItem("Cocola", "ShopItem12.png", gstate, this, pet, doodle);
-    AddItem("Bubble tea", "ShopItem2.png", gstate, this, pet, doodle);
-    AddItem("Bubble tea", "ShopItem3.png", gstate, this, pet, doodle);
-    AddItem("Bubble tea","ShopItem4.png", gstate, this, pet, doodle);
+    AddItem("Bubble teaI", "ShopItem2.png", gstate, this, pet, doodle);
+    AddItem("Bubble teaII", "ShopItem3.png", gstate, this, pet, doodle);
+    AddItem("Bubble teaIII","ShopItem4.png", gstate, this, pet, doodle);
     AddItem("Mochi","ShopItem10.png", gstate, this, pet, doodle);
     //AddItem("Dango","ShopItem11.png");
    
 
     AddItem("Evo I","ShopItem1.png", gstate, this, pet, doodle);
     AddItem("Evo II","ShopItem1.png", gstate, this, pet, doodle);
-    AddItem("Evo III","ShopItem1.png", gstate, this, pet, doodle);
+   // AddItem("Evo III","ShopItem1.png", gstate, this, pet, doodle);
 
     textofset.push_back(Vector2f(230, 320));
     textofset.push_back(Vector2f(225, 385));
@@ -205,7 +205,7 @@ void Shop::Draw(RenderWindow &window) {
             }
         }
         
-        bgbar->Draw(window);
+        //bgbar->Draw(window);
         up->Draw(window);
         low->Draw(window);
     }
@@ -231,6 +231,7 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
         float itemOffset = 200;
         float itemTextOffset = 70;
         if (status=="food") {
+            scrollbar->SetPosition(positionscrollX, scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
            
             for (int i = 0; i < itemfood.size(); i++)
             {

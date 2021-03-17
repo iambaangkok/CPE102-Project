@@ -204,7 +204,7 @@ string name)
 		this->poopChange = 10;
 
 	}
-	else if (name == "Bubble tea")
+	else if (name == "Bubble teaI")
 	{
 		type = "candy";
 		itemId = 7;
@@ -219,7 +219,7 @@ string name)
 		this->poopChange = 10;
 
 	}
-	else if (name == "Bubble tea")
+	else if (name == "Bubble teaII")
 	{
 		type = "candy";
 		itemId = 8;
@@ -234,7 +234,7 @@ string name)
 		this->poopChange = 10;
 
 	}
-	else if (name == "Bubble tea")
+	else if (name == "Bubble teaIII")
 	{
 		type = "candy";
 		itemId = 9;
