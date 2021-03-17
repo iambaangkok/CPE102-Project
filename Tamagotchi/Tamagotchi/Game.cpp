@@ -317,7 +317,7 @@ void Game::LoadGame() {
         evolveButton = &evB;
 
         /// Shop
-        static Shop s = Shop();
+        static Shop s = Shop(gameState,*pet,*doodle);
         shop = &s;
 
         static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
@@ -674,7 +674,7 @@ void Game::Update() {
         etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
 
-        shop->Update(deltaTime, mouseWheelDelta);
+        shop->Update(deltaTime, mouseWheelDelta, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
 
         UpdateUI();
         ReInitializeUI();

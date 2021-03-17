@@ -115,7 +115,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 }
 
 Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
-	string name)
+string name)
 	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime) {
 	this->name = name;
 	if (name == "cheeseCake")
@@ -204,7 +204,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "Bubble tea I")
+	else if (name == "Bubble tea")
 	{
 		type = "candy";
 		itemId = 7;
@@ -219,7 +219,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "Bubble tea II")
+	else if (name == "Bubble tea")
 	{
 		type = "candy";
 		itemId = 8;
@@ -234,7 +234,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "Bubble tea III")
+	else if (name == "Bubble tea")
 	{
 		type = "candy";
 		itemId = 9;
