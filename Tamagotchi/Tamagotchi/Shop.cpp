@@ -94,6 +94,7 @@ void Shop::AddItem(string itemName, string texturePath) {
             // SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+60, corePositiony));
             // SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
         }
+
         food.push_back(thisItemsText);
     }
     if (newItem->type == "candy")
@@ -115,9 +116,9 @@ void Shop::AddItem(string itemName, string texturePath) {
     if (newItem->type == "etc")
     {
         itemetc.push_back(newItem);
-       /* vector<Text> thisItemsText;
+        vector<Text> thisItemsText;
 
-        for (int i = 0; i < 5; ++i)
+        /*for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
         SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition+80, corePositiony));
