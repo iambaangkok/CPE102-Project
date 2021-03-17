@@ -394,8 +394,8 @@ void Game::LoadGame() {
         rB.animation.freezeFrame = true;
         rightBut = &rB;
 
-        static Button bacB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+        static Button bacB = Button(Vector2f(380, 890), Vector2f(26 * 7, 140), false,
+            "Assets/Textures/button_back.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "DEFAULT", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bacB.animation.freezeFrame = true;
         backBut = &bacB;
@@ -406,7 +406,7 @@ void Game::LoadGame() {
         bac2B.animation.freezeFrame = true;
         back2But = &bac2B;
 
-        static Button slB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        static Button slB = Button(Vector2f(210, 890), Vector2f(26 * 7, 140), false,
             "Assets/Textures/button_select.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "slB", 0, "SELECTBG", gameState, *shop, *pet, *doodle);
         slB.animation.freezeFrame = true;
@@ -748,11 +748,12 @@ void Game::Update() {
         startBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         exitdoodleBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
 
+        shop->Update(deltaTime, mouseWheelDelta, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
 
-        shop->Update(deltaTime, mouseWheelDelta, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        
 
         UpdateUI();
         ReInitializeUI();
