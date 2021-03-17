@@ -48,10 +48,13 @@ public:
 
 	Vector2f position = Vector2f(0,0);
 	vector<Item*> itemfood;
+
 	vector<Item*> itemcandy;
 	vector<Item*> itemetc;
 	vector<Item*> items;
 	vector<Button*> buy1;
+	vector<Button*> buy2;
+	vector<Button*>buy3;
 	vector<Text> descriptions;
 	vector<Text> prices;
 	GameObject* bg;

@@ -52,8 +52,17 @@ Shop::Shop(int& gstate, Pet& pet, Doodle& doodle) {
 
     for (int i = 0; i < buy1.size(); i++)
     {
-        buy1[i]->SetPosition(corePosition + 290, (i * 180) + 435);
-    }//buy
+        buy1[i]->SetPosition(corePosition + 330, (i * 180) + 440);
+    }
+    for (int i = 0; i < buy2.size(); i++)
+    {
+        buy2[i]->SetPosition(corePosition + 330, (i * 180) + 440);
+
+    }
+    for (int i = 0; i < buy3.size(); i++)
+    {
+        buy3[i]->SetPosition(corePosition + 330, (i * 180) + 440);
+    }
     
 
     static GameObject bgrshop = GameObject(Vector2f(corePosition, 200), Vector2f(400, 70), false, "Assets/Textures/button_manu1.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
@@ -83,8 +92,12 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
    
     Item* newItem = new Item(Vector2f(0, 0), itemPictureSize, false, "Assets/Textures/Shop/" + texturePath, imageCount, start, finish, 1, itemName);
     newItem->itemId;
-    Button* newbutton = new Button(Vector2f (340,520), Vector2f (140,50), false, "Assets/Textures/button_buy.png", Vector2u (5,1), Vector2i (0,0), Vector2i (0,0),  1,"GGEZ",
-        0, "BUYITEM",gstate, *shop, pet, doodle);
+    Button* newbutton = new Button(Vector2f (340,520), Vector2f (70,25), false, "Assets/Textures/button_buy.png", Vector2u (5,1), Vector2i (0,0), Vector2i (0,0),  1,
+        "bB", 0, "BUYITEM",gstate, *this, pet, doodle);
+    newbutton->animation.freezeFrame = true;
+    newbutton->id = newItem->itemId;
+    newbutton->enable = true;
+
     if (newItem->type == "food")
     {
         itemfood.push_back(newItem);
@@ -103,8 +116,8 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
         }
         food.push_back(thisItemsText);
 
+        newbutton->text = newItem->type;
         buy1.push_back(newbutton);
-        cout << "BUY1 " << buy1.size() << endl;
     }
     if (newItem->type == "candy")
     {
@@ -123,6 +136,9 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
         }
 
         candy.push_back(thisItemsText);
+
+        newbutton->text = newItem->type;
+        buy2.push_back(newbutton);
     }
     if (newItem->type == "etc")
     {
@@ -140,11 +156,15 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
             SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition + 280, (i * 180) + 435));
         }
         etc.push_back(thisItemsText);
+
+        newbutton->text = newItem->type;
+        buy3.push_back(newbutton);
     }
 }
 void Shop::Draw(RenderWindow &window) {
     if (isOpen) {
         scrollbar->Draw(window);
+        cout << status << endl;
         if (status == "food") {
   
             for (int i = 0; i < itemfood.size(); i++)
@@ -168,6 +188,9 @@ void Shop::Draw(RenderWindow &window) {
                     window.draw(candy[i][j]);
                 }
             }
+            for (int i = 0; i < buy2.size(); ++i) {
+                buy2[i]->Draw(window);
+            }
         }
         if (status == "etc") {
             for (int i = 0; i < itemetc.size(); i++)
@@ -176,6 +199,9 @@ void Shop::Draw(RenderWindow &window) {
                 for (int j = 0; j < etc[i].size(); ++j) {
                     window.draw(etc[i][j]);
                 }
+            }
+            for (int i = 0; i < buy3.size(); ++i) {
+                buy3[i]->Draw(window);
             }
         }
         
@@ -191,7 +217,6 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
     RenderWindow& window, unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition,
     bool& quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx, Button& foodButton, Button& candyButton, Button& etcc) {
     if (isOpen) {
-        //cout << mouseWheelDelta;
         if (mouseWheelDelta != 0){
             scrollbar->SetPosition(positionscrollX,scrollbar->GetPosition().y+0-mouseWheelDelta*deltaTime*speedscroll);
         }
@@ -220,6 +245,7 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
             }//food
             for (int i = 0; i < buy1.size(); ++i) {
                 buy1[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, foodButton, candyButton, etcc);
+                buy1[i]->SetPosition(corePosition + 330, (i * 180) + 440 - timey+180);
             }
         } 
         if (status=="candy") {
@@ -233,6 +259,10 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
 
                 }
             }//candy
+            for (int i = 0; i < buy2.size(); ++i) {
+                buy2[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, foodButton, candyButton, etcc);
+                buy2[i]->SetPosition(corePosition + 330, (i * 180) + 440 - timey+180);
+            }
         }
         if (status=="etc") {
            
@@ -240,10 +270,14 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
             {
                 itemetc[i]->SetPosition(corePosition, ((i * 180) + corePositiony+200)- timey);
                 for (int j = 0; j < etc[i].size(); ++j)
-                {
+                {   
                     etc[i][j].setPosition(corePosition + textofset[j].x, ((i * 180) + corePositiony - itemTextOffset) - timey + textofset[j].y);
 
                 }
+            }
+            for (int i = 0; i < buy3.size(); ++i) {
+                buy3[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, foodButton, candyButton, etcc);
+                buy3[i]->SetPosition(corePosition + 330, (i * 180) + 440 - timey+180);
             }
         }
         //test1->Update(deltaTime);
