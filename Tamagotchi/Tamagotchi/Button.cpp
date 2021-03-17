@@ -45,25 +45,24 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	rectangleShape.setTextureRect(animation.uvRect);
 
 
-	
-	if (IsMouseOver(mousePosition) && mouseHold["M1"]) {
+	if (IsMouseOver(mousePosition) && mousePress["M1"]) {
+		OnClick();
+	}
+	else if (IsMouseOver(mousePosition) && mouseHold["M1"]) {
 		OnHold();
 	}
+	
 	else if (IsMouseOver(mousePosition)) {
 		OnHover();
 	}
-	else if (IsMouseOver(mousePosition) && mousePress["M1"]) {
-		OnClick();
-	}
 	else {
-		status = 0;
+		if (text == "TOGGLE" && isPressed) status = 3;
+		else status = 0;
 	}
 	if (prevstatus == 3 && status == 1) OnRelease(quitGame, selectedPet);
-	//cout << prevstatus << " " << status << endl;
 	prevstatus = status;
 
 	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 4;
-
 	animation.SetFrame(Vector2i(status, 0));
 
 
@@ -71,10 +70,22 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 
 void Button::OnClick() {
 	status = 2;
+	if (text == "TOGGLE") {
+		if (isPressed == false) {
+			isPressed = true;
+			status = 3;
+		}
+		else{
+			isPressed = false;
+			status = 0;
+		}
+	}
+	cout << status << endl;
 }
 
 void Button::OnHover() {
-	status = 1;
+	if (isPressed == false) status = 1;
+	else status = 3;
 }
 
 void Button::OnHold() {
@@ -82,13 +93,9 @@ void Button::OnHold() {
 }
 
 void Button::OnRelease(bool& quitGame, int& selectedPet) {
-	status = 0;
+	if(text != "TOGGLE") status = 0;
 	if (type == "MAIN") {
 		*gstate = 1;
-	}
-	if (type == "SHOP") {
-		if (shop->isOpen == false) shop->isOpen = true;
-		else shop->isOpen = false;
 	}
 	if (type == "MINIGAME") {
 		if (*gstate == 1) {
@@ -106,15 +113,6 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 		shop->items[id - 1]->UseItem(pet);
 	}
 	if (type == "EXIT") quitGame = true;
-	if (type == "MAINDISH") {
-		
-	}
-	if (type == "DESSERT") {
-
-	}
-	if (type == "ETC") {
-
-	}
 	if (type == "PETEGG") {
 		cout << "Pet ID = " << id << endl;
 		selectedPet = id;
@@ -145,14 +143,48 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 	if (type == "RESET") {
 		game->ClearSave();
 	}
-	if (type == "MUTE") {
-		if (text == "BGM") {
+	if (text == "TOGGLE") {
+		if (type == "SHOP") {
+			if (shop->isOpen == false) {
+				shop->isOpen = true;
+				status = 2;
+			}
+			else {
+				shop->isOpen = false;
+				status = 0;
+			}
+		}
+		if (type == "MAINDISH") {
+			
+		}
+		if (type == "DESSERT") {
 
 		}
-		else if (text == "SFX") {
+		if (type == "ETC") {
 
 		}
-	}
+		if (type == "MUTEBGM") {
+			if (game->muteBgm == false) {
+				game->muteBgm = true;
+				status = 2;
+			}
+			else {
+				game->muteBgm = false;
+				status = 0;
+			}
+		}
+		if (text == "MUTESFX") {
+			if (game->muteSfx == false) {
+				game->muteSfx = true;
+				status = 2;
+			}
+			else{
+				game->muteSfx = false;
+				status = 0;
+			}
+		}
+	}	
+	
 }
 
 
