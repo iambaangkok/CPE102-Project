@@ -166,7 +166,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		return;
 	}
 
-	if (currentHp < 0) {
+	if (currentHp <= 0) {
 		isAlive = false;
 	}
 
@@ -233,6 +233,10 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 		if (keyPress["F"]) {
 			currentExp = expPerEvolve[currentLevel] - 0.5;
+		}
+		if (keyPress["C"]) {
+			currentFood = 10;
+			currentHp = 0.5;
 		}
 		
 		if (mouseHold["M1"]) {
@@ -415,16 +419,17 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		isMoving = (speed != Vector2f(0, 0));
 		//cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
 	}
+	else {
+		
+	}
+	
 
 	
 	drawLayer = GetSide("BOTTOM");
 
-	
-
 
 	
 	///Set Animation & Play Sound     according to pet state  && ///ParticleSystem
-
 	
 	particleSystems[0]->position = shadow->GetPosition();
 	particleSystems[0]->floorLine = shadow->GetPosition().y + 20;
@@ -458,7 +463,11 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	else {
 		rectangleShape.setScale(Vector2f(-1, 1));
 	}
-	if (isInAir) {
+	if (!isAlive) {
+		animation.freezeFrame = true;
+		animation.SetFrame(4, currentLevel);
+	}
+	else if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
 			animation.SetFrame(3, currentLevel);
