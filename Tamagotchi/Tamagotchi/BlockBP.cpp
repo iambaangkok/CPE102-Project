@@ -13,6 +13,7 @@ BlockBP::BlockBP(string filepath)
 	Border.SetDimensions(Vector2f(size_x + offset , size_y + offset));
 	Border.SetTexture("Assets/Textures/Orange.png");
 	Border.SetOrigin(Vector2f((size_x + offset) / 2.0f, (size_y + offset) / 2.0f));
+	
 }
 
 BlockBP::~BlockBP()
@@ -23,10 +24,12 @@ void BlockBP::SetPos(Vector2f pos)
 {
 	Border.SetPosition(pos);
 	Object.SetPosition(pos);
+	text.setPosition(pos);
 }
 
 void BlockBP::Draw(RenderWindow& window)
 {
 	Border.Draw(window);
 	Object.Draw(window);
+	window.draw(text);
 }

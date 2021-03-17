@@ -30,6 +30,9 @@ public :
 	void SetSpriteCenter(Sprite &S);
 	void SetTextCenter(Text& T);
 
+	void muteBGM(bool mute);
+	void muteSFX(bool mute);
+
 	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover , 3 - Background Customization
 	int* maingame_state;
 
@@ -42,8 +45,8 @@ public :
 	Font font;
 	Text scoreText , highscoreText , money;
 	vector<Sprite> background; 
-	Sprite Logo1, Logo2 , Press , YOUDIED , SelectBG;
-	Texture backgroundT , Logo1T, Logo2T , PressT , YOUDIEDT , SelectBGT;
+	Sprite Logo1, Logo2 , Press , YOUDIED , SelectBG , Lock;
+	Texture backgroundT , Logo1T, Logo2T , PressT , YOUDIEDT , SelectBGT , LockT;
 
 	vector<float> background_posy;
 	float land_posy;
@@ -76,5 +79,9 @@ public :
 	int no_pic = 4;
 	vector<BlockBP*> BGMenu;
 
+	int landing_ind = 0;
+
+	Text unlocked;
+	int unlocklvl[5] = { 0,0,10,20,30 };
 };
 

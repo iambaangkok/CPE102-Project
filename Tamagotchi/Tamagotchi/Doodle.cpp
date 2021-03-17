@@ -11,9 +11,9 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Power = new PowerUp("Assets/Textures/PowerUp.png", Vector2f(19.0f * 2, 34.0f * 2));
 	CoinP = new PowerUp("Assets/Textures/Coin.png" , Vector2f(34.0f * 2, 34.0f * 2));
 	land = new GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
-	landing = new ParticleSystem(20, 180, 90, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-		Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f, windowHeight / 2 + 300, 99999, false, true);
-	//landing->spawning_on = false;
+	landing = new ParticleSystem(20, 90, 270, 0.25, 7, Vector2f(10, 10), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/Yellow.png",
+		Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.25f, windowHeight, 1, true, true);
+	landing->gravity = 200.0f;
 
 	InitBGMenu();
 	InitBG();
@@ -103,8 +103,6 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 	}
 	else if (gstate == 1) // Playing
 	{
-		
-
 		scoreText.setString("Score: " + std::to_string(score / score_rate));
 		money.setString("Money: " + std::to_string(Money + MoneyPickup));
 
@@ -137,7 +135,9 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			{
 				Platform->platformPos[i].y -= Alpha->dy * deltaTime;
 				land_posy -= Alpha->dy * deltaTime * 0.15f ;
-
+				if (i == landing_ind) {
+					landing->position = Platform->platformPos[i];
+				}
 				if (Platform->platformPos[i].y > windowHeight)
 				{
 					if (!Platform->enabled[i])
@@ -160,7 +160,9 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			float change = 0.0f;
 			if ((Platform->enabled[i] || !Platform->pass[i]) && Alpha->CheckCollision(Platform->platformPos[i], Platform->platform.GetSize() / 2.0f) && Alpha->dy > 0.0f)
 			{
-				landing->spawning_on = true;
+				landing->tangKhaTuaPlae = false;
+				landing->position = Platform->platformPos[i];
+				landing_ind = i;
 				sound.play();
 				change = max(change, 1700.0f);
 			}
@@ -234,13 +236,13 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			sound.play();
 			gstate = 0;
 		}
-		if (key["A"]) 
-			equip++;
-		if (key["D"]) 
-			equip--;
 		InitBGMenu();
-		if (key["SPACE"]) 
-			InitBG();
+		if (key["SPACE"]) {
+			if (unlocklvl[equip] <= highscore)
+				InitBG();
+			else
+				sound.play();
+		}
 	}
 }
 
@@ -249,9 +251,7 @@ void Doodle::Draw(RenderWindow& window)
 
 	if (*maingame_state != 2)
 		return;
-
-	landing->Draw(window);
-
+	
 	for (int i = 0; i < 3; ++i)
 		window.draw(background[i]);
 	land->Draw(window);
@@ -284,12 +284,18 @@ void Doodle::Draw(RenderWindow& window)
 	}
 
 	if (gstate == 3) {
-
 		BGMenu[1]->Draw(window);
 		BGMenu[0]->Draw(window);
 		BGMenu[2]->Draw(window);
 		window.draw(SelectBG);
+		if (unlocklvl[equip] > highscore) {
+			window.draw(unlocked);
+			window.draw(Lock);
+		}
+			
 	}
+
+	landing->Draw(window);
 }
 
 void Doodle::InitBG()
@@ -328,6 +334,31 @@ void Doodle::SetTextCenter(Text& T)
 {
 	FloatRect bound = T.getLocalBounds();
 	T.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+}
+
+void Doodle::muteBGM(bool mute)
+{
+	if (mute)
+		music.setVolume(0.0f);
+	else
+		music.setVolume(15.0f);
+}
+
+void Doodle::muteSFX(bool mute)
+{
+	if (mute) {
+		sound.setVolume(0.0f);
+		pw.setVolume(0.0f);
+		dead.setVolume(0.0f);
+		coin.setVolume(0.0f);
+	}
+	else {
+		sound.setVolume(15.0f);
+		pw.setVolume(15.0f);
+		dead.setVolume(15.0f);
+		coin.setVolume(15.0f);
+	}
+	
 }
 
 void Doodle::InitSound(float musicVolume, float soundVolume)
@@ -378,6 +409,14 @@ void Doodle::InitBGMenu()
 		BGMenu[0]->Object.SetTexture("Assets/Textures/bgex" + std::to_string(equipL) + ".png");
 		BGMenu[2]->Object.SetTexture("Assets/Textures/bgex" + std::to_string(equipR) + ".png");
 	}
+	unlocked.setFont(font);
+	unlocked.setString("Get < Highscore: " + to_string(unlocklvl[equip]) + " > to unlock.");
+	FloatRect bound = unlocked.getLocalBounds();
+	unlocked.setOrigin(Vector2f(bound.left + bound.width / 2.0f, bound.top + bound.height / 2.0f));
+	unlocked.setPosition(Vector2f(360.0f, 520.0f));
+	unlocked.setOutlineColor(Color::Black);
+	unlocked.setOutlineThickness(2.0f);
+	unlocked.setScale(Vector2f(0.7f,0.7f));
 }
 
 void Doodle::InitSprite()
@@ -406,6 +445,12 @@ void Doodle::InitSprite()
 	SetSpriteCenter(SelectBG);
 	SelectBG.setScale(Vector2f(8.0f, 8.0f));
 	SelectBG.setPosition(Vector2f(360.0f, 100.0f));
+
+	LockT.loadFromFile("Assets/Textures/Lock.png");
+	Lock.setTexture(LockT);
+	SetSpriteCenter(Lock);
+	Lock.setScale(Vector2f(6.0f, 6.0f));
+	Lock.setPosition(Vector2f(360.0f, 440.0f));
 
 }
 

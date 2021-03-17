@@ -129,7 +129,7 @@ void Shop::Draw(RenderWindow &window) {
 
 void Shop::Update(float deltaTime, int mouseWheelDelta) {
     if (isOpen) {
-        cout << mouseWheelDelta;
+        //cout << mouseWheelDelta;
         if (mouseWheelDelta != 0){
             scrollbar->SetPosition(positionscrollX,scrollbar->GetPosition().y+0-mouseWheelDelta*deltaTime*speedscroll);
         }

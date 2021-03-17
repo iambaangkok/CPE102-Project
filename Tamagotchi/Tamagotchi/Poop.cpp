@@ -73,6 +73,7 @@ bool Poop::Update(float deltaTime, RenderWindow& window, unordered_map<string, b
 void Poop::OnClick() {
 	nClickToDestroy--;
 	sfx[0].play();
+	
 }
 
 void Poop::OnHover() {
