@@ -364,19 +364,19 @@ void Game::LoadGame() {
         etcBut = &etcB;
 
         /// Doodle
-        static Button stB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        static Button stB = Button(Vector2f(295, 360), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "stB", 0, "STARTDOODLE", gameState, *shop, *pet, *doodle);
         stB.animation.freezeFrame = true;
         startBut = &stB;
 
-        static Button edB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        static Button edB = Button(Vector2f(295, 700), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "edB", 0, "EXITDOODLE", gameState, *shop, *pet, *doodle);
         edB.animation.freezeFrame = true;
         exitdoodleBut = &edB;
 
-        static Button cbgB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
+        static Button cbgB = Button(Vector2f(295, 530), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "cbgB", 0, "CHOOSEBG", gameState, *shop, *pet, *doodle);
         cbgB.animation.freezeFrame = true;
@@ -394,11 +394,17 @@ void Game::LoadGame() {
         rB.animation.freezeFrame = true;
         rightBut = &rB;
 
-        static Button bacB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
+        static Button bacB = Button(Vector2f(380, 800), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "bacB", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
+            , "DEFAULT", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bacB.animation.freezeFrame = true;
         backBut = &bacB;
+
+        static Button bac2B = Button(Vector2f(380, 500), Vector2f(130, 140), false,
+            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "GAMEOVER", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
+        bac2B.animation.freezeFrame = true;
+        back2But = &bac2B;
 
         static Button slB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_select.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
@@ -659,7 +665,52 @@ void Game::Update() {
                 particleSystems.push_back(new ParticleSystem(20, 180, 0, 0.5, 4, Vector2f(10, 10), poops[i]->GetPosition(), "Assets/Textures/ps_poop_clickedon.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, poops[i]->floorLine+25, 1, true, true));
             }
         }
+        if (gameState == 1) {
+            shopBut->enable = true;
+            miniBut->enable = true;
+            exitBut->enable = true;
+            resetBut->enable = true;
+            mutebgmBut->enable = true;
+            mutesfxBut->enable = true;
+            evolveButton->enable = true;
 
+            leftBut->enable = false;
+            rightBut->enable = false;
+            selectBut->enable = false;
+            chooseBut->enable = false;
+            backBut->enable = false;
+            back2But->enable = false;
+            startBut->enable = false;
+            exitdoodleBut->enable = false;
+            maindishBut->enable = false;
+            dessertBut->enable = false;
+            etcBut->enable = false;
+        }
+        else if (gameState == 2) {
+            leftBut->enable = true;
+            rightBut->enable = true;
+            selectBut->enable = true;
+            chooseBut->enable = true;
+            backBut->enable = true;
+            back2But->enable = true;
+            startBut->enable = true;
+            exitdoodleBut->enable = true;
+
+            shopBut->enable = false;
+            miniBut->enable = false;
+            exitBut->enable = false;
+            resetBut->enable = false;
+            mutebgmBut->enable = false;
+            mutesfxBut->enable = false;
+            evolveButton->enable = false;
+        }
+        
+        if (shop->isOpen == true) {
+           maindishBut->enable = true;
+           dessertBut->enable = true;
+           etcBut->enable = true;
+        }
+        
         shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
@@ -667,15 +718,21 @@ void Game::Update() {
         mutebgmBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         mutesfxBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+
+        doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
         leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         selectBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        chooseBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        backBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        back2But->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        startBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        exitdoodleBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+
+        shop->Update(deltaTime, mouseWheelDelta);
         maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
-        doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
-
-        shop->Update(deltaTime, mouseWheelDelta);
 
         UpdateUI();
         ReInitializeUI();
@@ -814,9 +871,20 @@ void Game::Draw() {
         exitBut->Draw(window);
      
         doodle->Draw(window);
+        cout << gameState << " " << doodle->gstate << endl;
+        if (doodle->gstate == 0) {
+            chooseBut->Draw(window);
+            startBut->Draw(window);
+            exitdoodleBut->Draw(window);
+        }
+
+        if (doodle->gstate == 2) {
+            back2But->Draw(window);
+        }
 
         if (doodle->gstate == 3) {
             selectBut->Draw(window);
+            backBut->Draw(window);
             leftBut->Draw(window);
             rightBut->Draw(window);
         }
