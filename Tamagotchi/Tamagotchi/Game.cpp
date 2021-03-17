@@ -669,6 +669,7 @@ void Game::Update() {
         evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        selectBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
@@ -784,11 +785,7 @@ void Game::Draw() {
             dessertBut->Draw(window);
             etcBut->Draw(window);
         }
-        doodle->Draw(window);
-        if (doodle->gstate == 3) {
-            leftBut->Draw(window);
-            rightBut->Draw(window);
-        }
+        
 
 
         DrawUI(window);
@@ -822,7 +819,13 @@ void Game::Draw() {
 
         exitBut->Draw(window);
      
-        
+        doodle->Draw(window);
+
+        if (doodle->gstate == 3) {
+            selectBut->Draw(window);
+            leftBut->Draw(window);
+            rightBut->Draw(window);
+        }
 
     }
     for (int i = 0; i < particleSystems.size(); ++i) {

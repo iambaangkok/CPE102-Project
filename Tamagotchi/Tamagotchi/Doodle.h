@@ -83,6 +83,6 @@ public :
 	int landing_ind = 0;
 
 	Text unlocked;
-	int unlocklvl[6] = { -1,0,40,80,120,200 };
+	int unlocklvl[6] = { -1,0,20,40,80,160 };
 };
 

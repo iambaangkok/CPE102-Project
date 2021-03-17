@@ -187,7 +187,10 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 		doodle->gstate = 0;
 	}
 	if (type == "SELECTBG") {
-		doodle->InitBG();
+		if (doodle->unlocklvl[doodle->equip] <= doodle->highscore) {
+			doodle->equipnow = doodle->equip;
+			doodle->InitBG();
+		}
 	}
 	if (type == "RESET") {
 		clearSave = true;
