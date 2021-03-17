@@ -31,7 +31,7 @@ void Button::Initialize() {
 }//Runs before everything else in every game loop/ reset variable that needs to be reset every game loop
 
 void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition, bool &quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx, Button& food, Button& candy , Button& etcc) {
-	if (!enabled) {
+	if (!enable) {
 		return;
 	}
 	animation.Update(deltaTime);
@@ -169,13 +169,17 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 	}
 	if (type == "STARTDOODLE") {
 		doodle->gstate = 1;
+		doodle->music.play();
+		//doodle->sound.play();
 	}
 	if (type == "EXITDOODLE") {
 		doodle->gstate = -1;
+		doodle->pass = true;
 		*gstate = 1;
 	}
 	if (type == "CHOOSEBG") {
 		doodle->gstate = 3;
+		//doodle->sound.play();
 	}
 	if (type == "LEFTDOODLE") {
 		doodle->equip--;
@@ -184,10 +188,27 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 		doodle->equip++;
 	}
 	if (type == "BACKDOODLE") {
-		doodle->gstate = 0;
+		if (text == "DEFAULT") {
+			doodle->gstate = 0;
+			//doodle->pass = true;
+			//doodle->sound.play();
+		}
+		if (text == "GAMEOVER") {
+			doodle->music.stop();
+			doodle->gstate = -1;
+			pet->money += doodle->Money + doodle->MoneyPickup;
+			doodle->pass = true;
+			*gstate = 1;
+		}
 	}
 	if (type == "SELECTBG") {
-		doodle->InitBG();
+		if (doodle->unlocklvl[doodle->equip] <= doodle->highscore) {
+			doodle->equipnow = doodle->equip;
+			doodle->InitBG();
+		}
+		else {
+			//doodle->sound.play();
+		}
 	}
 	if (type == "RESET") {
 		clearSave = true;

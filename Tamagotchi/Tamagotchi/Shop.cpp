@@ -111,7 +111,7 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
         itemcandy.push_back(newItem);
         vector<Text> thisItemsText;
 
-       for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
         for (int i = 0; i < itemfood.size(); ++i) {
@@ -191,7 +191,7 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
     RenderWindow& window, unordered_map<string, bool>& mousePress, unordered_map<string, bool>& mouseHold, Vector2i& mousePosition,
     bool& quitGame, int& selectedPet, bool& clearSave, bool& muteBgm, bool& muteSfx, Button& foodButton, Button& candyButton, Button& etcc) {
     if (isOpen) {
-        cout << mouseWheelDelta;
+        //cout << mouseWheelDelta;
         if (mouseWheelDelta != 0){
             scrollbar->SetPosition(positionscrollX,scrollbar->GetPosition().y+0-mouseWheelDelta*deltaTime*speedscroll);
         }

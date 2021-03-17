@@ -161,6 +161,7 @@ public:
     Button* leftBut;
     Button* rightBut;
     Button* backBut;
+    Button* back2But;
     Button* selectBut;
     Doodle* doodle;
 

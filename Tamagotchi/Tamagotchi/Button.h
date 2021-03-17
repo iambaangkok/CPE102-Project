@@ -38,6 +38,7 @@ public:
     Pet* pet;
     Doodle* doodle;
     bool isPressed = false;
+    bool enable = false;
     int id;
 };
 

@@ -35,6 +35,7 @@ public :
 
 	int gstate = -1;										// 0 - Start, 1 - Playing, 2 - Gameover , 3 - Background Customization
 	int* maingame_state;
+	bool pass = true;
 
 	GravityObject* Alpha;
 	PlatformObject* Platform;
@@ -45,8 +46,8 @@ public :
 	Font font;
 	Text scoreText , highscoreText , money;
 	vector<Sprite> background; 
-	Sprite Logo1, Logo2 , Press , YOUDIED , SelectBG , Lock;
-	Texture backgroundT , Logo1T, Logo2T , PressT , YOUDIEDT , SelectBGT , LockT;
+	Sprite Logo1, Logo2 , YOUDIED , SelectBG , Lock;
+	Texture backgroundT , Logo1T, Logo2T , YOUDIEDT , SelectBGT , LockT;
 
 	vector<float> background_posy;
 	float land_posy;
@@ -83,6 +84,6 @@ public :
 	int landing_ind = 0;
 
 	Text unlocked;
-	int unlocklvl[6] = { -1,0,40,80,120,200 };
+	int unlocklvl[6] = { -1,0,20,40,80,160 };
 };
 
