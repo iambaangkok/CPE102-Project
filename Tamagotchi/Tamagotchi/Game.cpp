@@ -394,19 +394,19 @@ void Game::LoadGame() {
         rB.animation.freezeFrame = true;
         rightBut = &rB;
 
-        static Button bacB = Button(Vector2f(380, 890), Vector2f(26 * 7, 140), false,
+        static Button bacB = Button(Vector2f(390, 890), Vector2f(26 * 7, 140), false,
             "Assets/Textures/button_back.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "DEFAULT", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bacB.animation.freezeFrame = true;
         backBut = &bacB;
 
-        static Button bac2B = Button(Vector2f(360 - 13 * 7, 570), Vector2f(26 * 7, 140), false,
+        static Button bac2B = Button(Vector2f(360 - 13 * 7, 585), Vector2f(26 * 7, 140), false,
             "Assets/Textures/button_exit.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "GAMEOVER", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
         bac2B.animation.freezeFrame = true;
         back2But = &bac2B;
 
-        static Button slB = Button(Vector2f(210, 890), Vector2f(26 * 7, 140), false,
+        static Button slB = Button(Vector2f(200, 890), Vector2f(26 * 7, 140), false,
             "Assets/Textures/button_select.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "slB", 0, "SELECTBG", gameState, *shop, *pet, *doodle);
         slB.animation.freezeFrame = true;
