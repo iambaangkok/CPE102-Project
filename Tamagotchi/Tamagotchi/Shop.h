@@ -27,7 +27,7 @@ public:
 	void AddItem(string,string);
 	
 	int speedscroll = 600;
-	bool isOpen = true;
+	bool isOpen = false;
 	int windowWidth = 720;
 	int windowHeight = 1040;
 	int topscroll = 200;
@@ -40,7 +40,6 @@ public:
 	int heightcandy = 4 * 180;
 	int heightetc = 4 * 180;
 	string status = "food";
-	
 	Font font;
 	Color col_BLACK1 = Color(24, 20, 37);
 
@@ -59,9 +58,9 @@ public:
 	GameObject* low;
 	vector<Text> text;
 	//vector<vector<Text>> text;
-	//vector<vector<Text>> food;
-	//vector<vector<Text>> candy;
-	//vector<vector<Text>> etc;
+	vector<vector<Text>> food;
+	vector<vector<Text>> candy;
+	vector<vector<Text>> etc;
 	vector<Button*> buttons;//0 = food, 1 = dessert, 2 = booster;
 
 };

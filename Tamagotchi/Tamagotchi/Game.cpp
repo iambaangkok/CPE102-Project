@@ -42,17 +42,17 @@ void Game::LoadPetEgg() {
     petEggs.push_back(&petEgg1);
     static Button petEgg2 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_02_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 1);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
     petEgg2.animation.freezeFrame = true;
     petEggs.push_back(&petEgg2);
     static Button petEgg3 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_03_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 2);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
     petEgg3.animation.freezeFrame = true;
     petEggs.push_back(&petEgg3);
     static Button petEgg4 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_04_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 3);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
     petEgg4.animation.freezeFrame = true;
     petEggs.push_back(&petEgg4);
 
@@ -431,7 +431,7 @@ void Game::LoadGame() {
         msfxB.animation.freezeFrame = true;
         mutesfxBut = &msfxB;
 
-        static GameObject ypd = GameObject(Vector2f(windowWidth / 2, windowHeight / 2 - 100), Vector2f(590 * 0.8, 290 * 0.8), true, "Assets/Textures/yourpetdied.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
+        static GameObject ypd = GameObject(Vector2f(0,0), Vector2f(windowWidth,windowHeight), false, "Assets/Textures/yourpetdied.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1);
         yourPetDied = &ypd;
 
     }
@@ -773,9 +773,33 @@ void Game::Draw() {
     }
     if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
 
+
         
         shop->Draw(window);
+
+        
+
+        if (shop->isOpen == true) {
+            maindishBut->Draw(window);
+            dessertBut->Draw(window);
+            etcBut->Draw(window);
+        }
+        doodle->Draw(window);
+        if (doodle->gstate == 3) {
+            leftBut->Draw(window);
+            rightBut->Draw(window);
+        }
+
+
         DrawUI(window);
+
+        shopBut->Draw(window);
+        miniBut->Draw(window);
+        resetBut->Draw(window);
+        mutebgmBut->Draw(window);
+        mutesfxBut->Draw(window);
+        evolveButton->Draw(window);
+
         vector<GameObject*> drawQueue;
         drawQueue.push_back(pet);
         for (int i = 0; i < poops.size(); ++i) {
@@ -792,25 +816,12 @@ void Game::Draw() {
 
         }
 
-        shopBut->Draw(window);
-        miniBut->Draw(window);
-        exitBut->Draw(window);
-        resetBut->Draw(window);
-        mutebgmBut->Draw(window);
-        mutesfxBut->Draw(window);
-        evolveButton->Draw(window);
-        if (shop->isOpen == true) {
-            maindishBut->Draw(window);
-            dessertBut->Draw(window);
-            etcBut->Draw(window);
+        if (pet != NULL && pet->isAlive == false) {
+            yourPetDied->Draw(window);
         }
-        doodle->Draw(window);
-        if (doodle->gstate == 3) {
-            leftBut->Draw(window);
-            rightBut->Draw(window);
-        }
-        
 
+        exitBut->Draw(window);
+     
         
 
     }
@@ -820,9 +831,7 @@ void Game::Draw() {
         }
     }
 
-    if (pet->isAlive == false) {
-        yourPetDied->Draw(window);
-    }
+    
 
 
     window.draw(fpsText);

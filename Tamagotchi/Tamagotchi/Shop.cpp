@@ -83,48 +83,49 @@ void Shop::AddItem(string itemName, string texturePath) {
     {
         itemfood.push_back(newItem);
 
-        /*vector<Text> thisItemsText;
+        vector<Text> thisItemsText;
 
         for(int i = 0  ; i < 5 ;++i)
             thisItemsText.push_back(Text());
+        for (int i = 0; i < itemfood.size();++i) {
+            SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition + 80, (i * 180) + 470));
+            // SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition+50, corePositiony));
+            // SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition+55, corePositiony));
+            // SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+60, corePositiony));
+            // SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
+        }
 
-        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(0, 0));
-
-        food.push_back(thisItemsText);*/
+        food.push_back(thisItemsText);
     }
     if (newItem->type == "candy")
     {
         itemcandy.push_back(newItem);
-        /*vector<Text> thisItemsText;
+        vector<Text> thisItemsText;
 
-        for (int i = 0; i < 5; ++i)
+       /* for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
-        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(0, 0));
+        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition+80, corePositiony));
+        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition+50, corePositiony));
+        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition+55, corePositiony));
+        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+60, corePositiony));
+        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
 
         candy.push_back(thisItemsText);*/
     }
     if (newItem->type == "etc")
     {
         itemetc.push_back(newItem);
-       /* vector<Text> thisItemsText;
+        vector<Text> thisItemsText;
 
-        for (int i = 0; i < 5; ++i)
+        /*for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
-        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(0, 0));
-        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(0, 0));
+        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition+80, corePositiony));
+        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition+50, corePositiony));
+        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition+55, corePositiony));
+        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+60, corePositiony));
+        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
 
         etc.push_back(thisItemsText);*/
     }
@@ -139,7 +140,9 @@ void Shop::Draw(RenderWindow &window) {
             for (int i = 0; i < itemfood.size(); i++)
             {
                 itemfood[i]->Draw(window);
-                
+                for (int j = 0; j < food[i].size(); ++j) {
+                    window.draw(food[i][j]);
+                }
             }
            
         }
@@ -147,14 +150,18 @@ void Shop::Draw(RenderWindow &window) {
             for (int i = 0; i < itemcandy.size(); i++)
             {
                 itemcandy[i]->Draw(window);
-               // vector<Text>candy[i]->Draw(window);
+                for (int j = 0; j < candy[i].size(); ++j) {
+                    window.draw(candy[i][j]);
+                }
             }
         }
         if (status == "etc") {
             for (int i = 0; i < itemetc.size(); i++)
             {
                 itemetc[i]->Draw(window);
-                //vector<Text>etc[i]->Draw(window);
+                for (int j = 0; j < etc[i].size(); ++j) {
+                    window.draw(etc[i][j]);
+                }
             }
         }
         
