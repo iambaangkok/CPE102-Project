@@ -231,7 +231,7 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
         float itemOffset = 200;
         float itemTextOffset = 70;
         if (status=="food") {
-            scrollbar->SetPosition(positionscrollX, scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+            
            
             for (int i = 0; i < itemfood.size(); i++)
             {
