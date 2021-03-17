@@ -134,7 +134,7 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		sfx[i].setVolume(sfxVariables[i].volume);
 	}
 	
-	particleSystems.push_back(new ParticleSystem(8, 40, -170, 0.5, 2, Vector2f(10, 10), position, "Assets/Textures/ps_pet_airburst_walk.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 999, false));
+	particleSystems.push_back(new ParticleSystem(8, 40, -170, 0.5, 2, Vector2f(10, 10), position, "Assets/Textures/ps_pet_airburst_walk.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, -1, false));
 	particleSystems[0]->gravity = -0.5;
 	particleSystems[0]->spawning_on = false;
 	
