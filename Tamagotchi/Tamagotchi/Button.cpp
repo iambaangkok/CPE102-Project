@@ -62,7 +62,42 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	if (prevstatus == 3 && status == 1) OnRelease(quitGame, selectedPet, clearSave);
 	prevstatus = status;
 
-	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 4;
+	if (type == "BUYITEM") {
+		if (text == "food") {
+			for (int i = 0; i < shop->itemfood.size(); ++i) {
+				if (shop->itemfood[i]->itemId == id) {
+					if (pet->money >= shop->itemfood[i]->price) {
+					}
+					else {
+						status = 4;
+					}
+				}
+			}
+		}
+		else if (text == "candy") {
+			for (int i = 0; i < shop->itemcandy.size(); ++i) {
+				if (shop->itemcandy[i]->itemId == id) {
+					if (pet->money >= shop->itemcandy[i]->price) {
+					}
+					else {
+						status = 4;
+					}
+				}
+			}
+		}
+		else if (text == "etc") {
+			for (int i = 0; i < shop->itemetc.size(); ++i) {
+				if (shop->itemetc[i]->itemId == id) {
+					if (pet->money >= shop->itemetc[i]->price) {
+					}
+					else {
+						status = 4;
+					}
+				}
+			}
+		}
+	}
+	
 	if (type == "EVOLVE" && pet->currentExp < pet->expPerEvolve[pet->currentLevel] && pet->ateEvolveStone == false) status = 4;
 	animation.SetFrame(Vector2i(status, 0));
 
@@ -157,9 +192,37 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 	if (type == "SETTING") {
 		*gstate = 3;
 	}
-	if (type == "BUYITEM" && pet->money >= shop->items[id - 1]->price) {
-		pet->money -= shop->items[id - 1]->price;
-		shop->items[id - 1]->UseItem(pet);
+	if (type == "BUYITEM") {
+		if (text == "food") {
+			for (int i = 0; i < shop->itemfood.size(); ++i) {
+				if (shop->itemfood[i]->itemId == id) {
+					if (pet->money >= shop->itemfood[i]->price) {
+						pet->money -= shop->itemfood[i]->price;
+						shop->itemfood[i]->UseItem(pet);
+					}
+				}
+			}
+		}
+		else if (text == "candy") {
+			for (int i = 0; i < shop->itemcandy.size(); ++i) {
+				if (shop->itemcandy[i]->itemId == id) {
+					if (pet->money >= shop->itemcandy[i]->price) {
+						pet->money -= shop->itemcandy[i]->price;
+						shop->itemcandy[i]->UseItem(pet);
+					}
+				}
+			}
+		}
+		else if (text == "etc") {
+			for (int i = 0; i < shop->itemetc.size(); ++i) {
+				if (shop->itemetc[i]->itemId == id) {
+					if (pet->money >= shop->itemetc[i]->price) {
+						pet->money -= shop->itemetc[i]->price;
+						shop->itemetc[i]->UseItem(pet);
+					}
+				}
+			}
+		}
 	}
 	if (type == "EXIT") quitGame = true;
 	if (type == "PETEGG") {

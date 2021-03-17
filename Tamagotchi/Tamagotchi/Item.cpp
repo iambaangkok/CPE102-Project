@@ -280,7 +280,7 @@ string name)
 	}
 	else if (name == "Evo I")
 	{
-		type = "ect";
+		type = "etc";
 		itemId = 13;
 		this->price = 200;
 		this->description = "evolution";
@@ -294,7 +294,7 @@ string name)
 	}
 	else if (name == "Evo II")
 	{
-	type = "ect";
+	type = "etc";
 	itemId = 14;
 	this->price = 500;
 	this->description = "evolution";
@@ -308,7 +308,7 @@ string name)
 	}
 	else if (name == "Evo III")
 	{
-	type = "ect";
+	type = "etc";
 	itemId = 15;
 	this->price = 650;
 	this->description = "evolution";
