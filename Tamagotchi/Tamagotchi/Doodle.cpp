@@ -11,9 +11,9 @@ Doodle::Doodle(int& maingame_state , Pet &pet)
 	Power = new PowerUp("Assets/Textures/PowerUp.png", Vector2f(19.0f * 2, 34.0f * 2));
 	CoinP = new PowerUp("Assets/Textures/Coin.png" , Vector2f(34.0f * 2, 34.0f * 2));
 	land = new GameObject(Vector2f(360, 800), Vector2f(720, 480), true, "Assets/Textures/background_land.png");
-	landing = new ParticleSystem(20, 180, 90, 5, 7, Vector2f(30, 30), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/DefaultTexture.png",
-		Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f, windowHeight / 2 + 300, 99999, false, true);
-	//landing->spawning_on = false;
+	landing = new ParticleSystem(20, 90, 270, 0.25, 7, Vector2f(10, 10), Vector2f(windowWidth / 2, windowHeight / 2), "Assets/Textures/Yellow.png",
+		Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.25f, windowHeight, 1, true, true);
+	landing->gravity = 200.0f;
 
 	InitBGMenu();
 	InitBG();
@@ -103,8 +103,6 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 	}
 	else if (gstate == 1) // Playing
 	{
-		
-
 		scoreText.setString("Score: " + std::to_string(score / score_rate));
 		money.setString("Money: " + std::to_string(Money + MoneyPickup));
 
@@ -137,7 +135,9 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			{
 				Platform->platformPos[i].y -= Alpha->dy * deltaTime;
 				land_posy -= Alpha->dy * deltaTime * 0.15f ;
-
+				if (i == landing_ind) {
+					landing->position = Platform->platformPos[i];
+				}
 				if (Platform->platformPos[i].y > windowHeight)
 				{
 					if (!Platform->enabled[i])
@@ -160,7 +160,9 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			float change = 0.0f;
 			if ((Platform->enabled[i] || !Platform->pass[i]) && Alpha->CheckCollision(Platform->platformPos[i], Platform->platform.GetSize() / 2.0f) && Alpha->dy > 0.0f)
 			{
-				landing->spawning_on = true;
+				landing->tangKhaTuaPlae = false;
+				landing->position = Platform->platformPos[i];
+				landing_ind = i;
 				sound.play();
 				change = max(change, 1700.0f);
 			}
@@ -234,10 +236,6 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			sound.play();
 			gstate = 0;
 		}
-		if (key["A"]) 
-			equip++;
-		if (key["D"]) 
-			equip--;
 		InitBGMenu();
 		if (key["SPACE"]) 
 			InitBG();
@@ -250,7 +248,7 @@ void Doodle::Draw(RenderWindow& window)
 	if (*maingame_state != 2)
 		return;
 
-	landing->Draw(window);
+	
 
 	for (int i = 0; i < 3; ++i)
 		window.draw(background[i]);
@@ -290,6 +288,8 @@ void Doodle::Draw(RenderWindow& window)
 		BGMenu[2]->Draw(window);
 		window.draw(SelectBG);
 	}
+
+	landing->Draw(window);
 }
 
 void Doodle::InitBG()

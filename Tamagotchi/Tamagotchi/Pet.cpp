@@ -126,7 +126,10 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		sfx[i].setVolume(sfxVariables[i].volume);
 	}
 	
-
+	particleSystems.push_back(new ParticleSystem(8, 60, -170, 0.5, 1.5, Vector2f(15, 15), position, "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 999, false));
+	particleSystems[0]->gravity = -1;
+	particleSystems[0]->spawning_on = false;
+	
 }
 
 Pet::~Pet()
@@ -138,6 +141,7 @@ void Pet::Initialize() {
 	mouseIsOver = false;
 	happinessChangeRate = baseHappinessChangeRate;
 	evolveButtonClicked = false;
+	particleSystems[0]->spawning_on = false;
 }
 
 
@@ -204,6 +208,8 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			if (!isInAir) {
 				shadowYOffsetSpeed = jumpAcceleration;
 				isInAir = true;
+				//particleSystems.push_back(new ParticleSystem(10, 10, 90, 1, 3, Vector2f(15, 15), Vector2f(shadow->GetPosition().x, shadow->GetPosition().y), "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, shadow->GetPosition().y, 2, false, true));
+				//particleSystems[particleSystems.size() - 1]->gravity = -2;
 			}
 		}
 		if (keyPress["Q"]) {
@@ -349,19 +355,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		
 
 
-		if (deltaPosition.x > 0) {
-			faceRight = true;
-		}
-		if (deltaPosition.x < 0) {
-			faceRight = false;
-		}
-
-		if (faceRight) {
-			rectangleShape.setScale(Vector2f(1, 1));
-		}
-		else {
-			rectangleShape.setScale(Vector2f(-1, 1));
-		}
+		
 
 		/// Still Alive and Growing
 		//Calculate stats
@@ -417,8 +411,45 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	
 	drawLayer = GetSide("BOTTOM");
 
+	
 
-	///Set Animation & Play Sound     according to pet state
+
+	
+	///Set Animation & Play Sound     according to pet state  && ///ParticleSystem
+
+	
+	particleSystems[0]->position = shadow->GetPosition();
+	particleSystems[0]->floorLine = shadow->GetPosition().y;
+	if (deltaPosition.x > 0) {
+		faceRight = true;
+		if (!isInAir) {
+			particleSystems[0]->angleDegree = 10;
+			particleSystems[0]->spawning_on = true;
+			particleSystems[0]->totalTimein1spawn = 0;
+		}
+		
+
+	}else if (deltaPosition.x < 0) {
+		faceRight = false;
+		if (!isInAir) {
+			particleSystems[0]->angleDegree = -170;
+			particleSystems[0]->spawning_on = true;
+			particleSystems[0]->totalTimein1spawn = 0;
+		}
+		
+	}
+	else {
+	}
+
+	cout << "PS->spon = " << particleSystems[0]->spawning_on << endl;
+	
+
+	if (faceRight) {
+		rectangleShape.setScale(Vector2f(1, 1));
+	}
+	else {
+		rectangleShape.setScale(Vector2f(-1, 1));
+	}
 	if (isInAir) {
 		animation.freezeFrame = true;
 		if (deltaPosition.y < -3) {
@@ -451,10 +482,18 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 	}
 	if (!isInAir && isInAirLastFrame) {
+		particleSystems.push_back(new ParticleSystem(5 , 50, 170, 1, 2, Vector2f(10, 10), Vector2f(shadow->GetPosition().x, shadow->GetPosition().y + 5), "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, shadow->GetPosition().y+10, 2, true));
+		particleSystems[particleSystems.size() - 1]->gravity = -2;
+		particleSystems.push_back(new ParticleSystem(5 , 50, 10, 1, 2, Vector2f(10, 10), Vector2f(shadow->GetPosition().x, shadow->GetPosition().y + 5), "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, shadow->GetPosition().y+10, 2, true));
+		particleSystems[particleSystems.size() - 1]->gravity = -2;
 		sfx[4].play();
 	}
 
-	
+	for (int i = 0; i < particleSystems.size(); ++i) {
+		if (particleSystems[i]->Update(deltaTime)) {
+			DeleteParticle(i);
+		}
+	}
 
 	rectangleShape.setTextureRect(animation.uvRect);
 
@@ -467,7 +506,9 @@ void Pet::Draw(RenderWindow& window) {
 		shadowBorder[i].Draw(window);
 	}*/
 	window.draw(rectangleShape);
-
+	for (int i = 0; i < particleSystems.size(); ++i) {
+		particleSystems[i]->Draw(window);
+	}
 }
 
 void Pet::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
@@ -486,6 +527,13 @@ Poop* Pet::CreatePoop() {
 	sfx[rand() % 3 + 5].play();
 	return newPoop;
 }
+
+void Pet::DeleteParticle(int index)
+{
+	delete particleSystems[index];
+	particleSystems.erase(particleSystems.begin() + index);
+}
+
 
 template<typename T>
 void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)

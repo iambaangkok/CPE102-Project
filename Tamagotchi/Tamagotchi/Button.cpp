@@ -8,7 +8,7 @@ Button::Button() {
 
 Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
     string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime
-    ,string text, int status, string type,int &gstate,Shop &shop,Pet &pet,Doodle &doodle,int id)
+    ,string text, int status, string type,int &gstate,Shop &shop,Pet &pet,Doodle &doodle,Game &game,int id)
     : GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime)
 {
     this->text = text;
@@ -18,6 +18,7 @@ Button::Button(Vector2f position, Vector2f dimensions, bool originIsCenter,
 	this->shop = &shop;
 	this->pet = &pet;
 	this->doodle = &doodle;
+	this->game = &game;
 	this->id = id;
 	
 }
@@ -106,7 +107,7 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 	}
 	if (type == "EXIT") quitGame = true;
 	if (type == "MAINDISH") {
-
+		
 	}
 	if (type == "DESSERT") {
 
@@ -130,16 +131,27 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 		doodle->gstate = 3;
 	}
 	if (type == "LEFTDOODLE") {
-		doodle->equip++;
+		doodle->equip--;
 	}
 	if (type == "RIGHTDOODLE") {
-		doodle->equip--;
+		doodle->equip++;
 	}
 	if (type == "BACKDOODLE") {
 		doodle->gstate = 0;
 	}
 	if (type == "SELECTBG") {
 		doodle->InitBG();
+	}
+	if (type == "RESET") {
+		game->ClearSave();
+	}
+	if (type == "MUTE") {
+		if (text == "BGM") {
+
+		}
+		else if (text == "SFX") {
+
+		}
 	}
 }
 
