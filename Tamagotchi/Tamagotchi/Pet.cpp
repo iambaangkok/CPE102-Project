@@ -55,9 +55,9 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		happinessMax = vector<float>{ 100, 120, 140 };
 		foodMax = vector<float>{ 200, 300, 400 };
 		poopMax = vector<float>{ 60, 80, 100 };
-		hpChangeRate = 0.02;
+		hpChangeRate = 0.05;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.1;
+		foodChangeRate = 0.05;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -68,9 +68,9 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		happinessMax = vector<float>{ 100, 120, 140 };
 		foodMax = vector<float>{ 400, 550, 700 };
 		poopMax = vector<float>{ 80, 90, 100 };
-		hpChangeRate = 0.02;
+		hpChangeRate = 0.05;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.1;
+		foodChangeRate = 0.05;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -81,9 +81,9 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		happinessMax = vector<float>{ 100, 120, 140 };
 		foodMax = vector<float>{ 200, 250, 350 };
 		poopMax = vector<float>{ 30, 25, 20 };
-		hpChangeRate = 0.02;
+		hpChangeRate = 0.05;
 		expChangeRate = 0.02;
-		foodChangeRate = 0.1;
+		foodChangeRate = 0.05;
 		happinessChangeRate = baseHappinessChangeRate = 0.02;
 		poopChangeRate = 0.1;
 		notEnoughFoodThreshold = 0.2f;
@@ -104,6 +104,14 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 	else {
 		cout << "Invalid Pet Type" << endl;
 	}
+
+	float multi = 10;
+	hpChangeRate *= multi;
+	expChangeRate *= multi;
+	foodChangeRate *= multi;
+	happinessChangeRate *= multi;
+	poopChangeRate *= multi;
+
 
 	currentLevel = 0;
 	currentHp = hpMax[currentLevel];
@@ -126,8 +134,8 @@ Pet::Pet(Vector2f position, Vector2f dimensions, bool originIsCenter,//By Type
 		sfx[i].setVolume(sfxVariables[i].volume);
 	}
 	
-	particleSystems.push_back(new ParticleSystem(8, 60, -170, 0.5, 1.5, Vector2f(15, 15), position, "Assets/Textures/ps_pet_airburst.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 999, false));
-	particleSystems[0]->gravity = -1;
+	particleSystems.push_back(new ParticleSystem(8, 40, -170, 0.5, 1.5, Vector2f(10, 10), position, "Assets/Textures/ps_pet_airburst_walk.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 1, position.y, 999, false));
+	particleSystems[0]->gravity = -0.5;
 	particleSystems[0]->spawning_on = false;
 	
 }
@@ -249,7 +257,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 			throwSpeed.x = deltaPosition.x/2 * 30;
 			throwSpeed.y = -deltaPosition.y/2 * 30;
 			shadowYOffsetSpeed = throwSpeed.y;
-			cout << "MOUSE RELEASE" << " " << throwSpeed.x  << " "  << shadowYOffsetSpeed << endl << endl << endl;
+			//cout << "MOUSE RELEASE" << " " << throwSpeed.x  << " "  << shadowYOffsetSpeed << endl << endl << endl;
 		}
 		
 
@@ -419,7 +427,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 	
 	particleSystems[0]->position = shadow->GetPosition();
-	particleSystems[0]->floorLine = shadow->GetPosition().y;
+	particleSystems[0]->floorLine = shadow->GetPosition().y + 20;
 	if (deltaPosition.x > 0) {
 		faceRight = true;
 		if (!isInAir) {
@@ -441,7 +449,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	else {
 	}
 
-	cout << "PS->spon = " << particleSystems[0]->spawning_on << endl;
+	//cout << "PS->spon = " << particleSystems[0]->spawning_on << endl;
 	
 
 	if (faceRight) {

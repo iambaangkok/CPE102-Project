@@ -59,7 +59,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 		status = 0;
 	}
 	if (prevstatus == 3 && status == 1) OnRelease(quitGame, selectedPet);
-	cout << prevstatus << " " << status << endl;
+	//cout << prevstatus << " " << status << endl;
 	prevstatus = status;
 
 	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 4;
