@@ -286,11 +286,11 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->description = "evolution";
 		this->hpChange = 0;
 		this->evoStone = true;
-		this->foodChange = 30;
+		this->foodChange = 0;
 		this->happinessChange = 0;
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
-		this->poopChange = 10;
+		this->poopChange = 0;
 	}
 	else if (name == "evo2")
 	{
@@ -304,7 +304,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->happinessChange = 0;
 	this->minigameLife = false;
 	this->xpCoupon = 0.0;
-	this->poopChange = 20;
+	this->poopChange = 0;
 	}
 	else if (name == "evo3")
 	{
@@ -318,7 +318,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->happinessChange = 0;
 	this->minigameLife = false;
 	this->xpCoupon = 0.0;
-	this->poopChange = 30;
+	this->poopChange = 0;
 	}
 	else if (name == "potion")
 	{
