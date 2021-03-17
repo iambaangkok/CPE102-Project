@@ -377,7 +377,7 @@ void Game::LoadGame() {
         exitdoodleBut = &edB;
 
         static Button cbgB = Button(Vector2f(360 - 13 * 7, 540), Vector2f(26 * 7, 140), false,
-            "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            "Assets/Textures/button_choosebg.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "cbgB", 0, "CHOOSEBG", gameState, *shop, *pet, *doodle);
         cbgB.animation.freezeFrame = true;
         chooseBut = &cbgB;
