@@ -132,7 +132,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		xpCoupon = 0.0;
 		this->poopChange = 5;
 	}
-	else if (name=="cocola")
+	else if (name=="Cocola")
 	{
 		type = "candy";
 		itemId = 2;
@@ -147,7 +147,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 5;
 
 	}
-	else if (name=="hotdog")
+	else if (name=="Hotdog")
 	{
 		type = "food";
 		itemId = 3;
@@ -161,7 +161,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = 0.0;
 		this->poopChange = 2;
 	}
-	else if (name=="noodle69")
+	else if (name=="Noodle69")
 	{
 		type = "food";
 		itemId = 4;
@@ -175,12 +175,12 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = 0.0;
 		this->poopChange = 69;
 	}
-	else if (name=="chicken drumstick")
+	else if (name=="Chicken")
 	{
 		type = "food";
 		itemId = 5;
 		this->price = 10;
-		this->description = "Chicken drumstick";
+		this->description = "Chicken";
 		this->hpChange = -5;
 		this->evoStone = evoStone;
 		this->foodChange = 15;
@@ -189,7 +189,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = xpCoupon;
 		this->poopChange = 5;
 	}
-	else if (name=="waxwowald")
+	else if (name=="Waxwowald")
 	{
 		type = "food";
 		itemId = 6;
@@ -204,7 +204,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "bubble tea1")
+	else if (name == "Bubble tea I")
 	{
 		type = "candy";
 		itemId = 7;
@@ -219,7 +219,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "bubble tea2")
+	else if (name == "Bubble tea II")
 	{
 		type = "candy";
 		itemId = 8;
@@ -234,7 +234,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "bubble tea3")
+	else if (name == "Bubble tea III")
 	{
 		type = "candy";
 		itemId = 9;
@@ -249,7 +249,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "mochi")
+	else if (name == "Mochi")
 	{
 		type = "candy";
 		itemId = 10;
@@ -264,7 +264,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->poopChange = 10;
 
 	}
-	else if (name == "dango")
+	else if (name == "Dango")
 	{
 		type = "candy";
 		itemId = 12;
@@ -278,7 +278,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = 0.0;
 		this->poopChange = 10;
 	}
-	else if (name == "evo1")
+	else if (name == "Evo I")
 	{
 		type = "ect";
 		itemId = 13;
@@ -292,7 +292,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = 0.0;
 		this->poopChange = 0;
 	}
-	else if (name == "evo2")
+	else if (name == "Evo II")
 	{
 	type = "ect";
 	itemId = 14;
@@ -306,7 +306,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->xpCoupon = 0.0;
 	this->poopChange = 0;
 	}
-	else if (name == "evo3")
+	else if (name == "Evo III")
 	{
 	type = "ect";
 	itemId = 15;
@@ -320,7 +320,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->xpCoupon = 0.0;
 	this->poopChange = 0;
 	}
-	else if (name == "potion")
+	else if (name == "Potion I")
 	{
 	type = "ect";
 	itemId = 16;
@@ -334,7 +334,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->xpCoupon = 0.0;
 	this->poopChange = 30;
 	}
-	else if (name == "potion2")
+	else if (name == "Potion II")
 	{
 	type = "ect";
 	itemId = 17;

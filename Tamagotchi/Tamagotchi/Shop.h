@@ -40,7 +40,6 @@ public:
 	int heightcandy = 4 * 180;
 	int heightetc = 4 * 180;
 	string status = "food";
-	int status1 = 1;
 	Font font;
 	Color col_BLACK1 = Color(24, 20, 37);
 
@@ -62,6 +61,7 @@ public:
 	vector<vector<Text>> food;
 	vector<vector<Text>> candy;
 	vector<vector<Text>> etc;
+	vector<Vector2f> textofset;
 	vector<Button*> buttons;//0 = food, 1 = dessert, 2 = booster;
 
 };

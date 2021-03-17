@@ -1,6 +1,6 @@
 #include "Shop.h"
 #include "Item.h"
-Shop::Shop() {
+Shop::Shop() {  
   
     if (!font.loadFromFile("Assets/Fonts/Minecraftia.ttf"))
         throw(" CLOUD NOT LOAD FONT! ");
@@ -13,23 +13,28 @@ Shop::Shop() {
         description.setPosition(100, 1040 / 2);
         descriptions.push_back(description);
     }
-    AddItem("hotdog","ShopItem8.png");
-    AddItem("noodle69","ShopItem9.png");
-    AddItem("chicken drumstick","ShopItem14.png");
-    AddItem("waxwowald","ShopItem13.png");
+    AddItem("Hotdog","ShopItem8.png");
+    AddItem("Noodle69","ShopItem9.png");
+    AddItem("Chicken","ShopItem14.png");
+    AddItem("Waxwowald","ShopItem13.png");
     
-    AddItem("cocola", "ShopItem12.png"); 
-    AddItem("bubble tea1", "ShopItem2.png");
-    AddItem("bubble tea2", "ShopItem3.png");
-    AddItem("bubble tea3","ShopItem4.png");
-    AddItem("mochi","ShopItem10.png");
-    AddItem("dango","ShopItem11.png");
+    AddItem("Cocola", "ShopItem12.png"); 
+    AddItem("Bubble tea I", "ShopItem2.png");
+    AddItem("Bubble tea II", "ShopItem3.png");
+    AddItem("Bubble tea III","ShopItem4.png");
+    AddItem("Mochi","ShopItem10.png");
+    AddItem("Dango","ShopItem11.png");
    
 
-    AddItem("evo1","ShopItem1.png");
-    AddItem("evo2","ShopItem1.png");
-    AddItem("evo3","ShopItem1.png");
+    AddItem("Evo I","ShopItem1.png");
+    AddItem("Evo II","ShopItem1.png");
+    AddItem("Evo III","ShopItem1.png");
 
+    textofset.push_back(Vector2f(230, 320));
+    textofset.push_back(Vector2f(225, 385));
+    textofset.push_back(Vector2f(290, 385));
+    textofset.push_back(Vector2f(350, 385));
+    textofset.push_back(Vector2f(280, 435));
   
     
     for (int i = 0; i < itemfood.size(); i++)    
@@ -87,13 +92,13 @@ void Shop::AddItem(string itemName, string texturePath) {
 
         for(int i = 0  ; i < 5 ;++i)
             thisItemsText.push_back(Text());
-
-        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition+80, corePositiony+20));
-        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-
+        for (int i = 0; i < itemfood.size();++i) {
+            SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition + 230, (i * 180) + 320));
+            SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition+ 225, (i * 180) + 385));
+            SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 290, (i * 180) + 385));
+            SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+350, (i * 180) + 385));
+            SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition+280, (i * 180) + 435));
+        }
         food.push_back(thisItemsText);
     }
     if (newItem->type == "candy")
@@ -104,11 +109,13 @@ void Shop::AddItem(string itemName, string texturePath) {
         for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
-        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition+80, corePositiony));
-        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
+        for (int i = 0; i < itemfood.size(); ++i) {
+            SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition + 230, (i * 180) + 320));
+            SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 225, (i * 180) + 385));
+            SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 290, (i * 180) + 385));
+            SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 350, (i * 180) + 385));
+            SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition + 280, (i * 180) + 435));
+        }
 
         candy.push_back(thisItemsText);
     }
@@ -120,12 +127,13 @@ void Shop::AddItem(string itemName, string texturePath) {
         for (int i = 0; i < 5; ++i)
             thisItemsText.push_back(Text());
 
-        SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition+80, corePositiony));
-        SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-        SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition, corePositiony));
-
+        for (int i = 0; i < itemfood.size(); ++i) {
+            SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition + 230, (i * 180) + 320));
+            SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 225, (i * 180) + 385));
+            SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 290, (i * 180) + 385));
+            SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 350, (i * 180) + 385));
+            SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition + 280, (i * 180) + 435));
+        }
         etc.push_back(thisItemsText);
     }
 }
@@ -186,13 +194,19 @@ void Shop::Update(float deltaTime, int mouseWheelDelta) {
         }
 
         float timey = scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll;
-       
+        float itemOffset = 200;
+        float itemTextOffset = 70;
         if (status=="food") {
            
             for (int i = 0; i < itemfood.size(); i++)
             {
-                itemfood[i]->SetPosition(corePosition, ((i * 180) + corePositiony+200) - timey);
+                itemfood[i]->SetPosition(corePosition, ((i * 180) + corePositiony + itemOffset) - timey);
                  
+                for (int j = 0; j < food[i].size(); ++j) 
+                {
+                     food[i][j].setPosition(corePosition + textofset[j].x,((i * 180) + corePositiony - itemTextOffset) - timey + textofset[j].y);
+                        
+                }
             }//food
         } // 
         if (status=="candy") {
