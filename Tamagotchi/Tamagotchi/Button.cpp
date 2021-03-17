@@ -143,6 +143,14 @@ void Button::OnRelease(bool& quitGame, int& selectedPet) {
 	if (type == "RESET") {
 		game->ClearSave();
 	}
+	if (type == "EVOLVE") {
+		if ( (pet->currentExp == pet->expPerEvolve[pet->currentLevel]) && pet->ateEvolveStone == true) {
+			pet->ateEvolveStone = false;
+			pet->currentExp = 0;
+			pet->currentLevel += 1;
+			if (pet->currentLevel >= 2) pet->currentLevel = 2;
+		}
+	}
 	if (text == "TOGGLE") {
 		if (type == "SHOP") {
 			if (shop->isOpen == false) {
