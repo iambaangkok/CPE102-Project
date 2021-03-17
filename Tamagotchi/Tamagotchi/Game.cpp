@@ -37,22 +37,22 @@ void Game::LoadPetEgg() {
     float petEggPosY = 300;
     static Button petEgg1 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_01_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, *game, 0);
     petEgg1.animation.freezeFrame = true;
     petEggs.push_back(&petEgg1);
     static Button petEgg2 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_02_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 1);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, *game, 1);
     petEgg2.animation.freezeFrame = true;
     petEggs.push_back(&petEgg2);
     static Button petEgg3 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_03_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 2);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, *game, 2);
     petEgg3.animation.freezeFrame = true;
     petEggs.push_back(&petEgg3);
     static Button petEgg4 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_04_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 3);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, *game, 3);
     petEgg4.animation.freezeFrame = true;
     petEggs.push_back(&petEgg4);
 
@@ -310,9 +310,9 @@ void Game::LoadGame() {
 
 
         /// Pet
-        static Button evB = Button(Vector2f(580, 135), Vector2f(110, 60), false,
+        static Button evB = Button(Vector2f(210, 890), Vector2f(260, 200), false,
             "Assets/Textures/button_evolve.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "evB", 0, "EVOLVE", gameState, *shop, *pet, *doodle);
+            , "evB", 0, "EVOLVE", gameState, *shop, *pet, *doodle, *game);
         evB.animation.freezeFrame = true;
         evolveButton = &evB;
 
@@ -322,14 +322,14 @@ void Game::LoadGame() {
 
         static Button sB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "TOGGLE", 0, "SHOP", gameState, *shop, *pet, *doodle);
+            , "TOGGLE", 0, "SHOP", gameState, *shop, *pet, *doodle, *game);
         sB.animation.freezeFrame = true;
         shopBut = &sB;
 
         /// Minigames
         static Button mnB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_blue_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "mnB", 0, "MINIGAME", gameState, *shop, *pet, *doodle);
+            , "mnB", 0, "MINIGAME", gameState, *shop, *pet, *doodle, *game);
         mnB.animation.freezeFrame = true;
         miniBut = &mnB;
 
@@ -340,94 +340,94 @@ void Game::LoadGame() {
         for (int i = 0; i < 18; ++i) {
             static Button bB = Button(Vector2f(380, 890), Vector2f(130, 140), false,
                 "Assets/Textures/button_buy.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-                , "bB", 0, "BUYITEM", gameState, *shop, *pet, *doodle, i + 1);
+                , "bB", 0, "BUYITEM", gameState, *shop, *pet, *doodle, *game, i + 1);
             bB.animation.freezeFrame = true;
             buyBut.push_back(bB);
         }
 
         static Button mdB = Button(Vector2f(310, 200), Vector2f(125, 70), false,
             "Assets/Textures/button_food_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "TOGGLE", 0, "MAINDISH", gameState, *shop, *pet, *doodle);
+            , "TOGGLE", 0, "MAINDISH", gameState, *shop, *pet, *doodle, *game);
         mdB.animation.freezeFrame = true;
         maindishBut = &mdB;
 
         static Button dsB = Button(Vector2f(435, 200), Vector2f(155, 70), false,
             "Assets/Textures/button_candy_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "TOGGLE", 0, "DESSERT", gameState, *shop, *pet, *doodle);
+            , "TOGGLE", 0, "DESSERT", gameState, *shop, *pet, *doodle, *game);
         dsB.animation.freezeFrame = true;
         dessertBut = &dsB;
 
         static Button etcB = Button(Vector2f(585, 200), Vector2f(125, 70), false,
             "Assets/Textures/button_etc_w80.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "TOGGLE", 0, "ETC", gameState, *shop, *pet, *doodle);
+            , "TOGGLE", 0, "ETC", gameState, *shop, *pet, *doodle, *game);
         etcB.animation.freezeFrame = true;
         etcBut = &etcB;
 
         /// Doodle
         static Button stB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "stB", 0, "STARTDOODLE", gameState, *shop, *pet, *doodle);
+            , "stB", 0, "STARTDOODLE", gameState, *shop, *pet, *doodle, *game);
         stB.animation.freezeFrame = true;
         startBut = &stB;
 
         static Button edB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "edB", 0, "EXITDOODLE", gameState, *shop, *pet, *doodle);
+            , "edB", 0, "EXITDOODLE", gameState, *shop, *pet, *doodle, *game);
         edB.animation.freezeFrame = true;
         exitdoodleBut = &edB;
 
         static Button cbgB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "cbgB", 0, "CHOOSEBG", gameState, *shop, *pet, *doodle);
+            , "cbgB", 0, "CHOOSEBG", gameState, *shop, *pet, *doodle, *game);
         cbgB.animation.freezeFrame = true;
         chooseBut = &cbgB;
 
         static Button lB = Button(Vector2f(10, 460), Vector2f(130, 140), false,
             "Assets/Textures/button_left.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "lB", 0, "LEFTDOODLE", gameState, *shop, *pet, *doodle);
+            , "lB", 0, "LEFTDOODLE", gameState, *shop, *pet, *doodle, *game);
         lB.animation.freezeFrame = true;
         leftBut = &lB;
 
         static Button rB = Button(Vector2f(580, 460), Vector2f(130, 140), false,
             "Assets/Textures/button_right.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "rB", 0, "RIGHTDOODLE", gameState, *shop, *pet, *doodle);
+            , "rB", 0, "RIGHTDOODLE", gameState, *shop, *pet, *doodle, *game);
         rB.animation.freezeFrame = true;
         rightBut = &rB;
 
         static Button bacB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "bacB", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle);
+            , "bacB", 0, "BACKDOODLE", gameState, *shop, *pet, *doodle, *game);
         bacB.animation.freezeFrame = true;
         backBut = &bacB;
 
         static Button slB = Button(Vector2f(210, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_yellow_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "slB", 0, "SELECTBG", gameState, *shop, *pet, *doodle);
+            , "slB", 0, "SELECTBG", gameState, *shop, *pet, *doodle, *game);
         slB.animation.freezeFrame = true;
         selectBut = &slB;
 
         /// Miscellaneous
         static Button eB = Button(Vector2f(540, 890), Vector2f(130, 140), false,
             "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "eB", 0, "EXIT", gameState, *shop, *pet, *doodle);
+            , "eB", 0, "EXIT", gameState, *shop, *pet, *doodle, *game);
         eB.animation.freezeFrame = true;
         exitBut = &eB;
 
-        static Button rsB = Button(Vector2f(670, 996), Vector2f(32, 34), false,
-            "Assets/Textures/button_reset.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "rsB", 0, "RESET", gameState, *shop, *pet, *doodle);
+        static Button rsB = Button(Vector2f(550, 890), Vector2f(130, 140), false,
+            "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "rsB", 0, "RESET", gameState, *shop, *pet, *doodle, *game);
         rsB.animation.freezeFrame = true;
         resetBut = &rsB;
 
-        static Button mbgmB = Button(Vector2f(80, 890), Vector2f(65, 70), false,
-            "Assets/Textures/button_mutebgm.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "TOGGLE", 0, "MUTEBGM", gameState, *shop, *pet, *doodle);
+        static Button mbgmB = Button(Vector2f(550, 890), Vector2f(260, 200), false,
+            "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "TOGGLE", 0, "MUTEBGM", gameState, *shop, *pet, *doodle, *game);
         mbgmB.animation.freezeFrame = true;
         mutebgmBut = &mbgmB;
 
-        static Button msfxB = Button(Vector2f(80, 960), Vector2f(65, 70), false,
-            "Assets/Textures/button_mutesfx.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-            , "TOGGLE", 0, "MUTESFX", gameState, *shop, *pet, *doodle);
+        static Button msfxB = Button(Vector2f(550, 890), Vector2f(260, 200), false,
+            "Assets/Textures/button_red_01.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "TOGGLE", 0, "MUTESFX", gameState, *shop, *pet, *doodle, *game);
         msfxB.animation.freezeFrame = true;
         mutesfxBut = &msfxB;
 
@@ -620,7 +620,7 @@ void Game::Update() {
 
         if (gameState == -1) {
             for (int i = 0; i < petEggs.size(); ++i) {
-                petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
+                petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
                 if (gameState == 1) {
                     if (isFirstTimePlaying) {
                         isFirstTimePlaying = false;
@@ -660,18 +660,14 @@ void Game::Update() {
             }
         }
 
-        shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        resetBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        mutebgmBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        mutesfxBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
-        etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
+        shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
+        etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet);
         doodle->Update(deltaTime, keyPress, pet->currentLevel, *pet);
 
         shop->Update(deltaTime, mouseWheelDelta);
