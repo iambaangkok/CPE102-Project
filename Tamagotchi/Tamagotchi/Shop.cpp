@@ -102,19 +102,19 @@ void Shop::Draw(RenderWindow &window) {
         bgbar->Draw(window);
         scrollbar->Draw(window);
         //picitem->Draw(window);
-        if (buttons[0]==0) {
+        if (isOpen) {
             for (int i = 0; i < itemfood.size(); i++)
             {
                 itemfood[i]->Draw(window);
             }
         }
-        if (buttons[1]==1){
+        if (0){
             for (int i = 0; i < itemcandy.size(); i++)
             {
                 itemcandy[i]->Draw(window);
             }
         }
-        if (buttons[2]==2) {
+        if (0) {
             for (int i = 0; i < itemetc.size(); i++)
             {
                 itemetc[i]->Draw(window);
@@ -139,7 +139,7 @@ void Shop::Update(float deltaTime, int mouseWheelDelta) {
         if (scrollbar->GetPosition().y+heightscrollbar > lowscroll) {
             scrollbar->SetPosition(Vector2f(positionscrollX, lowscroll-heightscrollbar));
         }
-       
+        float timey = scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll;
        /* for (int i = 1; i < itemfood.size(); i++)
         {
             itemfood[i]->SetPosition(corePosition, (i * 180) + 270);
@@ -153,36 +153,36 @@ void Shop::Update(float deltaTime, int mouseWheelDelta) {
             itemetc[i]->SetPosition(corePosition, (i * 180) + 270);
         }*/
         
-        if () {
+        if (isOpen) {
             for (int i = 0; i < itemfood.size(); i++)
             {
                 itemfood[i]->Update(deltaTime);
             }
             for (int i = 1; i < itemfood.size(); i++)
             {
-                itemfood[i]->SetPosition(corePosition, (i * 180) + 270 - scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+                itemfood[i]->SetPosition(corePosition, (i * 180) + corePositiony - timey);
             }//food
 
 
         } // �Ѿവ 
-        if () {
+        if (0) {
             for (int i = 0; i < itemcandy.size(); i++)
             {
                 itemcandy[i]->Update(deltaTime);
             }
             for (int i = 1; i < itemcandy.size(); i++)
             {
-                itemcandy[i]->SetPosition(corePosition, (i * 180) + 270 - scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+                itemcandy[i]->SetPosition(corePosition, (i * 180) + corePositiony - timey);
             }//candy
         }
-        if () {
+        if (0) {
             for (int i = 0; i < itemetc.size(); i++)
             {
                 itemetc[i]->Update(deltaTime);
             }
             for (int i = 1; i < itemetc.size(); i++)
             {
-                itemetc[i]->SetPosition(corePosition, (i * 180) + 270 - scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll);
+                itemetc[i]->SetPosition(corePosition, (i * 180) + corePositiony - timey);
             }
         }
         //test1->Update(deltaTime);

@@ -33,10 +33,11 @@ public:
 	int positionscrollX = 710;
 	int heightscrollbar = 150;
 	int corePosition = 310;
-	
+	float corePositiony = 270;
 	int heightfood = 4 * 180;
 	int heightcandy = 4 * 180;
 	int heightetc = 4 * 180;
+	
 
 	Vector2f position = Vector2f(0,0);
 	//Item* test1;
