@@ -47,7 +47,6 @@ public:
 	float sfxVolume = 15;
 	vector<SoundVariables> sfxVariables = {
 		{"Assets/Sounds/Pet/pet_poop_splash.wav", sfxVolume},
-		{"Assets/Sounds/Pickup_Coin.wav", sfxVolume},
 	};
 };
 
