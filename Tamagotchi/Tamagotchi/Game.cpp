@@ -310,7 +310,7 @@ void Game::LoadGame() {
 
 
         /// Pet
-        static Button evB = Button(Vector2f(210, 890), Vector2f(260, 200), false,
+        static Button evB = Button(Vector2f(580, 135), Vector2f(110, 60), false,
             "Assets/Textures/button_evolve.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "evB", 0, "EVOLVE", gameState, *shop, *pet, *doodle);
         evB.animation.freezeFrame = true;
@@ -666,6 +666,7 @@ void Game::Update() {
         resetBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
         mutebgmBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
         mutesfxBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
+        evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
         leftBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
         rightBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
         maindishBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx);
@@ -797,6 +798,7 @@ void Game::Draw() {
         resetBut->Draw(window);
         mutebgmBut->Draw(window);
         mutesfxBut->Draw(window);
+        evolveButton->Draw(window);
         if (shop->isOpen == true) {
             maindishBut->Draw(window);
             dessertBut->Draw(window);

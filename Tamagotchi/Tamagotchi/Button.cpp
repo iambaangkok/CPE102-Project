@@ -63,6 +63,7 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	prevstatus = status;
 
 	if (type == "BUYITEM" && pet->money < shop->items[id - 1]->price) status = 4;
+	if (type == "EVOLVE" && pet->currentExp < pet->expPerEvolve[pet->currentLevel] && pet->ateEvolveStone == false) status = 4;
 	animation.SetFrame(Vector2i(status, 0));
 
 
@@ -80,7 +81,7 @@ void Button::OnClick(bool& muteBgm, bool& muteSfx) {
 			status = 0;
 		}
 		if (type == "SHOP") {
-			if (shop->isOpen == false) {
+			if (isPressed) {
 				shop->isOpen = true;
 			}
 			else {
