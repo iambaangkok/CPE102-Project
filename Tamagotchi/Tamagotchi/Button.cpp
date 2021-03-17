@@ -89,9 +89,21 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 			for (int i = 0; i < shop->itemetc.size(); ++i) {
 				if (shop->itemetc[i]->itemId == id) {
 					if (pet->money >= shop->itemetc[i]->price) {
+						if (pet->currentLevel == 0) {
+							if (shop->itemetc[i]->itemId != 13 && pet->ateEvolveStone == false) status = 4;
+							if (pet->ateEvolveStone == true) status = 4;
+						}
+						if (pet->currentLevel == 1) {
+							if (shop->itemetc[i]->itemId != 14 && pet->ateEvolveStone == false) status = 4;
+							if (pet->ateEvolveStone == true) status = 4;
+						}
+						if (pet->currentLevel == 2) {
+							status = 4;
+						}
 					}
 					else {
 						status = 4;
+						
 					}
 				}
 			}
@@ -99,6 +111,9 @@ void Button::Update(float deltaTime,RenderWindow& window,unordered_map<string, b
 	}
 	
 	if (type == "EVOLVE" && pet->currentExp < pet->expPerEvolve[pet->currentLevel] && pet->ateEvolveStone == false) status = 4;
+	if (type == "EVOLVE" && pet->currentExp < pet->expPerEvolve[pet->currentLevel] && pet->ateEvolveStone == true) status = 4;
+	if (type == "EVOLVE" && pet->currentExp == pet->expPerEvolve[pet->currentLevel] && pet->ateEvolveStone == false) status = 4;
+
 	animation.SetFrame(Vector2i(status, 0));
 
 
@@ -216,9 +231,23 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 		else if (text == "etc") {
 			for (int i = 0; i < shop->itemetc.size(); ++i) {
 				if (shop->itemetc[i]->itemId == id) {
-					if (pet->money >= shop->itemetc[i]->price) {
-						pet->money -= shop->itemetc[i]->price;
-						shop->itemetc[i]->UseItem(pet);
+					if (pet->currentLevel == 0 && shop->itemetc[i]->itemId == 13) {
+						if (pet->money >= shop->itemetc[i]->price && pet->ateEvolveStone == false) {
+							pet->money -= shop->itemetc[i]->price;
+							shop->itemetc[i]->UseItem(pet);
+						}
+						else {
+							status = 4;
+						}
+					}
+					if (pet->currentLevel == 1 && shop->itemetc[i]->itemId == 14) {
+						if (pet->money >= shop->itemetc[i]->price && pet->ateEvolveStone == false) {
+							pet->money -= shop->itemetc[i]->price;
+							shop->itemetc[i]->UseItem(pet);
+						}
+						else {
+							status = 4;
+						}
 					}
 				}
 			}
@@ -233,7 +262,6 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 	if (type == "STARTDOODLE") {
 		doodle->gstate = 1;
 		doodle->music.play();
-		//doodle->sound.play();
 	}
 	if (type == "EXITDOODLE") {
 		doodle->gstate = -1;
@@ -242,7 +270,6 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 	}
 	if (type == "CHOOSEBG") {
 		doodle->gstate = 3;
-		//doodle->sound.play();
 	}
 	if (type == "LEFTDOODLE") {
 		doodle->equip--;
@@ -253,8 +280,6 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 	if (type == "BACKDOODLE") {
 		if (text == "DEFAULT") {
 			doodle->gstate = 0;
-			//doodle->pass = true;
-			//doodle->sound.play();
 		}
 		if (text == "GAMEOVER") {
 			doodle->music.stop();
@@ -269,9 +294,7 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 			doodle->equipnow = doodle->equip;
 			doodle->InitBG();
 		}
-		else {
-			//doodle->sound.play();
-		}
+
 	}
 	if (type == "RESET") {
 		clearSave = true;
