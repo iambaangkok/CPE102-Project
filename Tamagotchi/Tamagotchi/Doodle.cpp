@@ -47,8 +47,6 @@ void Doodle::Reset(Pet &pet)
 
 	Logo1.setPosition(Vector2f(-250.0f, 120.0f));
 	Logo2.setPosition(Vector2f(970.0f, 255.0f));
-	
-	Press.setPosition(Vector2f(360.0f, 800.0f));
 
 	InitBG();
 
@@ -77,9 +75,11 @@ void Doodle::Reset(Pet &pet)
 
 void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curlevel , Pet &pet)
 {
-	if (*maingame_state == 2 && gstate == -1) {
+	//cout << " YY-> " << *maingame_state << " " << gstate<< endl;
+	if (*maingame_state == 2 && pass) {
 		Reset(pet);
 		gstate = 0;
+		pass = false;
 	}
 	else if (gstate == 0) // Start Screen
 	{
@@ -88,18 +88,18 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 		if (Logo2.getPosition().x > 360.0f)
 			Logo2.move(Vector2f(-600.0f * deltaTime, 0.0f));
 
-		if (key["SPACE"])
+		/*if (key["SPACE"])
 		{
 			music.play();
 			sound.play();
 			gstate = 1;
-		}
+		}*/
 
-		if (key["B"])
+		/*if (key["B"])
 		{
 			sound.play();
 			gstate = 3;
-		}
+		}*/
 	}
 	else if (gstate == 1) // Playing
 	{
@@ -191,6 +191,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			SetTextCenter(scoreText);
 			scoreText.setPosition(-200, 800);
 			money.setPosition(-200, 930);
+			
 			gstate = 2;
 		}
 
@@ -219,32 +220,34 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			YOUDIED.setColor(Color::Color(255, 255, 255, FadeCnt * FadeRate));
 			FadeCnt++;
 		}
-		if (key["SPACE"])
+		/*if (key["SPACE"])
 		{
 			music.stop();
 			gstate = -1;
 			pet.money += Money + MoneyPickup;
+			pass = true;
 			*maingame_state = 1;
-		}
+			
+		}*/
 	}
 	else if (gstate == 3) {	// Background Customization
 		BGMenu[1]->SetPos(Vector2f(360.0f, 520.0f));
 		BGMenu[0]->SetPos(Vector2f(-150.0f, 520.0f));
 		BGMenu[2]->SetPos(Vector2f(870.0f, 520.0f));
-		if (key["B"])
+		/*if (key["B"])
 		{
 			sound.play();
 			gstate = 0;
-		}
+		}*/
 		InitBGMenu();
-		if (key["SPACE"]) {
+		/*if (key["SPACE"]) {
 			if (unlocklvl[equip] <= highscore) {
 				equipnow = equip;
 				InitBG();
 			}
 			else
 				sound.play();
-		}
+		}*/
 	}
 }
 
@@ -260,7 +263,6 @@ void Doodle::Draw(RenderWindow& window)
 
 	if (gstate == 0)
 	{
-		window.draw(Press);
 		window.draw(Logo1);
 		window.draw(Logo2);
 
@@ -430,11 +432,6 @@ void Doodle::InitSprite()
 	SetSpriteCenter(Logo2);
 	Logo1.setScale(Vector2f(7.0f, 7.0f));
 	Logo2.setScale(Vector2f(7.0f, 7.0f));
-
-	PressT.loadFromFile("Assets/Textures/PressAnyKeyToStartGame.png");
-	Press.setTexture(PressT);
-	Press.setScale(Vector2f(10.0f, 10.0f));
-	Press.setOrigin(Vector2f(PressT.getSize().x / 2.0f, PressT.getSize().y / 2.0f));
 
 	YOUDIEDT.loadFromFile("Assets/Textures/GAMEOVER.png");
 	YOUDIED.setTexture(YOUDIEDT);
