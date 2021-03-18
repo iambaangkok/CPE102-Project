@@ -42,17 +42,17 @@ void Game::LoadPetEgg() {
     petEggs.push_back(&petEgg1);
     static Button petEgg2 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_02_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 1);
     petEgg2.animation.freezeFrame = true;
     petEggs.push_back(&petEgg2);
     static Button petEgg3 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_03_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 2);
     petEgg3.animation.freezeFrame = true;
     petEggs.push_back(&petEgg3);
     static Button petEgg4 = Button(Vector2f(petEggPosX + (petEggs.size()) * petEggDimX + (petEggs.size()) * petEggGapX, petEggPosY), Vector2f(petEggDimX, 140), false,
         "Assets/Textures/button_petEgg_04_x2.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
-        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 0);
+        , petEggType[petEggs.size()], 0, "PETEGG", gameState, *shop, *pet, *doodle, 3);
     petEgg4.animation.freezeFrame = true;
     petEggs.push_back(&petEgg4);
 
@@ -425,6 +425,12 @@ void Game::LoadGame() {
         rsB.animation.freezeFrame = true;
         resetBut = &rsB;
 
+        static Button rsdB = Button(Vector2f(323, 567), Vector2f(74, 74), false,
+            "Assets/Textures/button_reset.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
+            , "rsdB", 0, "RESET", gameState, *shop, *pet, *doodle);
+        rsdB.animation.freezeFrame = true;
+        resetDiedBut = &rsdB;
+
         static Button mbgmB = Button(Vector2f(80, 890), Vector2f(65, 70), false,
             "Assets/Textures/button_mutebgm.png", Vector2u(5, 1), Vector2i(0, 0), Vector2i(0, 0), 1
             , "TOGGLE", 0, "MUTEBGM", gameState, *shop, *pet, *doodle);
@@ -730,11 +736,16 @@ void Game::Update() {
            dessertBut->enable = true;
            etcBut->enable = true;
         }
+
+        if (pet != NULL && pet->isAlive == false) {
+            resetDiedBut->enable = true;
+        }
         
         shopBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         miniBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         exitBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         resetBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
+        resetDiedBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         mutebgmBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         mutesfxBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         evolveButton->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
@@ -886,11 +897,14 @@ void Game::Draw() {
 
         }
 
+        exitBut->Draw(window);
+
         if (pet != NULL && pet->isAlive == false) {
             yourPetDied->Draw(window);
+            resetDiedBut->Draw(window);
         }
 
-        exitBut->Draw(window);
+        
      
         doodle->Draw(window);
         cout << gameState << " " << doodle->gstate << endl;

@@ -196,6 +196,7 @@ public:
     /// Miscellaneous
     Button* exitBut;
     Button* resetBut;
+    Button* resetDiedBut;
     Button* mutebgmBut;
     Button* mutesfxBut;
     Game* game;
