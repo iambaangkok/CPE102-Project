@@ -157,7 +157,9 @@ void Game::LoadGame() {
             getline(saveFile, textline); nLine++;
             format = "poop %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentPoop));
-
+            getline(saveFile, textline); nLine++;
+            format = "money %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(pet->money));
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
             pet->shadow = &pShadow;
@@ -226,8 +228,8 @@ void Game::LoadGame() {
             pet->currentHp = pet->hpMax[pet->currentLevel];
             pet->currentHappiness = pet->happinessMax[pet->currentLevel];
             pet->currentFood = pet->foodMax[pet->currentLevel];
-            pet->currentPoop = pet->poopMax[pet->currentLevel];
-
+            pet->currentPoop = pet->poopMax[pet->currentLevel]-5;
+            
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
             pet->shadow = &pShadow;
@@ -304,7 +306,7 @@ void Game::LoadGame() {
         SetTextUI(ui_expMax, "/" + to_string(pet->expPerEvolve[pet->currentLevel]), fonts[0], col_BLACK1, fontSize, Vector2f(520 + gapXPlus - 5, 180));
         SetTextUI(ui_currentExp, to_string(pet->currentExp), fonts[0], col_BLACK1, fontSize - 2, Vector2f(520 - gapXMinus + 5, 170));
 
-        SetTextUI(ui_money, to_string(pet->currentExp), fonts[0], col_BLACK1, 20, Vector2f(630, 65));
+        SetTextUI(ui_money, to_string(pet->money), fonts[0], col_BLACK1, 20, Vector2f(630, 65));
         SetTextUI(ui_levelText, "LEVEL", fonts[0], col_BLACK1, 20, Vector2f(600, 120));
         SetTextUI(ui_currentLevel, to_string(pet->currentLevel + 1), fonts[0], col_BLACK1, 20, Vector2f(635, 140));
 
@@ -528,6 +530,7 @@ void Game::SaveGame() {
     saveFile << "happiness " << pet->currentHappiness << endl;
     saveFile << "food " << pet->currentFood << endl;
     saveFile << "poop " << pet->currentPoop << endl;
+    saveFile << "money " << pet->money << endl;
     saveFile.close();
 }
 void Game::ClearSave() {

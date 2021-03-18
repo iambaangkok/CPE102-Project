@@ -1,7 +1,127 @@
-﻿  main.cpp
+﻿  Game.cpp
 D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\ParticleSystem.h(49,16): warning C4305: 'initializing': truncation from 'double' to 'float'
 D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Pet.h(128,25): warning C4305: 'initializing': truncation from 'double' to 'float'
-D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(25,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(23,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(23,54): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(173,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(173,136): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(175,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(175,155): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(242,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(242,136): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(244,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(244,155): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(259,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(262,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(294,99): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(295,91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(298,103): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(299,95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(302,103): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(303,95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(306,107): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(307,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(448,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(448,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(456,81): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(456,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(466,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(478,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(485,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(490,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(503,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(578,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(589,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(596,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(637,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(665,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(673,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(778,60): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(778,43): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(782,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(799,28): warning C4018: '>=': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(815,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(821,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(827,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(828,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(851,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(856,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(889,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(893,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(931,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(1103,52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Generating code
   1 of 1741 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
