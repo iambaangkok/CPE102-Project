@@ -157,9 +157,19 @@ void Game::LoadGame() {
             getline(saveFile, textline); nLine++;
             format = "poop %f";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->currentPoop));
+            
             getline(saveFile, textline); nLine++;
             format = "money %d";
             sscanf_s(textline.c_str(), format.c_str(), &(pet->money));
+
+            getline(saveFile, textline); nLine++;
+            format = "highscore %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(hs));
+
+            getline(saveFile, textline); nLine++;
+            format = "BGequip %d";
+            sscanf_s(textline.c_str(), format.c_str(), &(eq));
+
             static GameObject pShadow = GameObject(Vector2f((float)(windowWidth / 2), (float)(windowHeight / 2)), Vector2f(140, 60), true,
                 "Assets/Textures/shadow_01.png", Vector2u(1, 1), Vector2i(0, 0), Vector2i(0, 0), 10);
             pet->shadow = &pShadow;
@@ -335,7 +345,7 @@ void Game::LoadGame() {
         mnB.animation.freezeFrame = true;
         miniBut = &mnB;
 
-        static Doodle d = Doodle(gameState, *pet);
+        static Doodle d = Doodle(gameState, hs , *pet ,eq);
         doodle = &d;
 
         /// BuyItems
@@ -531,6 +541,8 @@ void Game::SaveGame() {
     saveFile << "food " << pet->currentFood << endl;
     saveFile << "poop " << pet->currentPoop << endl;
     saveFile << "money " << pet->money << endl;
+    saveFile << "highscore" << doodle->highscore << endl;
+    saveFile << "BGequip" << doodle->equipnow << endl;
     saveFile.close();
 }
 void Game::ClearSave() {

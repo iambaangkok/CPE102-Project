@@ -164,7 +164,7 @@ public:
     Button* back2But;
     Button* selectBut;
     Doodle* doodle;
-
+    int hs = 0, eq = 1;
 
     ///Sound
     Sound bgm;

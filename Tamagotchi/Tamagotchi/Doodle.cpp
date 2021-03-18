@@ -1,10 +1,12 @@
 #include "Doodle.h"
 
 
-Doodle::Doodle(int& maingame_state , Pet &pet)
+Doodle::Doodle(int& maingame_state, int hs , Pet &pet , int eq )
 {
 	
 	this->maingame_state = &maingame_state;
+	this->highscore = hs;
+	this->equipnow = eq;
 
 	Platform = new PlatformObject(Vector2f(100.0f, 20.0f), Vector2i(windowWidth, windowHeight), 8, "Assets/Textures/platform2.png");
 	Alpha = new GravityObject(Vector2f(360.0f, 575.0f), Vector2f(100.0f, 100.0f), 400.0f, pet.filepath );
@@ -182,13 +184,14 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 		if (CoinP->CheckCollision(Alpha->player.GetPosition(), Alpha->player.GetSize() / 2.0f)) {
 			coin.play();
 			CoinP->state = 0;
-			MoneyPickup++;
+			MoneyPickup+=10;
 		}
 
 		if (Alpha->playerY > 1040)
 		{
 			dead.play();
 			SetTextCenter(scoreText);
+			SetTextCenter(money);
 			scoreText.setPosition(-200, 800);
 			money.setPosition(-200, 930);
 			

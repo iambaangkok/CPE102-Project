@@ -14,7 +14,7 @@
 class Doodle
 {
 public :
-	Doodle(int& maingame_state , Pet& pet);
+	Doodle(int& maingame_state , int hs , Pet& pet , int eq );
 	~Doodle();
 
 	void Reset(Pet &pet);														// Call to initialize doodle 
@@ -67,7 +67,7 @@ public :
 	float finalspeed_rate = 0.1f;
 	int Money = 0;
 	int MoneyPickup = 0;
-	int money_rate = 5;
+	int money_rate = 3;
 	int highscore = 0;
 
 	int power_range = 30;			//Powerup and Coin customization
