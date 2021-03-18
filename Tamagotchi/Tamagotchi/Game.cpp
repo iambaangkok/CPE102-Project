@@ -907,7 +907,6 @@ void Game::Draw() {
         
      
         doodle->Draw(window);
-        cout << gameState << " " << doodle->gstate << endl;
         if (doodle->gstate == 0) {
             chooseBut->Draw(window);
             startBut->Draw(window);

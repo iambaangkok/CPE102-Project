@@ -164,7 +164,6 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
 void Shop::Draw(RenderWindow &window) {
     if (isOpen) {
         scrollbar->Draw(window);
-        cout << status << endl;
         if (status == "food") {
   
             for (int i = 0; i < itemfood.size(); i++)
