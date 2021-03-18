@@ -626,6 +626,7 @@ void Game::Update() {
 
         if (gameState == -1) {
             for (int i = 0; i < petEggs.size(); ++i) {
+                petEggs[i]->enable = true; 
                 petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
                 if (gameState == 1) {
                     if (isFirstTimePlaying) {
