@@ -1,0 +1,10 @@
+﻿  main.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\ParticleSystem.h(49,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Pet.h(128,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(25,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating code
+  1 of 1741 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    6 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Tamagotchi.vcxproj -> D:\GitHub\CPE102-Project\Tamagotchi\Release\Tamagotchi.exe
