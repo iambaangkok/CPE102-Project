@@ -482,7 +482,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 	else if (isMoving) {
 		animation.freezeFrame = false;
 		animation.SetStartFinishFrame(1, currentLevel, 2, currentLevel);
-	}M
+	}
 	else {
 		animation.freezeFrame = false;
 		animation.SetStartFinishFrame(0, currentLevel, 0, currentLevel);
