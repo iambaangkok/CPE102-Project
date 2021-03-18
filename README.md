@@ -1,6 +1,7 @@
 # CPE102-Project
 a c++ project in 261102 - computer programming
-*.exe Game files is in "Tamagotchi/Release/Tamagotchi.exe", everything in the folder is required to run the game
+
+.exe Game files is in "Tamagotchi/Release/Tamagotchi.exe", everything in the folder is required to run the game
 
 ชื่อกลุ่ม BoBo
 
