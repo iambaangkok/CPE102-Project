@@ -16,14 +16,13 @@ PlatformObject::PlatformObject(Vector2f size, Vector2i windowSize, int NO_OF_PLA
 	
 	platform.SetDimensions(size);
 	platform.SetOrigin(size / 2.0f);
-	// size.x/2 -> 720 - size.x/2
 	int part = 1040 / NO_OF_PLATFORM;
 	for (unsigned int i = 0; i < NO_OF_PLATFORM; ++i) {
 		float ux = (rand() % (720 - (int)size.x)) + size.x / 2.0f;
-		// part/3 -> 2*part/3
 		float uy = rand() % (part/3) + part/3.0f + i * part - 600.0f;
 		platformPos.push_back(Vector2f(ux, uy));
 		enabled.push_back(true);
+		pass.push_back(false);
 	}
 }
 
@@ -31,13 +30,14 @@ PlatformObject::~PlatformObject()
 {
 }
 
-void PlatformObject::Initialize() {
+void PlatformObject::Reset() {
 	int part = 1040 / NO_OF_PLATFORM;
 	for (unsigned int i = 0; i < NO_OF_PLATFORM; ++i) {
 		float ux = (rand() % (720 - (int)size.x)) + size.x / 2.0f;
 		float uy = rand() % (part / 3) + part / 3.0f + i * part - 600.0f;
 		platformPos[i] = Vector2f(ux, uy);
 		enabled[i] = true;
+		pass[i] = false;
 	}
 }
 
@@ -53,6 +53,7 @@ void PlatformObject::Draw(RenderWindow& window , int difficulty)
 			enabled[random] = false;
 		}
 		platform.SetPosition(platformPos[i]);
-		platform.Draw(window);
+		if(enabled[i] || !pass[i])
+			platform.Draw(window);
 	}
 }

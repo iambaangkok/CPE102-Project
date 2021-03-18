@@ -15,6 +15,7 @@ Item::Item(){
 
 	Vector2u textureSize = texture.getSize();
 	rectangleShape.setTexture(&texture);
+
 }
 
 //Single Texture
@@ -114,7 +115,7 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 }
 
 Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime,
-	string name)
+string name)
 	: GameObject(position, dimensions, originIsCenter, texturePath, imageCount, start, finish, frameTime) {
 	this->name = name;
 	if (name == "cheeseCake")
@@ -131,12 +132,12 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		xpCoupon = 0.0;
 		this->poopChange = 5;
 	}
-	else if (name=="honeyPeachSoda")
+	else if (name=="Cocola")
 	{
-		type = "food";
+		type = "candy";
 		itemId = 2;
 		price = 15;
-		this->description = "A nice addition to a meal especially when outdoors.";
+		this->description = "Cocolaaaa";
 		this->hpChange = 5;
 		this->evoStone = false;
 		this->foodChange = 15;
@@ -144,13 +145,14 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
 		this->poopChange = 5;
+
 	}
-	else if (name=="milk")
+	else if (name=="Hotdog")
 	{
 		type = "food";
 		itemId = 3;
 		this->price = 20;
-		this->description = "Everyone know that milk is milk , nothing to describe about this thing.";
+		this->description = "Hotdog";
 		this->hpChange = 10;
 		this->evoStone = false;
 		this->foodChange = 15;
@@ -159,12 +161,12 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = 0.0;
 		this->poopChange = 2;
 	}
-	else if (name=="noodle69")
+	else if (name=="Noodle69")
 	{
 		type = "food";
 		itemId = 4;
 		this->price = 69;
-		this->description = "The super ultra mega ultimate noodle that the world ever have.";
+		this->description = "Noodle69";
 		this->hpChange = 69;
 		this->evoStone = false;
 		this->foodChange = 69;
@@ -173,36 +175,181 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 		this->xpCoupon = 0.0;
 		this->poopChange = 69;
 	}
-	else if (name=="icecream")
+	else if (name=="Chicken")
 	{
 		type = "food";
 		itemId = 5;
-		this->price = 5;
-		this->description = "A sweetened frozen food that every fat boy in the world love, contain a ton of callories";
+		this->price = 10;
+		this->description = "Chicken";
 		this->hpChange = -5;
 		this->evoStone = evoStone;
 		this->foodChange = 15;
-		this->happinessChange = 0;
+		this->happinessChange = 5;
 		this->minigameLife = minigameLife;
 		this->xpCoupon = xpCoupon;
 		this->poopChange = 5;
 	}
-	else if (name=="yamRoll")
+	else if (name=="Waxwowald")
 	{
 		type = "food";
 		itemId = 6;
-		this->price = 25;
-		this->description = "Light, soft and cottony cake";
+		this->price = 29;
+		this->description = "Waxwowald";
 		this->hpChange = 5;
 		this->evoStone = false;
 		this->foodChange = 30;
-		this->happinessChange = 10;
+		this->happinessChange = 20;
 		this->minigameLife = false;
 		this->xpCoupon = 0.0;
 		this->poopChange = 10;
 
 	}
-	else {
+	else if (name == "Bubble teaI")
+	{
+		type = "candy";
+		itemId = 7;
+		this->price = 35;
+		this->description = "Bubble tea green";
+		this->hpChange = 25;
+		this->evoStone = false;
+		this->foodChange = 10;
+		this->happinessChange = 15;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 10;
+
+	}
+	else if (name == "Bubble teaII")
+	{
+		type = "candy";
+		itemId = 8;
+		this->price = 35;
+		this->description = "Bubble tea orange";
+		this->hpChange = 10;
+		this->evoStone = false;
+		this->foodChange = 25;
+		this->happinessChange = 15;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 10;
+
+	}
+	else if (name == "Bubble teaIII")
+	{
+		type = "candy";
+		itemId = 9;
+		this->price = 35;
+		this->description = "Bubble tea purple";
+		this->hpChange = 15;
+		this->evoStone = false;
+		this->foodChange = 5;
+		this->happinessChange = 25;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 10;
+
+	}
+	else if (name == "Mochi")
+	{
+		type = "candy";
+		itemId = 10;
+		this->price = 50;
+		this->description = "Mochi";
+		this->hpChange = 30;
+		this->evoStone = false;
+		this->foodChange = 5;
+		this->happinessChange = 20;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 10;
+
+	}
+	else if (name == "Dango")
+	{
+		type = "candy";
+		itemId = 12;
+		this->price = 30;
+		this->description = "Dango";
+		this->hpChange = 30;
+		this->evoStone = false;
+		this->foodChange = 30;
+		this->happinessChange = 30;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 10;
+	}
+	else if (name == "Evo I")
+	{
+		type = "etc";
+		itemId = 13;
+		this->price = 200;
+		this->description = "evolution";
+		this->hpChange = 0;
+		this->evoStone = true;
+		this->foodChange = 0;
+		this->happinessChange = 0;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
+		this->poopChange = 0;
+	}
+	else if (name == "Evo II")
+	{
+	type = "etc";
+	itemId = 14;
+	this->price = 500;
+	this->description = "evolution";
+	this->hpChange = 0;
+	this->evoStone = true;
+	this->foodChange = 0;
+	this->happinessChange = 0;
+	this->minigameLife = false;
+	this->xpCoupon = 0.0;
+	this->poopChange = 0;
+	}
+	else if (name == "Evo III")
+	{
+	type = "etc";
+	itemId = 15;
+	this->price = 650;
+	this->description = "evolution";
+	this->hpChange = 0;
+	this->evoStone = true;
+	this->foodChange = 0;
+	this->happinessChange = 0;
+	this->minigameLife = false;
+	this->xpCoupon = 0.0;
+	this->poopChange = 0;
+	}
+	else if (name == "Potion I")
+	{
+	type = "ect";
+	itemId = 16;
+	this->price = 20;
+	this->description = "potion1";
+	this->hpChange = 0;
+	this->evoStone = true;
+	this->foodChange = 0;
+	this->happinessChange = 0;
+	this->minigameLife = true;
+	this->xpCoupon = 0.0;
+	this->poopChange = 30;
+	}
+	else if (name == "Potion II")
+	{
+	type = "ect";
+	itemId = 17;
+	this->price = 20;
+	this->description = "potion";
+	this->hpChange = 0;
+	this->evoStone = true;
+	this->foodChange = 0;
+	this->happinessChange = 0;
+	this->minigameLife = true;
+	this->xpCoupon = 0.0;
+	this->poopChange = 30;
+	}
+	else 
+	{
 		type = "not Item";
 		itemId = 10;
 		this->price = 0;
@@ -227,9 +374,29 @@ Item::Item(Vector2f position, Vector2f dimensions, bool originIsCenter, string t
 	this->minigameLife = minigameLife;
 	this->xpCoupon = xpCoupon;
 	this->poopChange = poopChange;
+	cout << "ITEM " << name << " CREATED" << endl;
 }
 Item::~Item() {
 
+}
+
+void Item::Update(float deltaTime) { 
+	if (!enabled) {
+		return;
+	}
+	if (IsUpdateAnimation) {
+		animation.Update(deltaTime);
+		if (faceRight) {
+			rectangleShape.setScale(Vector2f(1, 1));
+		}
+		else {
+			rectangleShape.setScale(Vector2f(-1, 1));
+		}
+		rectangleShape.setTextureRect(animation.uvRect);
+	}
+
+	Move(speed.x * deltaTime, speed.y * deltaTime);
+	//rectangleShape.setTexture(&texture);
 }
 
 void Item::UseItem(Pet *pet) {

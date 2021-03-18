@@ -1,27 +1,19 @@
 #include "BlockBP.h"
 
-BlockBP::BlockBP(string filepath, string type , string name)
+BlockBP::BlockBP(string filepath)
 {
-	Border.SetDimensions(Vector2f(250.0f , 320.0f));
-	Border.SetTexture("Assets/Textures/border.png");
-	Border.rectangleShape.setFillColor(Color::Yellow);
-
-	font.loadFromFile("Assets/Fonts/Minecraftia.ttf");
-	DES.setFont(font);
-	DES.setString(name);
-	DES.setFillColor(Color::Red);
+	float size_x = 720.0f / 1.60f;
+	float size_y = 1040.0f / 1.60f;
+	float offset = 20.0f;
 
 	Object.SetTexture(filepath);
+	Object.SetDimensions(Vector2f(size_x , size_y));
+	Object.SetOrigin(Vector2f(size_x / 2.0f, size_y / 2.0f));
 
-	this->type = type;
-
-	if (type == "BG") {
-		Object.SetDimensions(Vector2f(210.0f , 300.0f));
-	}
-	else if (type == "PF") {
-		Object.SetDimensions(Vector2f(170.0f, 170.0f));
-	}
-
+	Border.SetDimensions(Vector2f(size_x + offset , size_y + offset));
+	Border.SetTexture("Assets/Textures/Orange.png");
+	Border.SetOrigin(Vector2f((size_x + offset) / 2.0f, (size_y + offset) / 2.0f));
+	
 }
 
 BlockBP::~BlockBP()
@@ -31,18 +23,13 @@ BlockBP::~BlockBP()
 void BlockBP::SetPos(Vector2f pos)
 {
 	Border.SetPosition(pos);
-	if (type == "BG") {
-		Object.SetPosition(Vector2f(pos.x + 20.0f, pos.y + 10.0f));
-	}
-	else if (type == "PF") {
-		Object.SetPosition(Vector2f(pos.x + 40.0f, pos.y + 70.0f));
-	}
-	DES.setPosition(Vector2f(pos.x, pos.y + 230.0f));
+	Object.SetPosition(pos);
+	text.setPosition(pos);
 }
 
 void BlockBP::Draw(RenderWindow& window)
 {
 	Border.Draw(window);
 	Object.Draw(window);
-	window.draw(DES);
+	window.draw(text);
 }

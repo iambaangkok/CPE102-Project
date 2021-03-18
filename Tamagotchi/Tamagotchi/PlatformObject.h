@@ -13,13 +13,13 @@ public :
     PlatformObject(Vector2f size , Vector2i window, int NO_OF_PLATFORM , string filepath);
     ~PlatformObject();
 
-    void Initialize();
+    void Reset();
     void Draw(RenderWindow& window , int difficulty);
 
     Texture platformtexture;
     GameObject platform;
     vector<Vector2f> platformPos;
-    vector<bool> enabled;
+    vector<bool> enabled , pass;
     int NO_OF_PLATFORM;
     int prev = 0;
     Vector2i windowSize;

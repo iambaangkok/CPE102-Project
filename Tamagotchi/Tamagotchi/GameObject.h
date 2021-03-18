@@ -46,6 +46,7 @@ public:
 	Vector2f GetDimensions(); //Same as GetSize()
 	float GetRotation();//Returns rotation in degrees
 	Color GetColor();//Returns rectangleShape's Color
+	float GetSide(string side);//Returns x OR y coordinate of left/right/top/bottom
 
 	void SetPosition(Vector2f position); // Set Position
 	void SetPosition(float x, float y);
@@ -66,8 +67,13 @@ public:
 	void SetFrame(int x, int y);
 	void SetColor(Color color); // Set Color
 
-
-	
+	//bool CompareDrawLayer(const GameObject& x, const GameObject& y);
+	/*bool operator<(const GameObject& y) const {
+		return drawLayer < y.drawLayer;
+	}
+	bool operator>(const GameObject& y) const {
+		return drawLayer > y.drawLayer;
+	}*/
 
 	string filepath; 
 
@@ -78,8 +84,11 @@ public:
 
 	Texture texture;
 	RectangleShape rectangleShape;
+	bool originIsCenter = false;
 
 	Animation animation;
+
+	int drawLayer = 1; //1 is drawnFirst
 
 	bool faceRight = true; //Set whether to Face Right
 

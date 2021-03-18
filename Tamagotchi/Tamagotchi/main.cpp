@@ -28,7 +28,7 @@ int main() {
     int windowWidth = 720;
     int windowHeight = 1040;
     string title = "Tamagotchi";
-    RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Close | Style::Titlebar | Style::Resize);
+    RenderWindow window(VideoMode(windowWidth, windowHeight), title, Style::Titlebar);
     window.setMouseCursorVisible(false);
 
     Game tamagotchi(window);

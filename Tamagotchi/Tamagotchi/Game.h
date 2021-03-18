@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -10,6 +11,7 @@
 #include <chrono>
 #include <ctime>  
 #include <fstream>
+#include <algorithm>
 #include "Animation.h"
 #include "GameObject.h"
 #include "GravityObject.h"
@@ -20,6 +22,7 @@
 #include "Shop.h"
 #include "ParticleSystem.h"
 #include "Doodle.h"
+#include "Poop.h"
 class Button;
 class Shop;
 class Button;
@@ -31,6 +34,10 @@ using std::unordered_map;
 using std::pair;
 using std::cout;
 using std::endl;
+using std::sort;
+
+bool CompareDrawLayer(GameObject*& x, GameObject*& y);
+
 
 class Game
 {
@@ -40,19 +47,27 @@ public:
     Game(RenderWindow& mainWindow);
     ~Game();
 
+    void StartProgram();
+
+    void LoadPetEgg();
     void LoadGame();
     void SaveGame();
+    void ClearSave();
+
     void StartGameLoop();
     void ReInitialize();
     void GetInput();
     void Update();
     void Draw();
 
-
+    void ReInitializeUI();
     void UpdateUI();
     void DrawUI(RenderWindow& window);
-    void ReInitializeUI();
 
+
+    bool CheckPoopIntegrity(int index); //Returns true if poop should be deleted
+    void DeletePoop(int index);
+    void DeleteParticle(int index);
     void SetTextUI(Text& text, string str, Font& font, Color color, int size, Vector2f position = Vector2f(720/2,1040/2));
     void SetTextAlignment(Text& text, float anchorPositionX, int alignment); // alignment: 0 = left, 1 = right, 2 = middle
 
@@ -63,12 +78,27 @@ public:
 
     void ResetKeyboard();
     void ResetMouse();
+
+    void PlaySound(Sound& soundPlayer, int soundBufferIndex, string type = "BGM");
+
+
     
-    ParticleSystem* test1;
    
     /// Pet
     Pet* pet;
-    
+    vector<Poop*> poops;
+    // First time playing
+    bool isFirstTimePlaying = false;
+    int selectedPet = -1;
+    vector<Button*> petEggs;
+    vector<string> petEggType = {"PERRY", "DICKO", "CROK", "GYOZA" };
+    vector<string> petEggDescriptions = 
+    {   petEggType[0] + " is a super ordinary, balanced, normal, whatever you say that means 'basic' pet.",
+        petEggType[1] + " likes to eat....I mean it would probably.",
+        "In a game where picking up shit gives money, " + petEggType[2] + " is the money maker.",
+        "If you want to speed run this game, "+ petEggType[3] + " is for you. Beware this pet is super fragile."};
+    Text petEggDescription;
+
     /// User Interface
     GameObject* mouseCursor;
 
@@ -112,21 +142,64 @@ public:
     Text ui_levelText;
     Text ui_currentLevel;
 
+    /// Pet
     Button* evolveButton;
 
     /// Shop
     Shop* shop;
     Button* shopBut;
+    vector<Button> buyBut;
+    Button* maindishBut;
+    Button* dessertBut;
+    Button* etcBut;
 
     /// Minigames
     Button* miniBut;
+    Button* startBut;
+    Button* exitdoodleBut;
+    Button* chooseBut;
+    Button* leftBut;
+    Button* rightBut;
+    Button* backBut;
+    Button* back2But;
+    Button* selectBut;
     Doodle* doodle;
+    int hs = 0, eq = 1;
 
-    /// BuyItems
-    vector<Button> buyBut;
+    ///Sound
+    Sound bgm;
+    int currentBgm = 0;
+    struct SoundVariables {
+        string filePath = "";
+        float volume = 15.0f;
+    };
+    float bgmVolume = 12;
+    vector<SoundBuffer> bgmSoundBuffers;
+    vector<SoundVariables> bgmVariables = {
+        {"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },
+        {"Assets/Sounds/BGM/bgm_alonelycherrytree.wav", bgmVolume },
+        {"Assets/Sounds/BGM/bgm_mybestfriendisadog.wav", bgmVolume }
+        //{"Assets/Sounds/BGM/bgm_otherworld.wav", bgmVolume }
+    };
+    vector<Sound> sfx;
+    vector<SoundBuffer> sfxSoundBuffers;
+    float sfxVolume = 15;
+    vector<SoundVariables> sfxVariables = {
+        {"Assets/Sounds/Pickup_Coin.wav", sfxVolume}
+    };
+    Sound startProgramSound;
+    SoundBuffer startProgramSoundBuffer;
+    
+    /// ParticleSystem
+    vector<ParticleSystem*> particleSystems;
 
     /// Miscellaneous
     Button* exitBut;
+    Button* resetBut;
+    Button* resetDiedBut;
+    Button* mutebgmBut;
+    Button* mutesfxBut;
+    Game* game;
     int currentBackground = 0;
     vector<GameObject> backgrounds;
 
@@ -141,8 +214,6 @@ public:
     float titlePanelHeight = ceil((float)(titlePanelWidth * 250 / 640)/10) * 10;
     GameObject* titlePanel;
 
-    
-
     float pressAnyKeyToStartBlinkTime = 1.5f; //x seconds;
     float pressAnyKeyToStartBlinkTotalTime = 0;
     bool pressAnyKeyToStartIsShown = false;
@@ -151,11 +222,18 @@ public:
     vector<Font> fonts;
     float fps = 0;
     Text fpsText;
+
+    GameObject* yourPetDied;
     
 
     /// System variables
+    bool muteBgm = false;
+    bool muteSfx = false;
+
+    bool clearSave = false;
     bool quitGame = false;
-    int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump
+
+    int gameState = 0; //0 = start screen, 1 = main game + shop, 2 = doodle jump, -1 = first time playing
     
     int windowWidth = 720;
     int windowHeight = 1040;
@@ -172,7 +250,6 @@ public:
     
 
     /// Input variables
-
     Event evnt;
 
     Vector2i mousePosition = Vector2i(0, 0);

@@ -4,7 +4,7 @@
 class PowerUp
 {
 public :
-	PowerUp();
+	PowerUp(string filepath , Vector2f size);
 	~PowerUp();
 
 	void Update(float deltaTime);
@@ -12,11 +12,10 @@ public :
 	bool CheckCollision(Vector2f otherPos, Vector2f otherHalfSize);
 
 	GameObject POWERUP; 
-
-	int posx;
 	Texture POWERUPT;
 
-	bool spawn = false;
+	int posx;
+	
 	int state = 0;
 	int prev = 0;
 };

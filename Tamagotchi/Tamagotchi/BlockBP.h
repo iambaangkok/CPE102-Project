@@ -1,19 +1,19 @@
 #pragma once
 
 #include "GameObject.h"
+#include <string>
 
 class BlockBP
 {
 public :
-	BlockBP(string filepath , string type , string name);
+	BlockBP(string filepath);
 	~BlockBP();
 
 	void SetPos(Vector2f pos);
 	void Draw(RenderWindow &window);
 
 	GameObject Border , Object ;
-	Text DES;
-	string type;
 	Font font;
+	Text text;
 };
 
