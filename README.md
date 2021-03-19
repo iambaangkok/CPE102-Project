@@ -39,7 +39,7 @@ Built on SFML game engine based on c++
     - Pooping System 
          where collection poop gives money but the more poop present on screen, the faster happiness decays
     - Happiness System 
-         the lower the happiness the faster the hp decays
+         the lower the happiness the slower the exp increases
     - Shop System 
          where you can buy food, candy and evolution pill to sustain you pet's living
          items are divided into 3 categories
