@@ -182,7 +182,7 @@ string name)
 		this->price = 10;
 		this->description = "Chicken";
 		this->hpChange = -5;
-		this->evoStone = evoStone;
+		this->evoStone = false;
 		this->foodChange = 15;
 		this->happinessChange = 5;
 		this->minigameLife = minigameLife;
