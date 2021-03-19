@@ -73,6 +73,26 @@ void Game::LoadGame() {
     long long int nLine = 1;
     if ((!getline(saveFile, textline) && selectedPet == -1 )) { //First time playing 
         LoadPetEgg();
+        int fontSize = 14;
+        float baseYPos = 465;
+        float gap = 20;
+        float baseXPos = 70;
+        for(int i = 0 ; i < 4; ++i){
+            petEggDescriptionText.push_back(Text());
+            if (i == 0) {
+                SetTextUI(petEggDescriptionText[i], petEggDescriptions[i], fonts[0], col_RED1, fontSize, Vector2f(baseXPos, baseYPos + i * gap));
+            }
+            else if (i == 1) {
+                SetTextUI(petEggDescriptionText[i], petEggDescriptions[i], fonts[0], col_BLUE1, fontSize, Vector2f(baseXPos, baseYPos + i * gap));
+            }
+            else if (i == 2) {
+                SetTextUI(petEggDescriptionText[i], petEggDescriptions[i], fonts[0], col_GREEN2, fontSize, Vector2f(baseXPos, baseYPos + i * gap));
+            }
+            else if (i == 3) {
+                SetTextUI(petEggDescriptionText[i], petEggDescriptions[i], fonts[0], col_BROWN1, fontSize, Vector2f(baseXPos, baseYPos + i * gap));
+            }
+        }
+        
     }    
     else  {
         nLine++;
@@ -119,6 +139,7 @@ void Game::LoadGame() {
                 texturePath, Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
                 name, type);
             pet = &p;
+            pet->warningFont = &fonts[0];
 
             getline(saveFile, textline); nLine++;
             format = "time_sinceBirth %ld";
@@ -219,7 +240,7 @@ void Game::LoadGame() {
                 texturePath, Vector2u(5, 3), Vector2i(1, 0), Vector2i(2, 0), 0.3f,
                 name, type);
             pet = &p;
-            
+            pet->warningFont = &fonts[0];
 
             pet->time_sinceBirth = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
             pet->time_lastSession = pet->time_sinceBirth;
@@ -646,6 +667,7 @@ void Game::Update() {
         }
 
         if (gameState == -1) {
+            
             for (int i = 0; i < petEggs.size(); ++i) {
                 petEggs[i]->enable = true; 
                 petEggs[i]->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
@@ -867,6 +889,7 @@ void Game::Draw() {
     if (gameState == -1 && isFirstTimePlaying) {
         for (int i = 0; i < petEggs.size(); ++i) {
             petEggs[i]->Draw(window);
+            window.draw(petEggDescriptionText[i]);
         }
     }
     
@@ -879,6 +902,22 @@ void Game::Draw() {
     }
     if (gameState == 1 || gameState == 2 && !isFirstTimePlaying) {
   
+        vector<GameObject*> drawQueue;
+        drawQueue.push_back(pet);
+        for (int i = 0; i < poops.size(); ++i) {
+            drawQueue.push_back(poops[i]);
+        }
+        sort(drawQueue.begin(), drawQueue.end(), CompareDrawLayer);
+        for (int i = 0; i < drawQueue.size(); ++i) {
+            if (drawQueue[i] == pet) {
+                pet->Draw(window);
+            }
+            else {
+                drawQueue[i]->Draw(window);
+            }
+
+        }
+
         shop->Draw(window);
 
         if (shop->isOpen == true) {
@@ -896,21 +935,7 @@ void Game::Draw() {
         mutesfxBut->Draw(window);
         evolveButton->Draw(window);
 
-        vector<GameObject*> drawQueue;
-        drawQueue.push_back(pet);
-        for (int i = 0; i < poops.size(); ++i) {
-            drawQueue.push_back(poops[i]);
-        }
-        sort(drawQueue.begin(), drawQueue.end(), CompareDrawLayer);
-        for (int i = 0; i < drawQueue.size(); ++i) {
-            if (drawQueue[i] == pet) {
-                pet->Draw(window);
-            }
-            else {
-                drawQueue[i]->Draw(window);
-            }
-
-        }
+        
 
         exitBut->Draw(window);
 
@@ -919,7 +944,7 @@ void Game::Draw() {
             resetDiedBut->Draw(window);
         }
 
-        
+        pet->DrawWarningText(window);
      
         doodle->Draw(window);
         if (doodle->gstate == 0) {

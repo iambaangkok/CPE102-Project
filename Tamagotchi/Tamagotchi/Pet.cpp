@@ -150,6 +150,7 @@ void Pet::Initialize() {
 	happinessChangeRate = baseHappinessChangeRate;
 	evolveButtonClicked = false;
 	particleSystems[0]->spawning_on = false;
+	warningText.clear();
 }
 
 
@@ -220,6 +221,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 				//particleSystems[particleSystems.size() - 1]->gravity = -2;
 			}
 		}
+
 		if (keyPress["Q"]) {
 			currentLevel += 1;
 			Clamp(&currentLevel, 2, 0);
@@ -230,6 +232,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 		if (keyPress["R"]) {
 			currentPoop = poopMax[currentLevel] - 0.5;
+			money += 200;
 		}
 		if (keyPress["F"]) {
 			currentExp = expPerEvolve[currentLevel] - 0.5;
@@ -374,12 +377,15 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		//if (totalTime > tickTime) {
 		//	totalTime -= tickTime;
 
+		if ((float)currentFood < (float)foodMax[currentLevel] * 0.5f) {
+			happinessChangeRate -= baseHappinessChangeRate;
+			AddWarningText(warningString[0], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
+		}
 		if ((float)currentFood < (float)foodMax[currentLevel] * notEnoughFoodThreshold) { // Not Enough Food
 			currentHp -= hpChangeRate * hpChangeRateMultiplier * deltaTime / tickTime;
+			AddWarningText(warningString[1], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
 		}
-		else if((float)currentFood < (float)foodMax[currentLevel] * 0.5f){
-			happinessChangeRate -= baseHappinessChangeRate;
-		}
+		
 
 		happinessPoint = (float)currentHappiness / happinessMax[currentLevel];
 		if (happinessPoint > 210 / 310.0f) {
@@ -387,12 +393,15 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		}
 		else if (happinessPoint > 120 / 310.0f) {
 			expChangeMultiplier = 0.8;
+			AddWarningText(warningString[2] + to_string((int)std::ceil((1 - expChangeMultiplier) * 100)) + warningString[3], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
 		}
 		else if (happinessPoint > 50 / 310.0f) {
 			expChangeMultiplier = 0.6;
+			AddWarningText(warningString[2] + to_string((int)std::ceil((1 - expChangeMultiplier) * 100)) + warningString[3], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
 		}
 		else if (happinessPoint >= 0) {
 			expChangeMultiplier = 0.3;
+			AddWarningText(warningString[2] + to_string((int)std::ceil((1 - expChangeMultiplier) * 100)) + warningString[3], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
 		}
 
 
@@ -407,6 +416,13 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 		Clamp(&currentFood, foodMax[currentLevel], 0.0f);
 		Clamp(&currentPoop, poopMax[currentLevel], 0.0f);
 
+		if (currentExp >= expPerEvolve[currentLevel] && ateEvolveStone) {
+			AddWarningText(warningString[5], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
+		}
+		else if (currentExp >= expPerEvolve[currentLevel]) {
+			AddWarningText(warningString[4], *warningFont, col_YELLOW1, warningFontSize, Vector2f(warningBaseXPos, warningBaseYPos + warningText.size() * warningGap));
+		}
+
 		if (currentExp >= expPerEvolve[currentLevel] && ateEvolveStone && evolveButtonClicked ) {
 			currentLevel += 1;
 			if (currentLevel > 2) {
@@ -418,6 +434,7 @@ void Pet::Update(float deltaTime, unordered_map<string, bool>& keyPress, unorder
 
 		isMoving = (speed != Vector2f(0, 0));
 		//cout << currentLevel << " " << currentHp << " " << currentFood <<  " " << (float)foodMax[currentLevel] * notEnoughFoodThreshold <<  " " << currentPoop << " " << currentExp << " " << currentHappiness << " " <<  endl;
+
 	}
 	else {
 		
@@ -528,6 +545,12 @@ void Pet::Draw(RenderWindow& window) {
 	}
 }
 
+void Pet::DrawWarningText(RenderWindow& window) {
+	for (int i = 0; i < warningText.size(); ++i) {
+		window.draw(warningText[i]);
+	}
+}
+
 void Pet::PlaySound(Sound& soundPlayer, int soundBufferIndex, string type) {
 	cout << "Playing " << type << " : " << soundBufferIndex << endl;
 	soundPlayer.setVolume(sfxVariables[soundBufferIndex].volume);
@@ -551,6 +574,15 @@ void Pet::DeleteParticle(int index)
 	particleSystems.erase(particleSystems.begin() + index);
 }
 
+void Pet::AddWarningText(string str, Font& font, Color color, int size, Vector2f position) {
+	warningText.push_back(Text());
+	Text& text = warningText[warningText.size() - 1];
+	text.setString(str);
+	text.setFont(font);
+	text.setFillColor(color);
+	text.setCharacterSize(size);
+	text.setPosition(position);
+}
 
 template<typename T>
 void Pet::Clamp(T* clampVariable, T upperClamp, T lowerClamp)

@@ -236,5 +236,5 @@ ParticleSystem::~ParticleSystem() {
 		amountOfParticle.erase(amountOfParticle.begin());
 	}
 
-	cout << "ParticleSystem deleted";
+	//cout << "ParticleSystem deleted";
 }

@@ -2,9 +2,14 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>  
+#include <cmath>
 #include <vector>
 #include <unordered_map>
 #include <SFML/Audio.hpp>
+#include <cstring>
+#include <string>
+#include <cstdlib>
+#include <algorithm>
 #include "ParticleSystem.h"
 #include "GameObject.h"
 #include "Item.h"
@@ -12,6 +17,7 @@
 
 using std::vector;
 using std::unordered_map;
+using std::to_string;
 class Item;
 
 class Pet :
@@ -38,13 +44,14 @@ public:
 
 	void Draw(RenderWindow& window);
 
-
+	void DrawWarningText(RenderWindow& window);
 
 	bool CanPoop();
 	Poop* CreatePoop();
 
 	void DeleteParticle(int index);
 
+	void AddWarningText(string str, Font& font, Color color, int size, Vector2f position = Vector2f(720 / 2, 1040 / 2));
 	template <typename T>
 	void Clamp(T* clampVariable, T upperClamp = 0, T lowerClamp = 0); //Ensure that clampVariable will be in between [lowerClamp,upperClamp]
 	bool IsMouseOver(Vector2i& mousePosition);
@@ -101,6 +108,31 @@ public:
 	float poopChangeRate = 1;
 
 	float notEnoughFoodThreshold = 0.2f; //If Food is BELOW currentFood * this multiplier, HP , Happiness , starts to decay
+
+	
+	///Stats Warning UI
+	Color col_BLACK1 = Color(24, 20, 37);
+	Color col_RED1 = Color(244, 4, 69);
+	Color col_GREEN1 = Color(99, 199, 77);
+	Color col_GREEN2 = Color(38, 92, 66);
+	Color col_BLUE1 = Color(0, 153, 219);
+	Color col_BROWN1 = Color(184, 111, 80);
+	Color col_YELLOW1 = Color(254, 231, 97);
+
+	Font* warningFont;	
+	int warningFontSize = 14;
+	float warningBaseXPos = 40;
+	float warningBaseYPos = 230;
+	float warningGap = 25;
+	vector<Text> warningText;
+	vector<string> warningString = {
+		"Food lower than 50%, losing happiness.",
+		"Food lower than 20%, losing hp.",
+		"Low happiness, -", " % exp.",
+		"Full exp, eat an evolution pill to unlock evolve button.",
+		"Ready to evolve."
+	};
+
 
 
 	///Moving

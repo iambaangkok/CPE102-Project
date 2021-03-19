@@ -93,11 +93,11 @@ public:
     vector<Button*> petEggs;
     vector<string> petEggType = {"PERRY", "DICKO", "CROK", "GYOZA" };
     vector<string> petEggDescriptions = 
-    {   petEggType[0] + " is a super ordinary, balanced, normal, whatever you say that means 'basic' pet.",
-        petEggType[1] + " likes to eat....I mean it would probably.",
+    {   petEggType[0] + " is a super ordinary, balanced, normal, a  'basic' pet.",
+        petEggType[1] + " likes to eat....I mean it.",
         "In a game where picking up shit gives money, " + petEggType[2] + " is the money maker.",
-        "If you want to speed run this game, "+ petEggType[3] + " is for you. Beware this pet is super fragile."};
-    Text petEggDescription;
+        "If you want to speed run, "+ petEggType[3] + " is for you. But it dies quick."};
+    vector<Text> petEggDescriptionText;
 
     /// User Interface
     GameObject* mouseCursor;
@@ -105,6 +105,8 @@ public:
     Color col_BLACK1 = Color(24, 20, 37);
     Color col_RED1 = Color(244, 4, 69);
     Color col_GREEN1 = Color(99, 199, 77);
+    Color col_GREEN2 = Color(38, 92, 66);
+    Color col_BLUE1 = Color(0, 153, 219);
     Color col_BROWN1 = Color(184, 111, 80);
     Color col_YELLOW1 = Color(254, 231, 97);
     float ui_barWidth = 210;
