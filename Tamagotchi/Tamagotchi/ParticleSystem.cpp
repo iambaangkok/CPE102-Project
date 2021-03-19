@@ -39,7 +39,7 @@ ParticleSystem::ParticleSystem(float rate, float spread, float angleOngsa, float
 	}
 	angleDiff = maxAngle - minAngle;
 
-	for (int i = 0; i < numberOfParticle; ++i) {
+	for (int i = 0; i < numberOfParticle; ++i) {	
 		amountOfParticle.push_back(new GameObject(position, dimensions, true, texturePath, imageCount, start, finish, frameTime));
 		float randAngle;
 		if (spread != 0) {

@@ -16,7 +16,7 @@ class ParticleSystem
 public:
 	ParticleSystem();
 	ParticleSystem(float rate, float spread, float angleOngsa, float lifetime, float speed
-	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, float floorLine, float whelaTheePloyThangModbool, bool burst, bool gravity_on = true);
+	, Vector2f dimensions, Vector2f position, string texturePath, Vector2u imageCount, Vector2i start, Vector2i finish, float frameTime, float floorLine, float whelaTheePloyThangMod , bool burst, bool gravity_on = true);
 	~ParticleSystem();
 
 	void Initialize();
