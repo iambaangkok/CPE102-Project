@@ -21,7 +21,7 @@ Doodle::Doodle(int& maingame_state, int hs , Pet &pet , int eq )
 	InitBG();
 	InitSprite();
 	InitText();
-	InitSound(15.0f, 15.0f);
+	InitSound(10, 30);
 }
 
 Doodle::~Doodle()
@@ -385,7 +385,7 @@ void Doodle::InitSound(float musicVolume, float soundVolume)
 	music.setVolume(musicVolume);
 	sound.setVolume(soundVolume);
 	pw.setVolume(soundVolume);
-	dead.setVolume(soundVolume);
+	dead.setVolume(100);
 	coin.setVolume(soundVolume);
 }
 
