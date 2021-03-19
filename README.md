@@ -1,4 +1,7 @@
 # CPE102-Project
+
+itch.io page: https://iambaangkok.itch.io/not-tamagotchi
+
 a c++ project in 261102 - computer programming
 
 .exe Game files is in "Tamagotchi/Release/Tamagotchi.exe", everything in the folder is required to run the game
