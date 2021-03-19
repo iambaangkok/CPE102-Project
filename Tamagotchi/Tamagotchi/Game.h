@@ -173,7 +173,7 @@ public:
         string filePath = "";
         float volume = 15.0f;
     };
-    float bgmVolume = 12;
+    float bgmVolume = 8;
     vector<SoundBuffer> bgmSoundBuffers;
     vector<SoundVariables> bgmVariables = {
         {"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },

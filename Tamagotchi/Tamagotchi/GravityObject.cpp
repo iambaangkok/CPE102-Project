@@ -26,9 +26,9 @@ GravityObject::~GravityObject()
 
 void GravityObject::Update(float deltaTime , float speed_rate , int curlevel)
 {	
-	if (Keyboard::isKeyPressed(Keyboard::A))
+	if (Keyboard::isKeyPressed(Keyboard::Left))
 		playerX -= 800.0f * deltaTime * (1.0f - speed_rate);
-	if (Keyboard::isKeyPressed(Keyboard::D))
+	if (Keyboard::isKeyPressed(Keyboard::Right))
 		playerX += 800.0f * deltaTime * (1.0f - speed_rate);
 	if (playerX > 720)
 		playerX = 720;
