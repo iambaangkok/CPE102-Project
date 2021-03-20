@@ -8,7 +8,7 @@ a c++ project in 261102 - computer programming
 
 ชื่อกลุ่ม BoBo
 
-ชื่อโปรเเกรม "たまごっち Tamagotchi"
+ชื่อโปรเเกรม "たまごっち Not-Tamagotchi"
 
 
 A virtual pet simulator, aims to accompany you while you work on other things in your computer
