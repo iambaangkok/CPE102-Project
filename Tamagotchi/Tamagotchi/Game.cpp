@@ -802,12 +802,9 @@ void Game::Update() {
         dessertBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
         etcBut->Update(deltaTime, window, mousePress, mouseHold, mousePosition, quitGame, selectedPet, clearSave, muteBgm, muteSfx, *maindishBut, *dessertBut, *etcBut);
 
-        
-
         UpdateUI();
         ReInitializeUI();
     }
-
 
     mouseCursor->SetPosition(mousePosition.x, mousePosition.y);
     mouseCursor->Update(deltaTime);

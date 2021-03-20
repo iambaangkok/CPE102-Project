@@ -260,7 +260,7 @@ void Button::OnRelease(bool& quitGame, int& selectedPet, bool& clearSave) {
 		*gstate = 1;
 	}
 	if (type == "STARTDOODLE") {
-		doodle->gstate = 1;
+		doodle->gstate = 4;
 		doodle->music.play();
 	}
 	if (type == "EXITDOODLE") {

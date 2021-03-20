@@ -14,11 +14,11 @@
 class Doodle
 {
 public :
-	Doodle(int& maingame_state , int hs , Pet& pet , int eq );
+	Doodle(int& maingame_state , int hs , Pet& pet , int eq);
 	~Doodle();
 
 	void Reset(Pet &pet);														// Call to initialize doodle 
-	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel , Pet &pet);		// Update to GravityObject and PlatformObject
+	void Update(float deltaTime , unordered_map<string, bool> &key , int curlevel , Pet &pet );		// Update to GravityObject and PlatformObject
 	void Draw(RenderWindow& window);													// Draw GravityObject and PlatformObject
 	
 	void InitSound(float musicVolume, float soundVolume);
@@ -44,7 +44,7 @@ public :
 	ParticleSystem* landing;
 
 	Font font;
-	Text scoreText , highscoreText , money;
+	Text scoreText , highscoreText , money , tutorial , cntdown;
 	vector<Sprite> background; 
 	Sprite Logo1, Logo2 , YOUDIED , SelectBG , Lock;
 	Texture backgroundT , Logo1T, Logo2T , YOUDIEDT , SelectBGT , LockT;
@@ -52,8 +52,8 @@ public :
 	vector<float> background_posy;
 	float land_posy;
 
-	Sound sound, music , pw , dead , coin;
-	SoundBuffer soundB , musicB , pwB ,deadB , coinB;
+	Sound sound, music , pw , dead , coin , CNTdown , go;
+	SoundBuffer soundB , musicB , pwB ,deadB , coinB , CNTdownB , goB;
 
 	int curlevel = 0;
 
@@ -85,5 +85,9 @@ public :
 
 	Text unlocked;
 	int unlocklvl[6] = { -1,0,20,40,80,160 };
+
+	float curTime = 0;
+	bool complete = false;
+	int prevcnt = 4;
 };
 

@@ -1,7 +1,7 @@
 #include "Doodle.h"
 
 
-Doodle::Doodle(int& maingame_state, int hs , Pet &pet , int eq )
+Doodle::Doodle(int& maingame_state, int hs , Pet &pet , int eq)
 {
 	
 	this->maingame_state = &maingame_state;
@@ -30,6 +30,10 @@ Doodle::~Doodle()
 
 void Doodle::Reset(Pet &pet)
 {
+	this->curTime = 0;
+	this->complete = false;
+	this->prevcnt = 4;
+
 	this->curlevel = pet.currentLevel;
 	Alpha->player.SetTexture(pet.filepath);
 	Alpha->player.animation.SetFrame(Vector2i(0, curlevel));
@@ -223,6 +227,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			YOUDIED.setColor(Color::Color(255, 255, 255, FadeCnt * FadeRate));
 			FadeCnt++;
 		}
+			
 		/*if (key["SPACE"])
 		{
 			music.stop();
@@ -252,6 +257,29 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 				sound.play();
 		}*/
 	}
+	else if (gstate == 4) { // tutorial
+		curTime += deltaTime;
+		if (curTime > 4) {
+			sound.play();
+			gstate = 1;
+		}
+		if (curTime < 3) {
+			cntdown.setString(std::to_string(3 - int(curTime)));
+			if (3 - int(curTime) != prevcnt) {
+				prevcnt = 3 - int(curTime);
+				CNTdown.play();
+			}
+		}
+			
+		else if (!complete) {
+			cntdown.setString("GO!!!");
+			go.play();
+			complete = true;
+		}
+
+		SetTextCenter(cntdown);
+		//cout << curTime << endl;
+	}
 }
 
 void Doodle::Draw(RenderWindow& window)
@@ -273,7 +301,6 @@ void Doodle::Draw(RenderWindow& window)
 	}
 	if (gstate == 1)
 	{
-		
 		Platform->Draw(window, difficulty);
 		window.draw(scoreText);
 		window.draw(money);
@@ -300,6 +327,13 @@ void Doodle::Draw(RenderWindow& window)
 			window.draw(Lock);
 		}
 			
+	}
+
+	if (gstate == 4) {
+		window.draw(tutorial);
+		window.draw(cntdown);
+		Alpha->player.Draw(window);
+		Platform->Draw(window, difficulty);
 	}
 
 	landing->Draw(window);
@@ -375,10 +409,14 @@ void Doodle::InitSound(float musicVolume, float soundVolume)
 	music.setBuffer(musicB);
 	pwB.loadFromFile("Assets/Sounds/PowerUp.wav");
 	pw.setBuffer(pwB);
-	deadB.loadFromFile("Assets/Sounds/SlowedOOF.wav");
+	deadB.loadFromFile("Assets/Sounds/Dead~1.wav");
 	dead.setBuffer(deadB);
 	coinB.loadFromFile("Assets/Sounds/Pickup_Coin.wav");
 	coin.setBuffer(coinB);
+	CNTdownB.loadFromFile("Assets/Sounds/Cntdown321.wav");
+	CNTdown.setBuffer(CNTdownB);
+	goB.loadFromFile("Assets/Sounds/GO.wav");
+	go.setBuffer(goB);
 
 	music.setLoop(true);
 	
@@ -465,6 +503,7 @@ void Doodle::InitText()
 	scoreText.setCharacterSize(50);
 	scoreText.setFillColor(Color::Red);
 	scoreText.setString("Score: " + std::to_string(score));
+	scoreText.setPosition(Vector2f(-500 , -500));
 
 	highscoreText.setFont(font);
 	highscoreText.setOutlineThickness(2.0f);
@@ -472,6 +511,7 @@ void Doodle::InitText()
 	highscoreText.setCharacterSize(50);
 	highscoreText.setFillColor(Color::Red);
 	highscoreText.setString("Highscore: " + std::to_string(highscore));
+	highscoreText.setPosition(Vector2f(-500, -500));
 
 	money.setFont(font);
 	money.setOutlineThickness(2.0f);
@@ -479,5 +519,25 @@ void Doodle::InitText()
 	money.setCharacterSize(50);
 	money.setFillColor(Color::Yellow);
 	money.setString("Money: " + std::to_string(Money));
+	money.setPosition(Vector2f(-500, -500));
+
+	tutorial.setFont(font);
+	tutorial.setFont(font);
+	tutorial.setOutlineThickness(2.0f);
+	tutorial.setOutlineColor(Color::Black);
+	tutorial.setCharacterSize(30);
+	tutorial.setFillColor(Color::White);
+	tutorial.setString("Press <Right Arrow> or <Left Arrow> \n					to move your doodle.");
+	SetTextCenter(tutorial);
+	tutorial.setPosition(Vector2f(360, 520));
+
+	cntdown.setFont(font);
+	cntdown.setOutlineThickness(2.0f);
+	cntdown.setOutlineColor(Color::Black);
+	cntdown.setCharacterSize(100);
+	cntdown.setFillColor(Color::White);
+	cntdown.setString(std::to_string(3));
+	cntdown.setPosition(Vector2f(360, 800));
+	SetTextCenter(cntdown);
 
 }
