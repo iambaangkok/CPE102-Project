@@ -26,14 +26,20 @@ GravityObject::~GravityObject()
 
 void GravityObject::Update(float deltaTime , float speed_rate , int curlevel)
 {	
-	if (Keyboard::isKeyPressed(Keyboard::Left))
+	if (Keyboard::isKeyPressed(Keyboard::Left)) {
 		playerX -= 800.0f * deltaTime * (1.0f - speed_rate);
-	if (Keyboard::isKeyPressed(Keyboard::Right))
+		player.rectangleShape.setScale(Vector2f(-1, 1));
+	}
+		
+	if (Keyboard::isKeyPressed(Keyboard::Right)) {
 		playerX += 800.0f * deltaTime * (1.0f - speed_rate);
+		player.rectangleShape.setScale(Vector2f(1, 1));
+	}
+		
 	if (playerX > 720)
-		playerX = 720;
-	if (playerX < 0)
 		playerX = 0;
+	if (playerX < 0)
+		playerX = 720;
 
 	if (dy < -300.0f)
 		player.animation.SetFrame(Vector2i(3, curlevel));

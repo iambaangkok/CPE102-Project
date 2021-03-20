@@ -154,7 +154,7 @@ void Doodle::Update(float deltaTime , unordered_map<string, bool>&key , int curl
 			}
 			for (unsigned int i = 0; i < 3; ++i)
 			{
-				background_posy[i] -= Alpha->dy * deltaTime * 0.1f;
+				background_posy[i] -= Alpha->dy * 0.001f;
 				if (background_posy[i] >= windowHeight) 
 					background_posy[i] = background_posy[(i-1)%3] - 1040.0f;
 				background[i].setPosition(Vector2f(0, background_posy[i]));
@@ -297,7 +297,7 @@ void Doodle::Draw(RenderWindow& window)
 		window.draw(Logo1);
 		window.draw(Logo2);
 
-		Alpha->player.Draw(window);
+		//Alpha->player.Draw(window);
 	}
 	if (gstate == 1)
 	{
@@ -330,10 +330,10 @@ void Doodle::Draw(RenderWindow& window)
 	}
 
 	if (gstate == 4) {
-		window.draw(tutorial);
-		window.draw(cntdown);
 		Alpha->player.Draw(window);
 		Platform->Draw(window, difficulty);
+		window.draw(tutorial);
+		window.draw(cntdown);
 	}
 
 	landing->Draw(window);
@@ -529,7 +529,7 @@ void Doodle::InitText()
 	tutorial.setFillColor(Color::White);
 	tutorial.setString("Press <Right Arrow> or <Left Arrow> \n					to move your doodle.");
 	SetTextCenter(tutorial);
-	tutorial.setPosition(Vector2f(360, 520));
+	tutorial.setPosition(Vector2f(360, 460));
 
 	cntdown.setFont(font);
 	cntdown.setOutlineThickness(2.0f);
