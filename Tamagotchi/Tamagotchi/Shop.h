@@ -29,7 +29,7 @@ public:
 	void Draw(RenderWindow &window);
 	void AddItem(string,string, int& , Shop* , Pet& , Doodle& );
 	
-	int speedscroll = 600;
+	int speedscroll = 700;
 	bool isOpen = false;
 	int windowWidth = 720;
 	int windowHeight = 1040;
@@ -39,16 +39,18 @@ public:
 	int heightscrollbar = 150;
 	int corePosition = 310;
 	float corePositiony = 270;
-	int heightfood = 4 * 180;
-	int heightcandy = 4 * 180;
-	int heightetc = 4 * 180;
+
+	int heightfood = itemfood.size() * 180;
+	int heightcandy = itemcandy.size() * 180;
+	int heightetc = itemetc.size() * 180;
+	
 	string status = "food";
 	Font font;
 	Color col_BLACK1 = Color(24, 20, 37);
 
 	Vector2f position = Vector2f(0,0);
+	
 	vector<Item*> itemfood;
-
 	vector<Item*> itemcandy;
 	vector<Item*> itemetc;
 	vector<Item*> items;

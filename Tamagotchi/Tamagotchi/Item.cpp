@@ -185,8 +185,8 @@ string name)
 		this->evoStone = false;
 		this->foodChange = 15;
 		this->happinessChange = 5;
-		this->minigameLife = minigameLife;
-		this->xpCoupon = xpCoupon;
+		this->minigameLife = false;
+		this->xpCoupon = 0.0;
 		this->poopChange = 5;
 	}
 	else if (name=="Waxwowald")

@@ -13,21 +13,21 @@ Shop::Shop(int& gstate, Pet& pet, Doodle& doodle) {
         description.setPosition(100, 1040 / 2);
         descriptions.push_back(description);
     }
-    AddItem("Hotdog","ShopItem8.png",gstate, this, pet, doodle);
-    AddItem("Noodle69","ShopItem9.png",gstate, this, pet, doodle);
-    AddItem("Chicken","ShopItem14.png", gstate, this, pet, doodle);
-    AddItem("Waxwowald","ShopItem13.png", gstate, this, pet, doodle);
+    AddItem("Chicken", "real14.png", gstate, this, pet, doodle);
+    AddItem("Hotdog","real8.png",gstate, this, pet, doodle);
+    AddItem("Waxwowald", "real13.png", gstate, this, pet, doodle);
+    AddItem("Noodle69","real9.png",gstate, this, pet, doodle);
     
-    AddItem("Cocola", "ShopItem12.png", gstate, this, pet, doodle);
-    AddItem("Bubble teaI", "ShopItem2.png", gstate, this, pet, doodle);
-    AddItem("Bubble teaII", "ShopItem3.png", gstate, this, pet, doodle);
-    AddItem("Bubble teaIII","ShopItem4.png", gstate, this, pet, doodle);
-    AddItem("Mochi","ShopItem10.png", gstate, this, pet, doodle);
+    AddItem("Cocola", "real12.png", gstate, this, pet, doodle);
+    AddItem("Bubble teaI", "real2.png", gstate, this, pet, doodle);
+    AddItem("Bubble teaII", "real3.png", gstate, this, pet, doodle);
+    AddItem("Bubble teaIII","real4.png", gstate, this, pet, doodle);
+    AddItem("Mochi","real10.png", gstate, this, pet, doodle);
     //AddItem("Dango","ShopItem11.png");
    
 
-    AddItem("Evo I","ShopItem1.png", gstate, this, pet, doodle);
-    AddItem("Evo II","ShopItem1.png", gstate, this, pet, doodle);
+    AddItem("Evo I","real1.png", gstate, this, pet, doodle);
+    AddItem("Evo II","real1.png", gstate, this, pet, doodle);
    // AddItem("Evo III","ShopItem1.png", gstate, this, pet, doodle);
 
     textofset.push_back(Vector2f(230, 320));
@@ -90,7 +90,7 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
 
     int fontSize = 14;
    
-    Item* newItem = new Item(Vector2f(0, 0), itemPictureSize, false, "Assets/Textures/Shop/" + texturePath, imageCount, start, finish, 1, itemName);
+    Item* newItem = new Item(Vector2f(0, 0), itemPictureSize, false, "Assets/Textures/Shop/real/" + texturePath, imageCount, start, finish, 1, itemName);
     newItem->itemId;
     Button* newbutton = new Button(Vector2f (340,520), Vector2f (70,25), false, "Assets/Textures/button_buy.png", Vector2u (5,1), Vector2i (0,0), Vector2i (0,0),  1,
         "bB", 0, "BUYITEM",gstate, *this, pet, doodle);
@@ -108,10 +108,10 @@ void Shop::AddItem(string itemName, string texturePath, int& gstate, Shop* shop,
             thisItemsText.push_back(Text());
 
         for (int i = 0; i < itemfood.size();++i) {
-            SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition + 230, (i * 180) + 320));
-            SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition+ 225, (i * 180) + 385));
-            SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 290, (i * 180) + 385));
-            SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+350, (i * 180) + 385));
+            SetTextShop(thisItemsText[0], newItem->name, font, col_BLACK1, 20, Vector2f(corePosition + 230, (i * 180) + 330));
+            SetTextShop(thisItemsText[1], to_string(newItem->hpChange), font, col_BLACK1, fontSize, Vector2f(corePosition+ 225, (i * 180) + 390));
+            SetTextShop(thisItemsText[2], to_string(newItem->foodChange), font, col_BLACK1, fontSize, Vector2f(corePosition + 290, (i * 180) + 390));
+            SetTextShop(thisItemsText[3], to_string(newItem->happinessChange), font, col_BLACK1, fontSize, Vector2f(corePosition+350, (i * 180) + 390));
             SetTextShop(thisItemsText[4], to_string(newItem->price), font, col_BLACK1, fontSize, Vector2f(corePosition+280, (i * 180) + 435));
         }
         food.push_back(thisItemsText);
@@ -227,6 +227,8 @@ void Shop::Update(float deltaTime, int mouseWheelDelta,
         }
 
         float timey = scrollbar->GetPosition().y + 0 - mouseWheelDelta * deltaTime * speedscroll;
+        
+        float slide = 1;
         float itemOffset = 200;
         float itemTextOffset = 70;
         if (status=="food") {
