@@ -178,7 +178,7 @@ public:
     float bgmVolume = 8;
     vector<SoundBuffer> bgmSoundBuffers;
     vector<SoundVariables> bgmVariables = {
-        {"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },
+        //{"Assets/Sounds/BGM/bgm_mysticforest.wav", bgmVolume },
         {"Assets/Sounds/BGM/bgm_alonelycherrytree.wav", bgmVolume },
         {"Assets/Sounds/BGM/bgm_mybestfriendisadog.wav", bgmVolume }
         //{"Assets/Sounds/BGM/bgm_otherworld.wav", bgmVolume }

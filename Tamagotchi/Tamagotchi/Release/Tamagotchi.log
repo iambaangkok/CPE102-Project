@@ -1,7 +1,378 @@
-﻿  GravityObject.cpp
+﻿  Button.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\ParticleSystem.h(49,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Pet.h(160,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Button.cpp(67,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Button.cpp(78,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Button.cpp(89,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Button.cpp(212,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Button.cpp(222,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Button.cpp(232,22): warning C4018: '<': signed/unsigned mismatch
+  Game.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\ParticleSystem.h(49,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Pet.h(160,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(23,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(23,54): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(204,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(204,136): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(206,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(206,155): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(273,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(273,136): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(275,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(275,155): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(290,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(293,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(325,99): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(326,91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(329,103): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(330,95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(333,103): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(334,95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(337,107): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(338,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(479,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(479,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(487,81): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(487,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(497,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(509,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(516,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(521,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(534,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(611,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(622,22): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(629,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(671,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(699,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(707,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(809,60): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(809,43): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(813,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(830,28): warning C4018: '>=': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(846,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(852,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(858,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(859,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(882,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(887,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(904,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(908,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(965,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Game.cpp(1137,52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Shop.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\ParticleSystem.h(49,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Pet.h(160,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(7,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(39,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(41,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(41,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(43,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(45,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(45,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(47,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(49,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(49,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(53,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(55,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(55,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(57,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(59,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(59,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(62,23): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(64,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(64,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(68,53): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(72,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(72,89): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(110,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(111,119): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(111,102): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(112,139): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(112,122): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(113,142): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(113,125): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(114,145): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(114,129): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(115,135): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(115,119): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(130,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(131,119): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(131,102): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(132,140): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(132,123): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(133,142): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(133,125): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(134,147): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(134,130): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(135,137): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(135,120): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(151,27): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(152,119): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(152,102): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(153,140): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(153,123): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(154,142): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(154,125): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(155,147): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(155,130): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(156,137): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(156,120): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(169,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(172,35): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(177,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(183,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(186,35): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(190,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(195,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(198,35): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(202,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(220,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(223,62): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(223,45): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(226,71): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(226,45): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(237,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(239,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(241,35): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(248,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(250,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(255,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(257,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(258,35): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(264,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(266,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(271,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(273,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(274,35): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(280,31): warning C4018: '<': signed/unsigned mismatch
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Shop.cpp(282,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\ParticleSystem.h(49,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\Pet.h(160,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\GitHub\CPE102-Project\Tamagotchi\Tamagotchi\main.cpp(25,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating code
-  2 of 1748 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 1748 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    7 functions had inline decision re-evaluated but remain unchanged
+    8 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Tamagotchi.vcxproj -> D:\GitHub\CPE102-Project\Tamagotchi\Release\Tamagotchi.exe
